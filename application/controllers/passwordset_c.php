@@ -1,6 +1,6 @@
 <?php 
 class Passwordset_c extends MY_Controller {
-  const INPUT_REQUIRE_USERID = 1;
+  const INPUT_REQUIRE_USERNAME = 1;
   const INPUT_REQUIRE_PWD = 2;
   const INPUT_REQUIRE_NEWPWD = 4;
   const INPUT_REQUIRE_NGPWD = 3;
@@ -18,10 +18,10 @@ class Passwordset_c extends MY_Controller {
 
 	  $data["isLogin"] =false;
 	  if(!empty($user)){
-	     $data["txtUserId"] = $user['user_name'];
+	     $data["txtUserName"] = $user['user_name'];
 	     $data["isLogin"] =true;
 	  }else{
-	    $data["txtUserId"] = "";
+	    $data["txtUserName"] = "";
 	  }
 	  
 		$this->load->view('passwordset_v',$data);
@@ -30,16 +30,16 @@ class Passwordset_c extends MY_Controller {
 	public function resetPwd(){
 	  $data = array();
 	  $this->load->model('login_m','login_m');
-	  $userId = $this->input->post('txtUserId');
-	  $data['txtUserId'] = $userId;
+	  $userName = $this->input->post('txtUserName');
+	  $data['txtUserName'] = $userName;
 	  $password = $this->input->post('txtPassword');
 	  
 	  $newPassword = $this->input->post('txtNewPassword');
-    log_message('info', "####userdd newPassword".$userId."|".$password."|".$newPassword);
-	  $user = $this->login_m->getUser($userId);
+    log_message('info', "####userdd newPassword".$userName."|".$password."|".$newPassword);
+	  $user = $this->login_m->getUser($userName);
 
 	  if(!empty($user) && $user['password']===md5($password)){
-	     $ret = $this->login_m->setPwd($userId,md5($newPassword));
+	     $ret = $this->login_m->setPwd($userName,md5($newPassword));
 	     $data["errFlg"] = self::RESULT_OK;
 	     $this->load->view('passwordset_v', $data);
 	  }else{

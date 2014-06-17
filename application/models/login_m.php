@@ -7,9 +7,9 @@ class Login_m extends MY_Model
         $this->CI->load->database();
     }
     
-    public function getUser( $userId )
+    public function getUser( $userName )
     {
-       $this->db->where('user_name', $userId); 
+       $this->db->where('user_name', $userName); 
        $this->db->where('delete_flg', 0); 
        $this->db->select('*');    
        $query = $this->db->get('ss_users');
@@ -20,9 +20,9 @@ class Login_m extends MY_Model
        }
     	 return $user;
     }
-    public function setPwd($userId,$newPassword){
+    public function setPwd($userName,$newPassword){
        $this->db->set('password', $newPassword); 
-       $this->db->where('user_name', $userId); 
+       $this->db->where('user_name', $userName); 
        $ret = $this->db->update('ss_users');
     	 return $ret;
     }

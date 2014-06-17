@@ -19,7 +19,7 @@
           	<?php }?>
         });
         function chkSubmit(){
-            if(jQuery.trim(document.getElementById('txtUserId').value)==""){
+            if(jQuery.trim(document.getElementById('txtUserName').value)==""){
             	$.ligerDialog.error('请输入用户名');return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
@@ -42,7 +42,7 @@
 		    <form name="login" method="post" action="<?php echo SITE_URL;?>/login_c/doLogin" id="login">
 			    <tr>
                     <td align="right" class="l-table-edit-td">用户名称:</td>
-                    <td align="left" class="l-table-edit-td"><input name="txtUserId" type="text" style="width:130px;" id="txtUserId" value="<?php echo $txtUserId;?>" /></td>
+                    <td align="left" class="l-table-edit-td"><input name="txtUserName" type="text" style="width:130px;" id="txtUserName" value="<?php echo $txtUserName;?>" /></td>
                 </tr>
                 <tr>
                    <td align="right" class="l-table-edit-td">用户密码:</td>

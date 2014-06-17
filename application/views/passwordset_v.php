@@ -25,7 +25,7 @@
             <?php }?>
         });
         function chkSubmit(){
-            if(jQuery.trim(document.getElementById('txtUserId').value)==""){
+            if(jQuery.trim(document.getElementById('txtUserName').value)==""){
             	$.ligerDialog.error('请输入用户名');return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
@@ -57,7 +57,7 @@
             <form name="passwordset" method="post" action="<?php echo SITE_URL;?>/passwordset_c/resetPwd" id="passwordset">
 			    <tr>
                 	<td align="right" class="l-table-edit-td">用户名:</td>
-                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUserId;?>" /></td>
+                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUserName;?>" /></td>
                 </tr>
                 <tr>
                    <td align="right" class="l-table-edit-td">旧密码:</td>
