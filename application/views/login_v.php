@@ -35,19 +35,18 @@
 </head>
 <body style="padding:0px;background:#EAEEF5;">
     <div id="pageloading"></div>
-    <div id="topmenu" class="l-topmenu">
-    </div>
+    <div id="topmenu" class="l-topmenu"></div>
     <div id="layout1" style="width:99.2%; margin:0 auto; margin-top:4px; ">
-	    <table width="190" height="200" border="0" align="center" cellpadding="2" cellspacing="0"></table>
-        <table width="190" height="106" border="0" align="center" cellpadding="2" cellspacing="0">
+	    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+        <table width="210" height="106" border="0" align="center" cellpadding="2" cellspacing="0">
 		    <form name="login" method="post" action="<?php echo SITE_URL;?>/login_c/doLogin" id="login">
 			    <tr>
                     <td align="right" class="l-table-edit-td">用户名称:</td>
-                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" id="txtUsername" value="<?php echo $txtUsername;?>" /></td>
+                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUsername;?>" /></td>
                 </tr>
                 <tr>
                    <td align="right" class="l-table-edit-td">用户密码:</td>
-                   <td align="left" class="l-table-edit-td"><input name="txtPassword" type="password" id="txtPassword"/></td>
+                   <td align="left" class="l-table-edit-td"><input name="txtPassword" type="password" style="width:130px;" id="txtPassword"/></td>
                 </tr>
 				<tr>
                    <td colspan="2" align="center">
