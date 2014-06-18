@@ -25,7 +25,7 @@
             <?php }?>
         });
         function chkSubmit(){
-            if(jQuery.trim(document.getElementById('txtUserName').value)==""){
+            if(jQuery.trim(document.getElementById('txtUserId').value)==""){
             	$.ligerDialog.error('请输入用户名');return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
@@ -43,21 +43,26 @@
             }
             return true;
         }
-        function rtnLogin(){
-        	location.href='<?php echo SITE_URL;?>/login_c';
-        }
      </script>
+
+	<style type="text/css">
+		body{ font-size:12px;}
+	    .l-table-edit {}
+	    .l-table-edit-td{ padding:4px;}
+	    .l-button{width:80px; float:left; margin-left:10px; padding-bottom:2px;}
+	    .l-verify-tip{ left:230px; top:120px;}
+	</style>
 </head>
 <body style="padding:0px;background:#EAEEF5;">
-    <div id="pageloading"></div>
-    <div id="topmenu" class="l-topmenu"></div>
+    <div id="topmenu" class="l-topmenu">
+    </div>
     <div id="layout1" style="width:99.2%; margin:0 auto; margin-top:4px; ">
-	    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
-        <table width="210" height="130" border="0" align="center" cellpadding="2" cellspacing="0">
-            <form name="passwordset" method="post" action="<?php echo SITE_URL;?>/passwordset_c/resetPwd" id="passwordset">
+    <form name="passwordset" method="post" action="<?php echo SITE_URL;?>/passwordset_c/resetPwd" id="passwordset">
+	    <table width="260"  border="0" align="center" cellpadding="2" cellspacing="0"></table>
+        <table width="260"  border="0" align="center" cellpadding="2" cellspacing="0">
 			    <tr>
                 	<td align="right" class="l-table-edit-td">用户名:</td>
-                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUserName;?>" /></td>
+                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUsername;?>" /></td>
                 </tr>
                 <tr>
                    <td align="right" class="l-table-edit-td">旧密码:</td>
@@ -72,15 +77,15 @@
                    <td align="left" class="l-table-edit-td"><input name="txtNewPasswordRep" type="password" style="width:130px;" id="txtNewPasswordRep"/></td>
                 </tr>
 				<tr>
-                   <td colspan="2" align="center">
-                   	 <input type="submit" value="提交" id="login" class="l-button l-button" onclick="return chkSubmit();"/>
-                   	 <input type="button" value="返回" id="reset" class="l-button l-button" onclick="return rtnLogin();"/>
+                   <td colspan="2" align="right">
+                   	 <input type="submit" value="提交" id="login" class="l-button l-button" onclick="return chkSubmit();" />
+                   	 <input type="reset" value="重置" id="reset" class="l-button l-button"/>
 		           </td>
                 </tr>
-            </form>
 		</table>
+	</form>
     </div>
-    <div style="height:32px; line-height:32px; text-align:center;">
+    <div  style="height:32px; line-height:32px; text-align:center;">
             Copyright © 2014 www.easytech.com
     </div>
     <div style="display:none"></div>
