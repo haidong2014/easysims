@@ -1,4 +1,5 @@
-﻿<?php $sex_name=array(1=>'田',2=>'女');?>
+﻿<?php require_once("_header.php");?>
+<?php $sex_name=array(1=>'田',2=>'女');?>
 <div id="searchbar">
     编号或姓名：<input id="txtKey" type="text" />
     <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
