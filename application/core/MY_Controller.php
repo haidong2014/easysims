@@ -7,9 +7,5 @@ class MY_Controller extends CI_Controller
        $this->load->database('default');
        $this->load->helper('url');
        $this->load->library('session');
-       
-       
     }
-    
-
 }
