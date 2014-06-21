@@ -44,9 +44,9 @@ class Teacher_m extends MY_Model
     }
     
     public function updateOne($teacher_name, $sex,$birthday, $property, 
-        $course, $telephone, $email, $system_user, $remarks){
-      $this->db->where('teacher_id', $teacher_id);
-      $this->db->set( 'teacher_name',		$teacher_name );
+        $course, $telephone, $email, $system_user, $remarks,$teacher_id){
+          $this->db->where('teacher_id', $teacher_id);
+          $this->db->set( 'teacher_name',		$teacher_name );
 		  $this->db->set( 'sex',	$sex );
 		  $this->db->set( 'birthday',		$birthday );
 		  $this->db->set( 'property',		$property );

@@ -1,9 +1,14 @@
 ﻿<?php require_once("_header.php");?>
 <?php $sex_name=array(1=>'田',2=>'女');?>
+<script type="text/javascript">
+function goreg(){
+	location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
+}
+</script>
 <div id="searchbar">
     编号或姓名：<input id="txtKey" type="text" />
     <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
-	<input id="regist" type="button" value=" 教师信息登录 " onclick="regist_click()" />
+	<input id="regist" type="button" value=" 教师信息登录 " onclick="goreg()" />
 </div>
 	<br>
 	<table width="800" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" >
