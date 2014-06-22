@@ -1,5 +1,5 @@
 ﻿<?php require_once("_header.php");?>
-<?php $sex_name=array(1=>'田',2=>'女');?>
+<?php $sex_name=array(1=>'男',2=>'女');?>
 <script type="text/javascript">
 function goreg(){
 	location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
@@ -25,7 +25,7 @@ function goreg(){
 	  </tr>
 	  <tr>
 	  <?php foreach($teacherData as $key => $value) {?>
-		<td height="20" scope="row"><?php echo $value['teacher_id']?></td>
+		<td height="20" scope="row"><?php echo $value['teacher_no']?></td>
 		<td height="20" scope="row"><?php echo $value['teacher_name']?></td>
 		<td height="20" scope="row"><?php echo $sex_name[$value['sex']];?></td>
 		<td height="20" scope="row"><?php echo $value['birthday']?></td>
@@ -33,7 +33,12 @@ function goreg(){
 		<td height="20" scope="row"><?php echo $value['course']?></td>
 		<td height="20" scope="row"><?php echo $value['telephone']?></td>
 		<td height="20" scope="row"><?php echo $value['email']?></td>
-		<td height="20" scope="row" style="text-align:center;vertical-align:middle">查看 | 编辑 | 删除</td>
+		<td height="20" scope="row" style="text-align:center;vertical-align:middle">
+		
+		<a href="<?php echo SITE_URL;?>/teacher_c/view_teacher_init/<?php echo $value['teacher_id']?>">查看</a> | 
+		<a href="<?php echo SITE_URL;?>/teacher_c/upd_teacher_init/<?php echo $value['teacher_id']?>">编辑</a> | 
+		<a href="<?php echo SITE_URL;?>/teacher_c/delete_teacher/<?php echo $value['teacher_id']?>">删除</a>
+		</td>
 	  </tr>
 	  <?php }?>
 	</table>

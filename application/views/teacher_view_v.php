@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 if(empty($sex)){
   $sex=1;
 }
@@ -6,16 +6,16 @@ if(empty($sex)){
 if(empty($property)){
   $property=1;
 }
-$action = SITE_URL."/teacher_c/add_teacher";
-//echo $teacher_id."###";
-if(!empty($teacher_id)){
-  $action = SITE_URL."/teacher_c/upd_teacher";
-}
+$action = SITE_URL."/teacher_c";
+
+$sex_name = array(1=>'男',2=>'女');
+$property_name = array(1=>'专职',2=>'兼职');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
 <head>
 <title>教师信息登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" /> 
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" /> 
     <script src="<?php echo SITE_URL;?>/statics/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
@@ -90,66 +90,63 @@ if(!empty($teacher_id)){
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
 		    <tr>
                 <td align="right" class="l-table-edit-td">教师编号:</td>
-                <td align="left" class="l-table-edit-td"><input name="teacher_no" type="text" id="teacher_no" ltype="text" value="<?php echo @$teacher_no ?>" validate="{required:true,minlength:3,maxlength:10}" /></td>
+                <td align="left" class="l-table-edit-td"><?php echo @$teacher_no ?></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">教师姓名:</td>
-                <td align="left" class="l-table-edit-td"><input name="teacher_name" type="text" id="teacher_name" value="<?php echo @$teacher_name ?>" ltype="text" validate="{required:true,minlength:3,maxlength:10}" /></td>
+                <td align="left" class="l-table-edit-td"><?php echo @$teacher_name ?></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">性别:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input id="sex" type="radio" name="sex" value="1" <?php echo (@$sex==1?"checked":"")?> /><label for="rbtnl_0">男</label>
-					<input id="sex" type="radio" name="sex" value="2" <?php echo (@$sex==2?"checked":"")?>/><label for="rbtnl_1">女</label>
+                    <?php echo $sex_name[$sex];?>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">出生日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="birthday" type="text" id="birthday" ltype="date" value="<?php echo @$birthday ?>"  validate="{required:true}" />
+                    <?php echo @$birthday ?>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">专/兼职:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input id="property" type="radio" name="property" value="1" <?php echo (@$property==1?"checked":"")?>/><label for="rbtnl_0">专</label>
-					<input id="property" type="radio" name="property" value="2" <?php echo (@$property===2?"checked":"")?>/><label for="rbtnl_1">兼</label>
+                 <?php echo $property_name[$property]?>
                 </td><td align="left"></td>
             </tr>
 		    <tr>
                 <td align="right" class="l-table-edit-td">任课科目:</td>
-                <td align="left" class="l-table-edit-td"><input name="course" type="text" id="course" ltype="text"  value="<?php echo @$course ?>"  validate="{required:true,minlength:3,maxlength:10}" /></td>
+                <td align="left" class="l-table-edit-td"><?php echo $course?></td>
                 <td align="left"></td>
             </tr>
 			<tr>
                 <td align="right" class="l-table-edit-td">手机:</td>
-                <td align="left" class="l-table-edit-td"><input name="telephone" type="text" id="telephone" ltype="text"  value="<?php echo @$telephone ?>"   validate="{minlength:11,maxlength:11}" /></td>
+                <td align="left" class="l-table-edit-td"><?php echo @$telephone ?></td>
                 <td align="left"></td>
             </tr>
              <tr>
                 <td align="right" class="l-table-edit-td">Email:</td>
-                <td align="left" class="l-table-edit-td"><input name="email" type="text" id="email" ltype="text"   value="<?php echo @$email ?>"  validate="{email:true}" /></td>
+                <td align="left" class="l-table-edit-td"><?php echo @$email ?></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">系统用户:</td>
                 <td align="left" class="l-table-edit-td">
-                     <input id="system_user" type="checkbox" name="system_user" <?php echo (@$system_user===1?"checked":"")?> /><label for="CheckBoxList1_0">有效</label>
+                     <?php echo (@$system_user===1?"system user":"")?>
                 </td><td align="left"></td>
             </tr>  
             <tr>
                 <td align="right" class="l-table-edit-td">备注:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks"   style="width:400px"><?php echo @$remarks ?></textarea>
+                <?php echo @$remarks ?>
                 </td><td align="left"></td>
             </tr>
         </table>
 		<br />
 		<input type="hidden" name="teacher_id"  value="<?php echo @$teacher_id?>" />
-		<input type="submit" value="提交" class="l-button l-button-submit" /> 
-		<input type="reset" value="重置" class="l-button l-button-reset"/>
+		<a href="<?php echo $action;?>" style="display:block">返回</a>
     </form>
     <div style="display:none"></div>
 </body>

@@ -468,3 +468,347 @@ INFO  - 2014-06-22 20:16:55 --> add teacher array (
 )
 DEBUG - 2014-06-22 20:16:55 --> Final output sent to browser
 DEBUG - 2014-06-22 20:16:55 --> Total execution time: 0.0227
+DEBUG - 2014-06-22 20:30:27 --> Config Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:30:27 --> URI Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Router Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Output Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Security Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Input Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:30:27 --> Language Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:30:27 --> Session Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:30:27 --> Session routines successfully run
+DEBUG - 2014-06-22 20:30:27 --> Model Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Model Class Initialized
+INFO  - 2014-06-22 20:30:27 --> add teacher array (
+  'teacher_no' => 'asdf1',
+  'teacher_name' => '2321',
+  'sex' => '1',
+  'birthday' => '1111111',
+  'property' => '1',
+  'course' => '421',
+  'telephone' => '21111111111',
+  'email' => 'adc1@dd.com',
+  'remarks' => 'asfdasdfdasdfa',
+)
+DEBUG - 2014-06-22 20:30:27 --> Config Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:30:27 --> URI Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Router Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Output Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Security Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Input Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:30:27 --> Language Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:30:27 --> Session Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:30:27 --> Session routines successfully run
+DEBUG - 2014-06-22 20:30:27 --> Model Class Initialized
+DEBUG - 2014-06-22 20:30:27 --> Model Class Initialized
+INFO  - 2014-06-22 20:30:27 --> ####userarray (
+  'session_id' => 'fb0928e48938a94558e4a2a635990123',
+  'ip_address' => '182.249.245.145',
+  'user_agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
+  'last_activity' => 1403436627,
+  'user_data' => '',
+)
+DEBUG - 2014-06-22 20:30:27 --> File loaded: application/views/teacher_lst_v.php
+DEBUG - 2014-06-22 20:30:27 --> Final output sent to browser
+DEBUG - 2014-06-22 20:30:27 --> Total execution time: 0.1240
+DEBUG - 2014-06-22 20:44:04 --> Config Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:44:04 --> URI Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Router Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Output Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Security Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Input Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:44:04 --> Language Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:44:04 --> Session Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:44:04 --> Session routines successfully run
+DEBUG - 2014-06-22 20:44:04 --> Model Class Initialized
+DEBUG - 2014-06-22 20:44:04 --> Model Class Initialized
+INFO  - 2014-06-22 20:44:04 --> ####userarray (
+  'session_id' => '5a04cd08c921b5c671d815cf68860249',
+  'ip_address' => '182.249.245.145',
+  'user_agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
+  'last_activity' => 1403437444,
+  'user_data' => '',
+)
+DEBUG - 2014-06-22 20:44:04 --> File loaded: application/views/teacher_lst_v.php
+DEBUG - 2014-06-22 20:44:04 --> Final output sent to browser
+DEBUG - 2014-06-22 20:44:04 --> Total execution time: 0.1257
+DEBUG - 2014-06-22 20:44:08 --> Config Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:44:08 --> URI Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Router Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Output Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Security Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Input Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:44:08 --> Language Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:44:08 --> Session Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:44:08 --> Session routines successfully run
+DEBUG - 2014-06-22 20:44:08 --> Model Class Initialized
+DEBUG - 2014-06-22 20:44:08 --> Model Class Initialized
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:44:08 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:44:08 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:44:08 --> Final output sent to browser
+DEBUG - 2014-06-22 20:44:08 --> Total execution time: 0.0236
+DEBUG - 2014-06-22 20:45:31 --> Config Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:45:31 --> URI Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Router Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Output Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Security Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Input Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:45:31 --> Language Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:45:31 --> Session Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:45:31 --> Session routines successfully run
+DEBUG - 2014-06-22 20:45:31 --> Model Class Initialized
+DEBUG - 2014-06-22 20:45:31 --> Model Class Initialized
+INFO  - 2014-06-22 20:45:31 --> ####userarray (
+  'session_id' => '5a04cd08c921b5c671d815cf68860249',
+  'ip_address' => '182.249.245.145',
+  'user_agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
+  'last_activity' => 1403437444,
+  'user_data' => '',
+)
+DEBUG - 2014-06-22 20:45:32 --> File loaded: application/views/teacher_lst_v.php
+DEBUG - 2014-06-22 20:45:32 --> Final output sent to browser
+DEBUG - 2014-06-22 20:45:32 --> Total execution time: 0.1322
+DEBUG - 2014-06-22 20:45:41 --> Config Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:45:41 --> URI Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Router Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Output Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Security Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Input Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:45:41 --> Language Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:45:41 --> Session Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:45:41 --> Session routines successfully run
+DEBUG - 2014-06-22 20:45:41 --> Model Class Initialized
+DEBUG - 2014-06-22 20:45:41 --> Model Class Initialized
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:45:41 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:45:41 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:45:41 --> Final output sent to browser
+DEBUG - 2014-06-22 20:45:41 --> Total execution time: 0.0263
+DEBUG - 2014-06-22 20:46:30 --> Config Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:46:30 --> URI Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Router Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Output Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Security Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Input Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:46:30 --> Language Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:46:30 --> Session Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:46:30 --> Session routines successfully run
+DEBUG - 2014-06-22 20:46:30 --> Model Class Initialized
+DEBUG - 2014-06-22 20:46:30 --> Model Class Initialized
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:46:30 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:46:30 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:46:30 --> Final output sent to browser
+DEBUG - 2014-06-22 20:46:30 --> Total execution time: 0.0271
+DEBUG - 2014-06-22 20:47:19 --> Config Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:47:19 --> URI Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Router Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Output Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Security Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Input Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:47:19 --> Language Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:47:19 --> Session Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:47:19 --> Session routines successfully run
+DEBUG - 2014-06-22 20:47:19 --> Model Class Initialized
+DEBUG - 2014-06-22 20:47:19 --> Model Class Initialized
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:47:19 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:47:19 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:47:19 --> Final output sent to browser
+DEBUG - 2014-06-22 20:47:19 --> Total execution time: 0.0554
+DEBUG - 2014-06-22 20:48:12 --> Config Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:48:12 --> URI Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Router Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Output Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Security Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Input Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:48:12 --> Language Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:48:12 --> Session Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:48:12 --> Session routines successfully run
+DEBUG - 2014-06-22 20:48:12 --> Model Class Initialized
+DEBUG - 2014-06-22 20:48:12 --> Model Class Initialized
+INFO  - 2014-06-22 20:48:12 --> teachter getonearray (
+)
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:48:12 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:48:12 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:48:12 --> Final output sent to browser
+DEBUG - 2014-06-22 20:48:12 --> Total execution time: 0.0267
+DEBUG - 2014-06-22 20:50:02 --> Config Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:50:02 --> URI Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Router Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Output Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Security Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Input Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:50:02 --> Language Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:50:02 --> Session Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:50:02 --> Session routines successfully run
+DEBUG - 2014-06-22 20:50:02 --> Model Class Initialized
+DEBUG - 2014-06-22 20:50:02 --> Model Class Initialized
+INFO  - 2014-06-22 20:50:02 --> teachter getone|array (
+)
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:50:02 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:50:02 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:50:02 --> Final output sent to browser
+DEBUG - 2014-06-22 20:50:02 --> Total execution time: 0.0261
+DEBUG - 2014-06-22 20:50:52 --> Config Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Hooks Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Utf8 Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> UTF-8 Support Enabled
+DEBUG - 2014-06-22 20:50:52 --> URI Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Router Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Output Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Security Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Input Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Global POST and COOKIE data sanitized
+DEBUG - 2014-06-22 20:50:52 --> Language Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Loader Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Controller Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Database Driver Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Helper loaded: url_helper
+DEBUG - 2014-06-22 20:50:52 --> Session Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Helper loaded: string_helper
+DEBUG - 2014-06-22 20:50:52 --> Session routines successfully run
+DEBUG - 2014-06-22 20:50:52 --> Model Class Initialized
+DEBUG - 2014-06-22 20:50:52 --> Model Class Initialized
+INFO  - 2014-06-22 20:50:52 --> teachter getone|array (
+)
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: teacher_no /home/shengyi/www/easyss/application/views/teacher_add_v.php 88
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: teacher_name /home/shengyi/www/easyss/application/views/teacher_add_v.php 93
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 106
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: birthday /home/shengyi/www/easyss/application/views/teacher_add_v.php 118
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: telephone /home/shengyi/www/easyss/application/views/teacher_add_v.php 123
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: email /home/shengyi/www/easyss/application/views/teacher_add_v.php 128
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: system_user /home/shengyi/www/easyss/application/views/teacher_add_v.php 134
+ERROR - 2014-06-22 20:50:52 --> Severity: Notice  --> Undefined variable: remarks /home/shengyi/www/easyss/application/views/teacher_add_v.php 140
+DEBUG - 2014-06-22 20:50:52 --> File loaded: application/views/teacher_add_v.php
+DEBUG - 2014-06-22 20:50:52 --> Final output sent to browser
+DEBUG - 2014-06-22 20:50:52 --> Total execution time: 0.0309

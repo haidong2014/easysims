@@ -40,17 +40,25 @@ class Teacher_c extends MY_Controller {
      redirect("teacher_c");
 	  
 	}
-	public function upd_teacher_init(){
+	public function upd_teacher_init($teacher_id = null){
+	  
 	  $data = array();
-	  $teacher_id = $this->input->post('teacher_id');
+	  if(empty($teacher_id)){
+        $teacher_id = $this->input->get('teacher_id');
+        if(empty($teacher_id)){
+          $teacher_id = $this->input->post('teacher_id');
+        }
+     }
+	 
 	  $teacherData = $this->teacher_m->getOne($teacher_id);
+
 	  $this->load->view('teacher_add_v',$teacherData);
 	}
     public function upd_teacher($teacher_id = null){
       if(empty($teacher_id)){
         $teacher_id = $this->input->post('teacher_id');
       }
-      
+      $teacher_no = $this->input->post('teacher_no');
       $teacher_name = $this->input->post('$eacher_name');
       $sex = $this->input->post('sex');
       $birthday = $this->input->post('birthday');
@@ -61,8 +69,30 @@ class Teacher_c extends MY_Controller {
       $system_user = $this->input->post('system_user');
       $remarks = $this->input->post('remarks');
           
-      $this->teacher_m->updateOne($teacher_name, $sex,$birthday, $property, $course, 
-          $telephone, $email, $system_user, $remarks);
+      $this->teacher_m->updateOne($teacher_no, $teacher_name, $sex,$birthday, $property, $course, 
+          $telephone, $email, $system_user, $remarks,$teacher_id);
+      redirect("teacher_c");
+	}
+public function view_teacher_init($teacher_id = null){
+	  
+	  $data = array();
+	  if(empty($teacher_id)){
+        $teacher_id = $this->input->get('teacher_id');
+        if(empty($teacher_id)){
+          $teacher_id = $this->input->post('teacher_id');
+        }
+     }
+	 
+	  $teacherData = $this->teacher_m->getOne($teacher_id);
+
+	  $this->load->view('teacher_view_v',$teacherData);
+	}
+   public function delete_teacher($teacher_id = null){
+      if(empty($teacher_id)){
+        $teacher_id = $this->input->post('teacher_id');
+      }
+      
+      $this->teacher_m->deleteOne($teacher_id);
       redirect("teacher_c");
 	}
 }
