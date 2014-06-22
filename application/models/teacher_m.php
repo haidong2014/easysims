@@ -16,8 +16,9 @@ class Teacher_m extends MY_Model
        $query =  $this->db->get($this->table_name);
        return $query->result_array();
     }
-    public function addOne($teacher_name, $sex,$birthday, $property, $course, 
+    public function addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks){
+      $this->db->set( 'teacher_no',		$teacher_no );
       $this->db->set( 'teacher_name',		$teacher_name );
 		  $this->db->set( 'sex',	$sex );
 		  $this->db->set( 'birthday',		$birthday );

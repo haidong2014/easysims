@@ -23,8 +23,9 @@ class Teacher_c extends MY_Controller {
 	  $this->load->view('teacher_add_v',$data);
 	}
 	public function add_teacher(){
-	  log_message('info','add teacher '.var_export($_POST,true));
-	  $teacher_name = $this->input->post('$eacher_name');
+	   log_message('info','add teacher '.var_export($_POST,true));
+	   $teacher_no = $this->input->post('teacher_no');
+	   $teacher_name = $this->input->post('teacher_name');
 	   $sex = $this->input->post('sex');
 	   $birthday = $this->input->post('birthday');
 	   $property = $this->input->post('property');
@@ -34,8 +35,9 @@ class Teacher_c extends MY_Controller {
      $system_user = $this->input->post('system_user');
      $remarks = $this->input->post('remarks');
           
-	  $this->teacher_m->addOne($teacher_name, $sex,$birthday, $property, $course, 
+	   $this->teacher_m->addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks);
+     redirect("teacher_c");
 	  
 	}
 	public function upd_teacher_init(){
@@ -44,20 +46,23 @@ class Teacher_c extends MY_Controller {
 	  $teacherData = $this->teacher_m->getOne($teacher_id);
 	  $this->load->view('teacher_add_v',$teacherData);
 	}
-    public function upd_teacher(){
-      $teacher_id = $this->input->post('teacher_id');
-	  $teacher_name = $this->input->post('$eacher_name');
-	   $sex = $this->input->post('sex');
-	   $birthday = $this->input->post('birthday');
-	   $property = $this->input->post('property');
-	   $course = $this->input->post('course');
-       $telephone = $this->input->post('telephone');
-       $email = $this->input->post('email');
-       $system_user = $this->input->post('system_user');
-       $remarks = $this->input->post('remarks');
+    public function upd_teacher($teacher_id = null){
+      if(empty($teacher_id)){
+        $teacher_id = $this->input->post('teacher_id');
+      }
+      
+      $teacher_name = $this->input->post('$eacher_name');
+      $sex = $this->input->post('sex');
+      $birthday = $this->input->post('birthday');
+      $property = $this->input->post('property');
+      $course = $this->input->post('course');
+      $telephone = $this->input->post('telephone');
+      $email = $this->input->post('email');
+      $system_user = $this->input->post('system_user');
+      $remarks = $this->input->post('remarks');
           
-	    $this->teacher_m->updateOne($teacher_name, $sex,$birthday, $property, $course, 
+      $this->teacher_m->updateOne($teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks);
-	  
+      redirect("teacher_c");
 	}
 }
