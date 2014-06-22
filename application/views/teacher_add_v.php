@@ -84,8 +84,8 @@ if(!empty($teacher_id)){
 </head>
 <body>
 <div id="pageloading"></div>  
-	<a href="<?php echo $action;?>">教师一览</a>&nbsp>&nbsp
-    <form name="form" method="post" action="<?php echo SITE_URL;?>/teacher_c/add_teacher" id="form" action="">
+	<a href="<?php echo SITE_URL;?>/teacher_c">教师一览</a>&nbsp>&nbsp
+    <form name="form" method="post" action="<?php echo $action;?>" id="form" action="">
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
 		    <tr>

@@ -44,7 +44,7 @@ class Teacher_m extends MY_Model
     	 return $teacher;
     }
     
-    public function updateOne($teacher_name, $sex,$birthday, $property, 
+    public function updateOne($teacher_no,$teacher_name, $sex,$birthday, $property, 
         $course, $telephone, $email, $system_user, $remarks,$teacher_id){
           log_message('info', "ddd".$teacher_name."|".$sex."|".$birthday."|".$property."|".
         $course."|".$telephone."|".$email."|".$system_user."|".$remarks."|".$teacher_id);
