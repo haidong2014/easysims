@@ -40,7 +40,7 @@ if(!empty($teacher_id)){
         {
             $.metadata.setType("attr", "validate");
             var v = $("form").validate({
-                debug: true,
+                debug: false,
                 errorPlacement: function (lable, element)
                 {
                     if (element.hasClass("l-textarea"))

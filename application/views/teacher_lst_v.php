@@ -4,6 +4,14 @@
 function goreg(){
 	location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
 }
+function delTeacher(parm){
+	$.ligerDialog.confirm('确定要删除这名老师吗？', function (yes)
+  {
+      if(yes){
+          location.href = parm;
+      }
+  });
+}
 </script>
 <div id="searchbar">
     编号或姓名：<input id="txtKey" type="text" />
@@ -37,7 +45,7 @@ function goreg(){
 		
 		<a href="<?php echo SITE_URL;?>/teacher_c/view_teacher_init/<?php echo $value['teacher_id']?>">查看</a> | 
 		<a href="<?php echo SITE_URL;?>/teacher_c/upd_teacher_init/<?php echo $value['teacher_id']?>">编辑</a> | 
-		<a href="<?php echo SITE_URL;?>/teacher_c/delete_teacher/<?php echo $value['teacher_id']?>">删除</a>
+		<a href="#" onclick="delTeacher('<?php echo SITE_URL;?>/teacher_c/delete_teacher/<?php echo $value['teacher_id']?>')">删除</a>
 		</td>
 	  </tr>
 	  <?php }?>
