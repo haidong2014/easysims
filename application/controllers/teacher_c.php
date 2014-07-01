@@ -13,9 +13,14 @@ class Teacher_c extends MY_Controller {
     log_message('info', "####user".var_export($user,true));
 
     $teacherData = $this->teacher_m->getList();
-    
+    foreach($teacherData as &$data){
+      $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_no']."\">查看</a> |".
+    "<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_no']."\">编辑</a> |".
+    "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_no']."')\">删除</a>";
+      log_message('info', "####href".$data['opt']);
+    }
     $data['teacherData'] = $teacherData;
-    $data['teachersData'] = json_encode(array('Rows'=>$teacherData));
+    $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
     
 		$this->load->view('teacher_lst_v',$data);
 	}

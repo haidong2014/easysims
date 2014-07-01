@@ -14,7 +14,7 @@ $(function () {
         { display: '任课科目', name: 'course', align: 'left' },
         { display: '手机号码', name: 'telephone', align: 'left' },
         { display: '电子邮件', name: 'email', align: 'left' },
-        { display: '操作', name: 'system_user' }
+        { display: '操作', name: 'opt' }
         ],  
         pageSize:10,
         where : f_getWhere(),
