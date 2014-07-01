@@ -15,6 +15,7 @@ class Teacher_c extends MY_Controller {
     $teacherData = $this->teacher_m->getList();
     
     $data['teacherData'] = $teacherData;
+    $data['teachersData'] = json_encode(array('Rows'=>$teacherData));
     
 		$this->load->view('teacher_lst_v',$data);
 	}
