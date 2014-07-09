@@ -59,6 +59,9 @@
                 alert(v.element($("#txtName")));
             });
         });  
+		function returnPage() {
+			location.href = "user_lst.html";
+		}
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -71,7 +74,6 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>  
-	<a href="user_lst.html">>用户一览<a>
     <form name="form" method="post" action="" id="form">
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
@@ -113,7 +115,7 @@
         </table>
 		<br />
 		<input type="submit" value="提交" class="l-button l-button-submit" /> 
-		<input type="reset" value="重置" class="l-button l-button-reset"/>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     </form>
     <div style="display:none"></div>
 </body>
