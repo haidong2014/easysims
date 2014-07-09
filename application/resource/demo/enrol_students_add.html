@@ -58,7 +58,11 @@
             {
                 alert(v.element($("#txtName")));
             });
-        });  
+        });
+
+		function returnPage() {
+			location.href = "enrol_students_lst.html";
+		}
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -71,7 +75,6 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>  
-	<a href="enrol_students_course.html">课程一览<a>&nbsp>&nbsp<a href="enrol_students_class.html">班级一览</a>&nbsp>&nbsp<a href="enrol_students_lst.html">学生一览</a>&nbsp>&nbsp
     <form name="form1" method="post" action="" id="form1">
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
@@ -174,7 +177,7 @@
         </table>
 		<br />
 		<input type="submit" value="提交" class="l-button l-button-submit" /> 
-		<input type="reset" value="重置" class="l-button l-button-reset"/>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     </form>
     <div style="display:none"></div>
 </body>
