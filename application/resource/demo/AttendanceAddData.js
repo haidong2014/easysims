@@ -1,0 +1,6 @@
+﻿var AttendanceAddData = 
+{Rows:
+[
+{"StudentNo":"NO00001","StudentName":"张三","Telephone":"13800000000","AttendanceStatus":"<input id='rbtnl_0' type='radio' name='rbtnl' value='1' checked='checked' /><label for='rbtnl_0'>出勤</label>&nbsp<input id='rbtnl_1' type='radio' name='rbtnl' value='2' />&nbsp<label for='rbtnl_1'>迟到</label><input id='rbtnl_2' type='radio' name='rbtnl' value='3' />&nbsp<label for='rbtnl_2'>请假</label><input id='rbtnl_3' type='radio' name='rbtnl' value='4' />&nbsp<label for='rbtnl_3'>旷课</label>"},
+{"StudentNo":"NO00002","StudentName":"李四","Telephone":"13800000000","AttendanceStatus":"<input id='rbtn2_0' type='radio' name='rbtn2' value='1' checked='checked' /><label for='rbtnl_0'>出勤</label>&nbsp<input id='rbtn2_1' type='radio' name='rbtn2' value='2' />&nbsp<label for='rbtn2_1'>迟到</label><input id='rbtn2_2' type='radio' name='rbtn2' value='3' />&nbsp<label for='rbtn2_2'>请假</label><input id='rbtn2_3' type='radio' name='rbtn2' value='4' />&nbsp<label for='rbtn2_3'>旷课</label>"}
+],Total:2};
