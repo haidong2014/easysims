@@ -11,5 +11,5 @@
 {"SubjectNo":"S000109","SubjectName":"渲染高级","Period":"2周","Operation":"查看 | 编辑 | 删除"},
 {"SubjectNo":"S000110","SubjectName":"动画（3阶段）","Period":"2周","Operation":"查看 | 编辑 | 删除"},
 {"SubjectNo":"S000111","SubjectName":"后期（3阶段）","Period":"2周","Operation":"查看 | 编辑 | 删除"},
-{"SubjectNo":"S000112","SubjectName":"实训","Period":"8周","Operation":"查看 | 编辑 | 删除"},
-],Total:5};
+{"SubjectNo":"S000112","SubjectName":"实训","Period":"8周","Operation":"查看 | 编辑 | 删除"}
+],Total:12};
