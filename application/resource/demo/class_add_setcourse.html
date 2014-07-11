@@ -2,63 +2,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>班级课程详细设定</title>
-    <link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" /> 
-    <link href="lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" /> 
+    <link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <script src="lib/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="lib/ligerUI/js/core/base.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerForm.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerDateEditor.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerButton.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerRadio.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerSpinner.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerTextBox.js" type="text/javascript"></script> 
-    <script src="lib/ligerUI/js/plugins/ligerTip.js" type="text/javascript"></script>
-    <script src="lib/jquery-validation/jquery.validate.min.js" type="text/javascript"></script> 
-    <script src="lib/jquery-validation/jquery.metadata.js" type="text/javascript"></script>
-    <script src="lib/jquery-validation/messages_cn.js" type="text/javascript"></script>
-
+    <script src="lib/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script> 
+    <script src="SetCourseData.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var eee;
-        $(function ()
+        var grid = null;
+        $(function () {
+            grid = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '科目编号', name: 'SubjectNo', align: 'left', width: 80 },
+                { display: '科目名称', name: 'SubjectName', align: 'left', width: 200 },
+                { display: '周期', name: 'Period', align: 'left', width: 80 },
+                { display: '开始日期', name: 'StartDate', align: 'left', width: 120 },
+                { display: '结束日期', name: 'EndDate', align: 'left', width: 120 },
+                { display: '任课教师', name: 'Teacher', align: 'left', width: 120 }
+                ],  
+                pageSize:10,
+                where : f_getWhere(),
+                data: $.extend(true,{},SetCourseData), 
+                width: '80%',height:'80%'
+            });
+
+            $("#pageloading").hide();
+        });
+        function f_search()
         {
-            $.metadata.setType("attr", "validate");
-            var v = $("form").validate({
-                debug: true,
-                errorPlacement: function (lable, element)
-                {
-                    if (element.hasClass("l-textarea"))
-                    {
-                        element.ligerTip({ content: lable.html(), target: element[0] }); 
-                    }
-                    else if (element.hasClass("l-text-field"))
-                    {
-                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
-                    }
-                    else
-                    {
-                        lable.appendTo(element.parents("td:first").next("td"));
-                    }
-                },
-                success: function (lable)
-                {
-                    lable.ligerHideTip();
-                    lable.remove();
-                },
-                submitHandler: function ()
-                {
-                    $("form .l-text,.l-textarea").ligerHideTip();
-                    alert("Submitted!")
-                }
-            });
-            $("form").ligerForm();
-            $(".l-button-test").click(function ()
+            grid.options.data = $.extend(true, {}, CustomersData);
+            grid.loadData(f_getWhere());
+        }
+        function f_getWhere()
+        {
+            if (!grid) return null;
+            var clause = function (rowdata, rowindex)
             {
-                alert(v.element($("#txtName")));
-            });
-        });  
+                var key = $("#txtKey").val();
+                return rowdata.CustomerID.indexOf(key) > -1;
+            };
+            return clause; 
+        }
+		function returnPage() {
+			location.href = "class_add.html";
 		}
     </script>
     <style type="text/css">
@@ -72,198 +57,13 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>  
-    <form name="form" method="post" action="" id="form1">
-		<table width="800" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" method="post" action="teacher_add.html">
-		  <tr style="background:blue;"  >
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>科目编号</font></th>
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>科目名称</font></th>
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>周期</font></th>
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>开始日期</font></th>
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>结束日期</font></th>
-			<th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>任课教师</font></th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000101</th>
-			<th height="20" scope="row">基础</th>
-			<th height="20" scope="row">3周</th>
-			<th height="20" scope="row"><input name="txtStartDate01" type="text" id="txtStartDate01" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate01" type="text" id="txtEndDate01" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher1" id="ddlTeacher1" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000102</th>
-			<th height="20" scope="row">模型（2阶段）</th>
-			<th height="20" scope="row">3周</th>
-			<th height="20" scope="row"><input name="txtStartDate02" type="text" id="txtStartDate02" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate02" type="text" id="txtEndDate02" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher2" id="ddlTeacher2" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000103</th>
-			<th height="20" scope="row">室内（2阶段）</th>
-			<th height="20" scope="row">3周</th>
-			<th height="20" scope="row"><input name="txtStartDate03" type="text" id="txtStartDate03" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate03" type="text" id="txtEndDate03" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher3" id="ddlTeacher3" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000104</th>
-			<th height="20" scope="row">室外（2阶段）</th>
-			<th height="20" scope="row">3周</th>
-			<th height="20" scope="row"><input name="txtStartDate04" type="text" id="txtStartDate04" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate04" type="text" id="txtEndDate04" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher4" id="ddlTeacher4" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000105</th>
-			<th height="20" scope="row">后期（2阶段）</th>
-			<th height="20" scope="row">3周</th>
-			<th height="20" scope="row"><input name="txtStartDate05" type="text" id="txtStartDate05" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate05" type="text" id="txtEndDate05" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher5" id="ddlTeacher5" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000106</th>
-			<th height="20" scope="row">动画及项目</th>
-			<th height="20" scope="row">4周</th>
-			<th height="20" scope="row"><input name="txtStartDate06" type="text" id="txtStartDate06" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate06" type="text" id="txtEndDate06" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher6" id="ddlTeacher6" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000107</th>
-			<th height="20" scope="row">模型高级</th>
-			<th height="20" scope="row">2周</th>
-			<th height="20" scope="row"><input name="txtStartDate07" type="text" id="txtStartDate07" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate07" type="text" id="txtEndDate07" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher7" id="ddlTeacher7" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000108</th>
-			<th height="20" scope="row">室内高级</th>
-			<th height="20" scope="row">2周</th>
-			<th height="20" scope="row"><input name="txtStartDate08" type="text" id="txtStartDate08" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate08" type="text" id="txtEndDate08" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher8" id="ddlTeacher8" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000109</th>
-			<th height="20" scope="row">渲染高级</th>
-			<th height="20" scope="row">2周</th>
-			<th height="20" scope="row"><input name="txtStartDate09" type="text" id="txtStartDate09" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate09" type="text" id="txtEndDate09" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher9" id="ddlTeacher9" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000110</th>
-			<th height="20" scope="row">动画（3阶段）</th>
-			<th height="20" scope="row">2周</th>
-			<th height="20" scope="row"><input name="txtStartDate10" type="text" id="txtStartDate10" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate10" type="text" id="txtEndDate10" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher10" id="ddlTeacher10" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000111</th>
-			<th height="20" scope="row">后期（3阶段）</th>
-			<th height="20" scope="row">2周</th>
-			<th height="20" scope="row"><input name="txtStartDate11" type="text" id="txtStartDate11" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate11" type="text" id="txtEndDate11" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher11" id="ddlTeacher11" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		  <tr>
-			<th height="20" scope="row">S000112</th>
-			<th height="20" scope="row">实训</th>
-			<th height="20" scope="row">8周</th>
-			<th height="20" scope="row"><input name="txtStartDate12" type="text" id="txtStartDate12" ltype="date" /></th>
-			<th height="20" scope="row"><input name="txtEndDate12" type="text" id="txtEndDate12" ltype="date" /></th>
-			<th height="20" scope="row">
-				<select name="ddlTeacher12" id="ddlTeacher12" ltype="select">
-						<option value="1">张三</option>
-						<option value="2">李四</option>
-						<option value="3">王二麻子</option>
-						<option value="4">小淘气</option>
-				</select>
-			</th>
-		  </tr>
-		</table>
-    </form>
-    <div style="display:none"></div>
+<form name="form" method="post" action="" id="form">
+	<br />
+	<div id="maingrid" style="margin:0; padding:0"></div>
+	<br />
+	<input type="submit" value="保存" class="l-button l-button-submit" /> 
+    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+</form>
+<div style="display:none"></div>
 </body>
 </html>
