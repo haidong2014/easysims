@@ -44,13 +44,9 @@
             };
             return clause; 
         }
-        function regist_am_click()
+		function regist_click()
         {
-			location.href = "attendance_am_add.html";
-        }
-		function regist_pm_click()
-        {
-			location.href = "attendance_pm_add.html";
+			location.href = "attendance_add.html";
         }
 
         function returnPage() {
@@ -63,8 +59,7 @@
 <div id="searchbar">
     编号或姓名：<input id="txtKey" type="text" />
     <input id="button" type="button" value=" 查 询 " onclick="f_search()" />
-	<input id="regist" type="button" value="上午点名 " onclick="regist_am_click()" />
-	<input id="regist" type="button" value="下午点名 " onclick="regist_pm_click()" />
+	<input id="regist" type="button" value=" 点 名 " onclick="regist_click()" />
     <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
 </div>
 <br>
