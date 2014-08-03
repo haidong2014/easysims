@@ -133,9 +133,23 @@
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">专业:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtSpecialty" type="text" id="txtSpecialty" ltype="text" /></td>
+                <td align="right" class="l-table-edit-td">课程:</td>
+				<td align="left" class="l-table-edit-td">
+					<select name="ddlSpecialty" id="ddlSpecialty" ltype="select">
+						<option value="1">建筑动画课程信息</option>
+						<option value="2">室内设计课程信息</option>
+						<option value="3">影视动画课程信息</option>
+						<option value="4">影视后期课程信息</option>
+						<option value="5">影视坐标合作班课程信息</option>
+					</select>
+				</td>
                 <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">学费:</td>
+                <td align="left" class="l-table-edit-td">
+                    <input name="txtSchooling" type="text" id="txtSchooling" ltype='spinner' ligerui="{type:'int'}" />
+                </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">原籍</td>
@@ -172,11 +186,6 @@
                 <td align="left" class="l-table-edit-td"> 
                 <textarea cols="100" rows="4" class="l-textarea" id="purpose" style="width:400px"></textarea>
                 </td><td align="left"></td>
-            </tr>
-            <tr>
-                <td align="right" class="l-table-edit-td">培训课程:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtCourse" type="text" id="txtCourse" ltype="text" /></td>
-                <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">入学年度:</td>
@@ -223,7 +232,7 @@
                 </td><td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">毕业日期:</td>
+                <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
                     <input name="txtEndDate" type="text" id="txtEndDate" ltype="date" />
                 </td><td align="left"></td>
