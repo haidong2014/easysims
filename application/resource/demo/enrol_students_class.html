@@ -15,12 +15,15 @@
                 columns: [
                 { display: '班级编号', name: 'ClassNo', align: 'left', width: 80 },
                 { display: '班级名称', name: 'ClassName', align: 'left', width: 160 },
-                { display: '开始日期', name: 'StartDate', align:'left', width: 80 },
-                { display: '结束日期', name: 'EndDate',  align: 'left', width: 80 },
-                { display: '班主任', name: 'Teacher', align: 'left', width: 80 },
+                { display: '课程名称', name: 'CourseName', align: 'left', width: 160 },
+                { display: '开课日期', name: 'StartDate', align:'left', width: 80 },
+                { display: '结课日期', name: 'EndDate',  align: 'left', width: 80 },
+                { display: '班主任', name: 'Teacher', align: 'left', width: 60 },
                 { display: '教室', name: 'ClassRoom', align: 'left', width: 80 },
-                { display: '人数', name: 'Numbers', align: 'left', width: 80 },
-                { display: '状态', name: 'Status', align: 'left', width: 80 }
+                { display: '名额', name: 'Numbers', align: 'left', width: 60 },
+                { display: '学费', name: 'Schooling', align: 'left', width: 80 },
+                { display: '状态', name: 'Status', align: 'left', width: 60 },
+                { display: '备注', name: 'Remark', align: 'left', width: 220 }
                 ],  
                 pageSize:10,
                 where : f_getWhere(),

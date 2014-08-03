@@ -135,7 +135,7 @@
                 </td><td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">结束日期:</td>
+                <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
                     <input name="txtEndDate" type="text" id="txtEndDate" ltype="date" validate="{required:true}" />
                 </td><td align="left"></td>
@@ -172,20 +172,25 @@
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">预计人数:</td>
+                <td align="right" class="l-table-edit-td">名额:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtNumbers" type="text" id="txtNumbers" ltype='spinner' ligerui="{type:'int'}" value="2" class="required" validate="{digits:true,min:1,max:100}" />
+                    <input name="txtNumbers" type="text" id="txtNumbers" ltype='spinner' ligerui="{type:'int'}" class="required" validate="{digits:true,min:1,max:100}" />
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">费用:</td>
+                <td align="left" class="l-table-edit-td">
+                    <input name="txtSchooling" type="text" id="txtSchooling" ltype='spinner' ligerui="{type:'int'}" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">状态:</td>
                 <td align="left" class="l-table-edit-td">
 					<select name="ddlStatus" id="ddlStatus" ltype="select">
-						<option value="1">计划</option>
-						<option value="2">招生</option>
-						<option value="3">开课</option>
-						<option value="4">结业</option>
-						<option value="5">取消</option>
+						<option value="1">招生</option>
+						<option value="2">开课</option>
+						<option value="3">结课</option>
+						<option value="4">取消</option>
 					</select>
                 </td>
             </tr>
