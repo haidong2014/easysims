@@ -74,7 +74,7 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>  
-    <form name="form1" method="post" action="" id="form1">
+    <form name="form" method="post" action="" id="form">
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
 		    <tr>
@@ -87,7 +87,6 @@
                 <td align="left" class="l-table-edit-td"><input name="txtName" type="text" id="txtName" ltype="text" validate="{required:true,minlength:3,maxlength:10}" /></td>
                 <td align="left"></td>
             </tr>
-           
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">性别:</td>
                 <td align="left" class="l-table-edit-td">
@@ -98,6 +97,12 @@
                 <td align="right" class="l-table-edit-td">出生日期:</td>
                 <td align="left" class="l-table-edit-td">
                     <input name="txtBirthDate" type="text" id="txtBirthDate" ltype="date" validate="{required:true}" />
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">年龄:</td>
+                <td align="left" class="l-table-edit-td">
+                    <input name="txtAge" type="text" id="txtAge" ltype='spinner' ligerui="{type:'int'}" />
                 </td><td align="left"></td>
             </tr>
 			<tr>
@@ -117,7 +122,7 @@
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">毕业学校:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtGraduateSchool" type="text" id="txtGraduateSchool" ltype="text" /></td>
+                <td align="left" class="l-table-edit-td"><input name="txtGraduateSchool" type="text" id="txtGraduateSchool" ltype="text"/></td>
                 <td align="left"></td>
             </tr>
             <tr>
@@ -265,7 +270,7 @@
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">就业情况<br>跟踪备注:</td>
+                <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
                 <td align="left" class="l-table-edit-td"> 
                 <textarea cols="100" rows="4" class="l-textarea" id="follow" style="width:400px"></textarea>
                 </td><td align="left"></td>
