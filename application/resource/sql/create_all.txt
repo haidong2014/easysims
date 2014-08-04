@@ -64,22 +64,23 @@ CREATE TABLE IF NOT EXISTS `ss_group_function_relation` (
 
 DROP TABLE IF EXISTS `ss_teachers`;
 CREATE TABLE IF NOT EXISTS `ss_teachers` (
-  `teacher_id` int(11) NOT NULL AUTO_INCREMENT,
+  `teacher_no` varchar(10) NOT NULL,
   `teacher_name` varchar(30) NOT NULL,
   `sex` char(1) NULL,
   `birthday` char(10) NULL,
   `property` char(1) NULL,
   `course` varchar(20) NULL,
   `telephone` varchar(12) NULL,
-  `email` varchar(30) NULL,h
+  `email` varchar(30) NULL,
   `system_user` char(1) NULL,
   `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
+  `delete_flg` char(1) NULL DEFAULT '0',
   `insert_user` varchar(20) NULL DEFAULT 'system',
   `insert_time` timestamp NULL ,
   `update_user` varchar(20) NULL DEFAULT 'system',
   `update_time` timestamp NULL ,
-  PRIMARY KEY (`teacher_id`)
+  PRIMARY KEY (`teacher_no`),
+  KEY `teacher_name` (`teacher_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 DROP TABLE IF EXISTS `ss_course`;
