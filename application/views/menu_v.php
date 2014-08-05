@@ -57,7 +57,7 @@
     <div id="topmenu" class="l-topmenu">
     <div ><font color=white size="4">&nbsp&nbsp易用学生信息管理系统</font></div>
     <div class="l-topmenu-welcome">
-         <a href="" class="l-link2" target="_blank">退出</a>
+         <font color=white><?php echo $username;?></font>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="<?php echo SITE_URL;?>/login_c" class="l-link2">退出</a>
     </div>
     </div>
     <div id="layout" style="width:99.2%; margin:0 auto; margin-top:4px; ">
