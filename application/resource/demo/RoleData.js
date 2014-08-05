@@ -1,6 +1,11 @@
 ﻿var RoleData = 
 {Rows:
 [
-{"FunctionName":"招生信息输入查看"},
-{"FunctionName":"招生信息输入编辑"}
-],Total:2};
+{"FunctionName":"招生管理"},
+{"FunctionName":"学生管理"},
+{"FunctionName":"就业管理"},
+{"FunctionName":"高级查询"},
+{"FunctionName":"基础信息"},
+{"FunctionName":"用户权限"},
+{"FunctionName":"校长留言"}
+],Total:7};
