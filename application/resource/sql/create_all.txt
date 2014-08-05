@@ -1,250 +1,328 @@
-
-DROP TABLE IF EXISTS `ss_users`;
-CREATE TABLE IF NOT EXISTS `ss_users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(30) NOT NULL,
-  `password` char(32) NOT NULL DEFAULT '1a1dc91c907325c69271ddf0c944bc72',
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `ss_user_groups`;
-CREATE TABLE IF NOT EXISTS `ss_user_groups` (
-  `group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(20) NOT NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `ss_user_group_relation`;
-CREATE TABLE IF NOT EXISTS `ss_user_group_relation` (
-  `user_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`user_id`,`group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_functions`;
-CREATE TABLE IF NOT EXISTS `ss_functions` (
-  `function_id` int(11) NOT NULL AUTO_INCREMENT,
-  `function_name` varchar(20) NOT NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`function_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS `ss_group_function_relation`;
-CREATE TABLE IF NOT EXISTS `ss_group_function_relation` (
-  `group_id` int(11) NOT NULL,
-  `function_id` int(11) NOT NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`group_id`,`function_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_teachers`;
-CREATE TABLE IF NOT EXISTS `ss_teachers` (
-  `teacher_no` varchar(10) NOT NULL,
-  `teacher_name` varchar(30) NOT NULL,
-  `sex` char(1) NULL,
-  `birthday` char(10) NULL,
-  `property` char(1) NULL,
-  `course` varchar(20) NULL,
-  `telephone` varchar(12) NULL,
-  `email` varchar(30) NULL,
-  `system_user` char(1) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` char(1) NULL DEFAULT '0',
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`teacher_no`),
-  KEY `teacher_name` (`teacher_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_course`;
-CREATE TABLE IF NOT EXISTS `ss_course` (
-  `course_id` varchar(10) NOT NULL,
-  `course_name` varchar(30) NOT NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`course_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_subject`;
-CREATE TABLE IF NOT EXISTS `ss_subject` (
-  `course_id` varchar(10) NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
-  `subject_name` varchar(30) NOT NULL,
-  `period` int(3) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL ,
-  PRIMARY KEY (`course_id`,`subject_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_class`;
-CREATE TABLE IF NOT EXISTS `ss_class` (
-  `class_id` varchar(10) NOT NULL,
-  `class_name` varchar(30) NOT NULL,
-  `start_date` char(10) NULL,
-  `end_date` char(10) NULL,
-  `teacher_id` varchar(10) NULL,
-  `class_room` varchar(30) NULL,
-  `numbers` int(3) NULL,
-  `status` varchar(10) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`class_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_class_course`;
-CREATE TABLE IF NOT EXISTS `ss_class_course` (
-  `class_id` varchar(10) NOT NULL,
-  `course_id` varchar(10) NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
-  `start_date` char(10) NULL,
-  `end_date` char(10) NULL,
-  `teacher_id` varchar(10) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`class_id`,`course_id`,`subject_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_student`;
-CREATE TABLE IF NOT EXISTS `ss_student` (
-  `student_id` varchar(10) NOT NULL,
-  `student_name` varchar(30) NOT NULL,
-  `sex` char(1) NULL,
-  `birthday` char(10) NULL,
-  `id_card` char(18) NULL,
-  `contact_way` varchar(20) NULL,
-  `parent_phone` varchar(12) NULL,
-  `system_user` char(1) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_student_others`;
-CREATE TABLE IF NOT EXISTS `ss_student_others` (
-  `student_id` varchar(10) NOT NULL,
-  `graduate` varchar(30) NOT NULL,
-  `specialty` varchar(30) NOT NULL,
-  `know_school` varchar(200) NOT NULL,
-  `know_trade` varchar(200) NOT NULL,
-  `preference` varchar(200) NOT NULL,
-  `software_base` varchar(200) NOT NULL,
-  `purpose` varchar(200) NOT NULL,
-  `follow` varchar(200) NOT NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_attendance`;
-CREATE TABLE IF NOT EXISTS `ss_attendance` (
-  `today` char(10) NOT NULL,
-  `class_id` varchar(10) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  `status` char(1) NULL ,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`today`,`class_id`,`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_evaluation`;
-CREATE TABLE IF NOT EXISTS `ss_evaluation` (
-  `class_id` varchar(10) NOT NULL,
-  `course_id` varchar(10) NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
-  `teacher_id` varchar(10) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  `scores` int(3) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`teacher_id`,`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_works`;
-CREATE TABLE IF NOT EXISTS `ss_works` (
-  `class_id` varchar(10) NOT NULL,
-  `course_id` varchar(10) NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
-  `teacher_id` varchar(10) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  `path` varchar(100) NOT NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`teacher_id`,`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
-
-DROP TABLE IF EXISTS `ss_works_evaluation`;
-CREATE TABLE IF NOT EXISTS `ss_works_evaluation` (
-  `class_id` varchar(10) NOT NULL,
-  `course_id` varchar(10) NOT NULL,
-  `subject_id` varchar(10) NOT NULL,
-  `teacher_id` varchar(10) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  `scores` int(3) NULL,
-  `remarks` varchar(100) NULL,
-  `delete_flg` tinyint(1) NULL DEFAULT 0,
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL ,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp  NULL ,
-  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`teacher_id`,`student_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+		
+DROP TABLE IF EXISTS `ss_users`;		
+CREATE TABLE IF NOT EXISTS `ss_users` (		
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,		
+  `user_name` varchar(30) NOT NULL,		
+  `password` char(32) NOT NULL DEFAULT '1a1dc91c907325c69271ddf0c944bc72',		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`user_id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+		
+DROP TABLE IF EXISTS `ss_roles`;		
+CREATE TABLE IF NOT EXISTS `ss_roles` (		
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,		
+  `role_name` varchar(20) NOT NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`role_id`)		
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+		
+DROP TABLE IF EXISTS `ss_users_roles_relation`;		
+CREATE TABLE IF NOT EXISTS `ss_user_group_relation` (		
+  `user_id` int(11) NOT NULL,		
+  `role_id` int(11) NOT NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`user_id`,`role_id`)		
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_functions`;		
+CREATE TABLE IF NOT EXISTS `ss_functions` (		
+  `function_id` int(11) NOT NULL AUTO_INCREMENT,		
+  `function_name` varchar(20) NOT NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`function_id`)		
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+		
+DROP TABLE IF EXISTS `ss_roles_functions_relation`;		
+CREATE TABLE IF NOT EXISTS `ss_roles_functions_relation` (		
+  `role_id` int(11) NOT NULL,		
+  `function_id` int(11) NOT NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`role_id`,`function_id`)		
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_teachers`;		
+CREATE TABLE IF NOT EXISTS `ss_teachers` (		
+  `teacher_no` varchar(10) NOT NULL,		
+  `teacher_name` varchar(30) NOT NULL,		
+  `sex` char(1) NULL,		
+  `birthday` char(10) NULL,		
+  `property` char(1) NULL,		
+  `course` varchar(20) NULL,		
+  `telephone` varchar(12) NULL,		
+  `email` varchar(30) NULL,		
+  `system_user` char(1) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`teacher_no`),		
+  KEY `teacher_name` (`teacher_name`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_course`;		
+CREATE TABLE IF NOT EXISTS `ss_course` (		
+  `course_no` varchar(10) NOT NULL,		
+  `course_name` varchar(30) NOT NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`course_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_subject`;		
+CREATE TABLE IF NOT EXISTS `ss_subject` (		
+  `course_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `subject_name` varchar(30) NOT NULL,		
+  `period` int(3) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp NULL,		
+  PRIMARY KEY (`course_no`,`subject_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_class`;		
+CREATE TABLE IF NOT EXISTS `ss_class` (		
+  `class_no` varchar(10) NOT NULL,		
+  `class_name` varchar(30) NOT NULL,		
+  `start_year` char(4) NULL,		
+  `start_month` char(2) NULL,		
+  `start_date` char(10) NULL,		
+  `end_date` char(10) NULL,		
+  `course_no` varchar(10) NULL,		
+  `teacher_no` varchar(10) NULL,		
+  `class_room` varchar(30) NULL,		
+  `numbers` int(3) NULL,		
+  `cost` int(5) NULL,		
+  `status` varchar(10) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_class_course`;		
+CREATE TABLE IF NOT EXISTS `ss_class_course` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `start_date` char(10) NULL,		
+  `end_date` char(10) NULL,		
+  `teacher_no` varchar(10) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_student`;		
+CREATE TABLE IF NOT EXISTS `ss_student` (		
+  `student_no` varchar(10) NOT NULL,		
+  `student_name` varchar(30) NOT NULL,		
+  `sex` char(1) NULL,		
+  `birthday` char(10) NULL,		
+  `age` char(2) NULL,		
+  `id_card` char(18) NULL,		
+  `contact_way` varchar(20) NULL,		
+  `parent_phone` varchar(12) NULL,		
+  `course_no` varchar(10) NULL,		
+  `class_no` varchar(10) NULL,		
+  `cost` int(5) NULL,		
+  `start_year` char(4) NULL,		
+  `start_month` char(2) NULL,		
+  `start_date` char(10) NULL,		
+  `end_date` char(10) NULL,		
+  `attendance` varchar(3) NULL,		
+  `system_user` char(1) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`student_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_student_others`;		
+CREATE TABLE IF NOT EXISTS `ss_student_others` (		
+  `student_no` varchar(10) NOT NULL,		
+  `graduate_school` varchar(30) NOT NULL,		
+  `graduate` varchar(1) NOT NULL,		
+  `ancestralhome` varchar(200) NOT NULL,		
+  `know_school` varchar(200) NOT NULL,		
+  `know_trade` varchar(200) NOT NULL,		
+  `preference` varchar(200) NOT NULL,		
+  `software_base` varchar(200) NOT NULL,		
+  `purpose` varchar(200) NOT NULL,		
+  `follow_city` varchar(200) NOT NULL,		
+  `follow_company` varchar(200) NOT NULL,		
+  `follow_salary` varchar(200) NOT NULL,		
+  `follow_position` varchar(200) NOT NULL,		
+  `follow_remarks` varchar(200) NOT NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`student_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_attendance`;		
+CREATE TABLE IF NOT EXISTS `ss_attendance` (		
+  `class_no` varchar(10) NOT NULL,		
+  `student_no` varchar(10) NOT NULL,		
+  `today` char(10) NOT NULL,		
+  `ampm` char(1) NULL ,		
+  `ampm_status` char(1) NULL ,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`today`,`class_no`,`student_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_works`;		
+CREATE TABLE IF NOT EXISTS `ss_works` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `student_no` varchar(10) NOT NULL,		
+  `works_no` varchar(32) NOT NULL,		
+  `works_name` varchar(50) NOT NULL,		
+  `path_name` varchar(100) NOT NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`,`student_no`,`works_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_works_evaluation`;		
+CREATE TABLE IF NOT EXISTS `ss_works_evaluation` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `student_no` varchar(10) NOT NULL,		
+  `works_no` varchar(32) NOT NULL,		
+  `scores` int(3) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`,`student_no`,`works_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_student_evaluation`;		
+CREATE TABLE IF NOT EXISTS `ss_student_evaluation` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `student_no` varchar(10) NOT NULL,		
+  `a_scores` int(3) NULL,		
+  `b_scores` int(3) NULL,		
+  `c_scores` int(3) NULL,		
+  `d_scores` int(3) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`,`student_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_teacher_evaluation`;		
+CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `teacher_no` varchar(10) NOT NULL,		
+  `scores` int(3) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`,`teacher_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_teacher_evaluation_others`;		
+CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation_others` (		
+  `class_no` varchar(10) NOT NULL,		
+  `subject_no` varchar(10) NOT NULL,		
+  `teacher_no` varchar(10) NOT NULL,		
+  `student_no` varchar(10) NOT NULL,		
+  `others_no` varchar(10) NOT NULL,		
+  `scores` int(3) NULL,		
+  `remarks` varchar(100) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`class_no`,`subject_no`,`teacher_no`,`student_no`,`others_no`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_code`;		
+CREATE TABLE IF NOT EXISTS `ss_code` (		
+  `code` varchar(10) NOT NULL,		
+  `code_no` varchar(10) NOT NULL,		
+  `code_name` varchar(10) NOT NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`code`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+		
+DROP TABLE IF EXISTS `ss_message`;		
+CREATE TABLE IF NOT EXISTS `ss_message` (		
+  `message_id` int(11) NOT NULL AUTO_INCREMENT,		
+  `message_date` char(10) NOT NULL,		
+  `message_user` varchar(30) NOT NULL,		
+  `message_title` varchar(20) NOT NULL,		
+  `message_content` varchar(200) NOT NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`message_id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
