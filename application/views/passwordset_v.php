@@ -15,36 +15,36 @@
             $("#layout1").ligerLayout({ leftWidth: 190, height: '100%',heightDiff:-34,space:4 });
             $("#pageloading").hide();
             <?php if($errFlg==3){?>
-                     	  $.ligerDialog.error('错误的用户名或密码');
-          	<?php }?>
-          	<?php if($errFlg==99){?>
-                   	$.ligerDialog.success('设定成功');
-                   	window.setTimeout( function(){
-                   		location.href='<?php echo SITE_URL;?>/menu_c';
+                         $.ligerDialog.error('错误的用户名或密码');
+            <?php }?>
+            <?php if($errFlg==99){?>
+                     $.ligerDialog.success('设定成功');
+                     window.setTimeout( function(){
+                       location.href='<?php echo SITE_URL;?>/menu_c';
                     },2000);
             <?php }?>
         });
         function chkSubmit(){
             if(jQuery.trim(document.getElementById('txtUserId').value)==""){
-            	$.ligerDialog.error('请输入用户名');return false;
+              $.ligerDialog.error('请输入用户名');return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
-            	$.ligerDialog.error('请输入现密码');return false;
+              $.ligerDialog.error('请输入现密码');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPassword').value)==""){
-            	$.ligerDialog.error('请输入新密码');return false;
+              $.ligerDialog.error('请输入新密码');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPasswordRep').value)==""){
-            	$.ligerDialog.error('请输入密码确认');return false;
+              $.ligerDialog.error('请输入密码确认');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPasswordRep').value)
                     !=jQuery.trim(document.getElementById('txtNewPassword').value)){
-            	$.ligerDialog.error('新密码确认不一致');return false;
+              $.ligerDialog.error('新密码确认不一致');return false;
             }
             return true;
         }
         function rtnLogin(){
-        	location.href='<?php echo SITE_URL;?>/login_c';
+          location.href='<?php echo SITE_URL;?>/login_c';
         }
      </script>
 </head>
@@ -52,11 +52,11 @@
     <div id="pageloading"></div>
     <div id="topmenu" class="l-topmenu"></div>
     <div id="layout1" style="width:99.2%; margin:0 auto; margin-top:4px; ">
-	    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+      <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
         <table width="210" height="130" border="0" align="center" cellpadding="2" cellspacing="0">
             <form name="passwordset" method="post" action="<?php echo SITE_URL;?>/passwordset_c/resetPwd" id="passwordset">
-			    <tr>
-                	<td align="right" class="l-table-edit-td">用户名:</td>
+          <tr>
+                  <td align="right" class="l-table-edit-td">用户名:</td>
                     <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUsername;?>" /></td>
                 </tr>
                 <tr>
@@ -71,17 +71,17 @@
                    <td align="right" class="l-table-edit-td">密码确认:</td>
                    <td align="left" class="l-table-edit-td"><input name="txtNewPasswordRep" type="password" style="width:130px;" id="txtNewPasswordRep"/></td>
                 </tr>
-				<tr>
+        <tr>
                    <td colspan="2" align="center">
-                   	 <input type="submit" value="提交" id="login" class="l-button l-button" onclick="return chkSubmit();"/>
-                   	 <input type="button" value="返回" id="reset" class="l-button l-button" onclick="return rtnLogin();"/>
-		           </td>
+                      <input type="submit" value="提交" id="login" class="l-button l-button" onclick="return chkSubmit();"/>
+                      <input type="button" value="返回" id="reset" class="l-button l-button" onclick="return rtnLogin();"/>
+               </td>
                 </tr>
             </form>
-		</table>
+    </table>
     </div>
     <div style="height:32px; line-height:32px; text-align:center;">
-            Copyright © 2014 www.easytech.com
+            Copyright © 2014 www.crystaledu.com
     </div>
     <div style="display:none"></div>
 </body>
