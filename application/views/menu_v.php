@@ -96,7 +96,7 @@
             </div>
             <div title="校长留言">
                 <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage15','校长留言','message_lst.html')">校长留言</a>
+                <a class="l-link" href="javascript:f_addTab('listpage15','校长留言','<?php echo SITE_URL;?>/message_c')">校长留言</a>
             </div>
         </div>
         <div position="center" id="framecenter">
