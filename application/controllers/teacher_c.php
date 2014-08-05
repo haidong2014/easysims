@@ -19,6 +19,11 @@ class Teacher_c extends MY_Controller {
     "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_no']."')\">删除</a>";
       log_message('info', "####href".$data['opt']);
     }
+    foreach($teacherData as &$teacher){
+    	$now = date('Ymd');
+    	$birthday = $teacher["birthday"];
+    	$teacher["age"] = floor(($now-$birthday)/10000);
+    }
     $data['teacherData'] = $teacherData;
     $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
     
