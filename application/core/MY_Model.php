@@ -1,7 +1,7 @@
 <?php
 class MY_Model extends  CI_Model
 {
-    protected $CI = null; 
+    protected $CI = null;
 
     public function __construct()
     {
