@@ -10,8 +10,8 @@ class Message_c extends MY_Controller {
     {
         $data = array();
         $user = $this->session->all_userdata();
-        log_message('info', "####user".var_export($user,true));
-        log_message('info','search_message post:'.var_export($_POST,true));
+        log_message('info', "message_c index user:".var_export($user,true));
+        log_message('info', "message_c index post:".var_export($_POST,true));
 
         $year = array();
         $year[0] = array("id"=>"0","name"=>"2014","sel"=>"");
@@ -83,8 +83,8 @@ class Message_c extends MY_Controller {
     {
         $data = array();
         $user = $this->session->all_userdata();
-        log_message('info', "####user".var_export($user,true));
-        log_message('info','search_message post:'.var_export($_POST,true));
+        log_message('info', "message_c search_message user:".var_export($user,true));
+        log_message('info', "message_c search_message post:".var_export($_POST,true));
 
         $year = array();
         $year[0] = array("id"=>"0","name"=>"2014","sel"=>"");
@@ -138,7 +138,7 @@ class Message_c extends MY_Controller {
     }
 
     public function add_message(){
-        log_message('info','add_message post:'.var_export($_POST,true));
+        log_message('info', "message_c add_message post:".var_export($_POST,true));
 
         $data = array();
         $username = $this->session->userdata('user_name');
