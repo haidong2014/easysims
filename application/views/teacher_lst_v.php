@@ -9,7 +9,7 @@ $(function () {
         { display: '教师编号', name: 'teacher_no', align: 'left', width: 80 },
         { display: '教师姓名', name: 'teacher_name', align: 'left', width: 160 },
         { display: '性别', name: 'sex', align:'left', width: 60 },
-        { display: '年龄', name: 'birthday',  align: 'left', width: 60 },
+        { display: '年龄', name: 'age',  align: 'left', width: 60 },
         { display: '专/兼职', name: 'property', align: 'left', width: 60 },
         { display: '任课科目', name: 'course', align: 'left' },
         { display: '手机号码', name: 'telephone', align: 'left' },
