@@ -90,7 +90,7 @@
             </div>
             <div title="用户权限">
                 <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage12','系统角色设定','usergroups_lst.html')">系统角色设定</a>
+                <a class="l-link" href="javascript:f_addTab('listpage12','系统角色设定','<?php echo SITE_URL;?>/usergroups_c')">系统角色设定</a>
                 <a class="l-link" href="javascript:f_addTab('listpage13','系统用户设定','user_lst.html')">系统用户设定</a>
                 <a class="l-link" href="javascript:f_addTab('listpage14','系统权限设定','role_setup.html')">系统权限设定</a>
             </div>
