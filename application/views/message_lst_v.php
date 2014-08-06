@@ -7,7 +7,7 @@
             columns: [
             { display: '日期', name: 'message_date', align: 'left', width: 80 },
             { display: '姓名', name: 'message_user', align: 'left', width: 80 },
-            { display: '标题', name: 'message_title', align: 'left', width: 200 },
+            { display: '标题', name: 'message_title', align: 'left', width: 260 },
             { display: '内容', name: 'message_content', align: 'left', width: 600 }
             ],
             pageSize:10,
@@ -33,49 +33,43 @@
         };
         return clause;
     }
+
+    function search_click()
+    {
+        document.form.submit();
+    }
+
     function regist_click()
     {
-        location.href = "message_add.html";
+        location.href='<?php echo SITE_URL;?>/message_c/add_message_init';
     }
 </script>
 
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
-<div id="searchbar">
-  &nbsp年月:
-  <select name="ddlYear" id="ddlYear" ltype="select">
-    <option value="0"></option>
-    <option value="1" selected>2014年</option>
-    <option value="2">2013年</option>
-    <option value="3">2012年</option>
-    <option value="4">2011年</option>
-    <option value="5">2010年</option>
-    <option value="6">2009年</option>
-    <option value="7">2008年</option>
-    <option value="8">2007年</option>
-    <option value="9">2006年</option>
-    <option value="10">2005年</option>
-  </select>
-  <select name="ddlMonth" id="ddlMonth" ltype="select">
-    <option value="0"></option>
-    <option value="1">1月</option>
-    <option value="2">2月</option>
-    <option value="3">3月</option>
-    <option value="4">4月</option>
-    <option value="5">5月</option>
-    <option value="6">6月</option>
-    <option value="7">7月</option>
-    <option value="8" selected>8月</option>
-    <option value="9">9月</option>
-    <option value="10">10月</option>
-    <option value="11">11月</option>
-    <option value="12">12月</option>
-  </select>
-  &nbsp标题：<input id="txtKey" type="text" />
-  <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
-  <input id="regist" type="button" value="校长留言" onclick="regist_click()" />
-</div>
-<br>
-<div id="maingrid" style="margin:0; padding:0"></div>
+<div id="searchbar"></div>
+<form name="form" method="post" action="<?php echo SITE_URL.'/message_c/search_message';?>" id="form">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        <tr>
+            &nbsp年月:
+            <select name="ddlYear" id="ddlYear" onchange="search_click()">
+                <?php foreach($year as $y){?>
+                    <option value="<?php echo $y['id']?>" <?php echo $y['sel']?>><?php echo $y['name']?></option>
+                <?php } ?>
+            </select>
+            <select name="ddlMonth" id="ddlMonth" onchange="search_click()">
+                <?php foreach($month as $m){?>
+                    <option value="<?php echo $m['id']?>" <?php echo $m['sel']?>><?php echo $m['name']?></option>
+                <?php } ?>
+            </select>
+            &nbsp标题：
+            <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
+            <input type="submit" value=" 查 询 " />&nbsp
+            <input type="button" value="校长留言" onclick="regist_click()" />
+        </tr>
+    </table>
+    <br>
+    <div id="maingrid" style="margin:0; padding:0"></div>
+</form>
 <div style="display:none;"></div>
 </body>
