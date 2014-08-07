@@ -1,16 +1,18 @@
-		
-DROP TABLE IF EXISTS `ss_users`;		
-CREATE TABLE IF NOT EXISTS `ss_users` (		
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,		
-  `user_name` varchar(30) NOT NULL,		
-  `password` char(32) NOT NULL DEFAULT '1a1dc91c907325c69271ddf0c944bc72',		
-  `delete_flg` char(1) NULL DEFAULT '0',		
-  `insert_user` varchar(20) NULL DEFAULT 'system',		
-  `insert_time` timestamp NULL,		
-  `update_user` varchar(20) NULL DEFAULT 'system',		
-  `update_time` timestamp  NULL,		
-  PRIMARY KEY (`user_id`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
+DROP TABLE IF EXISTS `ss_users`;	
+CREATE TABLE IF NOT EXISTS `ss_users` (	
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,	
+  `user` varchar(10) NOT NULL,	
+  `password` char(32) NOT NULL DEFAULT '1a1dc91c907325c69271ddf0c944bc72',	
+  `user_name` varchar(30) NOT NULL,	
+  `role_id` int(11) NULL,	
+  `remarks` varchar(100) NULL,	
+  `delete_flg` char(1) NULL DEFAULT '0',	
+  `insert_user` varchar(20) NULL DEFAULT 'system',	
+  `insert_time` timestamp NULL,	
+  `update_user` varchar(20) NULL DEFAULT 'system',	
+  `update_time` timestamp  NULL,	
+  PRIMARY KEY (`user_id`)	
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;	
 		
 DROP TABLE IF EXISTS `ss_roles`;		
 CREATE TABLE IF NOT EXISTS `ss_roles` (		
@@ -24,19 +26,7 @@ CREATE TABLE IF NOT EXISTS `ss_roles` (
   `update_time` timestamp NULL,		
   PRIMARY KEY (`role_id`)		
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
-		
-DROP TABLE IF EXISTS `ss_users_roles_relation`;
-CREATE TABLE IF NOT EXISTS `ss_users_roles_relation` (
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `delete_flg` char(1) NULL DEFAULT '0',
-  `insert_user` varchar(20) NULL DEFAULT 'system',
-  `insert_time` timestamp NULL,
-  `update_user` varchar(20) NULL DEFAULT 'system',
-  `update_time` timestamp NULL,
-  PRIMARY KEY (`user_id`,`role_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
-		
+				
 DROP TABLE IF EXISTS `ss_functions`;		
 CREATE TABLE IF NOT EXISTS `ss_functions` (		
   `function_id` int(11) NOT NULL AUTO_INCREMENT,		
@@ -328,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
   PRIMARY KEY (`message_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 
-INSERT INTO ss_users (user_name, insert_time, update_time) values ("admin", NOW(), NOW());
+INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
 INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("DELETE_FLG", "0", "未删除", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("DELETE_FLG", "1", "删除", NOW(), NOW());
