@@ -51,7 +51,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
             <td align="left" class="l-table-edit-td"> 
-            <textarea name="txtRemarks" id="txtRemarks" cols="100" rows="5" class="l-textarea" style="width:400px" maxlength="100"><?php echo @$remarks ?></textarea>
+                <textarea name="txtRemarks" id="txtRemarks" cols="100" rows="5" class="l-textarea" style="width:400px" maxlength="100"><?php echo @$remarks ?></textarea>
             </td>
             <td align="left"></td>
         </tr>

@@ -15,31 +15,31 @@
             $("#layout1").ligerLayout({ leftWidth: 190, height: '100%',heightDiff:-34,space:4 });
             $("#pageloading").hide();
             <?php if($errFlg==3){?>
-                         $.ligerDialog.error('错误的用户名或密码');
+                         $.ligerDialog.error('错误的用户名称或密码!');
             <?php }?>
             <?php if($errFlg==99){?>
-                     $.ligerDialog.success('设定成功');
+                     $.ligerDialog.success('设定成功,请重新登录!');
                      window.setTimeout( function(){
-                       location.href='<?php echo SITE_URL;?>/menu_c';
+                       location.href='<?php echo SITE_URL;?>/login_c';
                     },2000);
             <?php }?>
         });
         function chkSubmit(){
-            if(jQuery.trim(document.getElementById('txtUserId').value)==""){
-              $.ligerDialog.error('请输入用户名');return false;
+            if(jQuery.trim(document.getElementById('txtUser').value)==""){
+              $.ligerDialog.error('请输入用户名称!');return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
-              $.ligerDialog.error('请输入现密码');return false;
+              $.ligerDialog.error('请输入现密码!');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPassword').value)==""){
-              $.ligerDialog.error('请输入新密码');return false;
+              $.ligerDialog.error('请输入新密码!');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPasswordRep').value)==""){
-              $.ligerDialog.error('请输入密码确认');return false;
+              $.ligerDialog.error('请输入密码确认!');return false;
             }
             if(jQuery.trim(document.getElementById('txtNewPasswordRep').value)
                     !=jQuery.trim(document.getElementById('txtNewPassword').value)){
-              $.ligerDialog.error('新密码确认不一致');return false;
+              $.ligerDialog.error('新密码确认不一致!');return false;
             }
             return true;
         }
@@ -57,7 +57,7 @@
             <form name="passwordset" method="post" action="<?php echo SITE_URL;?>/passwordset_c/resetPwd" id="passwordset">
           <tr>
                   <td align="right" class="l-table-edit-td">用户名:</td>
-                    <td align="left" class="l-table-edit-td"><input name="txtUsername" type="text" style="width:130px;" id="txtUsername" value="<?php echo $txtUsername;?>" /></td>
+                    <td align="left" class="l-table-edit-td"><input name="txtUser" type="text" style="width:130px;" id="txtUser" value="<?php echo $txtUser;?>" /></td>
                 </tr>
                 <tr>
                    <td align="right" class="l-table-edit-td">旧密码:</td>
