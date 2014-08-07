@@ -351,3 +351,11 @@ INSERT INTO ss_roles (role_name, insert_time, update_time) values ("就业总监", N
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("班主任", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("教师", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("学生", NOW(), NOW());
+
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("招生管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("学生管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("就业管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("高级查询", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("基础信息", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("用户权限", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("校长留言", NOW(), NOW());
