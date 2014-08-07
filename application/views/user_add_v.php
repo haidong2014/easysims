@@ -49,21 +49,21 @@
         <tr>
             <td align="right" class="l-table-edit-td">登录ID:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="txtUser" type="text" id="txtUser" maxlength="10"/>
+                <input name="txtUser" type="text" id="txtUser" maxlength="10" value="<?php echo @$user ?>"/>
             </td>
             <td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">登录密码:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="txtPassword" type="password" id="txtPassword" maxlength="10"/>
+                <input name="txtPassword" type="password" id="txtPassword" maxlength="10" value=""/>
             </td>
             <td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">用户姓名:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="txtName" type="text" id="txtName" maxlength="30"/>
+                <input name="txtName" type="text" id="txtName" maxlength="30" value="<?php echo @$user_name ?>"/>
             </td>
             <td align="left"></td>
         </tr>
@@ -81,8 +81,8 @@
         <tr>
             <td align="right" class="l-table-edit-td" valign="top">状态:</td>
             <td align="left" class="l-table-edit-td">
-                <input id="rbtnl_0" type="radio" name="rbtDeleteFlg" value="0" checked="checked" /><label for="rbtnl_0">有效</label>
-                <input id="rbtnl_1" type="radio" name="rbtDeleteFlg" value="1" /><label for="rbtnl_1">无效</label>
+                <input id="rbtnl_0" type="radio" name="rbtDeleteFlg" value="0" <?php if(@$delete_flg =='0'){ ?> checked="checked"<?php } ?> /><label for="rbtnl_0">有效</label>
+                <input id="rbtnl_1" type="radio" name="rbtDeleteFlg" value="1" <?php if(@$delete_flg =='1'){ ?> checked="checked"<?php } ?> /><label for="rbtnl_1">无效</label>
             </td>
             <td align="left"></td>
         </tr>
