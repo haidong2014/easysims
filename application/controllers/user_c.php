@@ -71,6 +71,8 @@ class User_c extends MY_Controller {
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;
+        $data['delete_flg'] = "0";
+
         $this->load->view('user_add_v',$data);
     }
 
@@ -78,6 +80,8 @@ class User_c extends MY_Controller {
         log_message('info', "user_c add_user post:".var_export($_POST,true));
 
         $data = array();
+        $usergroups = array();
+
         $userinfo = $this->session->userdata('user');
 
         $user_id = $this->input->post('txtUserId');
@@ -117,19 +121,6 @@ class User_c extends MY_Controller {
         redirect("user_c");
     }
 
-    public function delete_user($user_id = null){
-        $data = array();
-        $user = $this->session->userdata('user');
-        $update_user = $user;
-        $update_time = date("Y-m-d H:i:s");
- 
-        $data['user_id'] = $user_id;
-        $data['update_user'] = $update_user;
-        $data['update_time'] = $update_time;
-        $this->user_m->deleteOne($role_id);
-        redirect("user_c");
-    }
-
     public function view_user_init($user_id = null){
         $data = array();
 
@@ -137,6 +128,20 @@ class User_c extends MY_Controller {
         if(count($userData) == 1){
             $data = $userData[0];
         }
+
+        $data['search_key'] = "";
+        $usergroupsData = $this->usergroups_m->getList($data);
+        $i = 0;
+        foreach($usergroupsData as $dataug){
+			if ($dataug['role_id'] == $userData[0]['role_id']){
+                $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
+			} else {
+                $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
+			}
+            $i = $i+1;
+        }
+        $data['usergroups'] = $usergroups;
+
         $this->load->view('user_view_v',$data);
     }
 
@@ -147,6 +152,20 @@ class User_c extends MY_Controller {
         if(count($userData) == 1){
             $data = $userData[0];
         }
+
+        $data['search_key'] = "";
+        $usergroupsData = $this->usergroups_m->getList($data);
+        $i = 0;
+        foreach($usergroupsData as $dataug){
+			if ($dataug['role_id'] == $userData[0]['role_id']){
+                $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
+			} else {
+                $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
+			}
+            $i = $i+1;
+        }
+        $data['usergroups'] = $usergroups;
+
         $this->load->view('user_add_v',$data);
     }
 }
