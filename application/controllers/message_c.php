@@ -141,16 +141,16 @@ class Message_c extends MY_Controller {
         log_message('info', "message_c add_message post:".var_export($_POST,true));
 
         $data = array();
-        $username = $this->session->userdata('user_name');
+        $user = $this->session->userdata('user');
 
         $message_date = date("Y-m-d");
         $message_ym = substr(date("Y-m-d"),0,4).substr(date("Y-m-d"),5,2);
-        $message_user = $username;
+        $message_user = $user;
         $message_title = $this->input->post('txtTitle');
         $message_content = $this->input->post('txtMessage');
-        $insert_user = $username;
+        $insert_user = $user;
         $insert_time = date("Y-m-d H:i:s");
-        $update_user = $username;
+        $update_user = $user;
         $update_time = date("Y-m-d H:i:s");
 
         $data['message_date'] = $message_date;
