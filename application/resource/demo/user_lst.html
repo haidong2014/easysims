@@ -13,7 +13,8 @@
         $(function () {
             grid = $("#maingrid").ligerGrid({
                 columns: [
-                { display: '用户编号', name: 'UserNo', align: 'left', width: 80 },
+                { display: '编号', name: 'UserNo', align: 'left', width: 80 },
+                { display: '登录ID', name: 'UserId', align: 'left', width: 160 },
                 { display: '用户名称', name: 'UserName', align: 'left', width: 160 },
                 { display: '用户角色', name: 'UserGroup', align:'left', width: 80 },
                 { display: '用户状态', name: 'Status', align:'left', width: 80 },
@@ -51,7 +52,7 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>  
 <div id="searchbar">
-    编号或姓名：<input id="txtKey" type="text" />
+    用户名称：<input id="txtKey" type="text" />
     <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
 	<input id="regist" type="button" value=" 系统用户登录 " onclick="regist_click()" />
 </div>
