@@ -6,11 +6,11 @@ class Passwordset_m extends MY_Model
 		parent::__construct();
 	}
 
-	public function setPwd($username,$newPassword){
+	public function setPwd($user,$newPassword){
 		$this->db->set('password', md5($newPassword));
-		$this->db->set('update_user', $username);
+		$this->db->set('update_user', $user);
 		$this->db->set('update_time', date('Y-m-d H:i:s'));
-		$this->db->where('user_name', $username);
+		$this->db->where('user', $user);
 		$ret = $this->db->update('ss_users');
 		return $ret;
 	}
