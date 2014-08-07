@@ -35,27 +35,32 @@ class User_m extends MY_Model
         return $this->db->insert( $this->table_name );
     }
 
-    public function deleteOne($data){
-        $this->db->where('user_id',      $data['user_id']);
-        $this->db->set('delete_flg',     "1");
-        $this->db->set( 'update_user',   $data['update_user'] );
-        $this->db->set( 'update_time',   $data['update_time'] );
-        return $this->db->update( $this->table_name );
-    }
-
     public function updOne($data){
         $this->db->where('user_id',      $data['user_id']);
+        if(!empty($data['password'])){
+            $this->db->set( 'password',  $data['password'] );
+        }
         $this->db->set( 'user_name',     $data['user_name'] );
+        $this->db->set( 'role_id',       $data['role_id'] );
+        $this->db->set( 'remarks',       $data['remarks'] );
+        $this->db->set( 'delete_flg',    $data['delete_flg'] );
         $this->db->set( 'update_user',   $data['update_user'] );
         $this->db->set( 'update_time',   $data['update_time'] );
         return $this->db->update( $this->table_name );
     }
 
     public function getOne($user_id){
-        $this->db->select('user_id,user,password,user_name');
+        $this->db->select('user_id,user,password,user_name,role_id,remarks,delete_flg');
         $this->db->where('user_id', $user_id);
-        $this->db->where('delete_flg', "0");
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+
+    public function checkUser($user){
+        $this->db->select('user_id,user');
+        $this->db->where('user', $user);
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
+    }
+
 }
