@@ -136,7 +136,7 @@ if(!empty($teacher_id)){
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">系统用户:</td>
                 <td align="left" class="l-table-edit-td">
-                     <input id="system_user_0" type="checkbox" name="system_user" <?php echo (@$system_user===1?"checked":"")?> /><label for="system_user_0">有效</label>
+                     <input id="system_user_0" type="checkbox" name="system_user" value="1" <?php echo (intval(@$system_user)===1?"checked":"")?> /><label for="system_user_0">有效</label>
                 </td><td align="left"></td>
             </tr>
             <tr>
