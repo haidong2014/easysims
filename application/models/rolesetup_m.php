@@ -15,6 +15,30 @@ class Rolesetup_m extends MY_Model
         $this->db->from('ss_functions t1');
         $this->db->join('ss_roles_functions_relation t2', 't1.function_id = t2.function_id and t2.role_id='.$role_id , 'left');
         $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.function_id','esc');
+        $query =  $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getFunction($role_id)
+    {
+        $this->db->select('t1.function_id,t1.function_name');
+        $this->db->from('ss_functions t1');
+        $this->db->join('ss_roles_functions_relation t2', 't1.function_id = t2.function_id and t2.role_id='.$role_id);
+        $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.function_id','esc');
+        $query =  $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getURL($role_id)
+    {
+        $this->db->select('t1.function_id,t3.url_id,t3.url,t3.url_name');
+        $this->db->from('ss_functions t1');
+        $this->db->join('ss_roles_functions_relation t2', 't1.function_id = t2.function_id and t2.role_id='.$role_id);
+        $this->db->join('ss_url t3', 't1.function_id = t3.function_id');
+        $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.function_id, t3.url_id','esc');
         $query =  $this->db->get();
         return $query->result_array();
     }

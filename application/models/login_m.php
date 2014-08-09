@@ -10,7 +10,7 @@ class Login_m extends MY_Model
     {
         $this->db->where('user', $user);
         $this->db->where('delete_flg', '0');
-        $this->db->select('user,user_name,password');
+        $this->db->select('user_id,user,user_name,password,role_id');
         $query = $this->db->get('ss_users');
         $user = null;
 
