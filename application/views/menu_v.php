@@ -62,42 +62,16 @@
     </div>
     <div id="layout" style="width:99.2%; margin:0 auto; margin-top:4px; ">
         <div position="left"  title="主要菜单" id="accordion">
-            <div title="招生管理">
-                <div style=" height:5px;"></div>
-        <a class="l-link" href="javascript:f_addTab('listpage01','招生信息录入','enrol_students_class.html')">招生信息录入</a>
-            </div>
-            <div title="学生管理">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage02','出勤信息一览','attendance_class.html')">学生出勤管理</a>
-                <a class="l-link" href="javascript:f_addTab('listpage03','作品信息一览','works_class.html')">学生作品管理</a>
-                <a class="l-link" href="javascript:f_addTab('listpage04','课程评价一览','evaluation_class.html')">课程评价管理</a>
-            </div>
-            <div title="就业管理">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage05','就业信息录入','obtain_employment_class.html')">就业信息录入</a>
-            </div>
-            <div title="高级查询">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage06','高级查询','search_lst.html')">高级查询</a>
-                <a class="l-link" href="javascript:f_addTab('listpage07','作品展示','art_lst.html')">作品展示</a>
-            </div>
-            <div title="基础信息">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage08','课程信息维护','course_lst.html')">课程信息维护</a>
-                <a class="l-link" href="javascript:f_addTab('listpage09','班级信息维护','class_lst.html')">班级信息维护</a>
-                <a class="l-link" href="javascript:f_addTab('listpage10','教师信息维护','<?php echo SITE_URL;?>/teacher_c')">教师信息维护</a>
-                <a class="l-link" href="javascript:f_addTab('listpage11','学生信息维护','student_lst.html')">学生信息维护</a>
-            </div>
-            <div title="用户权限">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage12','系统角色设定','<?php echo SITE_URL;?>/usergroups_c')">系统角色设定</a>
-                <a class="l-link" href="javascript:f_addTab('listpage13','系统用户设定','<?php echo SITE_URL;?>/user_c')">系统用户设定</a>
-                <a class="l-link" href="javascript:f_addTab('listpage14','系统权限设定','<?php echo SITE_URL;?>/rolesetup_c')">系统权限设定</a>
-            </div>
-            <div title="校长留言">
-                <div style=" height:5px;"></div>
-                <a class="l-link" href="javascript:f_addTab('listpage15','校长留言','<?php echo SITE_URL;?>/message_c')">校长留言</a>
-            </div>
+            <?php for($i=0;$i<count($menu);$i++){?>
+                <div title="<?php echo $menu[$i]['function_name']?>">
+                    <div style=" height:5px;"></div>
+                    <?php for($j=0;$j<count($url);$j++){?>
+                        <?php if ($menu[$i]['function_id'] == $url[$j]['function_id']) {?>
+                            <a class="l-link" href="javascript:f_addTab('<?php echo $i.$j;?>','<?php echo $url[$j]['url_name'];?>','<?php echo SITE_URL;?>/<?php echo $url[$j]['url'];?>')"><?php echo $url[$j]['url_name'];?></a>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+            <?php } ?>
         </div>
         <div position="center" id="framecenter">
             <div tabid="home" title="我的主页" style="height:300px" >
