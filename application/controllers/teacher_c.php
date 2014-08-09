@@ -46,6 +46,26 @@ class Teacher_c extends MY_Controller {
      $system_user = $this->input->post('system_user');
      $remarks = $this->input->post('remarks');
           
+          if($system_user){
+          	 $userinfo = $this->session->userdata('user');
+
+             //insert a user
+             $this->load->model('user_m','user_m');
+             $userData['user_id'] = $teacher_no;
+        	 $userData['user'] = $user;
+        	 $password =  getPwd(5);
+        	 $userData['password'] = md5($password);
+        
+        	 $userData['user_name'] = $teacher_name;
+        	 $userData['role_id'] = 1006;
+        	 $userData['remarks'] = $remarks;
+        	 $userData['delete_flg'] = 0;
+        	 $userData['insert_user'] = $userinfo->user_name;
+        	 $userData['insert_time'] = $insert_time;
+        	 $userData['update_user'] = $userinfo->user_name;
+        	 $userData['update_time'] = $update_time;
+             $this->user_m->addOne();
+          }
 	   $this->teacher_m->addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks);
      redirect("teacher_c");
@@ -79,7 +99,26 @@ class Teacher_c extends MY_Controller {
       $email = $this->input->post('email');
       $system_user = $this->input->post('system_user');
       $remarks = $this->input->post('remarks');
-          
+          if($system_user){
+          	 $userinfo = $this->session->userdata('user');
+
+             //insert a user
+             $this->load->model('user_m','user_m');
+             $userData['user_id'] = $teacher_no;
+        	 $userData['user'] = $user;
+        	 $password =  getPwd(5);
+        	 $userData['password'] = md5($password);
+        
+        	 $userData['user_name'] = $teacher_name;
+        	 $userData['role_id'] = 1006;
+        	 $userData['remarks'] = $remarks;
+        	 $userData['delete_flg'] = 0;
+        	 $userData['insert_user'] = $userinfo->user_name;
+        	 $userData['insert_time'] = $insert_time;
+        	 $userData['update_user'] = $userinfo->user_name;
+        	 $userData['update_time'] = $update_time;
+             $this->user_m->addOne();
+          }
       $this->teacher_m->updateOne($teacher_no, $teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks,$teacher_id);
       redirect("teacher_c");
@@ -105,5 +144,13 @@ public function view_teacher_init($teacher_id = null){
       
       $this->teacher_m->deleteOne($teacher_id);
       redirect("teacher_c");
+	}
+	
+	private function getPwd($len){
+		$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+		for($i=0; $i<$len; $i++){
+	    	 $rand_str .= $str[mt_rand(0, strlen($str)-1)];
+		}
+	 	return $rand_str;
 	}
 }
