@@ -19,8 +19,8 @@ class User_c extends MY_Controller {
         $userData = $this->user_m->getList($data);
 
         foreach($userData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">view</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">modify</a> ";
+            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
+                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
             if($dataopt['delete_flg'] == "0") {
                 $dataopt['status'] = "OK";
             } else {
@@ -44,8 +44,8 @@ class User_c extends MY_Controller {
         $userData = $this->user_m->getList($data);
 
         foreach($userData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">view</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">modify</a> ";
+            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
+                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
             if($dataopt['delete_flg'] == "0") {
                 $dataopt['status'] = "OK";
             } else {
@@ -133,11 +133,11 @@ class User_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
-			if ($dataug['role_id'] == $userData[0]['role_id']){
+      if ($dataug['role_id'] == $userData[0]['role_id']){
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
-			} else {
+      } else {
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
-			}
+      }
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;
@@ -157,11 +157,11 @@ class User_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
-			if ($dataug['role_id'] == $userData[0]['role_id']){
+      if ($dataug['role_id'] == $userData[0]['role_id']){
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
-			} else {
+      } else {
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
-			}
+      }
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;

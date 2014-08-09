@@ -18,9 +18,9 @@ class Usergroups_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
 
         foreach($usergroupsData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/usergroups_c/view_usergroups_init/".$dataopt['role_id']."\">view</a> |".
-                         "<a href=\"".SITE_URL."/usergroups_c/upd_usergroups_init/".$dataopt['role_id']."\">modify</a> |".
-                         "<a href=\"#\" onclick=\"delUsergroups('".SITE_URL."/usergroups_c/delete_usergroups/".$dataopt['role_id']."')\">delete</a>";
+            $dataopt['opt']="<a href=\"".SITE_URL."/usergroups_c/view_usergroups_init/".$dataopt['role_id']."\">查看</a> |".
+                         "<a href=\"".SITE_URL."/usergroups_c/upd_usergroups_init/".$dataopt['role_id']."\">编辑</a> |".
+                         "<a href=\"#\" onclick=\"delUsergroups('".SITE_URL."/usergroups_c/delete_usergroups/".$dataopt['role_id']."')\">删除</a>";
         }
 
         $data['usergroupsData'] = @json_encode(array('Rows'=>$usergroupsData));
@@ -39,9 +39,9 @@ class Usergroups_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
 
         foreach($usergroupsData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/usergroups_c/view_usergroups_init/".$dataopt['role_id']."\">view</a> |".
-                         "<a href=\"".SITE_URL."/usergroups_c/upd_usergroups_init/".$dataopt['role_id']."\">modify</a> |".
-                         "<a href=\"#\" onclick=\"delUsergroups('".SITE_URL."/usergroups_c/delete_usergroups/".$dataopt['role_id']."')\">delete</a>";
+            $dataopt['opt']="<a href=\"".SITE_URL."/usergroups_c/view_usergroups_init/".$dataopt['role_id']."\">查看</a> |".
+                         "<a href=\"".SITE_URL."/usergroups_c/upd_usergroups_init/".$dataopt['role_id']."\">编辑</a> |".
+                         "<a href=\"#\" onclick=\"delUsergroups('".SITE_URL."/usergroups_c/delete_usergroups/".$dataopt['role_id']."')\">删除</a>";
         }
 
         $data['usergroupsData'] = @json_encode(array('Rows'=>$usergroupsData));
@@ -91,11 +91,11 @@ class Usergroups_c extends MY_Controller {
         $user = $this->session->userdata('user');
         $update_user = $user;
         $update_time = date("Y-m-d H:i:s");
- 
+
         $data['role_id'] = $role_id;
         $data['update_user'] = $update_user;
         $data['update_time'] = $update_time;
-        $this->usergroups_m->deleteOne($role_id);
+        $this->usergroups_m->deleteOne($data);
         redirect("usergroups_c");
     }
 

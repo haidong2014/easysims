@@ -40,7 +40,7 @@ class Message_c extends MY_Controller {
         $month[9] = array("id"=>"9","name"=>"10","sel"=>"");
         $month[10] = array("id"=>"10","name"=>"11","sel"=>"");
         $month[11] = array("id"=>"11","name"=>"12","sel"=>"");
-        
+
         $ddlYear = $this->input->post('ddlYear');
         $ddlMonth = $this->input->post('ddlMonth');
         $tmpYear = substr(date("Y-m-d"),0,4);
@@ -142,10 +142,11 @@ class Message_c extends MY_Controller {
 
         $data = array();
         $user = $this->session->userdata('user');
+        $user_name = $this->session->userdata('user_name');
 
         $message_date = date("Y-m-d");
         $message_ym = substr(date("Y-m-d"),0,4).substr(date("Y-m-d"),5,2);
-        $message_user = $user;
+        $message_user = $user_name;
         $message_title = $this->input->post('txtTitle');
         $message_content = $this->input->post('txtMessage');
         $insert_user = $user;
