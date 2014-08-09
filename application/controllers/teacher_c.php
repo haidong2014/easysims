@@ -14,9 +14,9 @@ class Teacher_c extends MY_Controller {
 
     $teacherData = $this->teacher_m->getList();
     foreach($teacherData as &$data){
-      $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_no']."\">查看</a> |".
-    "<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_no']."\">编辑</a> |".
-    "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_no']."')\">删除</a>";
+      $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
+    "<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
+    "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
       log_message('info', "####href".$data['opt']);
     }
     foreach($teacherData as &$teacher){

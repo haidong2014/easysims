@@ -120,29 +120,29 @@ if(!empty($teacher_id)){
             </tr>
         <tr>
                 <td align="right" class="l-table-edit-td">任课科目:</td>
-                <td align="left" class="l-table-edit-td"><input name="course" type="text" id="course" ltype="text"  value="<?php echo @$course ?>"  validate="{maxlength:20}" /></td>
+                <td align="left" class="l-table-edit-td"><input name="course" type="text" id="course" ltype="text"  value="<?php echo @$course ?>"  maxlength="20"/></td>
                 <td align="left"></td>
             </tr>
       <tr>
                 <td align="right" class="l-table-edit-td">手机:</td>
-                <td align="left" class="l-table-edit-td"><input name="telephone" type="text" id="telephone" ltype="text"  value="<?php echo @$telephone ?>" validate="{maxlength:12}" /></td>
+                <td align="left" class="l-table-edit-td"><input name="telephone" type="text" id="telephone" ltype="text"  value="<?php echo @$telephone ?>" maxlength="12" /></td>
                 <td align="left"></td>
             </tr>
              <tr>
                 <td align="right" class="l-table-edit-td">Email:</td>
-                <td align="left" class="l-table-edit-td"><input name="email" type="text" id="email" ltype="text"   value="<?php echo @$email ?>"  validate="{email:true}" /></td>
+                <td align="left" class="l-table-edit-td"><input name="email" type="text" id="email" ltype="text"   value="<?php echo @$email ?>"  /></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">系统用户:</td>
                 <td align="left" class="l-table-edit-td">
-                     <input id="system_user_0" type="checkbox" name="system_user" <?php echo (@$system_user===1?"checked":"")?> /><label for="system_user_0">有效</label>
+                     <input id="system_user_0" type="checkbox" name="system_user" value="1" <?php echo (intval(@$system_user)===1?"checked":"")?> /><label for="system_user_0">有效</label>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">备注:</td>
                 <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" style="width:400px" validate="{maxlength:100}"><?php echo @$remarks ?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" style="width:400px" ><?php echo @$remarks ?></textarea>
                 </td><td align="left"></td>
             </tr>
         </table>
