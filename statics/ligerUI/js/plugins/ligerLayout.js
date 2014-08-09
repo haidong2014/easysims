@@ -1,9 +1,9 @@
 ﻿/**
-* jQuery ligerUI 1.1.9
+* jQuery ligerUI 1.2.3
 * 
 * http://ligerui.com
 *  
-* Author daomi 2012 [ gd_star@163.com ] 
+* Author daomi 2014 [ gd_star@163.com ] 
 * 
 */
 (function ($)
@@ -194,6 +194,7 @@
                 g._onResize();
             });
             g.set(p);
+            g.mask.height(g.layout.height());
         },
         setLeftCollapse: function (isCollapse)
         {
@@ -383,7 +384,8 @@
             }
             g.draggingxline = $("<div class='l-layout-dragging-xline'></div>");
             g.draggingyline = $("<div class='l-layout-dragging-yline'></div>");
-            g.layout.append(g.draggingxline).append(g.draggingyline);
+            g.mask = $("<div class='l-dragging-mask'></div>");
+            g.layout.append(g.draggingxline).append(g.draggingyline).append(g.mask);
         },
         _setDropHandlePosition: function ()
         {
@@ -583,18 +585,19 @@
                 g.xresize = { startX: e.pageX };
                 g.draggingyline.css({ left: e.pageX - g.layout.offset().left, height: g.middleHeight, top: g.middleTop }).show();
                 $('body').css('cursor', 'col-resize');
+                g.mask.height(g.layout.height()).removeClass("l-layout-ymask").addClass("l-layout-xmask").show();
             }
             else if (dragtype == 'topresize' || dragtype == 'bottomresize')
             {
                 g.yresize = { startY: e.pageY };
                 g.draggingxline.css({ top: e.pageY - g.layout.offset().top, width: g.layout.width() }).show();
-                $('body').css('cursor', 'row-resize');
+                $('body').css('cursor', 'row-resize'); 
+                g.mask.height(g.layout.height()).removeClass("l-layout-xmask").addClass("l-layout-ymask").show();
             }
             else
             {
                 return;
-            }
-
+            } 
             g.layout.lock.width(g.layout.width());
             g.layout.lock.height(g.layout.height());
             g.layout.lock.show();
@@ -616,7 +619,7 @@
             {
                 g.xresize.diff = e.pageX - g.xresize.startX;
                 g.draggingyline.css({ left: e.pageX - g.layout.offset().left });
-                $('body').css('cursor', 'col-resize');
+                $('body').css('cursor', 'col-resize'); 
             }
             else if (g.yresize)
             {
@@ -707,6 +710,7 @@
             g._setDropHandlePosition();
             g.draggingxline.hide();
             g.draggingyline.hide();
+            g.mask.hide();
             g.xresize = g.yresize = g.dragtype = false;
             g.layout.lock.hide();
             if ($.browser.msie || $.browser.safari)

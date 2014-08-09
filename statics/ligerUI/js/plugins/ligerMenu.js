@@ -1,9 +1,9 @@
 ﻿/**
-* jQuery ligerUI 1.1.9
+* jQuery ligerUI 1.2.3
 * 
 * http://ligerui.com
 *  
-* Author daomi 2012 [ gd_star@163.com ] 
+* Author daomi 2014 [ gd_star@163.com ] 
 * 
 */
 (function ($)
@@ -155,6 +155,7 @@
             item.id && ditem.attr("menuitemid", item.id);
             item.text && $(">.l-menu-item-text:first", ditem).html(item.text);
             item.icon && ditem.prepend('<div class="l-menu-item-icon l-icon-' + item.icon + '"></div>');
+            item.img && ditem.prepend('<div class="l-menu-item-icon"><img style="width:16px;height:16px;margin:2px;" src="' + item.img + '" /></div>');
             if (item.disable || item.disabled)
                 ditem.addClass("l-menu-item-disable");
             if (item.children)

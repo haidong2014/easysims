@@ -1,9 +1,9 @@
 ﻿/**
-* jQuery ligerUI 1.1.9
+* jQuery ligerUI 1.2.3
 * 
 * http://ligerui.com
 *  
-* Author daomi 2012 [ gd_star@163.com ] 
+* Author daomi 2014 [ gd_star@163.com ] 
 * 
 */
 (function ($)
@@ -231,7 +231,7 @@
         editorCounter: 0,
 
         //增加分组
-        //@parm [jgroup] jQuery对象(主分组的table dom元素)
+        //parm [jgroup] jQuery对象(主分组的table dom元素)
         addGroup: function (jgroup)
         {
             var g = this, p = this.options;
@@ -273,8 +273,8 @@
         },
 
         //设置规则
-        //@parm [group] 分组数据
-        //@parm [jgruop] 分组table dom jQuery对象
+        //parm [group] 分组数据
+        //parm [jgruop] 分组table dom jQuery对象
         setData: function (group, jgroup)
         {
             var g = this, p = this.options;
@@ -294,7 +294,10 @@
                     if (editorid && g.editors[editorid])
                     {
                         var field = g.getField(this.field);
-                        p.editors[field.editor.type].setValue(g.editors[editorid], this.value, field);
+                        if (field && field.editor)
+                        {
+                            p.editors[field.editor.type].setValue(g.editors[editorid], this.value, field);
+                        }
                     }
                     else
                     {
@@ -313,7 +316,7 @@
         },
 
         //增加一个条件
-        //@parm [jgroup] 分组的jQuery对象
+        //parm [jgroup] 分组的jQuery对象
         addRule: function (jgroup)
         {
             var g = this, p = this.options;
@@ -332,6 +335,7 @@
             {
                 var jopsel = $(this).parent().next().find("select:first");
                 var fieldName = $(this).val();
+                if (!fieldName) return;
                 var field = g.getField(fieldName);
                 //字段类型处理
                 var fieldType = field.type || "string";

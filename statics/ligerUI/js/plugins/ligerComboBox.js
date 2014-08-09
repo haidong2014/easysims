@@ -1,9 +1,9 @@
 ﻿/**
-* jQuery ligerUI 1.1.9
+* jQuery ligerUI 1.2.3
 * 
 * http://ligerui.com
 *  
-* Author daomi 2012 [ gd_star@163.com ] 
+* Author daomi 2014 [ gd_star@163.com ] 
 * 
 */
 (function ($)
@@ -23,9 +23,9 @@
         resize: true,           //是否调整大小
         isMultiSelect: false,   //是否多选
         isShowCheckBox: false,  //是否选择复选框
-        columns: false,       //表格状态
-        selectBoxWidth: false, //宽度
-        selectBoxHeight: false, //高度
+        columns: null,       //表格状态
+        selectBoxWidth: null, //宽度
+        selectBoxHeight: 120, //高度
         onBeforeSelect: false, //选择前事件
         onSelected: null, //选择值事件 
         initValue: null,
@@ -33,21 +33,42 @@
         valueField: 'id',
         textField: 'text',
         valueFieldID: null,
-        slide: true,           //是否以动画的形式显示
+        slide: false,           //是否以动画的形式显示
         split: ";",
         data: null,
         tree: null,            //下拉框以树的形式显示，tree的参数跟LigerTree的参数一致 
         treeLeafOnly: true,   //是否只选择叶子
-        grid: null,              //表格
+        condition: null,       //列表条件搜索 参数同 ligerForm
+        grid: null,              //表格 参数同 ligerGrid
         onStartResize: null,
         onEndResize: null,
         hideOnLoseFocus: true,
+        hideGridOnLoseFocus : false,
         url: null,              //数据源URL(需返回JSON)
+        emptyText: '（空）',       //空行
+        addRowButton: '新增',           //新增按钮
+        addRowButtonClick: null,        //新增事件
+        triggerIcon : null,         //
         onSuccess: null,
         onError: null,
         onBeforeOpen: null,      //打开下拉框前事件，可以通过return false来阻止继续操作，利用这个参数可以用来调用其他函数，比如打开一个新窗口来选择值
+        onButtonClick: null,      //右侧图标按钮事件，可以通过return false来阻止继续操作，利用这个参数可以用来调用其他函数，比如打开一个新窗口来选择值
         render: null,            //文本框显示html函数
-        absolute: true         //选择框是否在附加到body,并绝对定位
+        absolute: true,         //选择框是否在附加到body,并绝对定位
+        cancelable: true,      //可取消选择
+        css: null,            //附加css
+        parms: null,         //ajax提交表单 
+        renderItem : null,   //选项自定义函数
+        autocomplete: false,  //自动完成 
+        highLight : false,    //自动完成是否匹配字符高亮显示
+        readonly: false,              //是否只读
+        ajaxType: 'post',
+        alwayShowInTop: false,      //下拉框是否一直显示在上方
+        valueFieldCssClass : null
+    };
+
+    $.ligerDefaults.ComboBoxString = {
+        Search : "搜索"
     };
 
     //扩展方法
@@ -78,17 +99,17 @@
             if (p.isMultiSelect)
             {
                 p.isShowCheckBox = true;
-            }
-        },
+            } 
+        }, 
         _render: function ()
         {
-            var g = this, p = this.options;
+            var g = this, p = this.options; 
             g.data = p.data;
             g.inputText = null;
             g.select = null;
             g.textFieldID = "";
             g.valueFieldID = "";
-            g.valueField = null; //隐藏域(保存值)
+            g.valueField = null; //隐藏域(保存值) 
             //文本框初始化
             if (this.element.tagName.toLowerCase() == "input")
             {
@@ -102,20 +123,17 @@
                 g.select = $(this.element);
                 p.isMultiSelect = false;
                 p.isShowCheckBox = false;
+                p.cancelable = false;
                 g.textFieldID = this.element.id + "_txt";
                 g.inputText = $('<input type="text" readonly="true"/>');
                 g.inputText.attr("id", g.textFieldID).insertAfter($(this.element));
-            } else
-            {
-                //不支持其他类型
-                return;
-            }
-            if (g.inputText[0].name == undefined) g.inputText[0].name = g.textFieldID;
+            }  
+            if (g.inputText[0].name == undefined) g.inputText[0].name = g.textFieldID; 
             //隐藏域初始化
             g.valueField = null;
             if (p.valueFieldID)
             {
-                g.valueField = $("#" + p.valueFieldID + ":input");
+                g.valueField = $("#" + p.valueFieldID + ":input,[name=" + p.valueFieldID + "]:input").filter("input:hidden"); 
                 if (g.valueField.length == 0) g.valueField = $('<input type="hidden"/>');
                 g.valueField[0].id = g.valueField[0].name = p.valueFieldID;
             }
@@ -124,15 +142,24 @@
                 g.valueField = $('<input type="hidden"/>');
                 g.valueField[0].id = g.valueField[0].name = g.textFieldID + "_val";
             }
+            if (p.valueFieldCssClass)
+            {
+                g.valueField.addClass(p.valueFieldCssClass);
+            }
             if (g.valueField[0].name == undefined) g.valueField[0].name = g.valueField[0].id;
+            //update by superzoc 增加初始值
+	    if (p.initValue != null) g.valueField[0].value = p.initValue;
+            g.valueField.attr("data-ligerid", g.id);
             //开关
             g.link = $('<div class="l-trigger"><div class="l-trigger-icon"></div></div>');
+            if (p.triggerIcon) g.link.find("div:first").addClass(p.triggerIcon);
             //下拉框
-            g.selectBox = $('<div class="l-box-select"><div class="l-box-select-inner"><table cellpadding="0" cellspacing="0" border="0" class="l-box-select-table"></table></div></div>');
+            g.selectBox = $('<div class="l-box-select" style="display:none"><div class="l-box-select-inner"><table cellpadding="0" cellspacing="0" border="0" class="l-box-select-table"></table></div></div>');
             g.selectBox.table = $("table:first", g.selectBox);
+            g.selectBoxInner = g.selectBox.find(".l-box-select-inner:first");
             //外层
             g.wrapper = g.inputText.wrap('<div class="l-text l-text-combobox"></div>').parent();
-            g.wrapper.append('<div class="l-text-l"></div><div class="l-text-r"></div>');
+            g.wrapper.append('<div class="l-text-l"></div><div class="l-text-r"></div>'); 
             g.wrapper.append(g.link);
             //添加个包裹，
             g.textwrapper = g.wrapper.wrap('<div class="l-text-wrapper"></div>').parent();
@@ -151,33 +178,34 @@
             {
                 p.isShowCheckBox = false;
                 $("table", g.selectBox).addClass("l-table-nocheckbox");
-            }
+            }  
             //开关 事件
             g.link.hover(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 this.className = "l-trigger-hover";
             }, function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 this.className = "l-trigger";
             }).mousedown(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 this.className = "l-trigger-pressed";
             }).mouseup(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 this.className = "l-trigger-hover";
             }).click(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
+                if (g.trigger('buttonClick') == false) return false;
                 if (g.trigger('beforeOpen') == false) return false;
                 g._toggleSelectBox(g.selectBox.is(":visible"));
             });
             g.inputText.click(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 if (g.trigger('beforeOpen') == false) return false;
                 g._toggleSelectBox(g.selectBox.is(":visible"));
             }).blur(function ()
@@ -186,16 +214,16 @@
                 g.wrapper.removeClass("l-text-focus");
             }).focus(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 g.wrapper.addClass("l-text-focus");
             });
             g.wrapper.hover(function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 g.wrapper.addClass("l-text-over");
             }, function ()
             {
-                if (p.disabled) return;
+                if (p.disabled || p.readonly) return;
                 g.wrapper.removeClass("l-text-over");
             });
             g.resizing = false;
@@ -205,19 +233,12 @@
                 {
                     g._toggleSelectBox(true);
                 }
-            });
-            var itemsleng = $("tr", g.selectBox.table).length;
-            if (!p.selectBoxHeight && itemsleng < 8) p.selectBoxHeight = itemsleng * 30;
-            if (p.selectBoxHeight)
-            {
-                g.selectBox.height(p.selectBoxHeight);
-            }
+            }); 
             //下拉框内容初始化
             g.bulidContent();
 
-            g.set(p);
-
-            //下拉框宽度、高度初始化
+            g.set(p); 
+            //下拉框宽度、高度初始化   
             if (p.selectBoxWidth)
             {
                 g.selectBox.width(p.selectBoxWidth);
@@ -226,6 +247,23 @@
             {
                 g.selectBox.css('width', g.wrapper.css('width'));
             }
+            if (p.grid) {
+                g.bind('show', function () {
+                    if (!g.grid) {
+                        g.setGrid(p.grid);
+                        g.set('SelectBoxHeight', p.selectBoxHeight);
+                    }
+                });
+            } 
+            g.updateSelectBoxPosition();
+            $(document).bind("click.combobox", function (e)
+            {
+                var tag = (e.target || e.srcElement).tagName.toLowerCase(); 
+                if (tag == "html" || tag == "body")
+                {
+                    g._toggleSelectBox(true);
+                }
+            });
         },
         destroy: function ()
         {
@@ -233,6 +271,68 @@
             if (this.selectBox) this.selectBox.remove();
             this.options = null;
             $.ligerui.remove(this);
+        },
+        clear : function()
+        {
+            this._changeValue("", "");
+            $("a.l-checkbox-checked", this.selectBox).removeClass("l-checkbox-checked");
+            $("td.l-selected", this.selectBox).removeClass("l-selected");
+            $(":checkbox", this.selectBox).each(function () { this.checked = false; });
+            this.trigger('clear');
+        },
+        _setSelectBoxHeight: function (height)
+        { 
+            if (!height) return;
+            var g = this, p = this.options;
+            if (p.grid) {
+                g.grid && g.grid.set('height', g.getGridHeight(height));
+            } else
+            { 
+                var itemsleng = $("tr", g.selectBox.table).length;
+                if (!p.selectBoxHeight && itemsleng < 8) p.selectBoxHeight = itemsleng * 30;
+                if (p.selectBoxHeight)
+                {
+                    if (itemsleng < 8)
+                    {
+                        g.selectBoxInner.height('auto');
+                    } else
+                    {
+                        g.selectBoxInner.height(p.selectBoxHeight);
+                    }
+                }
+            }
+        }, 
+        _setCss : function(css)
+        {
+            if (css) {
+                this.wrapper.addClass(css);
+            } 
+        }, 
+        //取消选择 
+        _setCancelable: function (value)
+        {
+            var g = this, p = this.options;
+            if (!value && g.unselect) {
+                g.unselect.remove();
+                g.unselect = null;
+            }
+            if (!value && !g.unselect) return;
+            g.unselect = $('<div class="l-trigger l-trigger-cancel"><div class="l-trigger-icon"></div></div>').hide();
+            g.wrapper.hover(function () { 
+                g.unselect.show();
+            }, function () { 
+                g.unselect.hide();
+            })
+            if (!p.disabled && !p.readonly && p.cancelable) {
+                g.wrapper.append(g.unselect);
+            }
+            g.unselect.hover(function () {
+                this.className = "l-trigger-hover l-trigger-cancel";
+            }, function () {
+                this.className = "l-trigger l-trigger-cancel";
+            }).click(function () {
+                g.clear();
+            });
         },
         _setDisabled: function (value)
         {
@@ -243,6 +343,16 @@
             } else
             {
                 this.wrapper.removeClass('l-text-disabled');
+            }
+        },
+        _setReadonly: function (readonly)
+        { 
+            if (readonly)
+            { 
+                this.wrapper.addClass("l-text-readonly");
+            } else
+            { 
+                this.wrapper.removeClass("l-text-readonly");
             }
         },
         _setLable: function (label)
@@ -281,12 +391,14 @@
         },
         _setWidth: function (value)
         {
-            var g = this;
+            var g = this, p = this.options;
             if (value > 20)
             {
                 g.wrapper.css({ width: value });
-                g.inputText.css({ width: value - 20 });
-                g.textwrapper.css({ width: value });
+                g.inputText.css({ width: value - 20 }); 
+                if (!p.selectBoxWidth) {
+                    g.selectBox.css({ width: value });
+                }
             }
         },
         _setHeight: function (value)
@@ -295,27 +407,42 @@
             if (value > 10)
             {
                 g.wrapper.height(value);
-                g.inputText.height(value - 2);
-                g.link.height(value - 4);
-                g.textwrapper.css({ width: value });
+                g.inputText.height(value - 2);  
             }
         },
         _setResize: function (resize)
         {
+            var g = this, p = this.options; 
+            if (p.columns) {
+                return;
+            }
             //调整大小支持
             if (resize && $.fn.ligerResizable)
             {
-                var g = this;
-                g.selectBox.ligerResizable({ handles: 'se,s,e', onStartResize: function ()
+                var handles = p.selectBoxHeight ? 'e' : 'se,s,e';
+                g.selectBox.ligerResizable({
+                    handles: handles, onStartResize: function ()
                 {
                     g.resizing = true;
                     g.trigger('startResize');
-                }
-                , onEndResize: function ()
+                }, onEndResize: function ()
                 {
                     g.resizing = false;
                     if (g.trigger('endResize') == false)
                         return false;
+                }, onStopResize: function (current, e) {
+                    if (g.grid) {
+                        if (current.newWidth) {
+                            g.selectBox.width(current.newWidth);
+                        }
+                        if (current.newHeight) {
+                            g.set({ selectBoxHeight: current.newHeight });
+                        }
+                        g.grid.refreshSize();
+                        g.trigger('endResize');
+                        return false;
+                    }
+                    return true;
                 }
                 });
                 g.selectBox.append("<div class='l-btn-nw-drop'></div>");
@@ -325,7 +452,7 @@
         findTextByValue: function (value)
         {
             var g = this, p = this.options;
-            if (value == undefined) return "";
+            if (value == null) return "";
             var texts = "";
             var contain = function (checkvalue)
             {
@@ -374,39 +501,42 @@
             });
             if (values.length > 0) values = values.substr(0, values.length - 1);
             return values;
-        },
-        removeItem: function ()
-        {
-        },
-        insertItem: function ()
-        {
-        },
-        addItem: function ()
-        {
-
-        },
-        _setValue: function (value)
+        }, 
+        insertItem: function (data,index)
         {
             var g = this, p = this.options;
-            var text = g.findTextByValue(value);
+            g.data = g.data || [];
+            g.data.splice(index, 0, data);
+            g.setData(g.data);
+        },
+        addItem: function (data)
+        {
+            var g = this, p = this.options;
+            g.insertItem(data, (g.data || []).length);
+        },
+        _setValue: function (value,text)
+        {
+            var g = this, p = this.options; 
+            text = g.findTextByValue(value);
             if (p.tree)
             {
                 g.selectValueByTree(value);
             }
             else if (!p.isMultiSelect)
-            {
+            {  
                 g._changeValue(value, text);
-                $("tr[value=" + value + "] td", g.selectBox).addClass("l-selected");
-                $("tr[value!=" + value + "] td", g.selectBox).removeClass("l-selected");
+                $("tr[value='" + value + "'] td", g.selectBox).addClass("l-selected");
+                $("tr[value!='" + value + "'] td", g.selectBox).removeClass("l-selected");
             }
             else
             {
                 g._changeValue(value, text);
-                var targetdata = value.toString().split(p.split);
-                $("table.l-table-checkbox :checkbox", g.selectBox).each(function () { this.checked = false; });
-                for (var i = 0; i < targetdata.length; i++)
-                {
-                    $("table.l-table-checkbox tr[value=" + targetdata[i] + "] :checkbox", g.selectBox).each(function () { this.checked = true; });
+                if (value != null) {
+                    var targetdata = value.toString().split(p.split);
+                    $("table.l-table-checkbox :checkbox", g.selectBox).each(function () { this.checked = false; });
+                    for (var i = 0; i < targetdata.length; i++) {
+                        $("table.l-table-checkbox tr[value=" + targetdata[i] + "] :checkbox", g.selectBox).each(function () { this.checked = true; });
+                    }
                 }
             }
         },
@@ -421,45 +551,60 @@
             if (g.select)
             {
                 g.setSelect();
-            }
-            else if (g.data)
-            {
-                g.setData(g.data);
-            }
+            } 
             else if (p.tree)
             {
                 g.setTree(p.tree);
             }
-            else if (p.grid)
+        },
+        reload: function ()
+        {
+            var g = this, p = this.options;
+            if (p.url)
             {
-                g.setGrid(p.grid);
+                g.set('url', p.url);
             }
-            else if (p.url)
+            else if (g.grid)
             {
-                $.ajax({
-                    type: 'post',
-                    url: p.url,
-                    cache: false,
-                    dataType: 'json',
-                    success: function (data)
-                    {
-                        g.data = data;
-                        g.setData(g.data);
-                        g.trigger('success', [g.data]);
-                    },
-                    error: function (XMLHttpRequest, textStatus)
-                    {
-                        g.trigger('error', [XMLHttpRequest, textStatus]);
-                    }
-                });
+                g.grid.reload();
             }
+        },
+        _setUrl: function (url) {
+            if (!url) return;
+            var g = this, p = this.options;
+            var parms = $.isFunction(p.parms) ? p.parms() : p.parms;
+            $.ajax({
+                type: p.ajaxType,
+                url: url,
+                data: parms,
+                cache: false,
+                dataType: 'json',
+                success: function (data) { 
+                    g.setData(data);
+                    g.trigger('success', [data]);
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    g.trigger('error', [XMLHttpRequest, textStatus]);
+                }
+            });
+        },
+        setUrl: function (url) {
+            return this._setUrl(url);
+        },
+        setParm: function (name, value) {
+            if (!name) return;
+            var g = this;
+            var parms = g.get('parms');
+            if (!parms) parms = {};
+            parms[name] = value;
+            g.set('parms', parms); 
         },
         clearContent: function ()
         {
             var g = this, p = this.options;
             $("table", g.selectBox).html("");
-            //g.inputText.val("");
-            //g.valueField.val("");
+            g.inputText.val("");
+            g.valueField.val(""); 
         },
         setSelect: function ()
         {
@@ -469,7 +614,7 @@
             {
                 var val = $(this).val();
                 var txt = $(this).html();
-                var tr = $("<tr><td index='" + i + "' value='" + val + "'>" + txt + "</td>");
+                var tr = $("<tr><td index='" + i + "' value='" + val + "' text='" + txt + "'>" + txt + "</td>");
                 $("table.l-table-nocheckbox", g.selectBox).append(tr);
                 $("td", tr).hover(function ()
                 {
@@ -509,12 +654,16 @@
             });
             g._addClickEven();
         },
+        _setData : function(data)
+        {
+            this.setData(data);
+        },
         setData: function (data)
         {
-            var g = this, p = this.options;
-            this.clearContent();
-            if (!data || !data.length) return;
+            var g = this, p = this.options; 
+            if (!data || !data.length) data = [];
             if (g.data != data) g.data = data;
+            this.clearContent();
             if (p.columns)
             {
                 g.selectBox.table.headrow = $("<tr class='l-table-headerow'><td width='18px'></td></tr>");
@@ -531,29 +680,63 @@
 
                 }
             }
+            var out = []; 
+            if (p.emptyText && !g.emptyRow)
+            { 
+                g.emptyRow = {};
+                g.emptyRow[p.textField] = p.emptyText;
+                g.emptyRow[p.valueField] = null;
+                data.splice(0, 0, g.emptyRow);
+            } 
             for (var i = 0; i < data.length; i++)
             {
                 var val = data[i][p.valueField];
                 var txt = data[i][p.textField];
                 if (!p.columns)
                 {
-                    $("table.l-table-checkbox", g.selectBox).append("<tr value='" + val + "'><td style='width:18px;'  index='" + i + "' value='" + val + "' text='" + txt + "' ><input type='checkbox' /></td><td index='" + i + "' value='" + val + "' align='left'>" + txt + "</td>");
-                    $("table.l-table-nocheckbox", g.selectBox).append("<tr value='" + val + "'><td index='" + i + "' value='" + val + "' align='left'>" + txt + "</td>");
+                    out.push("<tr value='" + val + "'>");
+                    if(p.isShowCheckBox){
+                        out.push("<td style='width:18px;'  index='" + i + "' value='" + val + "' text='" + txt + "' ><input type='checkbox' /></td>");
+                    }
+                    var itemHtml = txt;
+                    if (p.renderItem) {
+                        itemHtml = p.renderItem.call(g, {
+                            data: data[i],
+                            value: val,
+                            text: txt,
+                            key: g.inputText.val()
+                        });
+                    } else if (p.autocomplete && p.highLight)
+                    {
+                        itemHtml = g._highLight(txt, g.inputText.val());
+                    }
+                    out.push("<td index='" + i + "' value='" + val + "' text='" + txt + "' align='left'>" + itemHtml + "</td></tr>");
                 } else
                 {
-                    var tr = $("<tr value='" + val + "'><td style='width:18px;'  index='" + i + "' value='" + val + "' text='" + txt + "' ><input type='checkbox' /></td></tr>");
-                    $("td", g.selectBox.table.headrow).each(function ()
-                    {
-                        var columnname = $(this).attr("columnname");
-                        if (columnname)
-                        {
-                            var td = $("<td>" + data[i][columnname] + "</td>");
-                            tr.append(td);
-                        }
-                    });
-                    g.selectBox.table.append(tr);
+                    out.push("<tr value='" + val + "'><td style='width:18px;'  index='" + i + "' value='" + val + "' text='" + txt + "' ><input type='checkbox' /></td>");
+                    for (var j = 0; j < p.columns.length; j++) {
+                        var columnname = p.columns[j].name;
+                        out.push("<td>" + data[i][columnname] + "</td>");
+                    }
+                    out.push('</tr>');  
                 }
+            } 
+            if (!p.columns) {
+                if (p.isShowCheckBox) {
+                    $("table.l-table-checkbox", g.selectBox).append(out.join(''));
+                }else{
+                    $("table.l-table-nocheckbox", g.selectBox).append(out.join(''));
+                }
+            } else { 
+                g.selectBox.table.append(out.join(''));
             }
+            if (p.addRowButton && p.addRowButtonClick && !g.addRowButton)
+            {
+                g.addRowButton = $('<div class="l-box-select-add"><a href="javascript:void(0)" class="link"><div class="icon"></div></a></div>'); 
+                g.addRowButton.find(".link").append(p.addRowButton).click(p.addRowButtonClick);
+                g.selectBoxInner.after(g.addRowButton);
+            }
+            g.set('selectBoxHeight', p.selectBoxHeight);
             //自定义复选框支持
             if (p.isShowCheckBox && $.fn.ligerCheckBox)
             {
@@ -600,7 +783,9 @@
             });
             g._addClickEven();
             //选择项初始化
-            g._dataInit();
+            if (!p.autocomplete) {
+                g.updateStyle();
+            }
         },
         //树
         setTree: function (tree)
@@ -628,6 +813,7 @@
             {
                 tree.onSelect = function (node)
                 {
+                    if (g.trigger('BeforeSelect'[node]) == false) return;
                     if (p.treeLeafOnly && node.data.children) return;
                     var value = node.data[p.valueField];
                     var text = node.data[p.textField];
@@ -671,61 +857,145 @@
         setGrid: function (grid)
         {
             var g = this, p = this.options;
+            if (g.grid) return; 
+            p.hideOnLoseFocus = p.hideGridOnLoseFocus ? true : false;
             this.clearContent();
+            g.selectBox.addClass("l-box-select-lookup");
             g.selectBox.table.remove();
-            g.grid = $("div:first", g.selectBox);
-            grid.columnWidth = grid.columnWidth || 120;
-            grid.width = "100%";
-            grid.height = "100%";
-            grid.heightDiff = -2;
-            grid.InWindow = false;
-            g.gridManager = g.grid.ligerGrid(grid);
-            p.hideOnLoseFocus = false;
-            if (grid.checkbox != false)
+            var panel = $("div:first", g.selectBox);
+            var conditionPanel = $("<div></div>").appendTo(panel);
+            var gridPanel = $("<div></div>").appendTo(panel);
+            g.conditionPanel = conditionPanel;
+            //搜索框
+            if (p.condition) {
+                var conditionParm = $.extend({
+                    labelWidth: 60,
+                    space: 20,
+                    width: p.selectBoxWidth
+                }, p.condition); 
+                g.condition = conditionPanel.ligerForm(conditionParm);
+            } else {
+                conditionPanel.remove();
+            }
+            //列表
+            grid = $.extend({
+                columnWidth: 120,
+                alternatingRow: false,
+                frozen: true,
+                rownumbers: true,
+                allowUnSelectRow:true
+            }, grid, {
+                width: "100%",
+                height: g.getGridHeight(),
+                inWindow: false,
+                parms : p.parms,
+                isChecked: function (rowdata) {
+                    var value = g.getValue();
+                    if (!value) return false;
+                    if (!p.valueField || !rowdata[p.valueField]) return false;
+                    return $.inArray(rowdata[p.valueField].toString(), value.split(p.split)) != -1;
+                }
+            });
+            g.grid = g.gridManager = gridPanel.ligerGrid(grid);
+            g.grid.bind('afterShowData', function ()
+            { 
+                g.updateSelectBoxPosition();
+            });
+            var selecteds = [], onGridSelect = function () { 
+                var value = [], text = [];
+                $(selecteds).each(function (i, rowdata) {
+                    value.push(rowdata[p.valueField]);
+                    text.push(rowdata[p.textField]);
+                });
+                if (grid.checkbox)
+                    g.selected = selecteds;
+                else if (selecteds.length)
+                    g.selected = selecteds[0];
+                else
+                    g.selected = null;
+                g._changeValue(value.join(p.split), text.join(p.split));
+                g.trigger('gridSelect', {
+                    value: value.join(p.split),
+                    text: text.join(p.split),
+                    data: selecteds
+                });
+            }, removeSelected = function (rowdata) {
+                for (var i = selecteds.length - 1; i >= 0; i--) {
+                    if (selecteds[i][p.valueField] == rowdata[p.valueField]) {
+                        selecteds.splice(i, 1);
+                    }
+                }
+            }, addSelected = function (rowdata) {
+                for (var i = selecteds.length - 1; i >= 0; i--) {
+                    if (selecteds[i][p.valueField] == rowdata[p.valueField]) {
+                        return;
+                    }
+                }
+                selecteds.push(rowdata);
+            };
+            if (grid.checkbox)
             {
-                var onCheckRow = function ()
-                {
-                    var rowsdata = g.gridManager.getCheckedRows();
-                    var value = [];
-                    var text = [];
-                    $(rowsdata).each(function (i, rowdata)
-                    {
-                        value.push(rowdata[p.valueField]);
-                        text.push(rowdata[p.textField]);
-                    });
-                    g._changeValue(value.join(p.split), text.join(p.split));
+                var onCheckRow = function (checked, rowdata) {
+                    checked && addSelected(rowdata);
+                    !checked && removeSelected(rowdata);
                 };
-                g.gridManager.bind('CheckAllRow', onCheckRow);
-                g.gridManager.bind('CheckRow', onCheckRow);
+                g.grid.bind('CheckAllRow', function (checked) {
+                    $(g.grid.rows).each(function (rowdata) {
+                        onCheckRow(checked, rowdata);
+                    });
+                    onGridSelect();
+                });
+                g.grid.bind('CheckRow', function (checked, rowdata) {
+                    onCheckRow(checked, rowdata);
+                    onGridSelect();
+                });
             }
             else
             {
-                g.gridManager.bind('SelectRow', function (rowdata, rowobj, index)
-                {
-                    var value = rowdata[p.valueField];
-                    var text = rowdata[p.textField];
-                    g._changeValue(value, text);
+                g.grid.bind('SelectRow', function (rowdata) {
+                    selecteds = [rowdata]; 
+                    onGridSelect();
+                    g._toggleSelectBox(true);
                 });
-                g.gridManager.bind('UnSelectRow', function (rowdata, rowobj, index)
-                {
-                    g._changeValue("", "");
+                g.grid.bind('UnSelectRow', function () {
+                    selecteds = [];
+                    onGridSelect();
                 });
             }
-            g.bind('show', function ()
-            {
-                if (g.gridManager)
-                {
-                    g.gridManager._updateFrozenWidth();
-                }
+            g.bind('show', function () {
+                g.grid.refreshSize();
             });
-            g.bind('endResize', function ()
-            {
-                if (g.gridManager)
-                {
-                    g.gridManager._updateFrozenWidth();
-                    g.gridManager.setHeight(g.selectBox.height() - 2);
-                }
+            g.bind("clear", function () {
+                selecteds = [];
+                g.grid.selecteds = [];
+                g.grid._showData();
             });
+            if (p.condition) {
+                var containerBtn1 = $('<li style="margin-right:9px"><div></div></li>');
+                var containerBtn2 = $('<li style="margin-right:9px;float:right"><div></div></li>');
+                $("ul:first", conditionPanel).append(containerBtn1).append(containerBtn2).after('<div class="l-clear"></div>');
+                $("div", containerBtn1).ligerButton({
+                    text: p.Search, width: 40,
+                    click: function () { 
+                        var rules = g.condition.toConditions();
+                        g.grid.setParm(grid.conditionParmName || 'condition', $.ligerui.toJSON(rules));
+                        g.grid.reload();
+                    }
+                });
+                $("div", containerBtn2).ligerButton({
+                    text: '关闭',width:40,
+                    click: function () {
+                        g.selectBox.hide();
+                    }
+                });
+            }
+            g.grid.refreshSize();
+        },
+        getGridHeight: function (height) {
+            var g = this, p = this.options;
+            height = height || g.selectBox.height();
+            height -= g.conditionPanel.height();
+            return height;
         },
         _getValue: function ()
         {
@@ -736,9 +1006,20 @@
             //获取值
             return this._getValue();
         },
+        getSelected : function()
+        {
+            return this.selected;
+        },
+        getText: function () {
+            return this.inputText.val();
+        },
+        setText: function (value) {
+            this.inputText.val(value);
+        },
         updateStyle: function ()
         {
             var g = this, p = this.options;
+            p.initValue = g._getValue();
             g._dataInit();
         },
         _dataInit: function ()
@@ -758,18 +1039,12 @@
                     if(value)
                         g.selectValueByTree(value);
                 }
-                else
+                else if (g.data)
                 {
                     var text = g.findTextByValue(value);
                     g._changeValue(value, text);
                 }
-            }
-            //根据文本来初始化 
-            else if (p.initText != null)
-            {
-                value = g.findValueByText(p.initText);
-                g._changeValue(value, p.initText);
-            }
+            } 
             else if (g.valueField.val() != "")
             {
                 value = g.valueField.val();
@@ -778,24 +1053,27 @@
                     if(value)
                         g.selectValueByTree(value);
                 }
-                else
+                else if(g.data)
                 {
                     var text = g.findTextByValue(value);
                     g._changeValue(value, text);
                 }
             }
-            if (!p.isShowCheckBox && value != null)
+            if (!p.isShowCheckBox)
             {
                 $("table tr", g.selectBox).find("td:first").each(function ()
                 {
-                    if (value == $(this).attr("value"))
+                    if (value != null && value == $(this).attr("value"))
                     {
                         $(this).addClass("l-selected");
+                    } else
+                    {
+                        $(this).removeClass("l-selected");
                     }
                 });
             }
-            if (p.isShowCheckBox && value != null)
-            {
+            else
+            { 
                 $(":checkbox", g.selectBox).each(function ()
                 {
                     var parentTD = null;
@@ -808,10 +1086,12 @@
                         parentTD = checkbox.parent();
                     }
                     if (parentTD == null) return;
-                    var valuearr = value.toString().split(p.split);
+                    $(".l-checkbox", parentTD).removeClass("l-checkbox-checked");
+                    checkbox[0].checked = false;
+                    var valuearr = (value || "").toString().split(p.split);
                     $(valuearr).each(function (i, item)
                     {
-                        if (item == parentTD.attr("value"))
+                        if (value != null && item == parentTD.attr("value"))
                         {
                             $(".l-checkbox", parentTD).addClass("l-checkbox-checked");
                             checkbox[0].checked = true;
@@ -823,9 +1103,9 @@
         //设置值到 文本框和隐藏域
         _changeValue: function (newValue, newText)
         {
-            var g = this, p = this.options;
+            var g = this, p = this.options; 
             g.valueField.val(newValue);
-            if (p.render)
+            if (p && p.render)
             {
                 g.inputText.val(p.render(newValue, newText));
             }
@@ -835,8 +1115,8 @@
             }
             g.selectedValue = newValue;
             g.selectedText = newText;
-            g.inputText.trigger("change").focus();
-            g.trigger('selected', [newValue, newText]);
+            g.inputText.trigger("change").focus(); 
+            g.trigger('selected', [newValue, newText]); 
         },
         //更新选中的值(复选框)
         _checkboxUpdateValue: function ()
@@ -870,7 +1150,7 @@
             {
                 var value = $(this).attr("value");
                 var index = parseInt($(this).attr('index'));
-                var text = $(this).html();
+                var text = $(this).attr("text");
                 if (g.hasBind('beforeSelect') && g.trigger('beforeSelect', [value, text]) == false)
                 {
                     if (p.slide) g.selectBox.slideToggle("fast");
@@ -906,10 +1186,19 @@
         },
         updateSelectBoxPosition: function ()
         {
-            var g = this, p = this.options;
-            if (p.absolute)
+            var g = this, p = this.options; 
+            if (p && p.absolute)
             {
-                g.selectBox.css({ left: g.wrapper.offset().left, top: g.wrapper.offset().top + 1 + g.wrapper.outerHeight() });
+                var contentHeight = $(document).height();
+                if (p.alwayShowInTop || Number(g.wrapper.offset().top + 1 + g.wrapper.outerHeight() + g.selectBox.height()) > contentHeight
+            			&& contentHeight > Number(g.selectBox.height() + 1))
+                {
+                    //若下拉框大小超过当前document下边框,且当前document上留白大于下拉内容高度,下拉内容向上展现
+                    g.selectBox.css({ left: g.wrapper.offset().left, top: g.wrapper.offset().top - 1 - g.selectBox.height() });
+                } else
+                {
+                    g.selectBox.css({ left: g.wrapper.offset().left, top: g.wrapper.offset().top + 1 + g.wrapper.outerHeight() });
+                } 
             }
             else
             {
@@ -970,6 +1259,39 @@
             g.isShowed = g.selectBox.is(":visible");
             g.trigger('toggle', [isHide]);
             g.trigger(isHide ? 'hide' : 'show');
+        }, 
+        _highLight: function (str, key)
+        {
+            if (!str) return str;
+            var index = str.indexOf(key);
+            if (index == -1) return str;
+            return str.substring(0, index) + "<span class='l-highLight'>" + key + "</span>" + str.substring(key.length + index);
+        },
+        _setAutocomplete: function (value) {
+            var g = this, p = this.options;
+            if (!value) return;
+            g.inputText.removeAttr("readonly");
+            var lastText = g.inputText.val();
+            g.inputText.keyup(function ()
+            {
+                setTimeout(function ()
+                {
+                    if (lastText == g.inputText.val()) return;
+                    p.initValue = "";
+                    g.valueField.val("");
+                    if (p.url)
+                    {
+                        g.setParm('key', g.inputText.val());
+                        g.set('url', p.url);
+                        g.selectBox.show();
+                    } else if (p.grid)
+                    {
+                        g.grid.setParm('key', g.inputText.val());
+                        g.grid.reload();
+                    } 
+                    lastText = g.inputText.val();
+                }, 1);
+            });
         }
     });
 
