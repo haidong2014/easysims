@@ -72,7 +72,7 @@ class User_c extends MY_Controller {
         }
         $data['usergroups'] = $usergroups;
         $data['delete_flg'] = "0";
-
+        $data['msgFlg'] = "1";
         $this->load->view('user_add_v',$data);
     }
 
@@ -113,12 +113,18 @@ class User_c extends MY_Controller {
         $data['update_time'] = $update_time;
 
         if(empty($user_id)){
-            $this->user_m->addOne($data);
+            $checkuser = $this->user_m->checkUser($user);
+            if(empty($checkuser)) {
+                $this->user_m->addOne($data);
+                redirect("user_c");
+            } else {
+
+                $this->load->view('user_add_v',$data);
+            }
         } else {
             $this->user_m->updOne($data);
+            redirect("user_c");
         }
-
-        redirect("user_c");
     }
 
     public function view_user_init($user_id = null){
@@ -157,15 +163,15 @@ class User_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
-      if ($dataug['role_id'] == $userData[0]['role_id']){
+        if ($dataug['role_id'] == $userData[0]['role_id']){
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
-      } else {
+        } else {
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
-      }
+        }
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;
-
+        $data['msgFlg'] = "1";
         $this->load->view('user_add_v',$data);
     }
 
