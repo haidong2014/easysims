@@ -27,8 +27,8 @@ class Teacher_c extends MY_Controller {
       log_message('info', "####href".$data['opt']);
     }
     foreach($teacherData as &$teacher){
-    	$now = date('Ymd');
-    	$birthday = $teacher["birthday"];
+    	$now = intval(date('Ymd'));
+    	$birthday = intval(str_replace("-","",$teacher["birthday"]));
     	$teacher["age"] = floor(($now-$birthday)/10000);
     }
     $data['teacherData'] = $teacherData;
