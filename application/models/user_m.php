@@ -34,7 +34,7 @@ class User_m extends MY_Model
         $this->db->set( 'update_time',   $data['update_time'] );
         return $this->db->insert( $this->table_name );
     }
-    
+
 
     public function updOne($data){
         $this->db->where('user_id',      $data['user_id']);
@@ -60,14 +60,13 @@ class User_m extends MY_Model
     public function checkUser($user){
         $this->db->select('user_id,user');
         $this->db->where('user', $user);
-        $this->db->where('delete_flg', 0);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+
     public function deleteOne($user_id){
-          log_message('info', "del"."|".$user_id);
         $this->db->where('user_id', $user_id);
         $this->db->set( 'delete_flg',		1 );
-		    return $this->db->update( $this->table_name );
+        return $this->db->update( $this->table_name );
     }
 }
