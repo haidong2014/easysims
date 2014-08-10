@@ -14,7 +14,7 @@
         });
 
         function addMessage() {
-            
+
             txtTitle = document.form.txtTitle.value;
             if (txtTitle == "")
             {
@@ -39,7 +39,7 @@
 </head>
 
 <body style="padding:10px">
-<div id="pageloading"></div>  
+<div id="pageloading"></div>
 <form name="form" method="post" action="<?php echo SITE_URL.'/message_c/add_message';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
@@ -51,14 +51,14 @@
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">留言内容:</td>
-            <td align="left" class="l-table-edit-td"> 
+            <td align="left" class="l-table-edit-td">
                 <textarea name="txtMessage" id="txtMessage" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="200"></textarea>
             </td>
             <td align="left"></td>
         </tr>
     </table>
     <br />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="addMessage()"/> 
+    <input type="button" value="提交" class="l-button l-button-submit" onclick="addMessage()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>
 <div style="display:none"></div>
