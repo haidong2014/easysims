@@ -2,6 +2,9 @@
 
 <script type="text/javascript">
     $(function (){
+        <?php if($msgFlg==0){?>
+            $.ligerDialog.success('系统权限设定完了!');
+        <?php }?>
 
         $("#pageloading").hide();
     });
