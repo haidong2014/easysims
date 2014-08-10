@@ -1,11 +1,18 @@
 <?php 
+/**
+ * Teacher_c
+ * @author liwei
+ *
+ */
 class Teacher_c extends MY_Controller {
   public function __construct()
    {
         parent::__construct();
         $this->load->model('teacher_m','teacher_m');
    }
-
+  /**
+   * index
+   */
 	public function index()
 	{
 	  $data = array();
@@ -29,10 +36,16 @@ class Teacher_c extends MY_Controller {
     
 		$this->load->view('teacher_lst_v',$data);
 	}
+	/**
+	 * add_teacher_init
+	 */
 	public function add_teacher_init(){
 	  $data = array();
 	  $this->load->view('teacher_add_v',$data);
 	}
+	/**
+	 * add_teacher
+	 */
 	public function add_teacher(){
 	   log_message('info','add teacher '.var_export($_POST,true));
 	   $teacher_no = $this->input->post('teacher_no');
@@ -46,31 +59,47 @@ class Teacher_c extends MY_Controller {
      $system_user = $this->input->post('system_user');
      $remarks = $this->input->post('remarks');
           
-          if($system_user){
-          	 $userinfo = $this->session->userdata('user');
-
-             //insert a user
-             $this->load->model('user_m','user_m');
-             $userData['user_id'] = $teacher_no;
-        	 $userData['user'] = $user;
-        	 $password =  getPwd(5);
-        	 $userData['password'] = md5($password);
-        
-        	 $userData['user_name'] = $teacher_name;
-        	 $userData['role_id'] = 1006;
-        	 $userData['remarks'] = $remarks;
-        	 $userData['delete_flg'] = 0;
-        	 $userData['insert_user'] = $userinfo->user_name;
-        	 $userData['insert_time'] = $insert_time;
-        	 $userData['update_user'] = $userinfo->user_name;
-        	 $userData['update_time'] = $update_time;
-             $this->user_m->addOne();
-          }
+    if($system_user){
+      // add a user
+        addUser($teacher_no,$remarks);
+    }
 	   $this->teacher_m->addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks);
      redirect("teacher_c");
 	  
 	}
+	/**
+	 * add a user if sysuser
+	 * @param unknown_type $teacher_no
+	 * @param unknown_type $remarks
+	 */
+	private function addUser($teacher_no,$remarks){
+	   $userinfo = $this->session->userdata('user');
+	   
+       //insert a user
+      $this->load->model('user_m','user_m');
+      $user= $this->user_m->getOne($teacher_no);
+      if(!empty($user)){return ;}//already exsit
+      $userData['user_id'] = $teacher_no;
+      $userData['user'] = $user;
+      $password =  getPwd(5);
+      $userData['password'] = md5($password);
+      
+      $userData['user_name'] = $teacher_name;
+      $userData['role_id'] = 1006;
+      $userData['remarks'] = $remarks;
+      $userData['delete_flg'] = 0;
+      $userData['insert_user'] = $userinfo->user_name;
+      $sys_time = date("Y-m-d H:i:s");
+      $userData['insert_time'] = $sys_time;
+      $userData['update_user'] = $userinfo->user_name;
+      $userData['update_time'] = $sys_time;
+      $this->user_m->addOne($userData);
+	}
+	/**
+	 * upd_teacher_init
+	 * @param unknown_type $teacher_id
+	 */
 	public function upd_teacher_init($teacher_id = null){
 	  
 	  $data = array();
@@ -85,7 +114,11 @@ class Teacher_c extends MY_Controller {
 
 	  $this->load->view('teacher_add_v',$teacherData);
 	}
-    public function upd_teacher($teacher_id = null){
+	/**
+	 * upd_teacher
+	 * @param unknown_type $teacher_id
+	 */
+  public function upd_teacher($teacher_id = null){
       if(empty($teacher_id)){
         $teacher_id = $this->input->post('teacher_id');
       }
@@ -99,44 +132,41 @@ class Teacher_c extends MY_Controller {
       $email = $this->input->post('email');
       $system_user = $this->input->post('system_user');
       $remarks = $this->input->post('remarks');
-          if($system_user){
-          	 $userinfo = $this->session->userdata('user');
-
-             //insert a user
-             $this->load->model('user_m','user_m');
-             $userData['user_id'] = $teacher_no;
-        	 $userData['user'] = $user;
-        	 $password =  getPwd(5);
-        	 $userData['password'] = md5($password);
-        
-        	 $userData['user_name'] = $teacher_name;
-        	 $userData['role_id'] = 1006;
-        	 $userData['remarks'] = $remarks;
-        	 $userData['delete_flg'] = 0;
-        	 $userData['insert_user'] = $userinfo->user_name;
-        	 $userData['insert_time'] = $insert_time;
-        	 $userData['update_user'] = $userinfo->user_name;
-        	 $userData['update_time'] = $update_time;
-             $this->user_m->addOne();
-          }
+      if($system_user){
+          // add a user
+          addUser($teacher_no,$remarks);
+      }else{
+          $this->load->model('user_m','user_m');
+          $user= $this->user_m->deleteOne($teacher_no);
+      }
+      
       $this->teacher_m->updateOne($teacher_no, $teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks,$teacher_id);
+          
       redirect("teacher_c");
 	}
-public function view_teacher_init($teacher_id = null){
+	/**
+	 * view_teacher_init
+	 * @param unknown_type $teacher_id
+	 */
+  public function view_teacher_init($teacher_id = null){
 	  
-	  $data = array();
-	  if(empty($teacher_id)){
+    $data = array();
+    if(empty($teacher_id)){
         $teacher_id = $this->input->get('teacher_id');
         if(empty($teacher_id)){
           $teacher_id = $this->input->post('teacher_id');
         }
      }
-	 
-	  $teacherData = $this->teacher_m->getOne($teacher_id);
-
-	  $this->load->view('teacher_view_v',$teacherData);
+   
+    $teacherData = $this->teacher_m->getOne($teacher_id);
+  
+    $this->load->view('teacher_view_v',$teacherData);
 	}
+	/**
+	 * delete_teacher
+	 * @param unknown_type $teacher_id
+	 */
    public function delete_teacher($teacher_id = null){
       if(empty($teacher_id)){
         $teacher_id = $this->input->post('teacher_id');
@@ -145,7 +175,10 @@ public function view_teacher_init($teacher_id = null){
       $this->teacher_m->deleteOne($teacher_id);
       redirect("teacher_c");
 	}
-	
+	/**
+	 * getPwd
+	 * @param unknown_type $len
+	 */
 	private function getPwd($len){
 		$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 		for($i=0; $i<$len; $i++){

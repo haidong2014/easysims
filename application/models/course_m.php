@@ -1,5 +1,5 @@
 <?php
-course course_m extends MY_Model 
+class  course_m extends MY_Model 
 {
     
     public function __construct()
@@ -17,11 +17,11 @@ course course_m extends MY_Model
        return $query->result_array();
     }
     public function addOne($course_no,$course_name, $sex,$birthday, $property, $course, 
-          $telephone, $email, $system_user, $remarks){
-      		$this->db->set( 'course_name',		$course_no );
-		  $this->db->set( 'remarks',		$remarks );
-
-		  return $this->db->insert( $this->table_name );
+        $telephone, $email, $system_user, $remarks){
+      	$this->db->set( 'course_name',		$course_no );
+  		  $this->db->set( 'remarks',		$remarks );
+  
+  		  return $this->db->insert( $this->table_name );
     }
     public function getOne($course_id){
        $this->db->where('course_id', $course_id); 

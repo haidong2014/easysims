@@ -168,4 +168,6 @@ class User_c extends MY_Controller {
 
         $this->load->view('user_add_v',$data);
     }
+    
+    
 }
