@@ -17,19 +17,22 @@ class Teacher_c extends MY_Controller {
 	{
 	  $data = array();
 	  $user = $this->session->all_userdata();
-    log_message('info', "####user".var_export($user,true));
+    	log_message('info', "####user".var_export($user,true));
 
-    $teacherData = $this->teacher_m->getList();
-    foreach($teacherData as &$data){
-      $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
-    "<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
-    "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
-      log_message('info', "####href".$data['opt']);
+    	$teacherData = $this->teacher_m->getList();
+    	foreach($teacherData as &$data){
+    	  $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
+    	"<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
+    	"<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
+    	  log_message('info', "####href".$data['opt']);
     }
+    $this->load->model('code_m','code_m');
+    
     foreach($teacherData as &$teacher){
     	$now = intval(date('Ymd'));
     	$birthday = intval(str_replace("-","",$teacher["birthday"]));
     	$teacher["age"] = floor(($now-$birthday)/10000);
+    	
     }
     $data['teacherData'] = $teacherData;
     $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
