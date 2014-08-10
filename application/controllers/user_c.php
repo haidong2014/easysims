@@ -113,18 +113,12 @@ class User_c extends MY_Controller {
         $data['update_time'] = $update_time;
 
         if(empty($user_id)){
-            $checkuser = $this->user_m->checkUser($user);
-            if(empty($checkuser)) {
-                $this->user_m->addOne($data);
-                redirect("user_c");
-            } else {
-
-                $this->load->view('user_add_v',$data);
-            }
+            $this->user_m->addOne($data);
         } else {
             $this->user_m->updOne($data);
-            redirect("user_c");
         }
+
+        redirect("user_c");
     }
 
     public function view_user_init($user_id = null){
@@ -175,5 +169,13 @@ class User_c extends MY_Controller {
         $this->load->view('user_add_v',$data);
     }
 
-
+    public function chk_user($user){
+        log_message('info', "user_c chk_user start");
+        log_message('info', "user_c chk_user post user:".$user);
+        $checkuser = $this->user_m->checkUser($user);
+        if(!empty($checkuser)){
+            echo json_encode("NG");
+        }
+        log_message('info', "user_c chk_user end");
+    }
 }
