@@ -60,6 +60,7 @@ class User_m extends MY_Model
     public function checkUser($user){
         $this->db->select('user_id,user');
         $this->db->where('user', $user);
+        $this->db->where('delete_flg', 0);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }

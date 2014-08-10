@@ -38,35 +38,35 @@ if(!empty($teacher_id)){
         var eee;
         $(function ()
         {
-            $.metadata.setType("attr", "validate");
-            var v = $("form").validate({
-                debug: false,
-                errorPlacement: function (lable, element)
-                {
-                    if (element.hasClass("l-textarea"))
-                    {
-                        element.ligerTip({ content: lable.html(), target: element[0] });
-                    }
-                    else if (element.hasClass("l-text-field"))
-                    {
-                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
-                    }
-                    else
-                    {
-                        lable.appendTo(element.parents("td:first").next("td"));
-                    }
-                },
-                success: function (lable)
-                {
-                    lable.ligerHideTip();
-                    lable.remove();
-                },
-                submitHandler: function ()
-                {
-                    $("form .l-text,.l-textarea").ligerHideTip();
-                    $("form").submit();
-                }
-            });
+//            $.metadata.setType("attr", "validate");
+//            var v = $("form").validate({
+//                debug: false,
+//                errorPlacement: function (lable, element)
+//                {
+//                    if (element.hasClass("l-textarea"))
+//                    {
+//                        element.ligerTip({ content: lable.html(), target: element[0] });
+//                    }
+//                    else if (element.hasClass("l-text-field"))
+//                    {
+//                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
+//                    }
+//                    else
+//                    {
+//                        lable.appendTo(element.parents("td:first").next("td"));
+//                    }
+//                },
+//                success: function (lable)
+//                {
+//                    lable.ligerHideTip();
+//                    lable.remove();
+//                },
+//                submitHandler: function ()
+//                {
+//                    $("form .l-text,.l-textarea").ligerHideTip();
+//                    $("form").submit();
+//                }
+//            });
             $("form").ligerForm();
             $(".l-button-test").click(function ()
             {
