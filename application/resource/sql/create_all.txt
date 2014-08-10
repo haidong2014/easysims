@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `ss_functions` (
 DROP TABLE IF EXISTS `ss_url`;		
 CREATE TABLE IF NOT EXISTS `ss_url` (		
   `function_id` int(11) NOT NULL,	
-  `url_id` char(2) NOT NULL,
+  `url_id` char(6) NOT NULL,
   `url` varchar(20) NOT NULL,
   `url_name` varchar(20) NOT NULL,		
   `remarks` varchar(100) NULL,		
@@ -376,21 +376,21 @@ INSERT INTO ss_functions (function_name, insert_time, update_time) values ("基础
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("用户权限", NOW(), NOW());
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("校长留言", NOW(), NOW());
 
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "01", "enrol_students_c", "招生信息录入", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "01", "attendance_c", "学生出勤管理", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "02", "works_c", "学生作品管理", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "03", "evaluation_c", "课程评价管理", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "01", "obtain_employment_c", "就业信息录入", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "01", "search_c", "高级查询", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "02", "art_c", "作品展示", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "01", "course_c", "课程信息维护", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "02", "class_c", "班级信息维护", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "03", "teacher_c", "教师信息维护", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "04", "student_c", "学生信息维护", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "01", "usergroups_c", "系统角色设定", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "02", "user_c", "系统用户设定", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "03", "rolesetup_c", "系统权限设定", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "01", "message_c", "校长留言", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "招生信息录入", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "学生出勤管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "学生作品管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100103", "evaluation_c", "课程评价管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "就业信息录入", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "高级查询", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "作品展示", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "课程信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "班级信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "教师信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "学生信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "系统角色设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "系统用户设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "系统权限设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "校长留言", NOW(), NOW());
 
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1000", NOW(), NOW());
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1001", NOW(), NOW());
