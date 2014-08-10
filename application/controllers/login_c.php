@@ -1,5 +1,5 @@
 <?php
-class Login_c extends MY_Controller {
+class Login_c extends Login_Controller {
     public function __construct()
     {
         parent::__construct();
@@ -18,7 +18,6 @@ class Login_c extends MY_Controller {
         $this->load->model('login_m','login_m');
         $user = $this->input->post('txtUser');
         $password = $this->input->post('txtPassword');
-        log_message('info', "login_c doLogin user&password:".$user."|".$password);
 
         $data["errFlg"] = 0;
         $data["txtUser"] = $user;

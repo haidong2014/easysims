@@ -2,7 +2,7 @@
 class User_c extends MY_Controller {
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100502");
         $this->load->model('user_m','user_m');
         $this->load->model('usergroups_m','usergroups_m');
     }
@@ -22,9 +22,9 @@ class User_c extends MY_Controller {
             $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
                          "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
             if($dataopt['delete_flg'] == "0") {
-                $dataopt['status'] = "OK";
+                $dataopt['status'] = "有效";
             } else {
-                $dataopt['status'] = "NG";
+                $dataopt['status'] = "无效";
             }
         }
 
@@ -47,9 +47,9 @@ class User_c extends MY_Controller {
             $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
                          "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
             if($dataopt['delete_flg'] == "0") {
-                $dataopt['status'] = "OK";
+                $dataopt['status'] = "有效";
             } else {
-                $dataopt['status'] = "NG";
+                $dataopt['status'] = "无效";
             }
         }
 
@@ -168,6 +168,6 @@ class User_c extends MY_Controller {
 
         $this->load->view('user_add_v',$data);
     }
-    
-    
+
+
 }

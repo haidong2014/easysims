@@ -2,7 +2,7 @@
 class Message_c extends MY_Controller {
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100601");
         $this->load->model('message_m','message_m');
     }
 

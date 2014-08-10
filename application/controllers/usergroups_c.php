@@ -2,7 +2,7 @@
 class Usergroups_c extends MY_Controller {
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100501");
         $this->load->model('usergroups_m','usergroups_m');
     }
 

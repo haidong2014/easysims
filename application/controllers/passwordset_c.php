@@ -1,5 +1,5 @@
 <?php
-class Passwordset_c extends MY_Controller {
+class Passwordset_c extends Login_Controller {
     const INPUT_REQUIRE_USERID = 1;
     const INPUT_REQUIRE_PWD = 2;
     const INPUT_REQUIRE_NEWPWD = 4;

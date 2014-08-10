@@ -2,7 +2,7 @@
 class Rolesetup_c extends MY_Controller {
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100503");
         $this->load->model('rolesetup_m','rolesetup_m');
         $this->load->model('usergroups_m','usergroups_m');
     }
@@ -34,6 +34,7 @@ class Rolesetup_c extends MY_Controller {
 
         $data['usergroups'] = $usergroups;
         $data['functionlist'] = $functionlist;
+        $data['msgFlg'] = "1";
         $this->load->view('role_setup_v',$data);
     }
 
@@ -64,6 +65,7 @@ class Rolesetup_c extends MY_Controller {
 
         $data['usergroups'] = $usergroups;
         $data['functionlist'] = $functionlist;
+        $data['msgFlg'] = "1";
         $this->load->view('role_setup_v',$data);
     }
 
@@ -114,6 +116,7 @@ class Rolesetup_c extends MY_Controller {
 
         $data['usergroups'] = $usergroups;
         $data['functionlist'] = $functionlist;
+        $data['msgFlg'] = "0";
         $this->load->view('role_setup_v',$data);
 
     }

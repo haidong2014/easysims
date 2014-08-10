@@ -10,7 +10,7 @@ class Menu_c extends MY_Controller {
   {
     $data = array();
     $menu = array();
-    $url =array();
+    $url = array();
     $username = $this->session->userdata('user_name');
     $role_id = $this->session->userdata('role_id');
 
@@ -24,5 +24,11 @@ class Menu_c extends MY_Controller {
     $data['menu'] = $menu;
     $data['url'] = $url;
     $this->load->view('menu_v',$data);
+  }
+
+  public function logout()
+  {
+    $this->session->sess_destroy();
+    redirect("login_c");
   }
 }
