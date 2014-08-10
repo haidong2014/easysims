@@ -12,6 +12,18 @@
         {
             $("#pageloading").hide();
         });
+        function checkuser(){
+            var user = document.form.txtUser.value;
+            var jqxhr = $.post("<?php echo SITE_URL.'/user_c/chk_user/';?>" + user, function(data) {
+                showMsg(data);
+            });
+        }
+        function showMsg(data){
+          if (data == "NG")) {
+              alert("此登录ID已经被注册！");
+              document.form.txtUser.value = "";
+          }
+        }
         function addUser() {
 
             txtUser = document.form.txtUser.value;
@@ -49,7 +61,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">登录ID:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="txtUser" type="text" id="txtUser" maxlength="10" value="<?php echo @$user ?>"/>
+                <input name="txtUser" type="text" id="txtUser" maxlength="10" onchange="checkuser()" value="<?php echo @$user ?>"/>
             </td>
             <td align="left"></td>
         </tr>
