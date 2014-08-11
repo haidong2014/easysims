@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>班级一览</title>
+    <link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <script src="lib/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script> 
+    <script src="AttendanceData.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var grid = null;
+        $(function () {
+            grid = $("#maingrid").ligerGrid({
+                columns: [
+                { display: '班级编号', name: 'ClassNo', align: 'left', width: 80 },
+                { display: '班级名称', name: 'ClassName', align: 'left', width: 160 },
+                { display: '开始日期', name: 'StartDate', align:'left', width: 80 },
+                { display: '结束日期', name: 'EndDate',  align: 'left', width: 80 },
+                { display: '班主任', name: 'Teacher', align: 'left', width: 80 },
+                { display: '教室', name: 'ClassRoom', align: 'left', width: 80 },
+                { display: '人数', name: 'Numbers', align: 'left', width: 80 },
+                { display: '状态', name: 'Status', align: 'left', width: 80 }
+                ],  
+                pageSize:10,
+                where : f_getWhere(),
+                data: $.extend(true,{},AttendanceData), 
+                width: '100%',height:'100%'
+            });
+
+            $("#pageloading").hide();
+        });
+        function f_search()
+        {
+            grid.options.data = $.extend(true, {}, CustomersData);
+            grid.loadData(f_getWhere());
+        }
+        function f_getWhere()
+        {
+            if (!grid) return null;
+            var clause = function (rowdata, rowindex)
+            {
+                var key = $("#txtKey").val();
+                return rowdata.CustomerID.indexOf(key) > -1;
+            };
+            return clause; 
+        }
+    </script>
+</head>
+<body style="padding:6px; overflow:hidden;">
+<div id="pageloading"></div>  
+<div id="searchbar">
+    编号或名称：<input id="txtKey" type="text" />
+    <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
+</div>
+<br>
+<div id="maingrid" style="margin:0; padding:0"></div>
+<div style="display:none;"></div>
+</body>
+</html>
