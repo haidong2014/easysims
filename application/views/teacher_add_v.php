@@ -38,41 +38,24 @@ if(!empty($teacher_id)){
         var eee;
         $(function ()
         {
-//            $.metadata.setType("attr", "validate");
-//            var v = $("form").validate({
-//                debug: false,
-//                errorPlacement: function (lable, element)
-//                {
-//                    if (element.hasClass("l-textarea"))
-//                    {
-//                        element.ligerTip({ content: lable.html(), target: element[0] });
-//                    }
-//                    else if (element.hasClass("l-text-field"))
-//                    {
-//                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
-//                    }
-//                    else
-//                    {
-//                        lable.appendTo(element.parents("td:first").next("td"));
-//                    }
-//                },
-//                success: function (lable)
-//                {
-//                    lable.ligerHideTip();
-//                    lable.remove();
-//                },
-//                submitHandler: function ()
-//                {
-//                    $("form .l-text,.l-textarea").ligerHideTip();
-//                    $("form").submit();
-//                }
-//            });
             $("form").ligerForm();
-            $(".l-button-test").click(function ()
-            {
-                alert(v.element($("#txtName")));
-            });
         });
+        
+        function checkUser(){
+            var user = document.form.teacher_no.value;
+            var jqxhr = $.post("<?php echo SITE_URL.'/user_c/chk_user/';?>" + user+'/'+'<?php echo @$teacher_id?>', function(data) {
+                showMsg(data);
+            });
+        }
+        function showMsg(data){
+          if (data != "") {
+              //alert(data.replace(/\"/g, ""));
+              document.form.teacher_no.value = "";
+              return ;
+          }
+          document.form.submit();
+        }
+        
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -148,7 +131,7 @@ if(!empty($teacher_id)){
         </table>
     <br />
     <input type="hidden" name="teacher_id"  value="<?php echo @$teacher_id?>" />
-    <input type="submit" value="提交" class="l-button l-button-submit" />
+    <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
     <input type="reset" value="重置" class="l-button l-button-reset"/>
     </form>
     <div style="display:none"></div>
