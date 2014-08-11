@@ -73,6 +73,10 @@ class User_c extends MY_Controller {
         $data['usergroups'] = $usergroups;
         $data['delete_flg'] = "0";
         $data['msgFlg'] = "1";
+        $data['user'] = "";
+        $data['user_name'] = "";
+        $data['remarks'] = "";
+        $data['user_id'] = "";
         $this->load->view('user_add_v',$data);
     }
 
@@ -173,9 +177,11 @@ class User_c extends MY_Controller {
         log_message('info', "user_c chk_user start");
         log_message('info', "user_c chk_user post user:".$user);
         $checkuser = $this->user_m->checkUser($user);
+        $msg = "此登录ID已经被注册！";
         if(!empty($checkuser)){
-            echo json_encode("NG");
+            echo urldecode(json_encode(urlencode($msg)));
         }
+
         log_message('info', "user_c chk_user end");
     }
 }
