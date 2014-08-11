@@ -27,12 +27,14 @@ class Teacher_c extends MY_Controller {
     	  log_message('info', "####href".$data['opt']);
     }
     $this->load->model('code_m','code_m');
-    
+    $codes = $this->code_m->getList();
     foreach($teacherData as &$teacher){
     	$now = intval(date('Ymd'));
     	$birthday = intval(str_replace("-","",$teacher["birthday"]));
     	$teacher["age"] = floor(($now-$birthday)/10000);
     	
+    	$teacher["sex"] = $codes["SEX"][$teacher["sex"]];
+    	$teacher["property"] = $codes["PROPERTY"][$teacher["property"]];
     }
     $data['teacherData'] = $teacherData;
     $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
