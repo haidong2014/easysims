@@ -5,57 +5,67 @@ class Attendance_c extends MY_Controller {
         parent::__construct("100101");
         $this->load->model('class_m','class_m');
         $this->load->model('student_m','student_m');
+        $this->load->model('attendance_m','attendance_m');
     }
 
     public function index()
     {
         $data = array();
-        $dataopt = array();
+        $classData = array();
+
         $user = $this->session->all_userdata();
         log_message('info', "attendance_c index user:".var_export($user,true));
         log_message('info', "attendance_c index post:".var_export($_POST,true));
 
         $data['search_key'] =  $this->input->post('txtKey');
-        $userData = $this->class_m->getList($data);
+        $classData = $this->class_m->getList($data);
 
-        foreach($userData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
-            if($dataopt['delete_flg'] == "0") {
-                $dataopt['status'] = "有效";
-            } else {
-                $dataopt['status'] = "无效";
-            }
+        foreach($classData as &$temp){
+            $temp['class_no']="<a href=\"".SITE_URL."/attendance_c/student_lst/".$temp['class_no']."\">".$temp['class_no']."</a>";
         }
 
-        $data['userData'] = @json_encode(array('Rows'=>$userData));
-
-        $this->load->view('user_lst_v',$data);
+        $data['classData'] = @json_encode(array('Rows'=>$classData));
+        $this->load->view('attendance_class_v',$data);
     }
 
-    public function search_user()
+    public function search_class()
     {
         $data = array();
+        $classData = array();
+
         $user = $this->session->all_userdata();
-        log_message('info', "user_c search_user user:".var_export($user,true));
-        log_message('info', "user_c search_user post:".var_export($_POST,true));
+        log_message('info', "attendance_c search_class user:".var_export($user,true));
+        log_message('info', "attendance_c search_class post:".var_export($_POST,true));
 
         $data['search_key'] = $this->input->post('txtKey');
-        $userData = $this->user_m->getList($data);
+        $classData = $this->class_m->getList($data);
 
-        foreach($userData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
-            if($dataopt['delete_flg'] == "0") {
-                $dataopt['status'] = "有效";
-            } else {
-                $dataopt['status'] = "无效";
-            }
+        foreach($classData as &$temp){
+            $temp['class_no']="<a href=\"".SITE_URL."/attendance_c/student_lst/".$temp['class_no']."\">".$temp['class_no']."</a>";
         }
 
-        $data['userData'] = @json_encode(array('Rows'=>$userData));
+        $data['classData'] = @json_encode(array('Rows'=>$classData));
+        $this->load->view('attendance_class_v',$data);
+    }
 
-        $this->load->view('user_lst_v',$data);
+    public function student_lst($class_no){
+        $data = array();
+        $studentData = array();
+
+        $user = $this->session->all_userdata();
+        log_message('info', "attendance_c student_lst user:".var_export($user,true));
+        log_message('info', "attendance_c student_lst post:".var_export($_POST,true));
+
+        $data['search_key'] =  $this->input->post('txtKey');
+        $data['class_no'] =  $class_no;
+        $studentData = $this->attendance_m->getAttendanceList($data);
+
+        foreach($studentData as &$temp){
+            $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/student_lst/".$temp['student_no']."\">".$temp['student_no']."</a>";
+        }
+
+        $data['studentData'] = @json_encode(array('Rows'=>$studentData));
+        $this->load->view('attendance_lst_v',$data);
     }
 
     public function add_user_init(){
