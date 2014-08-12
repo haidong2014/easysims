@@ -307,9 +307,10 @@ CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation_others` (
 		
 DROP TABLE IF EXISTS `ss_code`;							
 CREATE TABLE IF NOT EXISTS `ss_code` (							
-  `code` varchar(10) NOT NULL,							
-  `code_no` varchar(10) NOT NULL,							
-  `code_name` varchar(10) NOT NULL,							
+  `code` varchar(2) NOT NULL,							
+  `code_no` varchar(2) NOT NULL,							
+  `code_name` varchar(10) NOT NULL,	
+  `remarks` varchar(100) NULL,		  
   `delete_flg` char(1) NULL DEFAULT '0',							
   `insert_user` varchar(20) NULL DEFAULT 'system',							
   `insert_time` timestamp NULL,							
@@ -336,28 +337,28 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
 
 INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("DELETE_FLG", "0", "未删除", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("DELETE_FLG", "1", "删除", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("SEX", "1", "男", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("SEX", "2", "女", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("PROPERTY", "1", "专", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("PROPERTY", "2", "兼", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("SYSTEM_USER", "0", "有效", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("SYSTEM_USER", "1", "无效", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("STATUS", "1", "招生", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("STATUS", "2", "开课", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("STATUS", "3", "结课", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("STATUS", "4", "取消", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("GRADUATE", "1", "本科以上", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("GRADUATE", "2", "本科", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("GRADUATE", "3", "专科", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("GRADUATE", "4", "专科以下", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM", "1", "上午", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM", "2", "下午", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM_STATUS", "1", "出勤", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM_STATUS", "2", "迟到", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM_STATUS", "3", "请假", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, insert_time, update_time) values ("AMPM_STATUS", "4", "旷课", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "未删除", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "删除", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "男", "SEX", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "2", "女", "SEX", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "1", "专", "PROPERTY", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "2", "兼", "PROPERTY", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "0", "有效", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "1", "无效", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "1", "招生", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "2", "开课", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "3", "结课", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "4", "取消", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "1", "本科以上", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "2", "本科", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "3", "专科", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "4", "专科以下", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "1", "上午", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "2", "下午", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "1", "出勤", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "迟到", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "请假", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "旷课", "AMPM_STATUS", NOW(), NOW());
 
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("系统管理员", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("校长", NOW(), NOW());
