@@ -1,69 +1,67 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>学生出勤一览</title>
-    <link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
-    <script src="lib/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/core/base.js" type="text/javascript"></script>
-    <script src="lib/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script> 
-    <script src="AttendanceLstData.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var grid = null;
-        $(function () {
-            grid = $("#maingrid").ligerGrid({
-                columns: [
-                { display: '学生编号', name: 'StudentNo', align: 'left', width: 80 },
-                { display: '学生姓名', name: 'StudentName', align: 'left', width: 160 },
-                { display: '手机号码', name: 'Telephone', align: 'left', width: 160 },
-                { display: '出勤次数', name: 'AttendanceStatus_1' , width: 80},
-                { display: '迟到次数', name: 'AttendanceStatus_2' , width: 80},
-                { display: '请假次数', name: 'AttendanceStatus_3' , width: 80},
-                { display: '旷课次数', name: 'AttendanceStatus_4' , width: 80}
-                ],  
-                pageSize:10,
-                where : f_getWhere(),
-                data: $.extend(true,{},AttendanceLstData), 
-                width: '100%',height:'100%'
-            });
-
-            $("#pageloading").hide();
+﻿<?php require_once("_header.php");?>
+<script type="text/javascript">
+    var studentData = <?php echo $studentData?>;
+    var grid = null;
+    $(function () {
+        grid = $("#maingrid").ligerGrid({
+            columns: [
+            { display: '学生编号', name: 'student_no', align: 'left', width: 80 },
+            { display: '学生姓名', name: 'student_name', align: 'left', width: 160 },
+            { display: '联络方式', name: 'contact_way', align: 'left', width: 160 },
+            { display: '出勤次数', name: 'AttendanceStatus_1' , width: 80},
+            { display: '迟到次数', name: 'AttendanceStatus_2' , width: 80},
+            { display: '请假次数', name: 'AttendanceStatus_3' , width: 80},
+            { display: '旷课次数', name: 'AttendanceStatus_4' , width: 80}
+            ],
+            pageSize:10,
+            where : f_getWhere(),
+            data: $.extend(true,{},studentData),
+            width: '100%',height:'100%'
         });
-        function f_search()
-        {
-            grid.options.data = $.extend(true, {}, CustomersData);
-            grid.loadData(f_getWhere());
-        }
-        function f_getWhere()
-        {
-            if (!grid) return null;
-            var clause = function (rowdata, rowindex)
-            {
-                var key = $("#txtKey").val();
-                return rowdata.CustomerID.indexOf(key) > -1;
-            };
-            return clause; 
-        }
-		function regist_click()
-        {
-			location.href = "attendance_add.html";
-        }
 
-        function returnPage() {
-            location.href = "attendance_class.html";
-        }
-    </script>
+        $("#pageloading").hide();
+    });
+    function f_search()
+    {
+        grid.options.data = $.extend(true, {}, CustomersData);
+        grid.loadData(f_getWhere());
+    }
+    function f_getWhere()
+    {
+        if (!grid) return null;
+        var clause = function (rowdata, rowindex)
+        {
+            var key = $("#txtKey").val();
+            return rowdata.CustomerID.indexOf(key) > -1;
+        };
+        return clause;
+    }
+  function regist_click()
+    {
+    location.href = "attendance_add.html";
+    }
+
+    function returnPage() {
+        location.href = "attendance_class.html";
+    }
+</script>
 </head>
 <body style="padding:6px; overflow:hidden;">
-<div id="pageloading"></div> 
-<div id="searchbar">
-    编号或姓名：<input id="txtKey" type="text" />
-    <input id="button" type="button" value=" 查 询 " onclick="f_search()" />
-	<input id="regist" type="button" value=" 点 名 " onclick="regist_click()" />
-    <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
-</div>
-<br>
-<div id="maingrid" style="margin:0; padding:0"></div>
+<div id="pageloading"></div>
+<div id="searchbar"></div>
+<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/search_class';?>" id="form">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        <tr>
+            &nbsp学生姓名：
+            <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
+            <input type="submit" value=" 查 询 " />&nbsp
+            <input id="attendance" type="button" value=" 点 名 " onclick="attendance_click()" />&nbsp
+            <input id="return" type="button" value=" 返 回 " onclick="return_click()" />
+        </tr>
+    </table>
+    <br>
+    <div id="maingrid" style="margin:0; padding:0"></div>
+</form>
 <div style="display:none;"></div>
 </body>
 </html>
