@@ -90,7 +90,8 @@ CREATE TABLE IF NOT EXISTS `ss_teachers` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 		
 DROP TABLE IF EXISTS `ss_course`;		
-CREATE TABLE IF NOT EXISTS `ss_course` (		
+CREATE TABLE IF NOT EXISTS `ss_course` (	
+  `course_id` int(11) NOT NULL AUTO_INCREMENT,		
   `course_no` varchar(10) NOT NULL,		
   `course_name` varchar(30) NOT NULL,		
   `remarks` varchar(100) NULL,		
@@ -99,11 +100,11 @@ CREATE TABLE IF NOT EXISTS `ss_course` (
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp NULL,		
-  PRIMARY KEY (`course_no`)		
+  PRIMARY KEY (`course_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_subject`;		
-CREATE TABLE IF NOT EXISTS `ss_subject` (		
+CREATE TABLE IF NOT EXISTS `ss_subject` (	
   `course_no` varchar(10) NOT NULL,		
   `subject_no` varchar(10) NOT NULL,		
   `subject_name` varchar(30) NOT NULL,		
@@ -119,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `ss_subject` (
 		
 DROP TABLE IF EXISTS `ss_class`;		
 CREATE TABLE IF NOT EXISTS `ss_class` (		
+  `class_id` int(11) NOT NULL AUTO_INCREMENT,	
   `class_no` varchar(10) NOT NULL,		
   `class_name` varchar(30) NOT NULL,		
   `start_year` char(4) NULL,		
@@ -137,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `ss_class` (
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_no`)		
+  PRIMARY KEY (`class_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_class_course`;		
