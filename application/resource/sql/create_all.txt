@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `ss_users` (
   `update_user` varchar(20) NULL DEFAULT 'system',	
   `update_time` timestamp  NULL,	
   PRIMARY KEY (`user_id`)	
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;	
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;	
 		
 DROP TABLE IF EXISTS `ss_roles`;		
 CREATE TABLE IF NOT EXISTS `ss_roles` (		
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `ss_roles` (
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp NULL,		
   PRIMARY KEY (`role_id`)		
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 				
 DROP TABLE IF EXISTS `ss_functions`;		
 CREATE TABLE IF NOT EXISTS `ss_functions` (		
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `ss_functions` (
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp NULL,		
   PRIMARY KEY (`function_id`)		
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;
 
 DROP TABLE IF EXISTS `ss_url`;		
 CREATE TABLE IF NOT EXISTS `ss_url` (		
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `ss_teachers` (
   `update_time` timestamp NULL,		
   PRIMARY KEY (`teacher_id`),		
   KEY `teacher_name` (`teacher_name`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 		
 DROP TABLE IF EXISTS `ss_course`;		
 CREATE TABLE IF NOT EXISTS `ss_course` (	
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
   PRIMARY KEY (`message_id`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 
 INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
