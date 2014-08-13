@@ -21,6 +21,10 @@ class Message_m extends MY_Model
             $this->db->where('message_title like', '%'.$data['search_key'].'%');
         }
 
+        if($data['user_cd'] <> null && trim($data['user_cd']) <> ""){
+            $this->db->where('insert_user', $data['user_cd']);
+        }
+
         $this->db->where('delete_flg', 0);
 
         $query =  $this->db->get($this->table_name);
