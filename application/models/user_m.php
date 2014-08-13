@@ -66,7 +66,7 @@ class User_m extends MY_Model
 	public function checkUser2($user,$userId){
         $this->db->select('user_id,user');
         $this->db->where('user', $user);
-         $this->db->where('user_id<>', $userId);
+         $this->db->where('user_id<>', $userId,false);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }

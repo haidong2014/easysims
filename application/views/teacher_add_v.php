@@ -42,17 +42,24 @@ if(!empty($teacher_id)){
         });
         
         function checkUser(){
+            if(document.getElementById('system_user_0').checked==false){
+            	document.form.submit();
+            }
             var user = document.form.teacher_no.value;
-            var jqxhr = $.post("<?php echo SITE_URL.'/user_c/chk_user/';?>" + user+'/'+'<?php echo @$teacher_id?>', function(data) {
+           // alert("<?php echo SITE_URL.'/user_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_id?>');
+            var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_id?>', function(data) {
+            
                 showMsg(data);
             });
         }
-        function showMsg(data){
+        function showMsg(data){alert('112');
           if (data != "") {
               //alert(data.replace(/\"/g, ""));
+              alert('教师编号重复');
               document.form.teacher_no.value = "";
               return ;
           }
+          alert('111');
           document.form.submit();
         }
         
