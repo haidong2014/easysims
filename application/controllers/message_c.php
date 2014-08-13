@@ -73,6 +73,15 @@ class Message_c extends MY_Controller {
         $data['month'] = $month;
         $data['search_ym'] =  $search_ym;
         $data['search_key'] =  $this->input->post('txtKey');
+        $role_id = $user['role_id'];
+        $user_cd = $user['user'];
+        if ($role_id == "1001") {
+            $data['user_cd'] = "";
+            $data['show_flg'] = "1";
+        } else {
+            $data['user_cd'] = $user_cd;
+            $data['show_flg'] = "0";
+        }
         $messageData = $this->message_m->getList($data);
         $data['messageData'] = @json_encode(array('Rows'=>$messageData));
 
@@ -125,6 +134,15 @@ class Message_c extends MY_Controller {
         $data['month'] = $month;
         $data['search_ym'] =  $search_ym;
         $data['search_key'] = $this->input->post('txtKey');
+        $role_id = $user['role_id'];
+        $user_cd = $user['user'];
+        if ($role_id == "1001") {
+            $data['user_cd'] = "";
+            $data['show_flg'] = "1";
+        } else {
+            $data['user_cd'] = $user_cd;
+            $data['show_flg'] = "0";
+        }
         $messageData = $this->message_m->getList($data);
         $data['messageData'] = @json_encode(array('Rows'=>$messageData));
 

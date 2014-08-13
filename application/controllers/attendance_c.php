@@ -65,7 +65,55 @@ class Attendance_c extends MY_Controller {
         }
 
         $data['studentData'] = @json_encode(array('Rows'=>$studentData));
+        $data['class_no'] = $class_no;
         $this->load->view('attendance_lst_v',$data);
+    }
+
+    public function search_student()
+    {
+        $data = array();
+        $studentData = array();
+
+        $user = $this->session->all_userdata();
+        log_message('info', "attendance_c student_lst user:".var_export($user,true));
+        log_message('info', "attendance_c student_lst post:".var_export($_POST,true));
+
+        $data['search_key'] =  $this->input->post('txtKey');
+        $data['class_no'] =  $this->input->post('txtClassNo');
+        $studentData = $this->attendance_m->getAttendanceList($data);
+
+        foreach($studentData as &$temp){
+            $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/student_lst/".$temp['student_no']."\">".$temp['student_no']."</a>";
+        }
+
+        $data['studentData'] = @json_encode(array('Rows'=>$studentData));
+        $this->load->view('attendance_lst_v',$data);
+    }
+
+    public function add_attendance_init($class_no)
+    {
+        $data = array();
+        $studentData = array();
+
+        $user = $this->session->all_userdata();
+        log_message('info', "attendance_c add_attendance_init user:".var_export($user,true));
+        log_message('info', "attendance_c add_attendance_init post:".var_export($_POST,true));
+
+        $data['search_key'] =  "";
+        $data['class_no'] =  $class_no;
+        $today = date("Y-m-d");
+        $studentData = $this->attendance_m->getAttendanceList($data);
+        $i = 0;
+        foreach($studentData as &$temp){
+            $temp['attendance_am']="<input id='am_'".$i." type='radio' name='am_'".$i." value='1' checked='checked' /><label for='am_'".$i.">出勤</label>&nbsp<input id='am_'".$i." type='radio' name='am_'".$i." value='2' />&nbsp<label for='am_'".$i.">迟到</label><input id='am_'".$i." type='radio' name='am_'".$i." value='3' />&nbsp<label for='am_'".$i.">请假</label><input id='am_'".$i." type='radio' name='am_'".$i." value='4' />&nbsp<label for='am_'".$i.">旷课</label>";
+            $temp['attendance_pm']="<input id='pm_'".$i." type='radio' name='pm_'".$i." value='1' checked='checked' /><label for='pm_'".$i.">出勤</label>&nbsp<input id='pm_'".$i." type='radio' name='pm_'".$i." value='2' />&nbsp<label for='pm_'".$i.">迟到</label><input id='pm_'".$i." type='radio' name='pm_'".$i." value='3' />&nbsp<label for='pm_'".$i.">请假</label><input id='pm_'".$i." type='radio' name='pm_'".$i." value='4' />&nbsp<label for='pm_'".$i.">旷课</label>";
+            $i = $i + 1;
+        }
+        log_message('info', "attendance_c add_attendance_init post:".var_export($studentData,true));
+
+        $data['studentData'] = @json_encode(array('Rows'=>$studentData));
+        $data['today'] = $today;
+        $this->load->view('attendance_add_v',$data);
     }
 
     public function add_user_init(){
