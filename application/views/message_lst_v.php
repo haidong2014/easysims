@@ -65,7 +65,9 @@
             &nbsp标题：
             <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
             <input type="submit" value=" 查 询 " />&nbsp
-            <input type="button" value="校长留言" onclick="regist_click()" />
+            <?php if ($show_flg == "0"){?>
+                <input type="button" value="校长留言" onclick="regist_click()" />
+            <?php } ?>
         </tr>
     </table>
     <br>
