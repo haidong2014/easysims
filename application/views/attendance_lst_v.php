@@ -8,10 +8,10 @@
             { display: '学生编号', name: 'student_no', align: 'left', width: 80 },
             { display: '学生姓名', name: 'student_name', align: 'left', width: 160 },
             { display: '联络方式', name: 'contact_way', align: 'left', width: 160 },
-            { display: '出勤次数', name: 'AttendanceStatus_1' , width: 80},
-            { display: '迟到次数', name: 'AttendanceStatus_2' , width: 80},
-            { display: '请假次数', name: 'AttendanceStatus_3' , width: 80},
-            { display: '旷课次数', name: 'AttendanceStatus_4' , width: 80}
+            { display: '出勤次数', name: 'status_1' , width: 80},
+            { display: '迟到次数', name: 'status_2' , width: 80},
+            { display: '请假次数', name: 'status_3' , width: 80},
+            { display: '旷课次数', name: 'status_4' , width: 80}
             ],
             pageSize:10,
             where : f_getWhere(),

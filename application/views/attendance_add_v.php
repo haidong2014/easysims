@@ -50,12 +50,12 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/search_student';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/add_attendance';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
-            &nbsp日期：<?php echo $today?>
-            <input id="attendance" type="button" value=" 提交 " onclick="attendance_click()" />&nbsp
-            <input id="return" type="button" value=" 返 回 " onclick="returnPage()" />
+            &nbsp日期：<?php echo $today?>&nbsp
+            <input type="submit" value=" 提交 " />&nbsp
+            <input type="button" value=" 返 回 " onclick="returnPage()" />
             <input type="hidden" name="txtClassNo" value="<?php echo @$class_no?>" />
         </tr>
     </table>
