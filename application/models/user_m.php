@@ -63,10 +63,13 @@ class User_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
-	public function checkUser2($user,$userId){
+	public function checkUser2($user,$old_teacher_no){
         $this->db->select('user_id,user');
         $this->db->where('user', $user);
-         $this->db->where('user_id<>', $userId,false);
+        if(!empty($old_teacher_no)){
+        	$this->db->where('user !=', $old_teacher_no);
+        }
+        log_message('info','teachter ddd'.$user."|".$old_teacher_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }

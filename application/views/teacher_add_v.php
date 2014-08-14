@@ -42,24 +42,31 @@ if(!empty($teacher_id)){
         });
         
         function checkUser(){
+            if(document.getElementById('teacher_no').value==""){
+            	alert('教师编号不能为空');return;
+            }
+            if(document.getElementById('teacher_name').value==""){
+            	alert('教师名不能为空');return;
+            }
+
             if(document.getElementById('system_user_0').checked==false){
             	document.form.submit();
             }
             var user = document.form.teacher_no.value;
-           // alert("<?php echo SITE_URL.'/user_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_id?>');
-            var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_id?>', function(data) {
+           // alert("<?php echo SITE_URL.'/user_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_no?>');
+            var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_user/';?>" + document.getElementById('teacher_no').value+'/'+'<?php echo @$teacher_no?>', function(data) {
             
                 showMsg(data);
             });
         }
         function showMsg(data){alert('112');
           if (data != "") {
-              //alert(data.replace(/\"/g, ""));
-              alert('教师编号重复');
+              alert(data.replace(/\"/g, ""));
+              //alert('教师编号重复');
               document.form.teacher_no.value = "";
               return ;
           }
-          alert('111');
+          //alert('111');
           document.form.submit();
         }
         
@@ -138,6 +145,7 @@ if(!empty($teacher_id)){
         </table>
     <br />
     <input type="hidden" name="teacher_id"  value="<?php echo @$teacher_id?>" />
+    <input type="hidden" name="old_teacher_no"  value="<?php echo @$teacher_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
     <input type="reset" value="重置" class="l-button l-button-reset"/>
     </form>
