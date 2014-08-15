@@ -34,7 +34,12 @@
         return clause;
     }
     function returnPage() {
-        location.href = "attendance_lst.html";
+        var class_no = document.form.txtClassNo.value;
+        location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_no;
+    }
+    function search_click()
+    {
+        document.form.submit();
     }
 </script>
 <style type="text/css">
@@ -47,42 +52,29 @@
 </head>
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
-<div id="searchbar">
-    &nbsp年月：
-  <select name="ddlYear" id="ddlYear" ltype="select">
-    <option value="0"></option>
-    <option value="1" selected>2014年</option>
-    <option value="2">2013年</option>
-    <option value="3">2012年</option>
-    <option value="4">2011年</option>
-    <option value="5">2010年</option>
-    <option value="6">2009年</option>
-    <option value="7">2008年</option>
-    <option value="8">2007年</option>
-    <option value="9">2006年</option>
-    <option value="10">2005年</option>
-  </select>
-  <select name="ddlMonth" id="ddlMonth" ltype="select">
-    <option value="0"></option>
-    <option value="1">1月</option>
-    <option value="2">2月</option>
-    <option value="3">3月</option>
-    <option value="4">4月</option>
-    <option value="5">5月</option>
-    <option value="6">6月</option>
-    <option value="7">7月</option>
-    <option value="8" selected>8月</option>
-    <option value="9">9月</option>
-    <option value="10">10月</option>
-    <option value="11">11月</option>
-    <option value="12">12月</option>
-  </select>
-    <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
-</div>
-<br>
-学生编号：NO00001 &nbsp&nbsp 学生姓名：张三
+<div id="searchbar"></div>
+<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/show_student';?>" id="form">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        <tr>
+            &nbsp年月:
+            <select name="ddlYear" id="ddlYear" onchange="search_click()">
+                <?php foreach($year as $y){?>
+                    <option value="<?php echo $y['id']?>" <?php echo $y['sel']?>><?php echo $y['name']?></option>
+                <?php } ?>
+            </select>
+            <select name="ddlMonth" id="ddlMonth" onchange="search_click()">
+                <?php foreach($month as $m){?>
+                    <option value="<?php echo $m['id']?>" <?php echo $m['sel']?>><?php echo $m['name']?></option>
+                <?php } ?>
+            </select>&nbsp
+            <input type="button" value=" 返 回 " onclick="returnPage()" />
+            <input type="hidden" name="txtClassNo" value="<?php echo @$class_no?>" />
+            <input type="hidden" name="txtStudentNo" value="<?php echo @$student_no?>" />
+        </tr>
+    </table>
+&nbsp学生编号：<?php echo $student_no?> &nbsp&nbsp 学生姓名：<?php echo $student_name?>
 <div id="maingrid" style="margin:0; padding:0"></div>
+</form>
 <div style="display:none;"></div>
-<br>
 </body>
 </html>
