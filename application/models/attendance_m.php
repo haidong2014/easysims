@@ -47,6 +47,10 @@ class Attendance_m extends MY_Model
         $this->db->join('ss_code t4', 't4.code_no=t1.status and t4.code='."08", 'left');
         $this->db->where('t1.class_no', $data['class_no']);
         $this->db->where('t1.student_no', $data['student_no']);
+        if (!empty($data['search_ymd_start']) && !empty($data['search_ymd_end'])) {
+            $this->db->where('t1.today >=', $data['search_ymd_start']);
+            $this->db->where('t1.today <=', $data['search_ymd_end']);
+        }
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.today','esc');
         $query = $this->db->get();
