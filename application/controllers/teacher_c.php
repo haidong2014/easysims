@@ -204,15 +204,16 @@ class Teacher_c extends MY_Controller {
 	 	return $rand_str;
 	}
 	
-	public function chk_user($user,$userId){
-        log_message('info', "user_c chk_user start");
-        log_message('info', "user_c chk_user post user:".$user);
-        $checkuser = $this->user_m->checkUser2($user,$userId);
+	public function chk_user($user, $old_teacher_no = null){
+        log_message('info', "teacher_c chk_user start");
+        log_message('info', "teacher_c chk_user post user:".$user." : :".$old_teacher_no);
+        $this->load->model('user_m','user_m');
+        $checkuser = $this->user_m->checkUser2($user,$old_teacher_no);
         $msg = "此登录ID已经被注册！";
         if(!empty($checkuser)){
             echo urldecode(json_encode(urlencode($msg)));
         }
 
-        log_message('info', "user_c chk_user end");
+        log_message('info', "teacher_c chk_user end".var_export($checkuser,true));
     }
 }
