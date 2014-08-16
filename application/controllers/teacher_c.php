@@ -15,29 +15,31 @@ class Teacher_c extends MY_Controller {
    */
 	public function index()
 	{
-	  $data = array();
-	  $user = $this->session->all_userdata();
+    	$data = array();
+    	$user = $this->session->all_userdata();
     	log_message('info', "####user".var_export($user,true));
-
-    	$teacherData = $this->teacher_m->getList();
+        $keyword = $this->input->post('txtKey');
+        log_message('info','keyword'.$keyword);
+    	$teacherData = $this->teacher_m->getList($keyword);
     	foreach($teacherData as &$data){
-    	  $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
-    	"<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
-    	"<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
-    	  log_message('info', "####href".$data['opt']);
-    }
-    $this->load->model('code_m','code_m');
-    $codes = $this->code_m->getList();
-    foreach($teacherData as &$teacher){
-    	$now = intval(date('Ymd'));
-    	$birthday = intval(str_replace("-","",$teacher["birthday"]));
-    	$teacher["age"] = floor(($now-$birthday)/10000);
-    	
-    	$teacher["sex"] = $codes["SEX"][$teacher["sex"]];
-    	$teacher["property"] = $codes["PROPERTY"][$teacher["property"]];
-    }
-    $data['teacherData'] = $teacherData;
-    $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
+        	  $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
+        	"<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
+        	"<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
+        	  //log_message('info', "####href".$data['opt']);
+        }
+        $this->load->model('code_m','code_m');
+        $codes = $this->code_m->getList();
+        foreach($teacherData as &$teacher){
+        	$now = intval(date('Ymd'));
+        	$birthday = intval(str_replace("-","",$teacher["birthday"]));
+        	$teacher["age"] = floor(($now-$birthday)/10000);
+        	
+        	$teacher["sex"] = $codes["SEX"][$teacher["sex"]];
+        	$teacher["property"] = $codes["PROPERTY"][$teacher["property"]];
+        }
+        $data['teacherData'] = $teacherData;
+        $data['txtKey'] = $keyword;
+        $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
     
 		$this->load->view('teacher_lst_v',$data);
 	}
@@ -59,18 +61,18 @@ class Teacher_c extends MY_Controller {
 	   $birthday = $this->input->post('birthday');
 	   $property = $this->input->post('property');
 	   $course = $this->input->post('course');
-     $telephone = $this->input->post('telephone');
-     $email = $this->input->post('email');
-     $system_user = $this->input->post('system_user');
-     $remarks = $this->input->post('remarks');
-          
-    if($system_user){
-      // add a user
-        self::addUser($teacher_no,$teacher_name,$remarks);
-    }
+       $telephone = $this->input->post('telephone');
+       $email = $this->input->post('email');
+       $system_user = $this->input->post('system_user');
+       $remarks = $this->input->post('remarks');
+            
+      if($system_user){
+        // add a user
+          self::addUser($teacher_no,$teacher_name,$remarks);
+      }
 	   $this->teacher_m->addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course, 
           $telephone, $email, $system_user, $remarks);
-     redirect("teacher_c");
+       redirect("teacher_c");
 	  
 	}
 	/**
@@ -79,8 +81,8 @@ class Teacher_c extends MY_Controller {
 	 * @param unknown_type $remarks
 	 */
 	private function addUser($teacher_no,$teacher_name,$remarks){
-	   $userinfo = $this->session->userdata('user');
-	   log_message('info', " add user userinfo:".var_export($userinfo,true));
+      $userinfo = $this->session->userdata('user');
+      log_message('info', " add user userinfo:".var_export($userinfo,true));
        //insert a user
       $this->load->model('user_m','user_m');
       $chkuser= $this->user_m->checkUser($teacher_no);
@@ -216,4 +218,6 @@ class Teacher_c extends MY_Controller {
 
         log_message('info', "teacher_c chk_user end".var_export($checkuser,true));
     }
+    
+    
 }
