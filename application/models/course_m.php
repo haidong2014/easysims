@@ -16,12 +16,11 @@ class  course_m extends MY_Model
        $query =  $this->db->get($this->table_name);
        return $query->result_array();
     }
-    public function addOne($course_no,$course_name, $sex,$birthday, $property, $course, 
-        $telephone, $email, $system_user, $remarks){
+    public function addOne($course_no, $course_name, $course_no, $remarks){
       	$this->db->set( 'course_name',		$course_no );
-  		  $this->db->set( 'remarks',		$remarks );
+  		$this->db->set( 'remarks',		$remarks );
   
-  		  return $this->db->insert( $this->table_name );
+  		return $this->db->insert( $this->table_name );
     }
     public function getOne($course_id){
        $this->db->where('course_id', $course_id); 
@@ -33,26 +32,24 @@ class  course_m extends MY_Model
        foreach ($query->result_array() as $row){
          $course = $row;
        }
-    	 return $course;
+    	return $course;
     }
     
-    public function updateOne($course_name, $sex,$birthday, $id_card, 
-        $contact_way, $parent_phone,  $system_user, $remarks,$course_id){
-          log_message('info', "ddd".$course_name."|".$sex."|".$birthday."|".$id_card."|".
-        $contact_way."|".$parent_phone."|".$system_user."|".$remarks."|".$course_id);
+    public function updateOne($course_no, $course_name, $remarks,$course_id){
+        log_message('info', "ddd".$course_name."|".$course_no."|".$remarks."|".$course_id);
         $this->db->where('course_id', $course_id);
         $this->db->set( 'course_name',		$course_name );
-        
+        $this->db->set( 'course_no',		$course_no );
         $this->db->set( 'remarks',		$remarks );
 
-		    return $this->db->update( $this->table_name );
+		return $this->db->update( $this->table_name );
     }
     
     public function deleteOne($course_id){
-          log_message('info', "del"."|".$course_id);
+        log_message('info', "del"."|".$course_id);
         $this->db->where('course_id', $course_id);
         $this->db->set( 'delete_flg',		1 );
-		    return $this->db->update( $this->table_name );
+		return $this->db->update( $this->table_name );
     }
     
     public function checkRepeat($new_no, $old_no){

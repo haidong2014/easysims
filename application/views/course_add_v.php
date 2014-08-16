@@ -55,7 +55,7 @@ if(!empty($course_id)){
                 showMsg(data);
             });
         }
-        function showMsg(data){alert('112');
+        function showMsg(data){
           if (data != "") {
               alert(data.replace(/\"/g, ""));
               document.form.course_no.value = "";

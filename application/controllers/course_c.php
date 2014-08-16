@@ -58,12 +58,12 @@ class course_c extends MY_Controller {
       if(empty($course_id)){
         $course_id = $this->input->post('course_id');
       }
-      $course_id = $this->input->post('course_id');
-      $course_name = $this->input->post('$course_name');
+      $course_no = $this->input->post('course_no');
+      $course_name = $this->input->post('course_name');
       
       $remarks = $this->input->post('remarks');
           
-      $this->course_m->updateOne($course_id, $course_name, $remarks,$course_id);
+      $this->course_m->updateOne($course_no, $course_name, $remarks, $course_id);
       redirect("course_c");
 	}
   public function view_course_init($course_id = null){
@@ -90,8 +90,8 @@ class course_c extends MY_Controller {
 	}
 	
   public function chk_repeat($course_no, $old_no = null){
-        log_message('info', "teacher_c chk_user start");
-        log_message('info', "teacher_c chk_user post user:".$user." : :".$old_teacher_no);
+        log_message('info', "course_c chk_repeat start");
+        log_message('info', "course_c chk_repeat post user:".$course_no." : :".$old_no);
         $this->load->model('course_m','course_m');
         $checkuser = $this->course_m->checkRepeat($course_no,$old_no);
         $msg = "课程编号重复";

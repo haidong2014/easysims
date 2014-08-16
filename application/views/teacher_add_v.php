@@ -59,7 +59,7 @@ if(!empty($teacher_id)){
                 showMsg(data);
             });
         }
-        function showMsg(data){alert('112');
+        function showMsg(data){
           if (data != "") {
               alert(data.replace(/\"/g, ""));
               //alert('教师编号重复');

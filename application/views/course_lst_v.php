@@ -36,7 +36,7 @@ function f_getWhere()
 function goreg(){
   location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
 }
-function delTeacher(parm){
+function delcourse(parm){
   $.ligerDialog.confirm('确定要删除这个课程吗？', function (yes)
   {
       if(yes){
