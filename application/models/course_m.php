@@ -54,4 +54,15 @@ class  course_m extends MY_Model
         $this->db->set( 'delete_flg',		1 );
 		    return $this->db->update( $this->table_name );
     }
+    
+    public function checkRepeat($new_no, $old_no){
+        $this->db->select('course_no');
+        $this->db->where('course_no', $new_no);
+        if(!empty($old_no)){
+        	$this->db->where('course_no !=', $old_no);
+        }
+        log_message('info','course checkRepeat '.$new_no."|".$old_no);
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
+    }
 }

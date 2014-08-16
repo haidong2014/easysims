@@ -10,19 +10,19 @@ class course_c extends MY_Controller {
 	{
 	  $data = array();
 	  $user = $this->session->all_userdata();
-    log_message('info', "####user".var_export($user,true));
+      log_message('info', "####user".var_export($user,true));
 
-    $courseData = $this->course_m->getList();
-    foreach($courseData as &$data){
-      $data['opt']="<a href=\"".SITE_URL."/course_c/view_course_init/".$data['course_id']."\">查看</a> |".
-    "<a href=\"".SITE_URL."/course_c/upd_course_init/".$data['course_id']."\">编辑</a> |".
-    "<a href=\"#\" onclick=\"delcourse('".SITE_URL."/course_c/delete_course/".$data['course_id']."')\">删除</a>";
-      log_message('info', "####href".$data['opt']);
-    }
-    $data['courseData'] = $courseData;
-    $data['coursesData'] = @json_encode(array('Rows'=>$courseData));
+      $courseData = $this->course_m->getList("");
+      foreach($courseData as &$data){
+        $data['opt']="<a href=\"".SITE_URL."/course_c/view_course_init/".$data['course_id']."\">查看</a> |".
+        "<a href=\"".SITE_URL."/course_c/upd_course_init/".$data['course_id']."\">编辑</a> |".
+        "<a href=\"#\" onclick=\"delcourse('".SITE_URL."/course_c/delete_course/".$data['course_id']."')\">删除</a>";
+        log_message('info', "####href".$data['opt']);
+      }
+      $data['courseData'] = $courseData;
+      $data['coursesData'] = @json_encode(array('Rows'=>$courseData));
     
-		$this->load->view('course_lst_v',$data);
+	  $this->load->view('course_lst_v',$data);
 	}
 	public function add_course_init(){
 	  $data = array();
@@ -66,7 +66,7 @@ class course_c extends MY_Controller {
       $this->course_m->updateOne($course_id, $course_name, $remarks,$course_id);
       redirect("course_c");
 	}
-public function view_course_init($course_id = null){
+  public function view_course_init($course_id = null){
 	  
 	  $data = array();
 	  if(empty($course_id)){
@@ -88,4 +88,17 @@ public function view_course_init($course_id = null){
       $this->course_m->deleteOne($course_id);
       redirect("course_c");
 	}
+	
+  public function chk_repeat($course_no, $old_no = null){
+        log_message('info', "teacher_c chk_user start");
+        log_message('info', "teacher_c chk_user post user:".$user." : :".$old_teacher_no);
+        $this->load->model('course_m','course_m');
+        $checkuser = $this->course_m->checkRepeat($course_no,$old_no);
+        $msg = "课程编号重复";
+        if(!empty($checkuser)){
+            echo urldecode(json_encode(urlencode($msg)));
+        }
+
+        log_message('info', "course chk_repeat end".var_export($checkuser,true));
+    }
 }
