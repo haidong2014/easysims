@@ -168,27 +168,6 @@ class Attendance_c extends MY_Controller {
             $pm_status = $this->input->post('pm_'.$i);
             $datatmp['am_status'] = $am_status;
             $datatmp['pm_status'] = $pm_status;
-            if ($am_status == "1"){
-                if ($pm_status == "1"){
-                    $datatmp['status'] = "1";
-                } else if ($pm_status == "2") {
-                    $datatmp['status'] = "2";
-                } else if ($pm_status == "3") {
-                    $datatmp['status'] = "3";
-                } else if ($pm_status == "4") {
-                    $datatmp['status'] = "4";
-                } else {
-                    $datatmp['status'] = "";
-                }
-            } else if ($am_status == "2") {
-                $datatmp['status'] = "2";
-            } else if ($am_status == "3") {
-                $datatmp['status'] = "3";
-            } else if ($am_status == "4") {
-                $datatmp['status'] = "4";
-            } else {
-                $datatmp['status'] = "";
-            }
 
             $this->attendance_m->insertAttendance($datatmp);
             $i = $i + 1;
