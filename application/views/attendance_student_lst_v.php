@@ -7,8 +7,7 @@
             columns: [
             { display: '日期', name: 'today', align: 'left', width: 80 },
             { display: '出勤状况(上午)', name: 'am_status', align: 'left', width: 200 },
-            { display: '出勤状况(下午)', name: 'pm_status', align: 'left', width: 200 },
-            { display: '出勤结果', name: 'status', align: 'left', width: 200 },
+            { display: '出勤状况(下午)', name: 'pm_status', align: 'left', width: 200 }
             ],
             pageSize:10,
             where : f_getWhere(),
