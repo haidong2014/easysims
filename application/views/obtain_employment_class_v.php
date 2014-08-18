@@ -7,12 +7,15 @@
             columns: [
             { display: '班级编号', name: 'class_no', align: 'left', width: 80 },
             { display: '班级名称', name: 'class_name', align: 'left', width: 160 },
+            { display: '课程名称', name: 'course_name', align: 'left', width: 160 },
             { display: '开课日期', name: 'start_date', align:'left', width: 80 },
             { display: '结课日期', name: 'end_date',  align: 'left', width: 80 },
             { display: '班主任', name: 'teacher_name', align: 'left', width: 80 },
             { display: '教室', name: 'class_room', align: 'left', width: 80 },
-            { display: '人数', name: 'numbers', align: 'left', width: 80 },
-            { display: '状态', name: 'code_name', align: 'left', width: 80 }
+            { display: '名额', name: 'numbers', align: 'left', width: 80 },
+            { display: '学费', name: 'cost', align: 'left', width: 80 },
+            { display: '状态', name: 'code_name', align: 'left', width: 60 },
+            { display: '备注', name: 'remarks', align: 'left', width: 300 }
             ],
             pageSize:10,
             where : f_getWhere(),
@@ -37,14 +40,29 @@
         };
         return clause;
     }
+    function search_click()
+    {
+        document.form.submit();
+    }
 </script>
 </head>
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/search_class';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/obtain_employment_c/search_class';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
+            &nbsp年月:
+            <select name="ddlYear" id="ddlYear" onchange="search_click()">
+                <?php foreach($year as $y){?>
+                    <option value="<?php echo $y['id']?>" <?php echo $y['sel']?>><?php echo $y['name']?></option>
+                <?php } ?>
+            </select>
+            <select name="ddlMonth" id="ddlMonth" onchange="search_click()">
+                <?php foreach($month as $m){?>
+                    <option value="<?php echo $m['id']?>" <?php echo $m['sel']?>><?php echo $m['name']?></option>
+                <?php } ?>
+            </select>
             &nbsp班级名称：
             <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
             <input type="submit" value=" 查 询 " />&nbsp
