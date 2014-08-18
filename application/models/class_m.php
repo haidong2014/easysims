@@ -11,12 +11,17 @@ class Class_m extends MY_Model
 
     public function getList($data)
     {
-        $this->db->select('t1.*,t2.teacher_name,t3.code_name');
+        $this->db->select('t1.*,t2.teacher_name,t3.code_name,t4.course_name');
         $this->db->from('ss_class t1');
         $this->db->join('ss_teachers t2', 't1.teacher_no = t2.teacher_no', 'left');
         $this->db->join('ss_code t3', 't1.status = t3.code_no and t3.code = '."05", 'left');
+        $this->db->join('ss_course t4', 't1.course_no = t4.course_no', 'left');
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.class_name like', '%'.$data['search_key'].'%');
+        }
+        if(!empty($data['search_year']) && !empty($data['search_month'])){
+            $this->db->where('t1.start_year', $data['search_year']);
+            $this->db->where('t1.start_month', $data['search_month']);
         }
         $this->db->where('t1.delete_flg', 0);
         $query =  $this->db->get();
