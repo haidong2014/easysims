@@ -86,7 +86,7 @@ if(!empty($course_id)){
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">课程姓名:</td>
+                <td align="right" class="l-table-edit-td">课程名称:</td>
                 <td align="left" class="l-table-edit-td"><input name="course_name" type="text" id="course_name" ltype="text" value="<?php echo @$course_name ?>" validate="{required:true,maxlength:30}" /></td>
                 <td align="left"></td>
             </tr>
