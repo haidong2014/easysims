@@ -34,7 +34,7 @@ function f_getWhere()
     return clause; 
 }
 function goreg(){
-  location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
+  location.href='<?php echo SITE_URL;?>/course_c/add_course_init';
 }
 function delcourse(parm){
   $.ligerDialog.confirm('确定要删除这个课程吗？', function (yes)
@@ -49,8 +49,8 @@ function search_click(){
 }
 </script>
 <div id="searchbar">
-<form id="form" name="form" method="post" action="<?php echo SITE_URL."/teacher_c";?>" >
-    编号或姓名：<input id="txtKey" name="txtKey"  type="text" value="<?php echo @$txtKey?>"/>
+<form id="form" name="form" method="post" action="<?php echo SITE_URL."/course_c";?>" >
+    编号或名称：<input id="txtKey" name="txtKey"  type="text" value="<?php echo @$txtKey?>"/>
     <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
   <input id="regist" type="button" value=" 课程信息登录 " onclick="goreg()" /></form>
 </div>
