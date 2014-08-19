@@ -10,15 +10,17 @@ class Class_c extends MY_Controller {
 	{
 	  $data = array();
 	  $user = $this->session->all_userdata();
-    log_message('info', "####user".var_export($user,true));
-
-    $classData = $this->class_m->getList();
+     log_message('info', "####user".var_export($user,true));
+     $keyword = $this->input->post('txtKey');
+     $classData = $this->class_m->getList(array('search_key'=>$keyword));
+     //var_dump($classData);
     foreach($classData as &$data){
       $data['opt']="<a href=\"".SITE_URL."/class_c/view_class_init/".$data['class_id']."\">查看</a> |".
-    "<a href=\"".SITE_URL."/class_c/upd_class_init/".$data['class_id']."\">编辑</a> |".
-    "<a href=\"#\" onclick=\"delclass('".SITE_URL."/class_c/delete_class/".$data['class_id']."')\">删除</a>";
+      "<a href=\"".SITE_URL."/class_c/upd_class_init/".$data['class_id']."\">编辑</a> |".
+      "<a href=\"#\" onclick=\"delclass('".SITE_URL."/class_c/delete_class/".$data['class_id']."')\">删除</a>";
       log_message('info', "####href".$data['opt']);
     }
+    $data['txtKey'] = $keyword;
     $data['classData'] = $classData;
     $data['classsData'] = @json_encode(array('Rows'=>$classData));
     

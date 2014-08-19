@@ -9,15 +9,20 @@ class  course_m extends MY_Model
         $this->table_name='ss_course';
     }
     
-    public function getList()
+    public function getList($keyword)
     {
        $this->db->where('delete_flg', 0); 
+       if(!empty($keyword)){
+          $this->db->like('course_no',$keyword);
+          $this->db->or_like('course_name',$keyword);
+       }
        $this->db->select('*');
        $query =  $this->db->get($this->table_name);
        return $query->result_array();
     }
-    public function addOne($course_no, $course_name, $course_no, $remarks){
-      	$this->db->set( 'course_name',		$course_no );
+    public function addOne($course_no, $course_name, $remarks){
+    	$this->db->set( 'course_no',		$course_no );
+      	$this->db->set( 'course_name',		$course_name );
   		$this->db->set( 'remarks',		$remarks );
   
   		return $this->db->insert( $this->table_name );
