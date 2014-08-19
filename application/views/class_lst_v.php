@@ -8,13 +8,13 @@ $(function () {
         columns: [
         { display: '班级编号', name: 'class_no', align: 'left', width: 80 },
         { display: '班级名称', name: 'class_name', align: 'left', width: 160 },
-        { display: '开始日期', name: 'start_date', align: 'left', width: 160 },
-        { display: '结束日期', name: 'end_date', align: 'left', width: 160 },
-        { display: '班主任', name: 'teacher_name', align: 'left', width: 160 },
-        { display: '教室', name: 'class_room', align: 'left', width: 160 },
-        { display: '人数', name: 'numbers', align: 'left', width: 160 },
-        { display: '状态', name: 'status', align: 'left', width: 160 },
-        { display: '操作', name: 'opt', align: 'center', width: 120}
+        { display: '开始日期', name: 'start_date', align: 'left', width: 80 },
+        { display: '结束日期', name: 'end_date', align: 'left', width: 80 },
+        { display: '班主任', name: 'teacher_name', align: 'left', width: 80 },
+        { display: '教室', name: 'class_room', align: 'left', width: 80 },
+        { display: '人数', name: 'numbers', align: 'left', width: 80 },
+        { display: '状态', name: 'status', align: 'left', width: 80 },
+        { display: '操作', name: 'opt', align: 'center'}
         ],  
         pageSize:10,
         where : f_getWhere(),
