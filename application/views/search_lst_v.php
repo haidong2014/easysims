@@ -52,7 +52,7 @@
 <div id="pageloading"></div>
 <div id="searchbar"></div>
 <form name="form" method="post" action="<?php echo SITE_URL.'/search_c/search';?>" id="form">
-    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+    <table cellspacing="0" cellspacing="0" class="l-table-edit" >
         <tr>
         <td>
         &nbsp入学年月：

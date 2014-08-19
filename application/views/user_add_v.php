@@ -22,6 +22,7 @@
           if (data != "") {
               alert(data.replace(/\"/g, ""));
               document.form.txtUser.value = "";
+              document.form.txtPassword.value = "";
           }
         }
         function addUser() {
