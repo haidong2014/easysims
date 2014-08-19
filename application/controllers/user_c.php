@@ -174,14 +174,10 @@ class User_c extends MY_Controller {
     }
 
     public function chk_user($user){
-        log_message('info', "user_c chk_user start");
-        log_message('info', "user_c chk_user post user:".$user);
         $checkuser = $this->user_m->checkUser($user);
         $msg = "此登录ID已经被注册！";
         if(!empty($checkuser)){
             echo urldecode(json_encode(urlencode($msg)));
         }
-
-        log_message('info', "user_c chk_user end");
     }
 }
