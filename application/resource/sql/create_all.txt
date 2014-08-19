@@ -188,7 +188,8 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
 DROP TABLE IF EXISTS `ss_student_others`;		
 CREATE TABLE IF NOT EXISTS `ss_student_others` (		
   `student_no` varchar(10) NOT NULL,		
-  `graduate_school` varchar(30) NOT NULL,		
+  `graduate_school` varchar(30) NOT NULL,	
+  `specialty` varchar(30) NOT NULL,		  
   `graduate` varchar(1) NOT NULL,		
   `ancestralhome` varchar(200) NOT NULL,		
   `know_school` varchar(200) NOT NULL,		
