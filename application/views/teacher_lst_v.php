@@ -1,24 +1,23 @@
 ﻿<?php require_once("_header.php");?>
-<?php $sex_name=array(1=>'男',2=>'女');?>
 <script type="text/javascript">
-var TeachersData = <?php echo $teachersData?>;
+var teachersData = <?php echo $teachersData?>;
 var grid = null;
 $(function () {
-    grid = $("#maingrid4").ligerGrid({
+    grid = $("#maingrid").ligerGrid({
         columns: [
         { display: '教师编号', name: 'teacher_no', align: 'left', width: 80 },
-        { display: '教师姓名', name: 'teacher_name', align: 'left', width: 160 },
-        { display: '性别', name: 'sex', align:'left', width: 60 },
+        { display: '教师姓名', name: 'teacher_name', align: 'left', width: 120 },
+        { display: '性别', name: 'sex_name', align:'left', width: 60 },
         { display: '年龄', name: 'age',  align: 'left', width: 60 },
-        { display: '专/兼职', name: 'property', align: 'left', width: 60 },
-        { display: '任课科目', name: 'course', align: 'left' },
-        { display: '手机号码', name: 'telephone', align: 'left' },
-        { display: '电子邮件', name: 'email', align: 'left' },
+        { display: '专/兼职', name: 'property_name', align: 'left', width: 60 },
+        { display: '任课科目', name: 'course', align: 'left', width: 160  },
+        { display: '手机号码', name: 'telephone', align: 'left', width: 120  },
+        { display: '电子邮件', name: 'email', align: 'left', width: 120  },
         { display: '操作', name: 'opt', align: 'center', width: 120}
-        ],  
+        ],
         pageSize:10,
         where : f_getWhere(),
-        data: $.extend(true,{},TeachersData), 
+        data: $.extend(true,{},teachersData),
         width: '100%',height:'100%'
     });
 
@@ -37,7 +36,7 @@ function f_getWhere()
         var key = $("#txtKey").val();
         return rowdata.CustomerID.indexOf(key) > -1;
     };
-    return clause; 
+    return clause;
 }
 function goreg(){
   location.href='<?php echo SITE_URL;?>/teacher_c/add_teacher_init';
@@ -50,16 +49,19 @@ function delTeacher(parm){
       }
   });
 }
-function search_click(){
-	document.form.submit();
-}
 </script>
-<div id="searchbar">
+<body style="padding:6px; overflow:hidden;">
+<div id="pageloading"></div>
+<div id="searchbar"></div>
 <form id="form" name="form" method="post" action="<?php echo SITE_URL."/teacher_c";?>" >
-    编号或姓名：<input id="txtKey" name="txtKey"  type="text" value="<?php echo @$txtKey?>"/>
-    <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
-  <input id="regist" type="button" value=" 教师信息登录 " onclick="goreg()" /></form>
-</div>
-  <br>
-  <div id="maingrid4" style="margin:0; padding:0"></div>
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        教师姓名：
+       <input id="txtKey" name="txtKey"  type="text" maxlength="20" style="width:200px" value="<?php echo @$keyword?>"/>&nbsp
+       <input id="search" type="submit" value=" 查 询 " />&nbsp
+       <input id="regist" type="button" value=" 教师信息登录 " onclick="goreg()" />
+    </table>
+    <br>
+    <div id="maingrid" style="margin:0; padding:0"></div>
+</form>
 <div style="display:none;"></div>
+</body>
