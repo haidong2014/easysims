@@ -23,13 +23,17 @@ class Class_c extends MY_Controller {
           log_message('info', "####href".$data['opt']);
         }
         
-        $teacherData = $this->teacher_m->getList(“”);
+        $teacherData = $this->teacher_m->getList(null);
         
         $data['teacherData'] = $teacherData;
         
-        $courseData = $this->course_m->getList(“”);
+        $courseData = $this->course_m->getList(null);
         
         $data['courseData'] = $courseData;
+        
+        $this->load->model('code_m','code_m');
+        $status = $this->code_m->getList("05");
+        $data['status'] = $status;
         //var_dump($courseData);
         $data['txtKey'] = $keyword;
         $data['classData'] = $classData;
@@ -39,6 +43,9 @@ class Class_c extends MY_Controller {
 	}
 	public function add_class_init(){
 	  $data = array();
+	    $this->load->model('code_m','code_m');
+        $status = $this->code_m->getList("05");
+        $data['status'] = $status;
 	  $this->load->view('class_add_v',$data);
 	}
 	public function add_class(){
@@ -82,6 +89,11 @@ class Class_c extends MY_Controller {
 	     $classData = $this->class_m->getOne($class_id);
 		 $classData['teacherData'] = $teacherData;
 		 $classData['courseData'] = $courseData;
+		 
+		 $this->load->model('code_m','code_m');
+         $status = $this->code_m->getList("05");
+         $classData['statuses'] = $status;
+        
 	     $this->load->view('class_add_v',$classData);
 	}
     public function upd_class($class_id = null){
