@@ -10,6 +10,8 @@ class Class_c extends MY_Controller {
 	{
 		$this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
+		$this->load->model('code_m','code_m');
+        $status = $this->code_m->getList("05");
 	    $data = array();
 	    $user = $this->session->all_userdata();
         log_message('info', "####user".var_export($user,true));
@@ -20,6 +22,7 @@ class Class_c extends MY_Controller {
           $data['opt']="<a href=\"".SITE_URL."/class_c/view_class_init/".$data['class_id']."\">查看</a> |".
           "<a href=\"".SITE_URL."/class_c/upd_class_init/".$data['class_id']."\">编辑</a> |".
           "<a href=\"#\" onclick=\"delclass('".SITE_URL."/class_c/delete_class/".$data['class_id']."')\">删除</a>";
+          $data['status'] = $status['STATUS'][$data['status']];
           log_message('info', "####href".$data['opt']);
         }
         
@@ -31,9 +34,8 @@ class Class_c extends MY_Controller {
         
         $data['courseData'] = $courseData;
         
-        $this->load->model('code_m','code_m');
-        $status = $this->code_m->getList("05");
-        $data['status'] = $status;
+        
+        //$data['status'] = $status;
         //var_dump($courseData);
         $data['txtKey'] = $keyword;
         $data['classData'] = $classData;
@@ -44,8 +46,17 @@ class Class_c extends MY_Controller {
 	public function add_class_init(){
 	  $data = array();
 	    $this->load->model('code_m','code_m');
-        $status = $this->code_m->getList("05");
-        $data['status'] = $status;
+         $status = $this->code_m->getList("05");
+        $data['statuses'] = $status;
+        $this->load->model('teacher_m','teacher_m');
+		$this->load->model('course_m','course_m');
+		$teacherData = $this->teacher_m->getList(null);
+        
+        $data['teacherData'] = $teacherData;
+        
+        $courseData = $this->course_m->getList(null);
+        
+        $data['courseData'] = $courseData;
 	  $this->load->view('class_add_v',$data);
 	}
 	public function add_class(){
@@ -87,6 +98,8 @@ class Class_c extends MY_Controller {
          }
 	 
 	     $classData = $this->class_m->getOne($class_id);
+	     $classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
+	     $classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
 		 $classData['teacherData'] = $teacherData;
 		 $classData['courseData'] = $courseData;
 		 
@@ -136,4 +149,16 @@ public function view_class_init($class_id = null){
       $this->class_m->deleteOne($class_id);
       redirect("class_c");
 	}
+	public function chk_repeat($class_no, $old_no = null){
+        log_message('info', "class_c chk_repeat start");
+        log_message('info', "class_c chk_repeat post user:".$class_no." : :".$old_no);
+
+        $checkuser = $this->class_m->checkRepeat($class_no,$old_no);
+        $msg = "课程编号重复";
+        if(!empty($checkuser)){
+            echo urldecode(json_encode(urlencode($msg)));
+        }
+
+        log_message('info', "class chk_repeat end".var_export($checkuser,true));
+    }
 }

@@ -78,4 +78,15 @@ class Class_m extends MY_Model
         $this->db->set( 'delete_flg',		1 );
         return $this->db->update( $this->table_name );
     }
+    
+    public function checkRepeat($new_no, $old_no){
+        $this->db->select('class_no');
+        $this->db->where('class_no', $new_no);
+        if(!empty($old_no)){
+        	$this->db->where('class_no !=', $old_no);
+        }
+        log_message('info','class checkRepeat '.$new_no."|".$old_no);
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
+    }
 }
