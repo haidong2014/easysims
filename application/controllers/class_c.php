@@ -113,18 +113,22 @@ class Class_c extends MY_Controller {
       if(empty($class_id)){
         $class_id = $this->input->post('class_id');
       }
-      $class_id = $this->input->post('class_id');
+      $class_no = $this->input->post('class_no');
       $class_name = $this->input->post('$class_name');
+      $start_year = $this->input->post('start_year');
+      $start_month = $this->input->post('start_month');
       $start_date = $this->input->post('start_date');
       $end_date = $this->input->post('end_date');
-      $teacher_id = $this->input->post('teacher_id');
+      $course_no = $this->input->post('course_no');
+      $teacher_no = $this->input->post('teacher_no');
       $class_room = $this->input->post('class_room');
+      $numbers = $this->input->post('numbers');
+      $cost = $this->input->post('cost');
       $status = $this->input->post('status');
- 
       $remarks = $this->input->post('remarks');
           
-      $this->class_m->updateOne($class_id, $class_name, $start_date,$end_date, $teacher_id, $class_room, 
-          $status, $remarks,$class_id);
+      $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
+        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
       redirect("class_c");
 	}
 public function view_class_init($class_id = null){
