@@ -63,7 +63,18 @@ class Teacher_m extends MY_Model
        }
        return $teacher;
     }
-
+  public function getOneByNo($teacher_no){
+       $this->db->where('teacher_no', $teacher_no);
+       $this->db->where('delete_flg', 0);
+       $this->db->select('*');
+       $query = $this->db->get($this->table_name);
+       $teacher= null;
+       log_message('info','teachter getOneByNo'.$teacher_no."|".var_export($query->result_array(),true));
+       foreach ($query->result_array() as $row){
+         $teacher = $row;
+       }
+       return $teacher;
+    }
     public function updateOne($data){
 
         $this->db->where('teacher_id', $data['teacher_id']);

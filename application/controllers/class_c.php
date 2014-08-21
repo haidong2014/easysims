@@ -61,18 +61,22 @@ class Class_c extends MY_Controller {
 	}
 	public function add_class(){
 	   log_message('info','add class '.var_export($_POST,true));
-	   $class_id = $this->input->post('class_id');
-	   $class_name = $this->input->post('class_name');
-	   $start_date = $this->input->post('start_date');
-	   $end_date = $this->input->post('end_date');
-	   $teacher_id = $this->input->post('teacher_id');
-	   $class_room = $this->input->post('class_room');
-     $status = $this->input->post('status');
-    
-     $remarks = $this->input->post('remarks');
+	  $class_no = $this->input->post('class_no');
+      $class_name = $this->input->post('class_name');
+      $start_year = $this->input->post('start_year');
+      $start_month = $this->input->post('start_month');
+      $start_date = $this->input->post('start_date');
+      $end_date = $this->input->post('end_date');
+      $course_no = $this->input->post('course_no');
+      $teacher_no = $this->input->post('teacher_no');
+      $class_room = $this->input->post('class_room');
+      $numbers = $this->input->post('numbers');
+      $cost = $this->input->post('cost');
+      $status = $this->input->post('status');
+      $remarks = $this->input->post('remarks');
           
-	   $this->class_m->addOne($class_id,$class_name, $start_date,$end_date, $teacher_id, $class_room, 
-          $status, $email, $system_user, $remarks);
+	   $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
+        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
      redirect("class_c");
 	  
 	}
@@ -98,8 +102,8 @@ class Class_c extends MY_Controller {
          }
 	 
 	     $classData = $this->class_m->getOne($class_id);
-	     $classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
-	     $classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
+	     //$classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
+	     //$classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
 		 $classData['teacherData'] = $teacherData;
 		 $classData['courseData'] = $courseData;
 		 
@@ -114,7 +118,7 @@ class Class_c extends MY_Controller {
         $class_id = $this->input->post('class_id');
       }
       $class_no = $this->input->post('class_no');
-      $class_name = $this->input->post('$class_name');
+      $class_name = $this->input->post('class_name');
       $start_year = $this->input->post('start_year');
       $start_month = $this->input->post('start_month');
       $start_date = $this->input->post('start_date');
@@ -131,17 +135,27 @@ class Class_c extends MY_Controller {
         $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
       redirect("class_c");
 	}
-public function view_class_init($class_id = null){
-	  
-	  $data = array();
+	public function view_class_init($class_id = null){
+	   $this->load->model('teacher_m','teacher_m');
+		$this->load->model('course_m','course_m');
+	   $data = array();
 	  if(empty($class_id)){
         $class_id = $this->input->get('class_id');
         if(empty($class_id)){
           $class_id = $this->input->post('class_id');
         }
-     }
-	 
+      }
+	  $this->load->model('code_m','code_m');
+	  $status = $this->code_m->getList("05");
 	  $classData = $this->class_m->getOne($class_id);
+	  $teacher = $this->teacher_m->getOneByNo($classData['teacher_no']);
+	  $course = $this->course_m->getOneByNo($classData['course_no']);
+	  
+	  
+	  $classData['teacher_name'] = $teacher['teacher_name'];
+	  $classData['course_name'] = $course['course_name'];
+	  
+	  $classData['status'] = $status['STATUS'][$classData['status']];
 
 	  $this->load->view('class_view_v',$classData);
 	}
@@ -158,7 +172,7 @@ public function view_class_init($class_id = null){
         log_message('info', "class_c chk_repeat post user:".$class_no." : :".$old_no);
 
         $checkuser = $this->class_m->checkRepeat($class_no,$old_no);
-        $msg = "课程编号重复";
+        $msg = "班级编号重复";
         if(!empty($checkuser)){
             echo urldecode(json_encode(urlencode($msg)));
         }

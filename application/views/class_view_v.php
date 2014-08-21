@@ -88,17 +88,80 @@ $property_name = array(1=>'专职',2=>'兼职');
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
 		    <tr>
-                <td align="right" style="background-color:#99CCFF">班级编号:</td>
+                <td align="right" >班级编号:</td>
                 <td align="left" class="l-table-edit-td"><?php echo @$class_no ?></td>
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" style="background-color:#99CCFF">班级姓名:</td>
+                <td align="right" >班级姓名:</td>
                 <td align="left" class="l-table-edit-td"><?php echo @$class_name ?></td>
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" style="background-color:#99CCFF">备注:</td>
+                <td align="right" class="l-table-edit-td">开课年份:</td>
+				<td align="left" class="l-table-edit-td">
+					<?php echo @$start_year?>
+				</td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">开课月份:</td>
+				<td align="left" class="l-table-edit-td">
+					<?php echo $start_month ?>
+				</td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">开始日期:</td>
+                <td align="left" class="l-table-edit-td">
+                    <?php echo @$start_date?>
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">结课日期:</td>
+                <td align="left" class="l-table-edit-td">
+                    <?php echo @$end_date?>
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">课程:</td>
+                <td align="left" class="l-table-edit-td">
+					<?php  echo @$course_name ?>
+                </td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">班主任:</td>
+                <td align="left" class="l-table-edit-td">
+					<?php  echo @$teacher_name ?>
+                </td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">教室:</td>
+                <td align="left" class="l-table-edit-td"><?php echo @$class_room?></td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">名额:</td>
+                <td align="left" class="l-table-edit-td">
+                    <?php echo @$numbers?>
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">费用:</td>
+                <td align="left" class="l-table-edit-td">
+                    <?php echo @$cost?>
+                </td><td align="left"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">状态:</td>
+                <td align="left" class="l-table-edit-td">
+					<?php echo @$status;?>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" >备注:</td>
                 <td align="left" class="l-table-edit-td"> 
                 <?php echo @$remarks ?>
                 </td><td align="left"></td>

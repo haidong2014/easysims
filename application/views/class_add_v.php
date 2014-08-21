@@ -124,13 +124,13 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开始日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="start_date" type="text" id="start_date" ltype="date"  value="<?php echo $start_date?>" />
+                    <input name="start_date" type="text" id="start_date" ltype="date"  value="<?php echo @$start_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="end_date" type="text" id="end_date" ltype="date"  value="<?php echo $end_date?>"/>
+                    <input name="end_date" type="text" id="end_date" ltype="date"  value="<?php echo @$end_date?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -166,19 +166,19 @@ if(!empty($class_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">教室:</td>
-                <td align="left" class="l-table-edit-td"><input name="class_room" type="text" id="class_room" value="<?php echo $class_room?>" ltype="text" /></td>
+                <td align="left" class="l-table-edit-td"><input name="class_room" type="text" id="class_room" value="<?php echo @$class_room?>" ltype="text" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">名额:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="numbers" type="text" id="numbers" ltype='spinner' value="<?php echo $numbers?>" ligerui="{type:'int'}" class="required" />
+                    <input name="numbers" type="text" id="numbers" ltype='spinner' value="<?php echo @$numbers?>" ligerui="{type:'int'}" class="required" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">费用:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="cost" type="text" id="cost" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $cost?>" />
+                    <input name="cost" type="text" id="cost" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$cost?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -189,7 +189,7 @@ if(!empty($class_id)){
 					<?php
 
 					foreach($statuses['STATUS'] as $key => $value) { ?>
-					  <?php if($key == $status){?>
+					  <?php if($key == @$status){?>
 					  <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
 					  <?php }else{?>
 					   <option value="<?php echo $key;?>"><?php echo $value;?></option>
@@ -209,7 +209,7 @@ if(!empty($class_id)){
     <input type="hidden" name="class_id"  value="<?php echo @$class_id?>" />
     <input type="hidden" name="old_class_no"  value="<?php echo @$class_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
-    <input type="reset" value="重置" class="l-button l-button-reset"/>
+   
     </form>
     <div style="display:none"></div>
 </body>

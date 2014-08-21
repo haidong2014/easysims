@@ -29,16 +29,26 @@ class Class_m extends MY_Model
         return $query->result_array();
     }
 
-    public function addOne($class_no,$class_name, $sex,$birthday, $property, $course,
-          $telephone, $email, $system_user, $remarks){
-      $this->db->set( 'class_name',		$class_no );
-      $this->db->set( 'start_date',	$start_date );
-      $this->db->set( 'end_date',		$end_date );
-      $this->db->set( 'teacher_id',		$teacher_id );
-      $this->db->set( 'class_room',		$class_room );
-      $this->db->set( 'numbers',		$numbers );
-      $this->db->set( 'status',		$status );
-      $this->db->set( 'remarks',		$remarks );
+    public function addOne($class_no, $class_name,$start_year, $start_month,
+        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
+        
+        log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
+        $start_date."|".$end_date."|".$course_no."|".$teacher_no."|".$class_room
+        ."|".$numbers."|".$cost."|".$status."|".$remarks);
+        
+        $this->db->set( 'class_name',		$class_name );
+        $this->db->set( 'class_no',		$class_no );
+        $this->db->set( 'start_year',	$start_year );
+        $this->db->set( 'start_month',	$start_month );
+        $this->db->set( 'start_date',	$start_date );
+        $this->db->set( 'end_date',		$end_date );
+        $this->db->set( 'course_no',		$course_no );
+        $this->db->set( 'teacher_no',		$teacher_no );
+        $this->db->set( 'class_room',		$class_room );
+        $this->db->set( 'numbers',		$numbers );
+        $this->db->set( 'cost',		$cost );
+        $this->db->set( 'status',		$status );
+        $this->db->set( 'remarks',		$remarks );
 
       return $this->db->insert( $this->table_name );
     }
@@ -63,8 +73,11 @@ class Class_m extends MY_Model
         $this->db->where('class_id', $class_id);
         $this->db->set( 'class_name',		$class_name );
         $this->db->set( 'class_no',		$class_no );
+        $this->db->set( 'start_year',	$start_year );
+        $this->db->set( 'start_month',	$start_month );
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
+        $this->db->set( 'course_no',		$course_no );
         $this->db->set( 'teacher_no',		$teacher_no );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );

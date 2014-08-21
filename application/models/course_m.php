@@ -39,7 +39,18 @@ class  course_m extends MY_Model
        }
     	return $course;
     }
-    
+    public function getOneByNo($course_no){
+       $this->db->where('course_no', $course_no); 
+       $this->db->where('delete_flg', 0); 
+       $this->db->select('*');    
+       $query = $this->db->get($this->table_name);
+       $course= null;
+       log_message('info','course getOneByNo'.$course_no."|".var_export($query->result_array(),true));
+       foreach ($query->result_array() as $row){
+         $course = $row;
+       }
+    	return $course;
+    }
     public function updateOne($course_no, $course_name, $remarks,$course_id){
         log_message('info', "ddd".$course_name."|".$course_no."|".$remarks."|".$course_id);
         $this->db->where('course_id', $course_id);
