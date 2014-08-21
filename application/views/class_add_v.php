@@ -11,6 +11,7 @@ $action = SITE_URL."/class_c/add_class";
 if(!empty($class_id)){
   $action = SITE_URL."/class_c/upd_class";
 }
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -93,9 +94,10 @@ if(!empty($class_id)){
               <tr>
                 <td align="right" class="l-table-edit-td">开课年份:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlYear" id="ddlYear" ltype="select">
+					<select name="start_year" id="start_year" ltype="select">
 					<?php for($i=0;$i<10;$i++){ ?>
 					    	<?php if(@$start_year==($i+2005)){ ?>
+					    	<option value="<?php echo ($i+2005); ?> " selected><?php echo ($i+2005); ?></option>
 					    	<? }else {?>
 							<option value="<?php echo ($i+2005); ?> "><?php echo ($i+2005); ?></option>
 							<?php } ?>
@@ -107,9 +109,13 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开课月份:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlMonth" id="ddlMonth" ltype="select">
+					<select name="start_month" id="start_month" ltype="select">
 						<?php for($i=0;$i<12;$i++){ ?>
-						<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
+						    <?php if(@$start_month==($i+1)){ ?>
+						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
+						    <?php }else{?>
+							<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
+							<?php }?>
 						<?php } ?>
 					</select>
 				</td>
@@ -118,21 +124,25 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开始日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtStartDate" type="text" id="txtStartDate" ltype="date"  />
+                    <input name="start_date" type="text" id="start_date" ltype="date"  value="<?php echo $start_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtEndDate" type="text" id="txtEndDate" ltype="date"  />
+                    <input name="end_date" type="text" id="end_date" ltype="date"  value="<?php echo $end_date?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">课程(<input type="button" value="设定" onclick="setCourse()"/>):</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="ddlSpecialty" id="ddlSpecialty" ltype="select">
+					<select name="course_no" id="course_no" ltype="select">
 						<?php foreach($courseData as $course){?>
-						<option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
+    						<?php if(@$course_no==($course['course_no'])){ ?>
+    						<option value="<?php  echo $course['course_no'] ?>" selected><?php  echo $course['course_name'] ?></option>
+    						<?php }else{?>
+    						<option value="<?php  echo $course['course_no'] ?>"><?php  echo $course['course_name'] ?></option>
+    						<?php } ?>
 						<?php } ?>
 					</select>
 					
@@ -142,9 +152,13 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">班主任:</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="ddlTeacher" id="ddlTeacher" ltype="select">
+					<select name="teacher_no" id="teacher_no" ltype="select">
 						<?php foreach($teacherData as $teacher){?>
-						<option value="<?php  echo $teacher['teacher_id'] ?>"><?php  echo $teacher['teacher_name'] ?></option>
+    						<?php if(@teacher_no==($course['teacher_no'])){ ?>
+    							<option value="<?php  echo $teacher['teacher_no'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
+    						<?php }else{?>
+    							<option value="<?php  echo $teacher['teacher_no'] ?>"><?php  echo $teacher['teacher_name'] ?></option>
+    						<?php }?>
 						<?php } ?>
 					</select>
                 </td>
@@ -152,29 +166,35 @@ if(!empty($class_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">教室:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtClassroom" type="text" id="txtClassroom" ltype="text" /></td>
+                <td align="left" class="l-table-edit-td"><input name="class_room" type="text" id="class_room" value="<?php echo $class_room?>" ltype="text" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">名额:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtNumbers" type="text" id="txtNumbers" ltype='spinner' ligerui="{type:'int'}" class="required" />
+                    <input name="numbers" type="text" id="numbers" ltype='spinner' value="<?php echo $numbers?>" ligerui="{type:'int'}" class="required" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">费用:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtSchooling" type="text" id="txtSchooling" ltype='spinner' ligerui="{type:'int'}" />
+                    <input name="cost" type="text" id="cost" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $cost?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">状态:</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="ddlStatus" id="ddlStatus" ltype="select">
-						<option value="1">招生</option>
-						<option value="2">开课</option>
-						<option value="3">结课</option>
-						<option value="4">取消</option>
+					<select name="status" id="status" ltype="select">
+					
+					<?php
+
+					foreach($statuses['STATUS'] as $key => $value) { ?>
+					  <?php if($key == $status){?>
+					  <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+					  <?php }else{?>
+					   <option value="<?php echo $key;?>"><?php echo $value;?></option>
+					  <?php }
+					}?>
 					</select>
                 </td>
             </tr>
