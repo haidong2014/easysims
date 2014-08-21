@@ -8,11 +8,11 @@ $(function () {
         { display: '教师编号', name: 'teacher_no', align: 'left', width: 80 },
         { display: '教师姓名', name: 'teacher_name', align: 'left', width: 120 },
         { display: '性别', name: 'sex_name', align:'left', width: 60 },
-        { display: '年龄', name: 'age',  align: 'left', width: 60 },
+        { display: '出生日期', name: 'birthday',  align: 'left', width: 120 },
         { display: '专/兼职', name: 'property_name', align: 'left', width: 60 },
         { display: '任课科目', name: 'course', align: 'left', width: 160  },
         { display: '手机号码', name: 'telephone', align: 'left', width: 120  },
-        { display: '电子邮件', name: 'email', align: 'left', width: 120  },
+        { display: '电子邮件', name: 'email', align: 'left', width: 180  },
         { display: '操作', name: 'opt', align: 'center', width: 120}
         ],
         pageSize:10,
