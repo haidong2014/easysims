@@ -20,24 +20,37 @@ class Teacher_m extends MY_Model
             $this->db->like('t1.teacher_name',$keyword);
         }
         $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.teacher_id','esc');
         $query =  $this->db->get();
         return $query->result_array();
     }
-    public function addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course,
-          $telephone, $email, $system_user, $remarks){
-      $this->db->set( 'teacher_no',		$teacher_no );
-      $this->db->set( 'teacher_name',		$teacher_name );
-      $this->db->set( 'sex',	$sex );
-      $this->db->set( 'birthday',		$birthday );
-      $this->db->set( 'property',		$property );
-      $this->db->set( 'course',		$course );
-      $this->db->set( 'telephone',		$telephone );
-      $this->db->set( 'email',		$email );
-      $this->db->set( 'system_user',		$system_user );
-      $this->db->set( 'remarks',		$remarks );
+    public function addOne($data){
+      $this->db->set( 'teacher_no',		$data['teacher_no'] );
+      $this->db->set( 'teacher_name',	$data['teacher_name'] );
+      $this->db->set( 'sex',	        $data['sex'] );
+      $this->db->set( 'birthday',		$data['birthday'] );
+      $this->db->set( 'property',		$data['property'] );
+      $this->db->set( 'course',		    $data['course'] );
+      $this->db->set( 'telephone',		$data['telephone'] );
+      $this->db->set( 'email',		    $data['email'] );
+      $this->db->set( 'system_user',    $data['system_user'] );
+      $this->db->set( 'remarks',		$data['remarks'] );
+      $this->db->set( 'delete_flg',		$data['delete_flg'] );
+      $this->db->set( 'insert_user',	$data['insert_user'] );
+      $this->db->set( 'insert_time',	$data['insert_time'] );
+      $this->db->set( 'update_user',	$data['update_user'] );
+      $this->db->set( 'update_time',	$data['update_time'] );
 
       return $this->db->insert( $this->table_name );
     }
+
+    public function checkTeacher($teacher_no){
+        $this->db->select('teacher_id,teacher_no');
+        $this->db->where('teacher_no', $teacher_no);
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
+    }
+
     public function getOne($teacher_id){
        $this->db->where('teacher_id', $teacher_id);
        $this->db->where('delete_flg', 0);
@@ -51,29 +64,30 @@ class Teacher_m extends MY_Model
        return $teacher;
     }
 
-    public function updateOne($teacher_no,$teacher_name, $sex,$birthday, $property,
-        $course, $telephone, $email, $system_user, $remarks,$teacher_id){
-          log_message('info', "ddd".$teacher_name."|".$sex."|".$birthday."|".$property."|".
-        $course."|".$telephone."|".$email."|".$system_user."|".$remarks."|".$teacher_id);
-        $this->db->where('teacher_id', $teacher_id);
-        $this->db->set( 'teacher_no',		$teacher_no );
-        $this->db->set( 'teacher_name',		$teacher_name );
-        $this->db->set( 'sex',	$sex );
-        $this->db->set( 'birthday',		$birthday );
-        $this->db->set( 'property',		$property );
-        $this->db->set( 'course',		$course );
-        $this->db->set( 'telephone',		$telephone );
-        $this->db->set( 'email',		$email );
-        $this->db->set( 'system_user',		$system_user );
-        $this->db->set( 'remarks',		$remarks );
+    public function updateOne($data){
 
-        return $this->db->update( $this->table_name );
+        $this->db->where('teacher_id', $data['teacher_id']);
+
+        $this->db->set( 'teacher_name',	$data['teacher_name'] );
+        $this->db->set( 'sex',	        $data['sex'] );
+        $this->db->set( 'birthday',		$data['birthday'] );
+        $this->db->set( 'property',		$data['property'] );
+        $this->db->set( 'course',		$data['course'] );
+        $this->db->set( 'telephone',	$data['telephone'] );
+        $this->db->set( 'email',		$data['email'] );
+        $this->db->set( 'system_user',  $data['system_user'] );
+        $this->db->set( 'remarks',		$data['remarks'] );
+        $this->db->set( 'update_user',	$data['update_user'] );
+        $this->db->set( 'update_time',	$data['update_time'] );
+
+        return $this->db->update($this->table_name);
     }
 
-    public function deleteOne($teacher_id){
-          log_message('info', "del"."|".$teacher_id);
-        $this->db->where('teacher_id', $teacher_id);
-        $this->db->set( 'delete_flg',		1 );
-        return $this->db->update( $this->table_name );
+    public function deleteOne($data){
+        $this->db->where('teacher_id',  $data['teacher_id']);
+        $this->db->set( 'delete_flg',   $data['delete_flg']);
+        $this->db->set( 'update_user',	$data['update_user'] );
+        $this->db->set( 'update_time',	$data['update_time'] );
+        return $this->db->update($this->table_name);
     }
 }
