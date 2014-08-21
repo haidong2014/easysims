@@ -6,8 +6,7 @@ class Teacher_c extends MY_Controller {
         $this->load->model('teacher_m','teacher_m');
     }
 
-    public function index()
-    {
+    public function index(){
         $data = array();
         $user = $this->session->all_userdata();
         log_message('info', "teacher_c index user:".var_export($user,true));
@@ -20,10 +19,6 @@ class Teacher_c extends MY_Controller {
             $data['opt']="<a href=\"".SITE_URL."/teacher_c/view_teacher_init/".$data['teacher_id']."\">查看</a> |".
             "<a href=\"".SITE_URL."/teacher_c/upd_teacher_init/".$data['teacher_id']."\">编辑</a> |".
             "<a href=\"#\" onclick=\"delTeacher('".SITE_URL."/teacher_c/delete_teacher/".$data['teacher_id']."')\">删除</a>";
-
-            $now = intval(date('Ymd'));
-            $birthday = intval(str_replace("-","",$data["birthday"]));
-            $data["age"] = floor(($now-$birthday)/10000);
         }
         $data['keyword'] = $keyword;
         $data['teachersData'] = @json_encode(array('Rows'=>$teacherData));
@@ -32,177 +27,107 @@ class Teacher_c extends MY_Controller {
 
     public function add_teacher_init(){
         $data = array();
+
+        $data['sex'] = "1";
+        $data['property'] = "1";
+        $data['system_user'] = "1";
         $this->load->view('teacher_add_v',$data);
     }
 
-  /**
-   * add_teacher
-   */
-  public function add_teacher(){
-     log_message('info','add teacher '.var_export($_POST,true));
-     $teacher_no = $this->input->post('teacher_no');
-     $teacher_name = $this->input->post('teacher_name');
-     $sex = $this->input->post('sex');
-     $birthday = $this->input->post('birthday');
-     $property = $this->input->post('property');
-     $course = $this->input->post('course');
-       $telephone = $this->input->post('telephone');
-       $email = $this->input->post('email');
-       $system_user = $this->input->post('system_user');
-       $remarks = $this->input->post('remarks');
+    public function add_teacher(){
 
-      if($system_user){
-        // add a user
-          self::addUser($teacher_no,$teacher_name,$remarks);
-      }
-     $this->teacher_m->addOne($teacher_no,$teacher_name, $sex,$birthday, $property, $course,
-          $telephone, $email, $system_user, $remarks);
-       redirect("teacher_c");
+        $data = array();
+        $user = $this->session->all_userdata();
+        log_message('info', "teacher_c add_teacher user:".var_export($user,true));
+        log_message('info', "teacher_c add_teacher post:".var_export($_POST,true));
 
-  }
-  /**
-   * add a user if sysuser
-   * @param unknown_type $teacher_no
-   * @param unknown_type $remarks
-   */
-  private function addUser($teacher_no,$teacher_name,$remarks){
-      $userinfo = $this->session->userdata('user');
-      log_message('info', " add user userinfo:".var_export($userinfo,true));
-       //insert a user
-      $this->load->model('user_m','user_m');
-      $chkuser= $this->user_m->checkUser($teacher_no);
-      if(!empty($chkuser)){return ;}//already exsit
-      $userData['user'] = $teacher_no;
-      $password =  self::getPwd(5);
-      $userData['password'] = md5($password);
-      $userData['user_name'] = $teacher_name;
-      $userData['role_id'] = 1006;
-      $userData['remarks'] = $remarks;
-      $userData['delete_flg'] = 0;
-      $userData['insert_user'] = 'sysuser';
-      $sys_time = date("Y-m-d H:i:s");
-      $userData['insert_time'] = $sys_time;
-      $userData['update_user'] = 'sysuser';
-      $userData['update_time'] = $sys_time;
-      log_message('info', " add user userData:".var_export($userData,true));
-      $this->user_m->addOne($userData);
-  }
-  /**
-   * upd_teacher_init
-   * @param unknown_type $teacher_id
-   */
-  public function upd_teacher_init($teacher_id = null){
-
-    $data = array();
-    if(empty($teacher_id)){
-        $teacher_id = $this->input->get('teacher_id');
-        if(empty($teacher_id)){
-          $teacher_id = $this->input->post('teacher_id');
-        }
-     }
-
-    $teacherData = $this->teacher_m->getOne($teacher_id);
-
-    $this->load->view('teacher_add_v',$teacherData);
-  }
-  /**
-   * upd_teacher
-   * @param unknown_type $teacher_id
-   */
-  public function upd_teacher($teacher_id = null){
-      if(empty($teacher_id)){
+        $userinfo = $this->session->userdata('user');
         $teacher_id = $this->input->post('teacher_id');
-      }
-      $teacher_no = $this->input->post('teacher_no');
-      $teacher_name = $this->input->post('teacher_name');
-      $sex = $this->input->post('sex');
-      $birthday = $this->input->post('birthday');
-      $property = $this->input->post('property');
-      $course = $this->input->post('course');
-      $telephone = $this->input->post('telephone');
-      $email = $this->input->post('email');
-      $system_user = $this->input->post('system_user');
-      $remarks = $this->input->post('remarks');
-      if($system_user){
-        log_message('info', " update user 2222:");
-          // add a user
-          $this->load->model('user_m','user_m');
-          $chkuser = $this->user_m->checkUser($teacher_no);
-          //log_message('info', " update user teacherid:".var_export($chkuser,true));
-          if(empty($chkuser)){
-            //log_message('info', " update user 3333:".$teacher_no.",". $teacher_name.",". $remarks);
-            self::addUser($teacher_no, $teacher_name, $remarks);
-          }
-      }else{
-        log_message('info', " update user 1111:".$teacher_no);
-          $this->load->model('user_m','user_m');
-          $chkuser= $this->user_m->checkUser($teacher_no);
-          if(!empty($chkuser)){
-            //log_message('info', " update user teacherid:".var_export($chkuser[0],true));
-            $user= $this->user_m->deleteOne($chkuser[0]['user_id']);
-          }
-      }
+        $teacher_no = $this->input->post('teacher_no');
+        $teacher_name = $this->input->post('teacher_name');
+        $system_user = $this->input->post('system_user');
 
-      $this->teacher_m->updateOne($teacher_no, $teacher_name, $sex,$birthday, $property, $course,
-          $telephone, $email, $system_user, $remarks,$teacher_id);
+        $data['teacher_id'] = $teacher_id;
+        $data['teacher_no'] = $teacher_no;
+        $data['teacher_name'] = $teacher_name;
+        $data['sex'] = $this->input->post('sex');
+        $data['birthday'] = $this->input->post('birthday');
+        $data['property'] = $this->input->post('property');
+        $data['course'] = $this->input->post('course');
+        $data['telephone'] = $this->input->post('telephone');
+        $data['email'] = $this->input->post('email');
+        $data['system_user'] = $system_user;
+        $data['remarks'] = $this->input->post('remarks');
+        $data['delete_flg'] = "0";
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
 
-      redirect("teacher_c");
-  }
-  /**
-   * view_teacher_init
-   * @param unknown_type $teacher_id
-   */
-  public function view_teacher_init($teacher_id = null){
-
-    $data = array();
-    if(empty($teacher_id)){
-        $teacher_id = $this->input->get('teacher_id');
-        if(empty($teacher_id)){
-          $teacher_id = $this->input->post('teacher_id');
+        if($system_user == "1"){
+            self::addUser($teacher_no,$teacher_name);
         }
-     }
 
-    $teacherData = $this->teacher_m->getOne($teacher_id);
+        if(empty($teacher_id)) {
+            $this->teacher_m->addOne($data);
+        } else {
+            $this->teacher_m->updateOne($data);
+        }
 
-    $this->load->view('teacher_view_v',$teacherData);
-  }
-  /**
-   * delete_teacher
-   * @param unknown_type $teacher_id
-   */
-   public function delete_teacher($teacher_id = null){
-      if(empty($teacher_id)){
-        $teacher_id = $this->input->post('teacher_id');
-      }
-
-      $this->teacher_m->deleteOne($teacher_id);
-      redirect("teacher_c");
-  }
-  /**
-   * getPwd
-   * @param unknown_type $len
-   */
-  private function getPwd($len){
-    $rand_str="";
-    $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-    for($i=0; $i<$len; $i++){
-         $rand_str .= $str[mt_rand(0, strlen($str)-1)];
+        redirect("teacher_c");
     }
-     return $rand_str;
-  }
 
-  public function chk_user($user, $old_teacher_no = null){
-        log_message('info', "teacher_c chk_user start");
-        log_message('info', "teacher_c chk_user post user:".$user." : :".$old_teacher_no);
+    private function addUser($teacher_no,$teacher_name){
+        $userinfo = $this->session->userdata('user');
+
         $this->load->model('user_m','user_m');
-        $checkuser = $this->user_m->checkUser2($user,$old_teacher_no);
-        $msg = "此登录ID已经被注册！";
+
+        $chkuser= $this->user_m->checkUser($teacher_no);
+        if(!empty($chkuser)){
+          return ;
+        }
+        $userData['user'] = $teacher_no;
+        $userData['user_name'] = $teacher_name;
+        $userData['role_id'] = "1006";
+        $userData['delete_flg'] = 0;
+        $userData['insert_user'] = $userinfo;
+        $userData['insert_time'] = date("Y-m-d H:i:s");
+        $userData['update_user'] = $userinfo;
+        $userData['update_time'] = date("Y-m-d H:i:s");
+        $this->user_m->addOne($userData);
+    }
+
+    public function upd_teacher_init($teacher_id = null){
+        $data = array();
+
+        $data = $this->teacher_m->getOne($teacher_id);
+        $this->load->view('teacher_add_v',$data);
+    }
+
+    public function view_teacher_init($teacher_id = null){
+        $data = array();
+
+        $data = $this->teacher_m->getOne($teacher_id);
+        $this->load->view('teacher_view_v',$data);
+    }
+
+    public function delete_teacher($teacher_id = null){
+        $data = array();
+
+        $userinfo = $this->session->userdata('user');
+        $data['teacher_id'] = $teacher_id;
+        $data['delete_flg'] = "1";
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->teacher_m->deleteOne($data);
+        redirect("teacher_c");
+    }
+
+    public function chk_teacher($teacher_no = null){
+        $checkuser = $this->teacher_m->checkTeacher($teacher_no);
+        $msg = "此教师编号已经被登录！";
         if(!empty($checkuser)){
             echo urldecode(json_encode(urlencode($msg)));
         }
-
-        log_message('info', "teacher_c chk_user end".var_export($checkuser,true));
     }
-
-
 }
