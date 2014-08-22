@@ -13,7 +13,16 @@
             $("#pageloading").hide();
         });
         function checkUser(){
+            var user_id = document.form.txtUserId.value;
             var user = document.form.txtUser.value;
+            var user_old = document.form.txtUserOld.value;
+            if (user_id != null) {
+                if (user != user_old) {
+                    alert("登录ID不能变更！");
+                    document.form.txtUser.value = user_old;
+                    return;
+                }
+            }
             var jqxhr = $.post("<?php echo SITE_URL.'/user_c/chk_user/';?>" + user, function(data) {
                 showMsg(data);
             });
@@ -108,7 +117,8 @@
         </tr>
     </table>
     <br />
-    <input type="hidden" name="txtUserId" value="<?php echo @$user_id?>" />
+    <input type="hidden" name="txtUserId" id="txtUserId" value="<?php echo @$user_id?>" />
+    <input type="hidden" name="txtUserOld" id="txtUserOld" value="<?php echo @$user?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="addUser()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>
