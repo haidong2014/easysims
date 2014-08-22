@@ -140,7 +140,7 @@
                 </td><td align="left"></td>
             </tr>
         </table>
-    <br />
+    <br>
     <input type="hidden" name="teacher_id" id="teacher_id" value="<?php echo @$teacher_id?>" />
     <input type="hidden" name="teacher_no_old" id="teacher_no_old" value="<?php echo @$teacher_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="addStudent()"/>
