@@ -28,6 +28,13 @@ class Teacher_c extends MY_Controller {
     public function add_teacher_init(){
         $data = array();
 
+        $maxId = $this->teacher_m->getMaxId();
+        if (empty($maxId[0]['max_id'])) {
+            $data['teacher_no'] = "T1000";
+        } else {
+            $data['teacher_no'] = "T".($maxId[0]['max_id']+1);
+        }
+
         $data['sex'] = "1";
         $data['property'] = "1";
         $data['system_user'] = "1";
