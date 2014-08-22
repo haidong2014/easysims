@@ -157,7 +157,8 @@ CREATE TABLE IF NOT EXISTS `ss_class_course` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_student`;		
-CREATE TABLE IF NOT EXISTS `ss_student` (		
+CREATE TABLE IF NOT EXISTS `ss_student` (	
+  `student_id` int(11) NOT NULL AUTO_INCREMENT,		
   `student_no` varchar(10) NOT NULL,		
   `student_name` varchar(30) NOT NULL,		
   `sex` char(1) NULL,		
@@ -181,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`student_no`)		
+  PRIMARY KEY (`student_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_student_others`;		
@@ -337,63 +338,63 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
   PRIMARY KEY (`message_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 
-INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "ÏµÍ³¹ÜÀíÔ±", "1000", NOW(), NOW());
+INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "ÏµÍ³ï¿½ï¿½ï¿½ï¿½Ô±", "1000", NOW(), NOW());
 
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "Î´É¾³ý", "DELETE_FLG", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "É¾³ý", "DELETE_FLG", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "ÄÐ", "SEX", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "Î´É¾ï¿½ï¿½", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "É¾ï¿½ï¿½", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "ï¿½ï¿½", "SEX", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "2", "Å®", "SEX", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "1", "×¨", "PROPERTY", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "2", "¼æ", "PROPERTY", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "0", "ÓÐÐ§", "SYSTEM_USER", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "1", "ÎÞÐ§", "SYSTEM_USER", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "1", "ÕÐÉú", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "2", "¿ª¿Î", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "3", "½á¿Î", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "4", "È¡Ïû", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "1", "±¾¿ÆÒÔÉÏ", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "2", "±¾¿Æ", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "3", "×¨¿Æ", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "4", "×¨¿ÆÒÔÏÂ", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "1", "ÉÏÎç", "AMPM", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "2", "ÏÂÎç", "AMPM", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "1", "³öÇÚ", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "³Ùµ½", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "Çë¼Ù", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "¿õ¿Î", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "2", "ï¿½ï¿½", "PROPERTY", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "0", "ï¿½ï¿½Ð§", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "1", "ï¿½ï¿½Ð§", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "1", "ï¿½ï¿½ï¿½ï¿½", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "2", "ï¿½ï¿½ï¿½ï¿½", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "3", "ï¿½ï¿½ï¿½", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "4", "È¡ï¿½ï¿½", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "1", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "2", "ï¿½ï¿½ï¿½ï¿½", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "3", "×¨ï¿½ï¿½", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "4", "×¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "1", "ï¿½ï¿½ï¿½ï¿½", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "2", "ï¿½ï¿½ï¿½ï¿½", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "1", "ï¿½ï¿½ï¿½ï¿½", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "ï¿½Ùµï¿½", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "ï¿½ï¿½ï¿½", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "ï¿½ï¿½ï¿½ï¿½", "AMPM_STATUS", NOW(), NOW());
 
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ÏµÍ³¹ÜÀíÔ±", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("Ð£³¤", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ÕÐÉú×Ü¼à", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("½ÌÑ§×Ü¼à", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("¾ÍÒµ×Ü¼à", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("°àÖ÷ÈÎ", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("½ÌÊ¦", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("Ñ§Éú", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ÏµÍ³ï¿½ï¿½ï¿½ï¿½Ô±", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("Ð£ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ï¿½ï¿½ï¿½ï¿½ï¿½Ü¼ï¿½", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ï¿½ï¿½Ñ§ï¿½Ü¼ï¿½", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ï¿½ï¿½Òµï¿½Ü¼ï¿½", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ï¿½ï¿½Ê¦", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("Ñ§ï¿½ï¿½", NOW(), NOW());
 
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ÕÐÉú¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("Ñ§Éú¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("¾ÍÒµ¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("¸ß¼¶²éÑ¯", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("»ù´¡ÐÅÏ¢", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ÓÃ»§È¨ÏÞ", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("Ð£³¤ÁôÑÔ", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ï¿½ß¼ï¿½ï¿½ï¿½Ñ¯", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ï¿½ï¿½ï¿½ï¿½Ï¢", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ï¿½Ã»ï¿½È¨ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
 
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "ÕÐÉúÐÅÏ¢Â¼Èë", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "Ñ§Éú³öÇÚ¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "Ñ§Éú×÷Æ·¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100103", "evaluation_c", "¿Î³ÌÆÀ¼Û¹ÜÀí", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "¾ÍÒµÐÅÏ¢Â¼Èë", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "¸ß¼¶²éÑ¯", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "×÷Æ·Õ¹Ê¾", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "¿Î³ÌÐÅÏ¢Î¬»¤", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "°à¼¶ÐÅÏ¢Î¬»¤", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "½ÌÊ¦ÐÅÏ¢Î¬»¤", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "Ñ§ÉúÐÅÏ¢Î¬»¤", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "ÏµÍ³½ÇÉ«Éè¶¨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "ÏµÍ³ÓÃ»§Éè¶¨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "ÏµÍ³È¨ÏÞÉè¶¨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "Ð£³¤ÁôÑÔ", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Â¼ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "Ñ§ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "Ñ§ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100103", "evaluation_c", "ï¿½Î³ï¿½ï¿½ï¿½ï¿½Û¹ï¿½ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "ï¿½ï¿½Òµï¿½ï¿½Ï¢Â¼ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "ï¿½ß¼ï¿½ï¿½ï¿½Ñ¯", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "ï¿½ï¿½Æ·Õ¹Ê¾", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "ï¿½Î³ï¿½ï¿½ï¿½Ï¢Î¬ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "ï¿½à¼¶ï¿½ï¿½Ï¢Î¬ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "ï¿½ï¿½Ê¦ï¿½ï¿½Ï¢Î¬ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "Ñ§ï¿½ï¿½ï¿½ï¿½Ï¢Î¬ï¿½ï¿½", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "ÏµÍ³ï¿½ï¿½É«ï¿½è¶¨", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "ÏµÍ³ï¿½Ã»ï¿½ï¿½è¶¨", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "ÏµÍ³È¨ï¿½ï¿½ï¿½è¶¨", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", NOW(), NOW());
 
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1000", NOW(), NOW());
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1001", NOW(), NOW());
