@@ -57,7 +57,6 @@ class Teacher_m extends MY_Model
        $this->db->select('*');
        $query = $this->db->get($this->table_name);
        $teacher= null;
-       log_message('info','teachter getone'.$teacher_id."|".var_export($query->result_array(),true));
        foreach ($query->result_array() as $row){
          $teacher = $row;
        }
@@ -100,5 +99,11 @@ class Teacher_m extends MY_Model
         $this->db->set( 'update_user',	$data['update_user'] );
         $this->db->set( 'update_time',	$data['update_time'] );
         return $this->db->update($this->table_name);
+    }
+
+    public function getMaxId(){
+        $this->db->select('Max(teacher_id) as max_id');
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
     }
 }
