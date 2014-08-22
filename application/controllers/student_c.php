@@ -11,12 +11,15 @@ class Student_c extends MY_Controller {
       $data = array();
       $user = $this->session->all_userdata();
       log_message('info', "####user".var_export($user,true));
-      
-      $studentData = $this->student_m->getList();
+      $now = date('Ymd');
+      $keyword = $this->input->post('txtKey');
+      $studentData = $this->student_m->getList($keyword);
       foreach($studentData as &$data){
         $data['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".$data['student_id']."\">查看</a> |".
         "<a href=\"".SITE_URL."/student_c/upd_student_init/".$data['student_id']."\">编辑</a> |".
         "<a href=\"#\" onclick=\"delstudent('".SITE_URL."/student_c/delete_student/".$data['student_id']."')\">删除</a>";
+        
+        $data['age'] = floor(($now-str_replace("-","",$data['birthday']))/10000);
         log_message('info', "####href".$data['opt']);
       }
       $data['studentData'] = $studentData;

@@ -9,9 +9,12 @@ class student_m extends MY_Model
         $this->table_name='ss_student';
     }
 
-    public function getList()
+    public function getList($keyword = null)
     {
        $this->db->where('delete_flg', 0);
+        if(!empty($keyword)){
+            $this->db->like('student_name',$keyword);
+        }
        $this->db->select('*');
        $query =  $this->db->get($this->table_name);
        return $query->result_array();

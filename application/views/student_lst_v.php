@@ -6,10 +6,10 @@ var grid = null;
 $(function () {
     grid = $("#maingrid4").ligerGrid({
         columns: [
-        { display: '学生编号', name: 'student_id', align: 'left', width: 80 },
+        { display: '学生编号', name: 'student_no', align: 'left', width: 80 },
         { display: '学生姓名', name: 'student_name', align: 'left', width: 160 },
         { display: '性别', name: 'sex', align:'left', width: 60 },
-        { display: '年龄', name: 'birthday',  align: 'left', width: 60 },
+        { display: '年龄', name: 'age',  align: 'left', width: 60 },
         { display: '联系方式 ', name: 'contact_way', align: 'left', width: 60 },
         { display: '家长电话', name: 'parent_phone', align: 'left' },
         { display: '操作', name: 'opt', align: 'center', width: 120}
@@ -50,45 +50,37 @@ function delstudent(parm){
 }
 </script>
 <div id="searchbar">
+<form id="form" name="form" method="post" action="<?php echo SITE_URL."/student_c";?>" >
+ &nbsp入学年月：
+	<select name="start_year" id="start_year" ltype="select">
+		<option value="0"></option>
+		<?php for($i=0;$i<20;$i++){ ?>
+				<?php if(@$start_year==($i+2000)){ ?>
+				<option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2005); ?></option>
+				<? }else {?>
+				<option value="<?php echo ($i+2000); ?> "><?php echo ($i+2005); ?></option>
+				<?php } ?>
+			<?php } ?>
+
+	</select>
+	<select name="ddlMonth" id="ddlMonth" ltype="select">
+		<option value="0"></option>
+		<?php for($i=0;$i<12;$i++){ ?>
+						    <?php if(@$start_month==($i+1)){ ?>
+						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?>月</option>
+						    <?php }else{?>
+							<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?>月</option>
+							<?php }?>
+						<?php } ?>
+	</select>
     编号或姓名：<input id="txtKey" type="text" />
     <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
   <input id="regist" type="button" value=" 学生信息登录 " onclick="goreg()" />
+  </form>
 </div>
   <br>
   <div id="maingrid4" style="margin:0; padding:0"></div>
 <div style="display:none;"></div>
   
-  <!--  
-  <table width="800" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" >
-    <tr style="background:blue;"  >
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>学生编号</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>学生姓名</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>性别</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>年龄</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>专/兼职</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>任课科目</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>手机号码</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>电子邮件</font></th>
-    <th height="20" scope="row" style="text-align:center;vertical-align:middle"><font color=white>操作</font></th>
-    </tr>
-    <tr>
-    <?php foreach($studentData as $key => $value) {?>
-    <td height="20" scope="row"><?php echo $value['student_id']?></td>
-    <td height="20" scope="row"><?php echo $value['student_name']?></td>
-    <td height="20" scope="row"><?php echo $sex_name[$value['sex']];?></td>
-    <td height="20" scope="row"><?php echo $value['birthday']?></td>
-    <td height="20" scope="row"><?php echo $value['contact_way']?></td>
-    <td height="20" scope="row"><?php echo $value['parent_phone']?></td>
-
-    <td height="20" scope="row" style="text-align:center;vertical-align:middle">
-
-    <a href="<?php echo SITE_URL;?>/student_c/view_student_init/<?php echo $value['student_id']?>">查看</a> |
-    <a href="<?php echo SITE_URL;?>/student_c/upd_student_init/<?php echo $value['student_id']?>">编辑</a> |
-    <a href="#" onclick="delstudent('<?php echo SITE_URL;?>/student_c/delete_student/<?php echo $value['student_id']?>')">删除</a>
-    </td>
-    </tr>
-    <?php }?>
-  </table>
-
--->
+  
 
