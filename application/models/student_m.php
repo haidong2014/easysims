@@ -44,6 +44,28 @@ class student_m extends MY_Model
 
       return $this->db->insert( $this->table_name );
     }
+    public function addOneOther($student_no, $graduate_school, $specialty,$graduate
+    ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks){
+            $this->db->set( 'student_no',	$student_no );
+          $this->db->set( 'graduate_school',	$graduate_school );
+          $this->db->set( 'specialty',	$specialty );
+          $this->db->set( 'graduate',	$graduate );
+          $this->db->set( 'ancestralhome',	$ancestralhome );
+          $this->db->set( 'know_school',	$know_school );
+          $this->db->set( 'know_trade',	$know_trade );
+          $this->db->set( 'preference',	$preference );
+          $this->db->set( 'software_base',	$software_base );
+          $this->db->set( 'purpose',	$purpose );
+          $this->db->set( 'follow_city',	$follow_city );
+          $this->db->set( 'follow_company',	$follow_company );
+          $this->db->set( 'follow_salary',	$follow_salary );
+          $this->db->set( 'follow_position',	$follow_position );
+          $this->db->set( 'follow_remarks',	$follow_remarks );
+          
+          return $this->db->insert( "ss_student_others");
+          
+     }
     public function getOne($student_id){
        $this->db->where('student_id', $student_id);
        $this->db->where('delete_flg', 0);
@@ -56,7 +78,18 @@ class student_m extends MY_Model
        }
        return $student;
     }
-
+    public function getOneOther($student_id){
+       $this->db->where('student_id', $student_id);
+       $this->db->where('delete_flg', 0);
+       $this->db->select('*');
+       $query = $this->db->get("ss_student_others");
+       $student= null;
+       log_message('info','student getoneother'.$student_id."|".var_export($query->result_array(),true));
+       foreach ($query->result_array() as $row){
+         $student = $row;
+       }
+       return $student;
+    }
     public function updateOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks,$student_id){
@@ -85,14 +118,40 @@ class student_m extends MY_Model
 
         return $this->db->update( $this->table_name );
     }
-
+    public function updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
+    ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks){
+      $this->db->where('student_id', $student_id);
+      $this->db->set( 'student_no',	$student_no );
+      $this->db->set( 'graduate_school',	$graduate_school );
+      $this->db->set( 'specialty',	$specialty );
+      $this->db->set( 'graduate',	$graduate );
+      $this->db->set( 'ancestralhome',	$ancestralhome );
+      $this->db->set( 'know_school',	$know_school );
+      $this->db->set( 'know_trade',	$know_trade );
+      $this->db->set( 'preference',	$preference );
+      $this->db->set( 'software_base',	$software_base );
+      $this->db->set( 'purpose',	$purpose );
+      $this->db->set( 'follow_city',	$follow_city );
+      $this->db->set( 'follow_company',	$follow_company );
+      $this->db->set( 'follow_salary',	$follow_salary );
+      $this->db->set( 'follow_position',	$follow_position );
+      $this->db->set( 'follow_remarks',	$follow_remarks );
+      
+      return $this->db->update( "ss_student_others");
+    }
     public function deleteOne($student_id){
           log_message('info', "del"."|".$student_id);
         $this->db->where('student_id', $student_id);
         $this->db->set( 'delete_flg',		1 );
         return $this->db->update( $this->table_name );
     }
-
+   public function deleteOneOther($student_id){
+          log_message('info', "del"."|".$student_id);
+        $this->db->where('student_id', $student_id);
+        $this->db->set( 'delete_flg',		1 );
+        return $this->db->update( "ss_student_others" );
+    }
     public function getStudentName($student_no) {
         $this->db->select('student_name');
         $this->db->where('student_no', $student_no);

@@ -186,7 +186,8 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_student_others`;		
-CREATE TABLE IF NOT EXISTS `ss_student_others` (		
+CREATE TABLE IF NOT EXISTS `ss_student_others` (	
+  `student_id` int(11) NOT NULL,	
   `student_no` varchar(10) NOT NULL,		
   `graduate_school` varchar(30) NOT NULL,	
   `specialty` varchar(30) NOT NULL,		  
@@ -207,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `ss_student_others` (
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`student_no`)		
+  PRIMARY KEY (`student_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_attendance`;		

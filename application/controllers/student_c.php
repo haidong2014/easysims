@@ -50,12 +50,31 @@ class Student_c extends MY_Controller {
        $attendance = $this->input->post('attendance');
        $system_user = $this->input->post('system_user');
        $remarks = $this->input->post('remarks');
-      
-          
+      /*************other***************/
+       $graduate_school = $this->input->post('graduate_school');
+	   $specialty = $this->input->post('specialty');
+	   $graduate = $this->input->post('graduate');
+	   $ancestralhome = $this->input->post('ancestralhome');
+	   $know_school = $this->input->post('know_school');
+	   $know_trade = $this->input->post('know_trade');
+       $preference = $this->input->post('preference');
+       $software_base = $this->input->post('software_base');
+       $purpose = $this->input->post('purpose');
+       $follow_city = $this->input->post('follow_city');
+       $follow_company = $this->input->post('follow_company');
+       $follow_salary = $this->input->post('follow_salary');
+       $follow_position = $this->input->post('follow_position');
+       $follow_remarks = $this->input->post('follow_remarks');
+       
+       /********************************************/
 	   $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
-         $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-         $attendance,$system_user,$remarks);
-       redirect("student_c");
+       $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
+       $attendance,$system_user,$remarks);
+         /***insert other**/
+         $this->student_m->addOneOther($student_no, $graduate_school, $specialty,$graduate
+        ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
+        $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks);
+           redirect("student_c");
 	  
 	}
 	public function upd_student_init($student_id = null){
@@ -70,7 +89,9 @@ class Student_c extends MY_Controller {
 	 
 	  $studentData = $this->student_m->getOne($student_id);
 
-	  $this->load->view('student_add_v',$studentData);
+	  $otherData = $this->student_m->getOneOther($student_id);
+	  
+	  $this->load->view('student_add_v',$studentData+$otherData);
 	}
     public function upd_student($student_id = null){
       if(empty($student_id)){
@@ -94,13 +115,34 @@ class Student_c extends MY_Controller {
        $attendance = $this->input->post('attendance');
        $system_user = $this->input->post('system_user');
        $remarks = $this->input->post('remarks');
-          
+          /*************other***************/
+       $graduate_school = $this->input->post('graduate_school');
+	   $specialty = $this->input->post('specialty');
+	   $graduate = $this->input->post('graduate');
+	   $ancestralhome = $this->input->post('ancestralhome');
+	   $know_school = $this->input->post('know_school');
+	   $know_trade = $this->input->post('know_trade');
+       $preference = $this->input->post('preference');
+       $software_base = $this->input->post('software_base');
+       $purpose = $this->input->post('purpose');
+       $follow_city = $this->input->post('follow_city');
+       $follow_company = $this->input->post('follow_company');
+       $follow_salary = $this->input->post('follow_salary');
+       $follow_position = $this->input->post('follow_position');
+       $follow_remarks = $this->input->post('follow_remarks');
+       
+       /********************************************/
       $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks,$student_id);
+         /********************************************/
+         $this->student_m->updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
+    ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks);
+         /********************************************/
       redirect("student_c");
 	}
-public function view_student_init($student_id = null){
+    public function view_student_init($student_id = null){
 	  
 	  $data = array();
 	  if(empty($student_id)){
@@ -111,8 +153,8 @@ public function view_student_init($student_id = null){
      }
 	 
 	  $studentData = $this->student_m->getOne($student_id);
-
-	  $this->load->view('student_view_v',$studentData);
+      $otherData = $this->student_m->getOneOther($student_id);
+	  $this->load->view('student_view_v',$studentData+$otherData);
 	}
    public function delete_student($student_id = null){
       if(empty($student_id)){
@@ -120,10 +162,11 @@ public function view_student_init($student_id = null){
       }
       
       $this->student_m->deleteOne($student_id);
+      $this->student_m->deleteOneOther($student_id);
       redirect("student_c");
 	}
 	
-public function chk_repeat($student_no, $old_no = null){
+    public function chk_repeat($student_no, $old_no = null){
         log_message('info', "student_c chk_repeat start");
         log_message('info', "student_c chk_repeat post user:".$student_no." : :".$old_no);
         $this->load->model('student_m','student_m');
