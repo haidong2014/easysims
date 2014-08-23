@@ -25,8 +25,10 @@ class Subject_c extends MY_Controller {
         $this->load->view('subject_lst_v',$data);
     }
 
-    public function add_subject_init(){
+    public function add_subject_init($course_id){
         $data = array();
+        $data['course_id'] = $course_id;
+        log_message('info', "subject add_subject_init data:".var_export($data,true));
         $this->load->view('subject_add_v',$data);
     }
 
@@ -35,9 +37,23 @@ class Subject_c extends MY_Controller {
 
         $userinfo = $this->session->userdata('user');
         $course_id = $this->input->post('course_id');
+        $subject_id = $this->input->post('subject_id');
 
         $data['course_id'] = $course_id;
-        $data['course_name'] = $this->input->post('course_name');
+        if (empty($subject_id)) {
+            $maxID = $this->subject_m->getMaxId($course_id);
+            if (empty($maxID[0]['max_id'])){
+                $subject_id = $course_id."01";
+            } else {
+                $subject_id = $maxID[0]['max_id']+1;
+            }
+            $mode = 1;
+        } else {
+            $mode = 2;
+        }
+        $data['subject_id'] = $subject_id;
+        $data['subject_name'] = $this->input->post('subject_name');
+        $data['period'] = $this->input->post('period');
         $data['remarks'] = $this->input->post('remarks');
         $data['delete_flg'] = "0";
         $data['insert_user'] = $userinfo;
@@ -45,13 +61,13 @@ class Subject_c extends MY_Controller {
         $data['update_user'] = $userinfo;
         $data['update_time'] = date("Y-m-d H:i:s");
 
-        if(empty($course_id)) {
-            $this->course_m->addOne($data);
+        if($mode == 1) {
+            $this->subject_m->addOne($data);
         } else {
-            $this->course_m->updateOne($data);
+            $this->subject_m->updateOne($data);
         }
 
-        redirect("course_c");
+        self::index($course_id);
     }
 
     public function upd_subject_init($course_id = null){
