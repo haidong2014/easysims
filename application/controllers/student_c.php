@@ -24,7 +24,9 @@ class Student_c extends MY_Controller {
       }
       $data['studentData'] = $studentData;
       $data['studentsData'] = @json_encode(array('Rows'=>$studentData));
-      
+      $this->load->model('code_m','code_m');
+      $graduateData = $this->code_m->getList("06");
+      $data['graduateData'] = $graduateData;
       $this->load->view('student_lst_v',$data);
 	}
 	public function add_student_init(){

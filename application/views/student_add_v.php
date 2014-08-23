@@ -81,12 +81,12 @@ if(!empty($student_id)){
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
-                <td align="right" class="l-table-edit-td">课程编号:</td>
+                <td align="right" class="l-table-edit-td">学生编号:</td>
                 <td align="left" class="l-table-edit-td"><input name="student_no" type="text" id="student_no" ltype="text" value="<?php echo @$student_no ?>" validate="{required:true,maxlength:10}" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">课程名称:</td>
+                <td align="right" class="l-table-edit-td">学生名称:</td>
                 <td align="left" class="l-table-edit-td"><input name="student_name" type="text" id="student_name" ltype="text" value="<?php echo @$student_name ?>" validate="{required:true,maxlength:30}" /></td>
                 <td align="left"></td>
             </tr>
@@ -106,7 +106,7 @@ if(!empty($student_id)){
              <tr>
                 <td align="right" class="l-table-edit-td">年龄:</td>
                 <td align="left" class="l-table-edit-td">
-                 <input name="txtAge" type="text" id="txtAge" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $age?>"/></td>
+                 <input name="age" type="text" id="age" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $age?>"/></td>
                 <td align="left"></td>
             </tr>
              <tr>
@@ -126,22 +126,26 @@ if(!empty($student_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">毕业学校:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtGraduateSchool" type="text" id="txtGraduateSchool" ltype="text"/></td>
+                <td align="left" class="l-table-edit-td"><input name="graduate_school" type="text" id="graduate_school" value="<?php echo $graduate_school"?> ltype="text"/></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">毕业专业:</td>
-                <td align="left" class="l-table-edit-td"><input name="txtSpecialty" type="text" id="txtSpecialty" ltype="text"/></td>
+                <td align="left" class="l-table-edit-td"><input name="specialty" type="text" id="specialty" ltype="text" value="<?php echo $specialty;?>"/></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">学历:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlEducation" id="ddlEducation" ltype="select">
-						<option value="1">本科以上</option>
-						<option value="2">本科</option>
-						<option value="3">专科</option>
-						<option value="4">专科以下</option>
+					<select name="graduate" id="graduate" ltype="select">
+						<?php
+					foreach($graduateData['GRADUATE'] as $key => $value) { ?>
+					  <?php if($key == @$graduate){?>
+					  <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+					  <?php }else{?>
+					   <option value="<?php echo $key;?>"><?php echo $value;?></option>
+					  <?php }
+					}?>
 					</select>
 				</td>
                 <td align="left"></td>
@@ -149,12 +153,14 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">课程:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlSpecialty" id="ddlSpecialty" ltype="select">
-						<option value="1">建筑动画课程信息</option>
-						<option value="2">室内设计课程信息</option>
-						<option value="3">影视动画课程信息</option>
-						<option value="4">影视后期课程信息</option>
-						<option value="5">影视坐标合作班课程信息</option>
+					<select name="course_no" id="course_no" ltype="select">
+						<?php foreach($courseData as $course){?>
+    						<?php if(@$course_no==($course['course_no'])){ ?>
+    						<option value="<?php  echo $course['course_no'] ?>" selected><?php  echo $course['course_name'] ?></option>
+    						<?php }else{?>
+    						<option value="<?php  echo $course['course_no'] ?>"><?php  echo $course['course_name'] ?></option>
+    						<?php } ?>
+						<?php } ?>
 					</select>
 				</td>
                 <td align="left"></td>
@@ -162,31 +168,31 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">学费:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtSchooling" type="text" id="txtSchooling" ltype='spinner' ligerui="{type:'int'}" />
+                    <input name="txtSchooling" type="text" id="cost"   name="cost"  ltype='spinner' ligerui="{type:'int'}" value="<?php echo $cost;?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">原籍</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" style="width:400px"></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" name ="ancestralhome" style="width:400px"><?php echo $ancestralhome;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">通过什么<br>方式了解<br>到学校:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="knowme" style="width:400px"></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="know_school" name="know_school" style="width:400px"><?php echo $know_school;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">对行业的<br>了解情况:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="knowtrade" style="width:400px"></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="know_trade" name="know_trade" style="width:400px" ><?php echo $know_trade?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">个人喜好:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="preference" style="width:400px"></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="preference" name="" style="width:400px"><?php echo $preference?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -204,17 +210,14 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">入学年度:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlYear" id="ddlYear" ltype="select">
-						<option value="1">2014</option>
-						<option value="2">2013</option>
-						<option value="3">2012</option>
-						<option value="4">2011</option>
-						<option value="5">2010</option>
-						<option value="6">2009</option>
-						<option value="7">2008</option>
-						<option value="8">2007</option>
-						<option value="9">2006</option>
-						<option value="10">2005</option>
+					<select name="start_year" id="start_year" ltype="select">
+						<?php for($i=0;$i<10;$i++){ ?>
+					    	<?php if(@$start_year==($i+2005)){ ?>
+					    	<option value="<?php echo ($i+2005); ?> " selected><?php echo ($i+2005); ?></option>
+					    	<? }else {?>
+							<option value="<?php echo ($i+2005); ?> "><?php echo ($i+2005); ?></option>
+							<?php } ?>
+						<?php } ?>
 					</select>
 				</td>
                 <td align="left"></td>
@@ -223,18 +226,13 @@ if(!empty($student_id)){
                 <td align="right" class="l-table-edit-td">入学月份:</td>
 				<td align="left" class="l-table-edit-td">
 					<select name="ddlMonth" id="ddlMonth" ltype="select">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
+						<?php for($i=0;$i<12;$i++){ ?>
+						    <?php if(@$start_month==($i+1)){ ?>
+						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
+						    <?php }else{?>
+							<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
+							<?php }?>
+						<?php } ?>
 					</select>
 				</td>
                 <td align="left"></td>
@@ -242,19 +240,19 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtStartDate" type="text" id="txtStartDate" ltype="date" />
+                    <input name="start_date" type="text" id="start_date" ltype="date" value="<?php echo $start_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtEndDate" type="text" id="txtEndDate" ltype="date" />
+                    <input name="end_date" type="text" id="end_date" ltype="date" value="<?php echo $end_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">成绩:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtScore" type="text" id="purpose" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" <?php echo $purpose;?>/>
+                    <input name="attendance" type="text" id="attendance" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" <?php echo $attendance;?>/>
                 </td><td align="left"></td>
             </tr>
             <tr>
