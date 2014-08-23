@@ -53,7 +53,7 @@ function delcourse(parm){
          课程名称：
         <input id="txtKey" name="txtKey"  type="text" maxlength="20" style="width:200px" value="<?php echo @$txtKey?>"/>&nbsp
         <input id="search" type="submit" value=" 查 询 " />&nbsp
-        <input id="regist" type="button" value=" 课程信息登录 " onclick="goreg()" /></form>
+        <input id="regist" type="button" value=" 课程信息登录 " onclick="goreg()" />
     </table>
     <br>
     <div id="maingrid" style="margin:0; padding:0"></div>

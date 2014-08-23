@@ -34,7 +34,8 @@ function f_getWhere()
     return clause;
 }
 function goreg(){
-  location.href='<?php echo SITE_URL;?>/subject_c/add_subject_init';
+    var course_id = document.form.course_id.value;
+    location.href='<?php echo SITE_URL;?>/subject_c/add_subject_init/'+course_id;
 }
 function delsubject(parm){
   $.ligerDialog.confirm('确定要删除这个科目吗？', function (yes)
@@ -43,6 +44,9 @@ function delsubject(parm){
           location.href = parm;
       }
   });
+}
+function returnPage(){
+    location.href='<?php echo SITE_URL;?>/course_c';
 }
 </script>
 
@@ -54,11 +58,12 @@ function delsubject(parm){
          科目名称：
         <input id="txtKey" name="txtKey"  type="text" maxlength="20" style="width:200px" value="<?php echo @$txtKey?>"/>&nbsp
         <input id="search" type="submit" value=" 查 询 " />&nbsp
-        <input id="regist" type="button" value=" 科目信息登录 " onclick="goreg()" /></form>
+        <input id="regist" type="button" value=" 科目信息登录 " onclick="goreg()" />&nbsp
+        <input id="regist" type="button" value=" 返 回 " onclick="returnPage()" />
     </table>
     <br>
     <div id="maingrid" style="margin:0; padding:0"></div>
-    <input type="hidden" name="course_id" value="<?php echo @$course_id?>" />
+    <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
 </form>
 <div style="display:none;"></div>
 </body>

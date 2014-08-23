@@ -40,7 +40,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">课程名称:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="course_name" type="text" id="course_name" maxlength="50" style="width:400px" value="<?php echo @$course_name ?>" />
+                <input name="course_name" type="text" id="course_name" maxlength="30" style="width:400px" value="<?php echo @$course_name ?>" />
             </td>
             <td align="left"></td>
         </tr>
