@@ -87,6 +87,7 @@ $property_name = array(1=>'专职',2=>'兼职');
 	<a href="<?php echo $action;?>">课程一览</a>&nbsp>&nbsp
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+            <col width="130px"><col width="*">
 		     <tr>
                 <td align="right" class="l-table-edit-td">学生编号:</td>
                 <td align="left" class="l-table-edit-td"><?php echo @$student_no ?></td>

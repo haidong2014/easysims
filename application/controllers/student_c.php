@@ -164,8 +164,8 @@ class Student_c extends MY_Controller {
       
       $this->load->model('code_m','code_m');
       $graduateData = $this->code_m->getList("06");
-      var_dump($graduateData);
-      $studentData['course_name'] = $graduateData['GRADUATE'][$otherData['graduate']];
+      //var_dump($graduateData);
+      $studentData['graduate'] = $graduateData['GRADUATE'][$otherData['graduate']];
       
       
 	  $this->load->view('student_view_v',$studentData+$otherData);
