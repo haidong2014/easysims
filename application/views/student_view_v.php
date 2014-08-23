@@ -265,7 +265,7 @@ $property_name = array(1=>'专职',2=>'兼职');
             <tr>
                 <td align="right" class="l-table-edit-td" valign="top">系统用户:</td>
                 <td align="left" class="l-table-edit-td">
-                     <?php if(@$system_user)==1){?>有效<?php }?>
+                     <?php if(@$system_user==1){?>有效<?php }?>
                 </td>
                 <td align="left"></td>
             </tr>

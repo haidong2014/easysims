@@ -106,7 +106,7 @@ if(!empty($student_id)){
              <tr>
                 <td align="right" class="l-table-edit-td">年龄:</td>
                 <td align="left" class="l-table-edit-td">
-                 <input name="age" type="text" id="age" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $age?>"/></td>
+                 <input name="age" type="text" id="age" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$age?>"/></td>
                 <td align="left"></td>
             </tr>
              <tr>
@@ -126,12 +126,12 @@ if(!empty($student_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">毕业学校:</td>
-                <td align="left" class="l-table-edit-td"><input name="graduate_school" type="text" id="graduate_school" value="<?php echo $graduate_school"?> ltype="text"/></td>
+                <td align="left" class="l-table-edit-td"><input name="graduate_school" type="text" id="graduate_school" value="<?php echo @$graduate_school;?>" ltype="text"/></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">毕业专业:</td>
-                <td align="left" class="l-table-edit-td"><input name="specialty" type="text" id="specialty" ltype="text" value="<?php echo $specialty;?>"/></td>
+                <td align="left" class="l-table-edit-td"><input name="specialty" type="text" id="specialty" ltype="text" value="<?php echo @$specialty;?>"/></td>
                 <td align="left"></td>
             </tr>
             <tr>
@@ -168,43 +168,43 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">学费:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtSchooling" type="text" id="cost"   name="cost"  ltype='spinner' ligerui="{type:'int'}" value="<?php echo $cost;?>"/>
+                    <input name="txtSchooling" type="text" id="cost"   name="cost"  ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$cost;?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">原籍</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" name ="ancestralhome" style="width:400px"><?php echo $ancestralhome;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" name ="ancestralhome" style="width:400px"><?php echo @$ancestralhome;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">通过什么<br>方式了解<br>到学校:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="know_school" name="know_school" style="width:400px"><?php echo $know_school;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="know_school" name="know_school" style="width:400px"><?php echo @$know_school;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">对行业的<br>了解情况:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="know_trade" name="know_trade" style="width:400px" ><?php echo $know_trade?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="know_trade" name="know_trade" style="width:400px" ><?php echo @$know_trade?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">个人喜好:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="preference" name="" style="width:400px"><?php echo $preference?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="preference" name="" style="width:400px"><?php echo @$preference?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">有无软件<br>基础:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="software_base" name="software_base" style="width:400px" ><?php echo $software_base?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="software_base" name="software_base" style="width:400px" ><?php echo @$software_base?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">来校学习<br>的目的:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="purpose" name="purpose" style="width:400px" ><?php echo $purpose?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="purpose" name="purpose" style="width:400px" ><?php echo @$purpose?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -240,46 +240,46 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="start_date" type="text" id="start_date" ltype="date" value="<?php echo $start_date?>" />
+                    <input name="start_date" type="text" id="start_date" ltype="date" value="<?php echo @$start_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">结课日期:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="end_date" type="text" id="end_date" ltype="date" value="<?php echo $end_date?>" />
+                    <input name="end_date" type="text" id="end_date" ltype="date" value="<?php echo @$end_date?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">成绩:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="attendance" type="text" id="attendance" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" <?php echo $attendance;?>/>
+                    <input name="attendance" type="text" id="attendance" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" <?php echo @$attendance;?>/>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业城市:</td>
-                <td align="left" class="l-table-edit-td"><input name="follow_city" type="text" id="follow_city" ltype="text" <?php echo $follow_city?>/></td>
+                <td align="left" class="l-table-edit-td"><input name="follow_city" type="text" id="follow_city" ltype="text" <?php echo @$follow_city?>/></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业企业:</td>
-                <td align="left" class="l-table-edit-td"><input name="follow_company" type="text" id="follow_company" ltype="text" value="<?php echo $follow_company?>" /></td>
+                <td align="left" class="l-table-edit-td"><input name="follow_company" type="text" id="follow_company" ltype="text" value="<?php echo @$follow_company?>" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业薪资:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="follow_salary" type="text" id="follow_salary" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $follow_salary;?>"/>
+                    <input name="follow_salary" type="text" id="follow_salary" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$follow_salary;?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业职位:</td>
-                <td align="left" class="l-table-edit-td"><input name="follow_position" type="text" id="follow_position" ltype="text" value="<?php echo $follow_position;?>" /></td>
+                <td align="left" class="l-table-edit-td"><input name="follow_position" type="text" id="follow_position" ltype="text" value="<?php echo @$follow_position;?>" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="follow" style="width:400px"><?php echo $follow_remarks;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="follow" style="width:400px"><?php echo @$follow_remarks;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>

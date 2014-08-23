@@ -69,14 +69,14 @@ class Student_c extends MY_Controller {
        $follow_remarks = $this->input->post('follow_remarks');
        
        /********************************************/
-	   $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
+	   $student_id = $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
        $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
        $attendance,$system_user,$remarks);
          /***insert other**/
-         $this->student_m->addOneOther($student_no, $graduate_school, $specialty,$graduate
+         $this->student_m->addOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
         ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
         $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks);
-           redirect("student_c");
+        redirect("student_c");
 	  
 	}
 	public function upd_student_init($student_id = null){
@@ -155,7 +155,19 @@ class Student_c extends MY_Controller {
      }
 	 
 	  $studentData = $this->student_m->getOne($student_id);
+	  $this->load->model('course_m','course_m');
+	  //var_dump($studentData['course_no']);
+	  $courseData = $this->course_m->getOneByNo($studentData['course_no']);
+	  //var_dump($courseData);
+	  $studentData['course_name'] = $courseData['course_name'];
       $otherData = $this->student_m->getOneOther($student_id);
+      
+      $this->load->model('code_m','code_m');
+      $graduateData = $this->code_m->getList("06");
+      var_dump($graduateData);
+      $studentData['course_name'] = $graduateData['GRADUATE'][$otherData['graduate']];
+      
+      
 	  $this->load->view('student_view_v',$studentData+$otherData);
 	}
    public function delete_student($student_id = null){

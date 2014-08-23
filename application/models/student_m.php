@@ -26,9 +26,9 @@ class student_m extends MY_Model
       $this->db->set( 'student_name',	$student_name );
       $this->db->set( 'sex',	$sex );
       $this->db->set( 'birthday',		$birthday );
-      $this->db->set( 'id_card',		$property );
-      $this->db->set( 'contact_way',		$course );
-      $this->db->set( 'parent_phone',		$telephone );
+      $this->db->set( 'id_card',		$id_card );
+      $this->db->set( 'contact_way',		$contact_way );
+      $this->db->set( 'parent_phone',		$parent_phone );
       
       $this->db->set( 'course_no',	$course_no );
       $this->db->set( 'class_no',	$class_no );
@@ -42,12 +42,14 @@ class student_m extends MY_Model
       $this->db->set( 'system_user',	$system_user );
       $this->db->set( 'remarks',		$remarks );
 
-      return $this->db->insert( $this->table_name );
+       $this->db->insert( $this->table_name );
+      return $this->db->insert_id();
     }
-    public function addOneOther($student_no, $graduate_school, $specialty,$graduate
+    public function addOneOther($student_id,$student_no, $graduate_school, $specialty,$graduate
     ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
     $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks){
-            $this->db->set( 'student_no',	$student_no );
+    	  $this->db->set( 'student_id',	$student_id );
+          $this->db->set( 'student_no',	$student_no );
           $this->db->set( 'graduate_school',	$graduate_school );
           $this->db->set( 'specialty',	$specialty );
           $this->db->set( 'graduate',	$graduate );
@@ -100,9 +102,9 @@ class student_m extends MY_Model
         $this->db->set( 'student_name',	$student_name );
         $this->db->set( 'sex',	$sex );
         $this->db->set( 'birthday',		$birthday );
-        $this->db->set( 'id_card',		$property );
-        $this->db->set( 'contact_way',		$course );
-        $this->db->set( 'parent_phone',		$telephone );
+        $this->db->set( 'id_card',		$id_card );
+        $this->db->set( 'contact_way',		$contact_way );
+        $this->db->set( 'parent_phone',		$parent_phone );
         
         $this->db->set( 'course_no',	$course_no );
         $this->db->set( 'class_no',	$class_no );
