@@ -23,6 +23,7 @@ class Subject_m extends MY_Model
 
     public function addOne($data){
         $this->db->set( 'course_id',	$data['course_id'] );
+        $this->db->set( 'subject_id',	$data['subject_id'] );
         $this->db->set( 'subject_name',	$data['subject_name'] );
         $this->db->set( 'period',	    $data['period'] );
         $this->db->set( 'remarks',		$data['remarks'] );
@@ -65,5 +66,12 @@ class Subject_m extends MY_Model
         $this->db->set( 'update_user',   $data['update_user'] );
         $this->db->set( 'update_time',	 $data['update_time'] );
         return $this->db->update( $this->table_name );
+    }
+
+    public function getMaxId($course_id){
+        $this->db->select('Max(subject_id) as max_id');
+        $this->db->where('course_id',$course_id);
+        $query =  $this->db->get($this->table_name);
+        return $query->result_array();
     }
 }
