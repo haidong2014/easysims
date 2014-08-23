@@ -84,7 +84,7 @@ $property_name = array(1=>'专职',2=>'兼职');
 </head>
 <body>
 <div id="pageloading"></div>  
-	<a href="<?php echo $action;?>">课程一览</a>&nbsp>&nbsp
+	<a href="<?php echo $action;?>">学生一览</a>&nbsp>&nbsp
     <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <col width="130px"><col width="*">

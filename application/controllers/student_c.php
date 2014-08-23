@@ -19,7 +19,7 @@ class Student_c extends MY_Controller {
         "<a href=\"".SITE_URL."/student_c/upd_student_init/".$data['student_id']."\">编辑</a> |".
         "<a href=\"#\" onclick=\"delstudent('".SITE_URL."/student_c/delete_student/".$data['student_id']."')\">删除</a>";
         
-        $data['age'] = floor(($now-str_replace("-","",$data['birthday']))/10000);
+        //$data['age'] = floor(($now-str_replace("-","",$data['birthday']))/10000);
         log_message('info', "####href".$data['opt']);
       }
       $data['studentData'] = $studentData;
@@ -31,6 +31,13 @@ class Student_c extends MY_Controller {
 	}
 	public function add_student_init(){
 	  $data = array();
+	   $this->load->model('code_m','code_m');
+      $graduateData = $this->code_m->getList("06");
+      $data['graduateData'] = $graduateData;
+      $this->load->model('course_m','course_m');
+      $courseData = $this->course_m->getList(null);
+        
+        $data['courseData'] = $courseData;
 	  $this->load->view('student_add_v',$data);
 	}
 	public function add_student(){
@@ -39,6 +46,7 @@ class Student_c extends MY_Controller {
 	   $student_name = $this->input->post('student_name');
 	   $sex = $this->input->post('sex');
 	   $birthday = $this->input->post('birthday');
+	   $age = $this->input->post('age');
 	   $id_card = $this->input->post('id_card');
 	   $contact_way = $this->input->post('contact_way');
        $parent_phone = $this->input->post('parent_phone');
@@ -69,7 +77,7 @@ class Student_c extends MY_Controller {
        $follow_remarks = $this->input->post('follow_remarks');
        
        /********************************************/
-	   $student_id = $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
+	   $student_id = $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
        $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
        $attendance,$system_user,$remarks);
          /***insert other**/
@@ -92,8 +100,17 @@ class Student_c extends MY_Controller {
 	  $studentData = $this->student_m->getOne($student_id);
 
 	  $otherData = $this->student_m->getOneOther($student_id);
-	  
-	  $this->load->view('student_add_v',$studentData+$otherData);
+	  $data = $studentData+$otherData;
+	  $this->load->model('code_m','code_m');
+      $graduateData = $this->code_m->getList("06");
+      $data['graduateData'] = $graduateData;
+      
+      $this->load->model('course_m','course_m');
+      $courseData = $this->course_m->getList(null);
+        
+        $data['courseData'] = $courseData;
+        
+	  $this->load->view('student_add_v', $data);
 	}
     public function upd_student($student_id = null){
       if(empty($student_id)){
@@ -104,6 +121,7 @@ class Student_c extends MY_Controller {
 	   $student_name = $this->input->post('student_name');
 	   $sex = $this->input->post('sex');
 	   $birthday = $this->input->post('birthday');
+	   $age = $this->input->post('age');
 	   $id_card = $this->input->post('id_card');
 	   $contact_way = $this->input->post('contact_way');
        $parent_phone = $this->input->post('parent_phone');
@@ -134,7 +152,7 @@ class Student_c extends MY_Controller {
        $follow_remarks = $this->input->post('follow_remarks');
        
        /********************************************/
-      $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
+      $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks,$student_id);
          /********************************************/

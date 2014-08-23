@@ -19,13 +19,14 @@ class student_m extends MY_Model
        $query =  $this->db->get($this->table_name);
        return $query->result_array();
     }
-    public function addOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
+    public function addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks){
       $this->db->set( 'student_no',		$student_no );
       $this->db->set( 'student_name',	$student_name );
       $this->db->set( 'sex',	$sex );
       $this->db->set( 'birthday',		$birthday );
+      $this->db->set( 'age',		$age );
       $this->db->set( 'id_card',		$id_card );
       $this->db->set( 'contact_way',		$contact_way );
       $this->db->set( 'parent_phone',		$parent_phone );
@@ -92,7 +93,7 @@ class student_m extends MY_Model
        }
        return $student;
     }
-    public function updateOne($student_no,$student_name, $sex,$birthday, $id_card, $contact_way, 
+    public function updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks,$student_id){
 //          log_message('info', "ddd".$student_name."|".$sex."|".$birthday."|".$id_card."|".
@@ -102,6 +103,7 @@ class student_m extends MY_Model
         $this->db->set( 'student_name',	$student_name );
         $this->db->set( 'sex',	$sex );
         $this->db->set( 'birthday',		$birthday );
+        $this->db->set( 'age',		$age );
         $this->db->set( 'id_card',		$id_card );
         $this->db->set( 'contact_way',		$contact_way );
         $this->db->set( 'parent_phone',		$parent_phone );

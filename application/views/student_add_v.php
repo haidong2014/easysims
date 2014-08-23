@@ -168,7 +168,7 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">学费:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="txtSchooling" type="text" id="cost"   name="cost"  ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$cost;?>"/>
+                    <input name="cost" type="text" id="cost"    ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$cost;?>"/>
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -192,7 +192,7 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">个人喜好:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="preference" name="" style="width:400px"><?php echo @$preference?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="preference" name="preference" style="width:400px"><?php echo @$preference?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
@@ -225,7 +225,7 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">入学月份:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="ddlMonth" id="ddlMonth" ltype="select">
+					<select name="start_month" id="start_month" ltype="select">
 						<?php for($i=0;$i<12;$i++){ ?>
 						    <?php if(@$start_month==($i+1)){ ?>
 						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
@@ -301,7 +301,7 @@ if(!empty($student_id)){
     <input type="hidden" name="student_id"  value="<?php echo @$student_id?>" />
     <input type="hidden" name="old_student_no"  value="<?php echo @$student_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
-    <input type="reset" value="返回" class="l-button l-button-reset"/>
+    <input type="button" value="返回" class="l-button l-button-reset" onclick="location.href='<?php echo SITE_URL.'/student_c/';?>'" />
     </form>
     <div style="display:none"></div>
 </body>
