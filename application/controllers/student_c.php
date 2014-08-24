@@ -48,6 +48,7 @@ class Student_c extends MY_Controller {
 	}
 	public function add_student(){
 	   log_message('info','add student '.var_export($_POST,true));
+	   $userinfo = $this->session->userdata('user');
 	   $student_no = $this->input->post('student_no');
 	   $student_name = $this->input->post('student_name');
 	   $sex = $this->input->post('sex');
@@ -85,11 +86,16 @@ class Student_c extends MY_Controller {
        /********************************************/
 	   $student_id = $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
        $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-       $attendance,$system_user,$remarks);
+       $attendance,$system_user,$remarks,$userinfo);
          /***insert other**/
          $this->student_m->addOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
         ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-        $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks);
+        $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userinfo);
+        
+        
+       if($system_user == "1"){
+            self::addUser($student_no,$student_name);
+        }
         redirect("student_c");
 	  
 	}
@@ -156,16 +162,21 @@ class Student_c extends MY_Controller {
        $follow_salary = $this->input->post('follow_salary');
        $follow_position = $this->input->post('follow_position');
        $follow_remarks = $this->input->post('follow_remarks');
-       
+       $userinfo = $this->session->userdata('user');
        /********************************************/
       $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-         $attendance,$system_user,$remarks,$student_id);
+         $attendance,$system_user,$remarks,$student_id,$userinfo);
          /********************************************/
          $this->student_m->updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
     ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks);
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userinfo);
          /********************************************/
+         
+         
+         if($system_user == "1"){
+            self::addUser($student_no,$student_name);
+        }
       redirect("student_c");
 	}
     public function view_student_init($student_id = null){
@@ -215,5 +226,25 @@ class Student_c extends MY_Controller {
         }
 
         log_message('info', "student chk_repeat end".var_export($checkuser,true));
+    }
+    
+    private function addUser($teacher_no,$teacher_name){
+        $userinfo = $this->session->userdata('user');
+
+        $this->load->model('user_m','user_m');
+
+        $chkuser= $this->user_m->checkUser($teacher_no);
+        if(!empty($chkuser)){
+          return ;
+        }
+        $userData['user'] = $teacher_no;
+        $userData['user_name'] = $teacher_name;
+        $userData['role_id'] = "1006";
+        $userData['delete_flg'] = 0;
+        $userData['insert_user'] = $userinfo;
+        $userData['insert_time'] = date("Y-m-d H:i:s");
+        $userData['update_user'] = $userinfo;
+        $userData['update_time'] = date("Y-m-d H:i:s");
+        $this->user_m->addOne($userData);
     }
 }

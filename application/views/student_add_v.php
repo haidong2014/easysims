@@ -43,10 +43,10 @@ if(!empty($student_id)){
         
         function checkUser(){
             if(document.getElementById('student_no').value==""){
-            	alert('课程编号不能为空');return;
+            	alert('学生编号不能为空');return;
             }
             if(document.getElementById('student_name').value==""){
-            	alert('课程名不能为空');return;
+            	alert('学生名不能为空');return;
             }
 
             var user = document.form.student_no.value;

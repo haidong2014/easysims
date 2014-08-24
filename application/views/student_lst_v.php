@@ -1,5 +1,5 @@
 <?php require_once("_header.php");?>
-<?php $sex_name=array(1=>'男',2=>'女');?>
+
 <script type="text/javascript">
 var studentsData = <?php echo $studentsData?>;
 var grid = null;
@@ -41,7 +41,7 @@ function goreg(){
   location.href='<?php echo SITE_URL;?>/student_c/add_student_init';
 }
 function delstudent(parm){
-  $.ligerDialog.confirm('确定要删除这名老师吗？', function (yes)
+  $.ligerDialog.confirm('确定要删除这名学生吗？', function (yes)
   {
       if(yes){
           location.href = parm;

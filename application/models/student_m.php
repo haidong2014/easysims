@@ -28,7 +28,7 @@ class student_m extends MY_Model
     }
     public function addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-         $attendance,$system_user,$remarks){
+         $attendance,$system_user,$remarks, $userInfo = 'sysuser'){
       $this->db->set( 'student_no',		$student_no );
       $this->db->set( 'student_name',	$student_name );
       $this->db->set( 'sex',	$sex );
@@ -49,13 +49,16 @@ class student_m extends MY_Model
       
       $this->db->set( 'system_user',	$system_user );
       $this->db->set( 'remarks',		$remarks );
-
+ 	  $this->db->set('insert_user', $userInfo);
+      $this->db->set('insert_time',date("Y-m-d H:i:s"));
+      $this->db->set('update_user',$userInfo);
+      $this->db->set('update_time', date("Y-m-d H:i:s"));
        $this->db->insert( $this->table_name );
       return $this->db->insert_id();
     }
     public function addOneOther($student_id,$student_no, $graduate_school, $specialty,$graduate
     ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks){
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userInfo ='sysuser'){
     	  $this->db->set( 'student_id',	$student_id );
           $this->db->set( 'student_no',	$student_no );
           $this->db->set( 'graduate_school',	$graduate_school );
@@ -72,7 +75,10 @@ class student_m extends MY_Model
           $this->db->set( 'follow_salary',	$follow_salary );
           $this->db->set( 'follow_position',	$follow_position );
           $this->db->set( 'follow_remarks',	$follow_remarks );
-          
+          $this->db->set('insert_user', $userInfo);
+      $this->db->set('insert_time',date("Y-m-d H:i:s"));
+      $this->db->set('update_user',$userInfo);
+      $this->db->set('update_time', date("Y-m-d H:i:s"));
           return $this->db->insert( "ss_student_others");
           
      }
@@ -102,7 +108,7 @@ class student_m extends MY_Model
     }
     public function updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-         $attendance,$system_user,$remarks,$student_id){
+         $attendance,$system_user,$remarks,$student_id,$userInfo ='sysuser'){
 //          log_message('info', "ddd".$student_name."|".$sex."|".$birthday."|".$id_card."|".
 //        $contact_way."|".$parent_phone."|".$system_user."|".$remarks."|".$student_id);
         $this->db->where('student_id', $student_id);
@@ -127,11 +133,13 @@ class student_m extends MY_Model
         $this->db->set( 'system_user',	$system_user );
         $this->db->set( 'remarks',		$remarks );
 
+      $this->db->set('update_user',$userInfo);
+      $this->db->set('update_time', date("Y-m-d H:i:s"));
         return $this->db->update( $this->table_name );
     }
     public function updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
     ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks){
+    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userInfo ='sysuser'){
       $this->db->where('student_id', $student_id);
       $this->db->set( 'student_no',	$student_no );
       $this->db->set( 'graduate_school',	$graduate_school );
@@ -148,7 +156,9 @@ class student_m extends MY_Model
       $this->db->set( 'follow_salary',	$follow_salary );
       $this->db->set( 'follow_position',	$follow_position );
       $this->db->set( 'follow_remarks',	$follow_remarks );
-      
+
+      $this->db->set('update_user',$userInfo);
+      $this->db->set('update_time', date("Y-m-d H:i:s"));
       return $this->db->update( "ss_student_others");
     }
     public function deleteOne($student_id){
