@@ -211,11 +211,11 @@ if(!empty($student_id)){
                 <td align="right" class="l-table-edit-td">入学年度:</td>
 				<td align="left" class="l-table-edit-td">
 					<select name="start_year" id="start_year" ltype="select">
-						<?php for($i=0;$i<10;$i++){ ?>
+						<?php for($i=0;$i<20;$i++){ ?>
 					    	<?php if(@$start_year==($i+2005)){ ?>
-					    	<option value="<?php echo ($i+2005); ?> " selected><?php echo ($i+2005); ?></option>
+					    	<option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2000); ?></option>
 					    	<? }else {?>
-							<option value="<?php echo ($i+2005); ?> "><?php echo ($i+2005); ?></option>
+							<option value="<?php echo ($i+2000); ?> "><?php echo ($i+2000); ?></option>
 							<?php } ?>
 						<?php } ?>
 					</select>
@@ -279,7 +279,7 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
                 <td align="left" class="l-table-edit-td"> 
-                <textarea cols="100" rows="4" class="l-textarea" id="follow" style="width:400px"><?php echo @$follow_remarks;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" style="width:400px"><?php echo @$follow_remarks;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>

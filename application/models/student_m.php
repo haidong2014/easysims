@@ -9,14 +9,21 @@ class student_m extends MY_Model
         $this->table_name='ss_student';
     }
 
-    public function getList($keyword = null)
+    public function getList($keyword = null, $start_year = null, $start_month = null)
     {
        $this->db->where('delete_flg', 0);
         if(!empty($keyword)){
             $this->db->like('student_name',$keyword);
         }
+        if(!empty($start_year)){
+            $this->db->where('start_year', $start_year);
+        }
+        if(!empty($where)){
+            $this->db->like('start_month', $start_month);
+        }
        $this->db->select('*');
        $query =  $this->db->get($this->table_name);
+       //log_message('info','student_m getList'.$keyword."|".$start_year."|".$start_month."|".$this->db->last_query());
        return $query->result_array();
     }
     public function addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 

@@ -56,25 +56,25 @@ function delstudent(parm){
 		<option value="0"></option>
 		<?php for($i=0;$i<20;$i++){ ?>
 				<?php if(@$start_year==($i+2000)){ ?>
-				<option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2005); ?></option>
+				<option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2000); ?></option>
 				<? }else {?>
-				<option value="<?php echo ($i+2000); ?> "><?php echo ($i+2005); ?></option>
+				<option value="<?php echo ($i+2000); ?> "><?php echo ($i+2000); ?></option>
 				<?php } ?>
-			<?php } ?>
+		<?php } ?>
 
 	</select>
-	<select name="ddlMonth" id="ddlMonth" ltype="select">
+	<select name="start_month" id="start_month" ltype="select">
 		<option value="0"></option>
 		<?php for($i=0;$i<12;$i++){ ?>
-						    <?php if(@$start_month==($i+1)){ ?>
-						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?>月</option>
-						    <?php }else{?>
-							<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?>月</option>
-							<?php }?>
-						<?php } ?>
+			 <?php if(@$start_month==($i+1)){ ?>
+			<option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?>月</option>
+			<?php }else{?>
+			<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?>月</option>
+			<?php }?>
+		<?php } ?>
 	</select>
-    编号或姓名：<input id="txtKey" type="text" />
-    <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
+    编号或姓名：<input id="txtKey" type="text" value="<?php echo $txtKey ?>" />
+    <input id="search" type="submit" value=" 查 询 "  />
   <input id="regist" type="button" value=" 学生信息登录 " onclick="goreg()" />
   </form>
 </div>

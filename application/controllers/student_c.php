@@ -13,7 +13,10 @@ class Student_c extends MY_Controller {
       log_message('info', "####user".var_export($user,true));
       $now = date('Ymd');
       $keyword = $this->input->post('txtKey');
-      $studentData = $this->student_m->getList($keyword);
+      $start_year = $this->input->post('start_year');
+      $start_month = $this->input->post('start_month');
+      //echo "ggg:".$start_year."|".$start_month;
+      $studentData = $this->student_m->getList($keyword, $start_year, $start_month);
       foreach($studentData as &$data){
         $data['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".$data['student_id']."\">查看</a> |".
         "<a href=\"".SITE_URL."/student_c/upd_student_init/".$data['student_id']."\">编辑</a> |".
@@ -27,6 +30,9 @@ class Student_c extends MY_Controller {
       $this->load->model('code_m','code_m');
       $graduateData = $this->code_m->getList("06");
       $data['graduateData'] = $graduateData;
+      $data['start_year'] = $start_year;
+      $data['start_month'] = $start_month;
+      $data['txtKey'] = $keyword;
       $this->load->view('student_lst_v',$data);
 	}
 	public function add_student_init(){
