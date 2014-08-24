@@ -40,17 +40,17 @@ if(!empty($student_id)){
         {
             $("form").ligerForm();
         });
-        
+
         function checkUser(){
             if(document.getElementById('student_no').value==""){
-            	alert('学生编号不能为空');return;
+              alert('学生编号不能为空');return;
             }
             if(document.getElementById('student_name').value==""){
-            	alert('学生名不能为空');return;
+              alert('学生名不能为空');return;
             }
 
             var user = document.form.student_no.value;
-           
+
             var jqxhr = $.post("<?php echo SITE_URL.'/student_c/chk_repeat/';?>" + document.getElementById('student_no').value+'/'+'<?php echo @$student_no?>', function(data) {
                 showMsg(data);
             });
@@ -64,7 +64,7 @@ if(!empty($student_id)){
           //alert('111');
           document.form.submit();
         }
-        
+
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -74,11 +74,10 @@ if(!empty($student_id)){
         .l-verify-tip{ left:230px; top:120px;}
     </style>
 </head>
-<body>
+
+<body style="padding:10px">
 <div id="pageloading"></div>
-  <a href="<?php echo SITE_URL;?>/student_c">学生一览</a>&nbsp>&nbsp
     <form name="form" method="post" action="<?php echo $action;?>" id="form">
-    <div></div>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
                 <td align="right" class="l-table-edit-td">学生编号:</td>
@@ -136,33 +135,33 @@ if(!empty($student_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">学历:</td>
-				<td align="left" class="l-table-edit-td">
-					<select name="graduate" id="graduate" ltype="select">
-						<?php
-					foreach($graduateData['GRADUATE'] as $key => $value) { ?>
-					  <?php if($key == @$graduate){?>
-					  <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
-					  <?php }else{?>
-					   <option value="<?php echo $key;?>"><?php echo $value;?></option>
-					  <?php }
-					}?>
-					</select>
-				</td>
+        <td align="left" class="l-table-edit-td">
+          <select name="graduate" id="graduate" ltype="select">
+            <?php
+          foreach($graduateData['GRADUATE'] as $key => $value) { ?>
+            <?php if($key == @$graduate){?>
+            <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+            <?php }else{?>
+             <option value="<?php echo $key;?>"><?php echo $value;?></option>
+            <?php }
+          }?>
+          </select>
+        </td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">课程:</td>
-				<td align="left" class="l-table-edit-td">
-					<select name="course_no" id="course_no" ltype="select">
-						<?php foreach($courseData as $course){?>
-    						<?php if(@$course_no==($course['course_no'])){ ?>
-    						<option value="<?php  echo $course['course_no'] ?>" selected><?php  echo $course['course_name'] ?></option>
-    						<?php }else{?>
-    						<option value="<?php  echo $course['course_no'] ?>"><?php  echo $course['course_name'] ?></option>
-    						<?php } ?>
-						<?php } ?>
-					</select>
-				</td>
+        <td align="left" class="l-table-edit-td">
+          <select name="course_no" id="course_no" ltype="select">
+            <?php foreach($courseData as $course){?>
+                <?php if(@$course_no==($course['course_no'])){ ?>
+                <option value="<?php  echo $course['course_no'] ?>" selected><?php  echo $course['course_name'] ?></option>
+                <?php }else{?>
+                <option value="<?php  echo $course['course_no'] ?>"><?php  echo $course['course_name'] ?></option>
+                <?php } ?>
+            <?php } ?>
+          </select>
+        </td>
                 <td align="left"></td>
             </tr>
             <tr>
@@ -173,68 +172,68 @@ if(!empty($student_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">原籍</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" name ="ancestralhome" style="width:400px"><?php echo @$ancestralhome;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">通过什么<br>方式了解<br>到学校:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="know_school" name="know_school" style="width:400px"><?php echo @$know_school;?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">对行业的<br>了解情况:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="know_trade" name="know_trade" style="width:400px" ><?php echo @$know_trade?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">个人喜好:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="preference" name="preference" style="width:400px"><?php echo @$preference?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">有无软件<br>基础:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="software_base" name="software_base" style="width:400px" ><?php echo @$software_base?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">来校学习<br>的目的:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="purpose" name="purpose" style="width:400px" ><?php echo @$purpose?></textarea>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">入学年度:</td>
-				<td align="left" class="l-table-edit-td">
-					<select name="start_year" id="start_year" ltype="select">
-						<?php for($i=0;$i<20;$i++){ ?>
-					    	<?php if(@$start_year==($i+2005)){ ?>
-					    	<option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2000); ?></option>
-					    	<? }else {?>
-							<option value="<?php echo ($i+2000); ?> "><?php echo ($i+2000); ?></option>
-							<?php } ?>
-						<?php } ?>
-					</select>
-				</td>
+        <td align="left" class="l-table-edit-td">
+          <select name="start_year" id="start_year" ltype="select">
+            <?php for($i=0;$i<20;$i++){ ?>
+                <?php if(@$start_year==($i+2005)){ ?>
+                <option value="<?php echo ($i+2000); ?> " selected><?php echo ($i+2000); ?></option>
+                <? }else {?>
+              <option value="<?php echo ($i+2000); ?> "><?php echo ($i+2000); ?></option>
+              <?php } ?>
+            <?php } ?>
+          </select>
+        </td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">入学月份:</td>
-				<td align="left" class="l-table-edit-td">
-					<select name="start_month" id="start_month" ltype="select">
-						<?php for($i=0;$i<12;$i++){ ?>
-						    <?php if(@$start_month==($i+1)){ ?>
-						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
-						    <?php }else{?>
-							<option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
-							<?php }?>
-						<?php } ?>
-					</select>
-				</td>
+        <td align="left" class="l-table-edit-td">
+          <select name="start_month" id="start_month" ltype="select">
+            <?php for($i=0;$i<12;$i++){ ?>
+                <?php if(@$start_month==($i+1)){ ?>
+                <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
+                <?php }else{?>
+              <option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
+              <?php }?>
+            <?php } ?>
+          </select>
+        </td>
                 <td align="left"></td>
             </tr>
             <tr>
@@ -278,7 +277,7 @@ if(!empty($student_id)){
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
-                <td align="left" class="l-table-edit-td"> 
+                <td align="left" class="l-table-edit-td">
                 <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" style="width:400px"><?php echo @$follow_remarks;?></textarea>
                 </td><td align="left"></td>
             </tr>
@@ -298,11 +297,11 @@ if(!empty($student_id)){
             </tr>
         </table>
     <br />
-    <input type="hidden" name="student_id"  value="<?php echo @$student_id?>" />
-    <input type="hidden" name="old_student_no"  value="<?php echo @$student_no?>" />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
+    <input type="hidden" name="student_id" id="student_id" value="<?php echo @$student_id?>" />
+    <input type="hidden" name="student_no_old" id="student_no_old" value="<?php echo @$student_no?>" />
+    <input type="button" value="提交" class="l-button l-button-submit"/>
     <input type="button" value="返回" class="l-button l-button-reset" onclick="location.href='<?php echo SITE_URL.'/student_c/';?>'" />
-    </form>
-    <div style="display:none"></div>
+</form>
+<div style="display:none"></div>
 </body>
 </html>
