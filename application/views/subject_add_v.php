@@ -25,8 +25,8 @@
             document.form.submit();
         }
         function returnPage(){
-            var course_id = document.form.course_id.vaule;
-            location.href='<?php echo SITE_URL;?>/subject_c/index/course_id';
+            var course_id = document.form.course_id.value;
+            location.href='<?php echo SITE_URL;?>/subject_c/index/'+course_id;
         }
     </script>
     <style type="text/css">
@@ -64,8 +64,8 @@
         </tr>
     </table>
     <br>
-    <input type="hidden" name="course_id" value="<?php echo @$course_id?>" />
-    <input type="hidden" name="subject_id" value="<?php echo @$subject_id?>" />
+    <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
+    <input type="hidden" name="subject_id" id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="addSubject()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>

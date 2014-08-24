@@ -53,7 +53,7 @@ function returnPage(){
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form id="form" name="form" method="post" action="<?php echo SITE_URL."/subject_c";?>" >
+<form id="form" name="form" method="post" action="<?php echo SITE_URL."/subject_c/index/$course_id";?>" >
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
          科目名称：
         <input id="txtKey" name="txtKey"  type="text" maxlength="20" style="width:200px" value="<?php echo @$txtKey?>"/>&nbsp

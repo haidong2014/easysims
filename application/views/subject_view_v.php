@@ -1,27 +1,24 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>科目信息登录</title>
+<title>科目信息查看</title>
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo SITE_URL;?>/statics/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerForm.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerSpinner.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerTextBox.js" type="text/javascript"></script>
     <script type="text/javascript">
         var eee;
         $(function ()
         {
+            $("form").ligerForm();
             $("#pageloading").hide();
         });
-        function addCourse(){
-            txtCourseName = document.form.course_name.value;
-            if (txtCourseName == ""){
-                alert("请输入课程名称！");
-                return;
-            }
-            document.form.submit();
-        }
         function returnPage(){
-            location.href='<?php echo SITE_URL;?>/course_c';
+            var course_id = document.form.course_id.value;
+            location.href='<?php echo SITE_URL;?>/subject_c/index/'+course_id;
         }
     </script>
     <style type="text/css">
@@ -35,14 +32,20 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/course_c/add_course';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/subject_c/add_subject';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
-            <td align="right" class="l-table-edit-td">课程名称:</td>
+            <td align="right" class="l-table-edit-td">科目名称:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="course_name" type="text" id="course_name" maxlength="50" style="width:400px" value="<?php echo @$course_name ?>" />
+                <input name="subject_name" type="text" id="subject_name" maxlength="30" style="width:400px" value="<?php echo @$subject_name ?>" />
             </td>
             <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">周期:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="period" type="text" id="period" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$period ?>" />
+            </td><td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
@@ -53,7 +56,8 @@
         </tr>
     </table>
     <br>
-    <input type="hidden" name="course_id" value="<?php echo @$course_id?>" />
+    <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
+    <input type="hidden" name="subject_id" id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>
 <div style="display:none"></div>
