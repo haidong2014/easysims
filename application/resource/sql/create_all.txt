@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `ss_class` (
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
   PRIMARY KEY (`class_id`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 		
 DROP TABLE IF EXISTS `ss_class_course`;		
 CREATE TABLE IF NOT EXISTS `ss_class_course` (		
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
   PRIMARY KEY (`student_id`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 		
 DROP TABLE IF EXISTS `ss_student_others`;		
 CREATE TABLE IF NOT EXISTS `ss_student_others` (	
@@ -339,63 +339,63 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
   PRIMARY KEY (`message_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 
-INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "ϵͳ����Ա", "1000", NOW(), NOW());
+INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "δɾ��", "DELETE_FLG", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "ɾ��", "DELETE_FLG", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "��", "SEX", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "2", "Ů", "SEX", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "1", "ר", "PROPERTY", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "2", "��", "PROPERTY", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "0", "��Ч", "SYSTEM_USER", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "1", "��Ч", "SYSTEM_USER", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "1", "����", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "2", "����", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "3", "���", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "4", "ȡ��", "STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "1", "��������", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "2", "����", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "3", "ר��", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "4", "ר������", "GRADUATE", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "1", "����", "AMPM", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "2", "����", "AMPM", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "1", "����", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "�ٵ�", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "���", "AMPM_STATUS", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "����", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "未删除", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "删除", "DELETE_FLG", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "男", "SEX", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "2", "女", "SEX", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "1", "专", "PROPERTY", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("03", "2", "兼", "PROPERTY", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "0", "有效", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("04", "1", "无效", "SYSTEM_USER", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "1", "招生", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "2", "开课", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "3", "结课", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("05", "4", "取消", "STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "1", "本科以上", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "2", "本科", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "3", "专科", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("06", "4", "专科以下", "GRADUATE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "1", "上午", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("07", "2", "下午", "AMPM", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "1", "出勤", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "迟到", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "请假", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "旷课", "AMPM_STATUS", NOW(), NOW());
 
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ϵͳ����Ա", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("У��", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("�����ܼ�", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("��ѧ�ܼ�", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("��ҵ�ܼ�", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("������", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("��ʦ", NOW(), NOW());
-INSERT INTO ss_roles (role_name, insert_time, update_time) values ("ѧ��", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("系统管理员", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("校长", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("招生总监", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("教学总监", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("就业总监", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("班主任", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("教师", NOW(), NOW());
+INSERT INTO ss_roles (role_name, insert_time, update_time) values ("学生", NOW(), NOW());
 
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("�������", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("ѧ�����", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("��ҵ����", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("�߼���ѯ", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("����Ϣ", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("�û�Ȩ��", NOW(), NOW());
-INSERT INTO ss_functions (function_name, insert_time, update_time) values ("У������", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("招生管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("学生管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("就业管理", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("高级查询", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("基础信息", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("用户权限", NOW(), NOW());
+INSERT INTO ss_functions (function_name, insert_time, update_time) values ("校长留言", NOW(), NOW());
 
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "������Ϣ¼��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "ѧ����ڹ���", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "ѧ����Ʒ����", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100103", "evaluation_c", "�γ����۹���", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "��ҵ��Ϣ¼��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "�߼���ѯ", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "��Ʒչʾ", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "�γ���Ϣά��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "�༶��Ϣά��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "��ʦ��Ϣά��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "ѧ����Ϣά��", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "ϵͳ��ɫ�趨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "ϵͳ�û��趨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "ϵͳȨ���趨", NOW(), NOW());
-INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "У������", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "招生信息录入", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "学生出勤管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "学生作品管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100103", "evaluation_c", "课程评价管理", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "就业信息录入", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "高级查询", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "作品展示", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "课程信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "班级信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "教师信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "学生信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "系统角色设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "系统用户设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "系统权限设定", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "校长留言", NOW(), NOW());
 
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1000", NOW(), NOW());
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1001", NOW(), NOW());
