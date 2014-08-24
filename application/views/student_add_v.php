@@ -252,12 +252,12 @@ if(!empty($student_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">成绩:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="attendance" type="text" id="attendance" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" <?php echo @$attendance;?>/>
+                    <input name="attendance" type="text" id="attendance" ltype='spinner'  ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" value="<?php echo @$attendance;?>" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">就业城市:</td>
-                <td align="left" class="l-table-edit-td"><input name="follow_city" type="text" id="follow_city" ltype="text" <?php echo @$follow_city?>/></td>
+                <td align="left" class="l-table-edit-td"><input name="follow_city" type="text" id="follow_city" ltype="text" value="<?php echo @$follow_city?>" /></td>
                 <td align="left"></td>
             </tr>
             <tr>
