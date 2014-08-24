@@ -179,4 +179,15 @@ class Class_c extends MY_Controller {
 
         log_message('info', "class chk_repeat end".var_export($checkuser,true));
     }
+    
+    public function selectKemu()
+    {
+        $data = array();
+        
+        $this->load->model('subject_m','subject_m');
+		$subjectData = $this->subject_m->getList($course_id, null);
+        
+        $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
+        $this->load->view('class_add_setcourse',$data);
+    }
 }

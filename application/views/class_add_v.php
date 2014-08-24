@@ -65,7 +65,9 @@ if(!empty($class_id)){
           //alert('111');
           document.form.submit();
         }
-        
+        function gotoSetSubject(){
+        	location.href = "<?php echo SITE_URL;?>/class_c/selectKemu";
+        }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -134,7 +136,7 @@ if(!empty($class_id)){
                 </td><td align="left"></td>
             </tr>
             <tr>
-                <td align="right" class="l-table-edit-td">课程(<input type="button" value="设定" onclick="setCourse()"/>):</td>
+                <td align="right" class="l-table-edit-td">课程(<input type="button" value="设定" onclick="gotoSetSubject()"/>):</td>
                 <td align="left" class="l-table-edit-td">
 					<select name="course_no" id="course_no" ltype="select">
 						<?php foreach($courseData as $course){?>
