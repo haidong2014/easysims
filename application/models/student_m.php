@@ -1,5 +1,5 @@
 <?php
-class student_m extends MY_Model
+class Student_m extends MY_Model
 {
 
     public function __construct()
@@ -11,77 +11,78 @@ class student_m extends MY_Model
 
     public function getList($keyword = null, $start_year = null, $start_month = null)
     {
-       $this->db->where('delete_flg', 0);
+        $this->db->select('t1.student_id,t1.student_no,t1.student_name,t1.age,t1.contact_way,t1.parent_phone,t2.code_name as sex');
+        $this->db->from('ss_student t1');
+        $this->db->join('ss_code t2', 't2.code_no=t1.sex and t2.code='."02", 'left');
+        $this->db->where('t1.delete_flg', 0);
         if(!empty($keyword)){
-            $this->db->like('student_name',$keyword);
+            $this->db->like('t1.student_name',$keyword);
         }
         if(!empty($start_year)){
-            $this->db->where('start_year', $start_year);
+            $this->db->where('t1.start_year', $start_year);
         }
-        if(!empty($where)){
-            $this->db->like('start_month', $start_month);
+        if(!empty($start_month)){
+            $this->db->like('t1.start_month', $start_month);
         }
-       $this->db->select('*');
-       $query =  $this->db->get($this->table_name);
-       //log_message('info','student_m getList'.$keyword."|".$start_year."|".$start_month."|".$this->db->last_query());
-       return $query->result_array();
+        $query = $this->db->get();
+        return $query->result_array();
     }
-    public function addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
-         $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
-         $attendance,$system_user,$remarks, $userInfo = 'sysuser'){
-      $this->db->set( 'student_no',		$student_no );
-      $this->db->set( 'student_name',	$student_name );
-      $this->db->set( 'sex',	$sex );
-      $this->db->set( 'birthday',		$birthday );
-      $this->db->set( 'age',		$age );
-      $this->db->set( 'id_card',		$id_card );
-      $this->db->set( 'contact_way',		$contact_way );
-      $this->db->set( 'parent_phone',		$parent_phone );
-      
-      $this->db->set( 'course_no',	$course_no );
-      $this->db->set( 'class_no',	$class_no );
-      $this->db->set( 'cost',	$cost );
-      $this->db->set( 'start_year',	$start_year );
-      $this->db->set( 'start_month',	$start_month );
-      $this->db->set( 'start_date',	$start_date );
-      $this->db->set( 'end_date',	$end_date );
-      $this->db->set( 'attendance',	$attendance );
-      
-      $this->db->set( 'system_user',	$system_user );
-      $this->db->set( 'remarks',		$remarks );
- 	  $this->db->set('insert_user', $userInfo);
-      $this->db->set('insert_time',date("Y-m-d H:i:s"));
-      $this->db->set('update_user',$userInfo);
-      $this->db->set('update_time', date("Y-m-d H:i:s"));
-       $this->db->insert( $this->table_name );
-      return $this->db->insert_id();
+
+    public function addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way,
+        $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
+        $attendance,$system_user,$remarks, $userInfo = 'sysuser'){
+        $this->db->set( 'student_no',		$student_no );
+        $this->db->set( 'student_name',	$student_name );
+        $this->db->set( 'sex',	$sex );
+        $this->db->set( 'birthday',		$birthday );
+        $this->db->set( 'age',		$age );
+        $this->db->set( 'id_card',		$id_card );
+        $this->db->set( 'contact_way',		$contact_way );
+        $this->db->set( 'parent_phone',		$parent_phone );
+        $this->db->set( 'course_no',	$course_no );
+        $this->db->set( 'class_no',	$class_no );
+        $this->db->set( 'cost',	$cost );
+        $this->db->set( 'start_year',	$start_year );
+        $this->db->set( 'start_month',	$start_month );
+        $this->db->set( 'start_date',	$start_date );
+        $this->db->set( 'end_date',	$end_date );
+        $this->db->set( 'attendance',	$attendance );
+        $this->db->set( 'system_user',	$system_user );
+        $this->db->set( 'remarks',		$remarks );
+        $this->db->set('insert_user', $userInfo);
+        $this->db->set('insert_time',date("Y-m-d H:i:s"));
+        $this->db->set('update_user',$userInfo);
+        $this->db->set('update_time', date("Y-m-d H:i:s"));
+        $this->db->insert( $this->table_name );
+        return $this->db->insert_id();
     }
+
     public function addOneOther($student_id,$student_no, $graduate_school, $specialty,$graduate
-    ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-    $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userInfo ='sysuser'){
-    	  $this->db->set( 'student_id',	$student_id );
-          $this->db->set( 'student_no',	$student_no );
-          $this->db->set( 'graduate_school',	$graduate_school );
-          $this->db->set( 'specialty',	$specialty );
-          $this->db->set( 'graduate',	$graduate );
-          $this->db->set( 'ancestralhome',	$ancestralhome );
-          $this->db->set( 'know_school',	$know_school );
-          $this->db->set( 'know_trade',	$know_trade );
-          $this->db->set( 'preference',	$preference );
-          $this->db->set( 'software_base',	$software_base );
-          $this->db->set( 'purpose',	$purpose );
-          $this->db->set( 'follow_city',	$follow_city );
-          $this->db->set( 'follow_company',	$follow_company );
-          $this->db->set( 'follow_salary',	$follow_salary );
-          $this->db->set( 'follow_position',	$follow_position );
-          $this->db->set( 'follow_remarks',	$follow_remarks );
-          $this->db->set('insert_user', $userInfo);
-      $this->db->set('insert_time',date("Y-m-d H:i:s"));
-      $this->db->set('update_user',$userInfo);
-      $this->db->set('update_time', date("Y-m-d H:i:s"));
-          return $this->db->insert( "ss_student_others");
-          
+        ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
+        $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userInfo ='sysuser'){
+        $this->db->set( 'student_id',	$student_id );
+        $this->db->set( 'student_no',	$student_no );
+        $this->db->set( 'graduate_school',	$graduate_school );
+        $this->db->set( 'specialty',	$specialty );
+        $this->db->set( 'graduate',	$graduate );
+        $this->db->set( 'ancestralhome',	$ancestralhome );
+        $this->db->set( 'know_school',	$know_school );
+        $this->db->set( 'know_trade',	$know_trade );
+        $this->db->set( 'preference',	$preference );
+        $this->db->set( 'software_base',	$software_base );
+        $this->db->set( 'purpose',	$purpose );
+        $this->db->set( 'follow_city',	$follow_city );
+        $this->db->set( 'follow_company',	$follow_company );
+        $this->db->set( 'follow_salary',	$follow_salary );
+        $this->db->set( 'follow_position',	$follow_position );
+        $this->db->set( 'follow_remarks',	$follow_remarks );
+        $this->db->set('insert_user', $userInfo);
+        $this->db->set('insert_time',date("Y-m-d H:i:s"));
+        $this->db->set('update_user',$userInfo);
+        $this->db->set('update_time', date("Y-m-d H:i:s"));
+        return $this->db->insert( "ss_student_others");
      }
+
     public function getOne($student_id){
        $this->db->where('student_id', $student_id);
        $this->db->where('delete_flg', 0);
@@ -106,7 +107,7 @@ class student_m extends MY_Model
        }
        return $student;
     }
-    public function updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way, 
+    public function updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way,
          $parent_phone, $course_no, $class_no, $cost, $start_year,$start_month,$start_date,$end_date,
          $attendance,$system_user,$remarks,$student_id,$userInfo ='sysuser'){
 //          log_message('info', "ddd".$student_name."|".$sex."|".$birthday."|".$id_card."|".
@@ -120,7 +121,7 @@ class student_m extends MY_Model
         $this->db->set( 'id_card',		$id_card );
         $this->db->set( 'contact_way',		$contact_way );
         $this->db->set( 'parent_phone',		$parent_phone );
-        
+
         $this->db->set( 'course_no',	$course_no );
         $this->db->set( 'class_no',	$class_no );
         $this->db->set( 'cost',	$cost );
@@ -129,7 +130,7 @@ class student_m extends MY_Model
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',	$end_date );
         $this->db->set( 'attendance',	$attendance );
-        
+
         $this->db->set( 'system_user',	$system_user );
         $this->db->set( 'remarks',		$remarks );
 
@@ -180,12 +181,12 @@ class student_m extends MY_Model
         $query = $this->db->get($this->table_name);
         return $query->result_array();
     }
-    
+
     public function checkRepeat($new_no, $old_no){
         $this->db->select('student_no');
         $this->db->where('student_no', $new_no);
         if(!empty($old_no)){
-        	$this->db->where('student_no !=', $old_no);
+          $this->db->where('student_no !=', $old_no);
         }
         log_message('info','student checkRepeat '.$new_no."|".$old_no);
         $query =  $this->db->get($this->table_name);
