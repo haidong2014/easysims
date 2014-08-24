@@ -14,9 +14,9 @@ class Subject_c extends MY_Controller {
         $subjectData = $this->subject_m->getList($course_id, $keyword);
 
         foreach($subjectData as &$data){
-            $data['opt']="<a href=\"".SITE_URL."/subject_c/view_subject_init/".$data['course_id']."\">查看</a> |".
-            "<a href=\"".SITE_URL."/subject_c/upd_subject_init/".$data['course_id']."\">编辑</a> |".
-            "<a href=\"#\" onclick=\"delsubject('".SITE_URL."/subject_c/delete_subject/".$data['course_id']."')\">删除</a>";
+            $data['opt']="<a href=\"".SITE_URL."/subject_c/view_subject_init/".$data['course_id']."/".$data['subject_id']."\">查看</a> |".
+            "<a href=\"".SITE_URL."/subject_c/upd_subject_init/".$data['course_id']."/".$data['subject_id']."\">编辑</a> |".
+            "<a href=\"#\" onclick=\"delsubject('".SITE_URL."/subject_c/delete_subject/".$data['course_id']."/".$data['subject_id']."')\">删除</a>";
         }
 
         $data['course_id'] = $course_id;
@@ -28,7 +28,6 @@ class Subject_c extends MY_Controller {
     public function add_subject_init($course_id){
         $data = array();
         $data['course_id'] = $course_id;
-        log_message('info', "subject add_subject_init data:".var_export($data,true));
         $this->load->view('subject_add_v',$data);
     }
 
@@ -70,29 +69,31 @@ class Subject_c extends MY_Controller {
         self::index($course_id);
     }
 
-    public function upd_subject_init($course_id = null){
-        $courseData = $this->course_m->getOne($course_id);
-        $this->load->view('course_add_v',$courseData);
+    public function upd_subject_init($course_id = null,$subject_id = null){
+        $data = $this->subject_m->getOne($course_id,$subject_id);
+        log_message('info', "subject add_subject_init data:".var_export($data,true));
+        $this->load->view('subject_add_v',$data);
     }
 
-    public function view_subject_init($course_id = null){
-
-        $data = array();
-        $courseData = $this->course_m->getOne($course_id);
-        $this->load->view('course_view_v',$courseData);
+    public function view_subject_init($course_id = null,$subject_id = null){
+        $data = $this->subject_m->getOne($course_id,$subject_id);
+        log_message('info', "subject add_subject_init data:".var_export($data,true));
+        $this->load->view('subject_view_v',$data);
     }
 
-    public function delete_subject($course_id = null){
+    public function delete_subject($course_id = null,$subject_id = null){
 
         $data = array();
 
         $userinfo = $this->session->userdata('user');
         $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
         $data['delete_flg'] = "1";
         $data['update_user'] = $userinfo;
         $data['update_time'] = date("Y-m-d H:i:s");
 
-        $this->course_m->deleteOne($data);
-        redirect("course_c");
+        $this->subject_m->deleteOne($data);
+
+        self::index($course_id);
     }
 }
