@@ -43,9 +43,9 @@ class Subject_m extends MY_Model
         $this->db->where('delete_flg', 0);
         $query = $this->db->get($this->table_name);
         foreach ($query->result_array() as $row){
-            $course = $row;
+            $subject = $row;
         }
-        return $course;
+        return $subject;
     }
 
     public function updateOne($data){
