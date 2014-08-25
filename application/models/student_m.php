@@ -162,18 +162,23 @@ class Student_m extends MY_Model
       $this->db->set('update_time', date("Y-m-d H:i:s"));
       return $this->db->update( "ss_student_others");
     }
-    public function deleteOne($student_id){
-          log_message('info', "del"."|".$student_id);
-        $this->db->where('student_id', $student_id);
-        $this->db->set( 'delete_flg',		1 );
+
+    public function deleteOne($data){
+        $this->db->where('student_id',  $data['student_id']);
+        $this->db->set( 'delete_flg',   $data['delete_flg']);
+        $this->db->set( 'update_user',	$data['update_user'] );
+        $this->db->set( 'update_time',	$data['update_time'] );
         return $this->db->update( $this->table_name );
     }
-   public function deleteOneOther($student_id){
-          log_message('info', "del"."|".$student_id);
-        $this->db->where('student_id', $student_id);
-        $this->db->set( 'delete_flg',		1 );
+
+    public function deleteOneOther($data){
+        $this->db->where('student_id',  $data['student_id']);
+        $this->db->set( 'delete_flg',   $data['delete_flg']);
+        $this->db->set( 'update_user',	$data['update_user'] );
+        $this->db->set( 'update_time',	$data['update_time'] );
         return $this->db->update( "ss_student_others" );
     }
+
     public function getStudentName($student_no) {
         $this->db->select('student_name');
         $this->db->where('student_no', $student_no);
@@ -182,13 +187,9 @@ class Student_m extends MY_Model
         return $query->result_array();
     }
 
-    public function checkRepeat($new_no, $old_no){
-        $this->db->select('student_no');
-        $this->db->where('student_no', $new_no);
-        if(!empty($old_no)){
-          $this->db->where('student_no !=', $old_no);
-        }
-        log_message('info','student checkRepeat '.$new_no."|".$old_no);
+    public function checkStudent($student_no){
+        $this->db->select('student_id,student_no');
+        $this->db->where('student_no', $student_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
