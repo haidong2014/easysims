@@ -66,7 +66,7 @@ if(!empty($class_id)){
           document.form.submit();
         }
         function gotoSetSubject(){
-        	location.href = "<?php echo SITE_URL;?>/class_c/selectKemu";
+        	location.href = "<?php echo SITE_URL;?>/class_c/selectKemu/"+document.getElementById('course_id').value;
         }
     </script>
     <style type="text/css">
@@ -138,12 +138,12 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">课程(<input type="button" value="设定" onclick="gotoSetSubject()"/>):</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="course_no" id="course_no" ltype="select">
+					<select name="course_id" id="course_id" ltype="select">
 						<?php foreach($courseData as $course){?>
-    						<?php if(@$course_no==($course['course_no'])){ ?>
-    						<option value="<?php  echo $course['course_no'] ?>" selected><?php  echo $course['course_name'] ?></option>
+    						<?php if(@$course_id==@$course['course_id']){ ?>
+    						<option value="<?php  echo @$course['course_id'] ?>" selected><?php  echo @$course['course_name'] ?></option>
     						<?php }else{?>
-    						<option value="<?php  echo $course['course_no'] ?>"><?php  echo $course['course_name'] ?></option>
+    						<option value="<?php  echo @$course['course_id'] ?>"><?php  echo @$course['course_name'] ?></option>
     						<?php } ?>
 						<?php } ?>
 					</select>

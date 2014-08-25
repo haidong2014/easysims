@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS `ss_teachers` (
 DROP TABLE IF EXISTS `ss_course`;		
 CREATE TABLE IF NOT EXISTS `ss_course` (	
   `course_id` int(11) NOT NULL AUTO_INCREMENT,	
-  `course_no` varchar(10) NOT NULL,	
   `course_name` varchar(30) NOT NULL,		
   `remarks` varchar(100) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		

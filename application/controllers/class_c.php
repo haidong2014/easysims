@@ -180,14 +180,29 @@ class Class_c extends MY_Controller {
         log_message('info', "class chk_repeat end".var_export($checkuser,true));
     }
     
-    public function selectKemu()
+    public function selectKemu($course_id ,$class_id = 0)
     {
         $data = array();
-        
+        //echo "course_id;".$course_id;
         $this->load->model('subject_m','subject_m');
 		$subjectData = $this->subject_m->getList($course_id, null);
-        
+         //var_dump($subjectData);
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
+        $data['course_id'] = $course_id;
+        $data['class_id'] = $class_id;
         $this->load->view('class_add_setcourse',$data);
+    }
+    public function save_subject(){
+    	$userinfo = $this->session->userdata('user');
+    	$class_id = $this->input->post('class_id');
+    	$subject_id = $this->input->post('subject_id');
+    	$start_date = $this->input->post('start_date');
+   	 	$end_date = $this->input->post('end_date');
+    	$teacher_no = $this->input->post('teacher_no');
+    	
+    	$this->class_m->addSub($class_id,$subject_id, $start_date,$end_date,$teacher_no ,$userInfo);
+    
+    	redirect("class_c/".$class_id);
+    
     }
 }

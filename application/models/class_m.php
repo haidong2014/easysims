@@ -15,7 +15,7 @@ class Class_m extends MY_Model
         $this->db->from('ss_class t1');
         $this->db->join('ss_teachers t2', 't1.teacher_no = t2.teacher_no', 'left');
         $this->db->join('ss_code t3', 't1.status = t3.code_no and t3.code = '."05", 'left');
-        $this->db->join('ss_course t4', 't1.course_no = t4.course_no', 'left');
+        $this->db->join('ss_course t4', 't1.course_id = t4.course_id', 'left');
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.class_name like', '%'.$data['search_key'].'%');
         }
@@ -104,5 +104,18 @@ class Class_m extends MY_Model
         log_message('info','class checkRepeat '.$new_no."|".$old_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
+    }
+    
+    public function addSub($class_no ,$subject_no, $start_date,$end_date,$teacher_no ,$userInfo){
+        $this->db->set( 'class_no',		$class_no );
+        $this->db->set( 'subject_no',		$subject_no );
+        $this->db->set( 'start_date',		$start_date );
+        $this->db->set( 'end_date',		$end_date );
+        $this->db->set( 'teacher_no',		$teacher_no );
+    	$this->db->set('insert_user', $userInfo);
+        $this->db->set('insert_time',date("Y-m-d H:i:s")); 
+        $this->db->set('update_user',$userInfo);
+        $this->db->set('update_time', date("Y-m-d H:i:s"));
+    	return $this->db->insert( "ss_class_course" );
     }
 }
