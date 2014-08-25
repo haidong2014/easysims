@@ -64,18 +64,18 @@ function search_click()
           <select name="start_year" id="start_year" onchange="search_click()">
           <?php for($i=0;$i<12;$i++){ ?>
               <?php if(@$start_year==($i+2014)){ ?>
-                  <option value="<?php echo ($i+2014); ?> " selected><?php echo ($i+2014); ?></option>
+                  <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
               <?php } else {?>
-                  <option value="<?php echo ($i+2014); ?> "><?php echo ($i+2014); ?></option>
+                  <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
               <?php } ?>
           <?php } ?>
           </select>
           <select name="start_month" id="start_month" onchange="search_click()">
           <?php for($i=0;$i<12;$i++){ ?>
             <?php if(@$start_month==($i+1)){ ?>
-                <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
-            <?php }else{?>
-                <option value="<?php echo ($i+1); ?> "><?php echo ($i+1); ?></option>
+                <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
+            <?php } else {?>
+                <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
             <?php }?>
           <?php } ?>
           </select>

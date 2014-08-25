@@ -40,7 +40,7 @@
               document.form.teacher_no.value = "";
           }
         }
-        function addStudent(){
+        function addTeacher(){
             txtTeacherNo = document.form.teacher_no.value;
             if (txtTeacherNo == ""){
                 alert("请输入教师编号！");
@@ -143,7 +143,7 @@
     <br>
     <input type="hidden" name="teacher_id" id="teacher_id" value="<?php echo @$teacher_id?>" />
     <input type="hidden" name="teacher_no_old" id="teacher_no_old" value="<?php echo @$teacher_no?>" />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="addStudent()"/>
+    <input type="button" value="提交" class="l-button l-button-submit" onclick="addTeacher()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>
 <div style="display:none"></div>
