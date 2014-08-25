@@ -13,17 +13,14 @@ class Student_c extends MY_Controller {
         $keyword = $this->input->post('txtKey');
         $start_year = $this->input->post('start_year');
         if (empty($start_year)) {
-            $start_year = substr(date("Y-m-d"),0,4);;
-        } else {
-            $start_year = trim($start_year);
+            $start_year = substr(date("Y-m-d"),0,4);
         }
         $start_month = $this->input->post('start_month');
         if (empty($start_month)) {
             $start_month = substr(date("Y-m-d"),5,2);
         } else {
-            $start_month = substr("0".trim($start_month),-2);
+            $start_month = substr("0".$start_month,-2);
         }
-        log_message('info', "Student_c index start_month".$start_month);
         $studentData = $this->student_m->getList($keyword, $start_year, $start_month);
         foreach($studentData as &$data){
             $data['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".$data['student_id']."\">查看</a> |".
@@ -34,7 +31,6 @@ class Student_c extends MY_Controller {
         $data['start_month'] = $start_month;
         $data['txtKey'] = $keyword;
         $data['studentsData'] = @json_encode(array('Rows'=>$studentData));
-                log_message('info', "Student_c index data".var_export($data,true));
         $this->load->view('student_lst_v',$data);
     }
 
@@ -46,6 +42,11 @@ class Student_c extends MY_Controller {
         $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
+        $data['sex'] = "1";
+        $start_year = substr(date("Y-m-d"),0,4);
+        $start_month = substr(date("Y-m-d"),5,2);
+        $data['start_year'] = $start_year;
+        $data['start_month'] = $start_month;
         $this->load->view('student_add_v',$data);
     }
 
@@ -208,27 +209,28 @@ class Student_c extends MY_Controller {
 
     $this->load->view('student_view_v',$studentData+$otherData);
   }
-   public function delete_student($student_id = null){
-      if(empty($student_id)){
-        $student_id = $this->input->post('student_id');
-      }
 
-      $this->student_m->deleteOne($student_id);
-      $this->student_m->deleteOneOther($student_id);
-      redirect("student_c");
-  }
+    public function delete_student($student_id = null){
+        $data = array();
 
-    public function chk_repeat($student_no, $old_no = null){
-        log_message('info', "student_c chk_repeat start");
-        log_message('info', "student_c chk_repeat post user:".$student_no." : :".$old_no);
+        $userinfo = $this->session->userdata('user');
+        $data['student_id'] = $student_id;
+        $data['delete_flg'] = "1";
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+
+        $this->student_m->deleteOne($data);
+        $this->student_m->deleteOneOther($data);
+        redirect("student_c");
+    }
+
+    public function chk_student($student_no){
         $this->load->model('student_m','student_m');
-        $checkuser = $this->student_m->checkRepeat($student_no,$old_no);
-        $msg = "课程编号重复";
-        if(!empty($checkuser)){
+        $checkstudent = $this->student_m->checkStudent($student_no);
+        $msg = "此学生编号已经被登录！";
+        if(!empty($checkstudent)){
             echo urldecode(json_encode(urlencode($msg)));
         }
-
-        log_message('info', "student chk_repeat end".var_export($checkuser,true));
     }
 
     private function addUser($teacher_no,$teacher_name){
