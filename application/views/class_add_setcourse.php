@@ -39,9 +39,11 @@
 			location.href = "'<?php echo SITE_URL;?>/class_c/add_class_init/<?php echo $class_id;?>'";
 		}
 		function saveSubject(){
+			//alert(11);
 			var rows = grid.getSelecteds();
 			if(rows.length==0){alert('请选择一个科目')}
-			//alert(rows[0]['subject_id']);
+			//alert(12);
+			
 			var subject_id ="";
 			for(var i=0;i<rows.length;i++){
 				if(subject_id==""){
@@ -51,6 +53,7 @@
 				}
 			}
 			document.getElementById('subject_id').value = subject_id;
+			document.form.submit();
 		}
     </script>
     <style type="text/css">

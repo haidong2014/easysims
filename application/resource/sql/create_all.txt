@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `ss_class` (
 DROP TABLE IF EXISTS `ss_class_course`;		
 CREATE TABLE IF NOT EXISTS `ss_class_course` (		
   `class_no` varchar(10) NOT NULL,		
-  `subject_no` varchar(10) NOT NULL,		
+  `subject_id` int(10) NOT NULL,		
   `start_date` char(10) NULL,		
   `end_date` char(10) NULL,		
   `teacher_no` varchar(10) NULL,		

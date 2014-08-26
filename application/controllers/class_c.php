@@ -43,11 +43,12 @@ class Class_c extends MY_Controller {
     
 		$this->load->view('class_lst_v',$data);
 	}
-	public function add_class_init(){
+	public function add_class_init($subject_id = null){
 	  $data = array();
 	    $this->load->model('code_m','code_m');
-         $status = $this->code_m->getList("05");
+        $status = $this->code_m->getList("05");
         $data['statuses'] = $status;
+        $data['subject_id'] = $subject_id;
         $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 		$teacherData = $this->teacher_m->getList(null);
@@ -61,26 +62,33 @@ class Class_c extends MY_Controller {
 	}
 	public function add_class(){
 	   log_message('info','add class '.var_export($_POST,true));
-	  $class_no = $this->input->post('class_no');
-      $class_name = $this->input->post('class_name');
-      $start_year = $this->input->post('start_year');
-      $start_month = $this->input->post('start_month');
-      $start_date = $this->input->post('start_date');
-      $end_date = $this->input->post('end_date');
-      $course_no = $this->input->post('course_no');
-      $teacher_no = $this->input->post('teacher_no');
-      $class_room = $this->input->post('class_room');
-      $numbers = $this->input->post('numbers');
-      $cost = $this->input->post('cost');
-      $status = $this->input->post('status');
-      $remarks = $this->input->post('remarks');
+	   $userinfo = $this->session->userdata('user');
+	    $class_no = $this->input->post('class_no');
+        $class_name = $this->input->post('class_name');
+        $start_year = $this->input->post('start_year');
+        $start_month = $this->input->post('start_month');
+        $start_date = $this->input->post('start_date');
+        $end_date = $this->input->post('end_date');
+        $course_no = $this->input->post('course_no');
+        $teacher_no = $this->input->post('teacher_no');
+        $class_room = $this->input->post('class_room');
+        $numbers = $this->input->post('numbers');
+        $cost = $this->input->post('cost');
+        $status = $this->input->post('status');
+        $remarks = $this->input->post('remarks');
+        $subject_id = $this->input->post('subject_id');
           
-	   $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
+	    $class_id = $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
         $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
-     redirect("class_c");
+        
+        
+        
+        $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no, $userinfo);
+        
+        redirect("class_c");
 	  
 	}
-	public function upd_class_init($class_id = null){
+	public function upd_class_init($class_id = null,$subject_id = null){
 	    $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 	    $data = array();
@@ -88,7 +96,7 @@ class Class_c extends MY_Controller {
 	    $teacherData = $this->teacher_m->getList(null);
         //var_dump($teacherData);
         $data['teacherData'] = $teacherData;
-        
+        $data['subject_id'] = $subject_id;
         $courseData = $this->course_m->getList(null);
         
         //$data['courseData'] = $courseData;
@@ -117,6 +125,7 @@ class Class_c extends MY_Controller {
       if(empty($class_id)){
         $class_id = $this->input->post('class_id');
       }
+      $userinfo = $this->session->userdata('user');
       $class_no = $this->input->post('class_no');
       $class_name = $this->input->post('class_name');
       $start_year = $this->input->post('start_year');
@@ -132,7 +141,11 @@ class Class_c extends MY_Controller {
       $remarks = $this->input->post('remarks');
           
       $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+      $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+        
+        
+       $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no , $userinfo);
+        
       redirect("class_c");
 	}
 	public function view_class_init($class_id = null){
@@ -193,16 +206,17 @@ class Class_c extends MY_Controller {
         $this->load->view('class_add_setcourse',$data);
     }
     public function save_subject(){
-    	$userinfo = $this->session->userdata('user');
+    	//$userinfo = $this->session->userdata('user');
     	$class_id = $this->input->post('class_id');
     	$subject_id = $this->input->post('subject_id');
-    	$start_date = $this->input->post('start_date');
-   	 	$end_date = $this->input->post('end_date');
-    	$teacher_no = $this->input->post('teacher_no');
     	
-    	$this->class_m->addSub($class_id,$subject_id, $start_date,$end_date,$teacher_no ,$userInfo);
-    
-    	redirect("class_c/".$class_id);
+    	
+    	//$this->class_m->addSub($class_id,　$subject_id, $start_date,　$end_date,　$teacher_no ,　$userInfo);
+    	if(!empty($class_id)){
+    		redirect("class_c/upd_class_init/".$class_id."/".$subject_id);
+    	}else{
+    		redirect("class_c/add_class_init/".$subject_id);
+    	}	
     
     }
 }

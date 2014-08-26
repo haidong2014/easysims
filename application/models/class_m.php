@@ -30,10 +30,10 @@ class Class_m extends MY_Model
     }
 
     public function addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
+        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
         
         log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_no."|".$teacher_no."|".$class_room
+        $start_date."|".$end_date."|".$course_id."|".$teacher_no."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks);
         
         $this->db->set( 'class_name',		$class_name );
@@ -42,7 +42,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_month',	$start_month );
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
-        $this->db->set( 'course_no',		$course_no );
+        $this->db->set( 'course_id',		$course_id );
         $this->db->set( 'teacher_no',		$teacher_no );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
@@ -50,7 +50,8 @@ class Class_m extends MY_Model
         $this->db->set( 'status',		$status );
         $this->db->set( 'remarks',		$remarks );
 
-      return $this->db->insert( $this->table_name );
+        $this->db->insert( $this->table_name );
+        return $this->db->insert_id();
     }
     public function getOne($class_id){
        $this->db->where('class_id', $class_id);
@@ -66,9 +67,9 @@ class Class_m extends MY_Model
     }
 
     public function updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id){
+        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id){
           log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_no."|".$teacher_no."|".$class_room
+        $start_date."|".$end_date."|".$course_id."|".$teacher_no."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks."|".$class_id);
         $this->db->where('class_id', $class_id);
         $this->db->set( 'class_name',		$class_name );
@@ -77,7 +78,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_month',	$start_month );
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
-        $this->db->set( 'course_no',		$course_no );
+        $this->db->set( 'course_id',		$course_id );
         $this->db->set( 'teacher_no',		$teacher_no );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
@@ -106,16 +107,24 @@ class Class_m extends MY_Model
         return $query->result_array();
     }
     
-    public function addSub($class_no ,$subject_no, $start_date,$end_date,$teacher_no ,$userInfo){
-        $this->db->set( 'class_no',		$class_no );
-        $this->db->set( 'subject_no',		$subject_no );
-        $this->db->set( 'start_date',		$start_date );
-        $this->db->set( 'end_date',		$end_date );
-        $this->db->set( 'teacher_no',		$teacher_no );
-    	$this->db->set('insert_user', $userInfo);
-        $this->db->set('insert_time',date("Y-m-d H:i:s")); 
-        $this->db->set('update_user',$userInfo);
-        $this->db->set('update_time', date("Y-m-d H:i:s"));
-    	return $this->db->insert( "ss_class_course" );
+    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_no , $userInfo){
+    
+        $sql ="delete from ss_class_course  where class_no = '".$class_no."'";
+        $this->db->query($sql);
+        $subject_ids = explode(",",$subject_id);
+        
+        foreach($subject_ids as $id){
+         	$this->db->set( 'class_no',		$class_no );
+        	$this->db->set( 'subject_id',	$subject_id );
+        	$this->db->set( 'start_date',	$start_date );
+        	$this->db->set( 'end_date',		$end_date );
+        	$this->db->set( 'teacher_no',	$teacher_no );
+    		$this->db->set( 'insert_user',   $userInfo);
+        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
+        	$this->db->set( 'update_user',   $userInfo);
+        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+    		 $this->db->insert( "ss_class_course" );
+        }
+        return count($subject_ids);
     }
 }

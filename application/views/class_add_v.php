@@ -209,6 +209,7 @@ if(!empty($class_id)){
         </table>
     <br />
     <input type="hidden" name="class_id"  value="<?php echo @$class_id?>" />
+    <input type="hidden" name="subject_id"  value="<?php echo @$subject_id?>" />
     <input type="hidden" name="old_class_no"  value="<?php echo @$class_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
    
