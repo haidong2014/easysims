@@ -72,7 +72,7 @@ class Teacher_c extends MY_Controller {
         $data['update_time'] = date("Y-m-d H:i:s");
 
         if($system_user == "1"){
-            self::addUser($teacher_no,$teacher_name);
+            self::addUser($teacher_no,$teacher_name,$data['remarks']);
         }
 
         if(empty($teacher_id)) {
@@ -84,7 +84,7 @@ class Teacher_c extends MY_Controller {
         redirect("teacher_c");
     }
 
-    private function addUser($teacher_no,$teacher_name){
+    private function addUser($teacher_no,$teacher_name,$remarks){
         $userinfo = $this->session->userdata('user');
 
         $this->load->model('user_m','user_m');
@@ -97,6 +97,7 @@ class Teacher_c extends MY_Controller {
         $userData['user_name'] = $teacher_name;
         $userData['role_id'] = "1006";
         $userData['delete_flg'] = 0;
+        $userData['remarks'] = $remarks;
         $userData['insert_user'] = $userinfo;
         $userData['insert_time'] = date("Y-m-d H:i:s");
         $userData['update_user'] = $userinfo;

@@ -23,6 +23,7 @@ if(!empty($class_id)){
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/core/base.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerForm.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerDateEditor.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerButton.js" type="text/javascript"></script>
@@ -39,6 +40,11 @@ if(!empty($class_id)){
         var eee;
         $(function ()
         {
+        	$("#start_year").ligerComboBox(); 
+        	$("#start_month").ligerComboBox(); 
+        	$("#course_id").ligerComboBox(); 
+        	$("#teacher_no").ligerComboBox(); 
+        	$("#status").ligerComboBox(); 
             $("form").ligerForm();
         });
         
@@ -49,12 +55,17 @@ if(!empty($class_id)){
             if(document.getElementById('class_name').value==""){
             	alert('班级名不能为空');return;
             }
-
+ 			if(document.getElementById('subject_id').value==""){
+            	alert('科目不能为空');return;
+            }
             var user = document.form.class_no.value;
            
             var jqxhr = $.post("<?php echo SITE_URL.'/class_c/chk_repeat/';?>" + document.getElementById('class_no').value+'/'+'<?php echo @$class_no?>', function(data) {
                 showMsg(data);
             });
+        }
+        function clearsub(){
+        	document.getElementById('subject_id').value="";
         }
         function showMsg(data){
           if (data != "") {
@@ -96,7 +107,7 @@ if(!empty($class_id)){
               <tr>
                 <td align="right" class="l-table-edit-td">开课年份:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="start_year" id="start_year" ltype="select">
+					<select name="start_year" id="start_year" ligeruiid="start_year" >
 					<?php for($i=0;$i<10;$i++){ ?>
 					    	<?php if(@$start_year==($i+2005)){ ?>
 					    	<option value="<?php echo ($i+2005); ?> " selected><?php echo ($i+2005); ?></option>
@@ -111,7 +122,7 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">开课月份:</td>
 				<td align="left" class="l-table-edit-td">
-					<select name="start_month" id="start_month" ltype="select">
+					<select name="start_month" id="start_month" ligeruiid="start_month">
 						<?php for($i=0;$i<12;$i++){ ?>
 						    <?php if(@$start_month==($i+1)){ ?>
 						    <option value="<?php echo ($i+1); ?> " selected><?php echo ($i+1); ?></option>
@@ -138,7 +149,7 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">课程(<input type="button" value="设定" onclick="gotoSetSubject()"/>):</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="course_id" id="course_id" ltype="select">
+					<select name="course_id" id="course_id" ligeruiid="course_id" onChange="clearsub()">
 						<?php foreach($courseData as $course){?>
     						<?php if(@$course_id==@$course['course_id']){ ?>
     						<option value="<?php  echo @$course['course_id'] ?>" selected><?php  echo @$course['course_name'] ?></option>
@@ -154,7 +165,7 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">班主任:</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="teacher_no" id="teacher_no" ltype="select">
+					<select name="teacher_no" id="teacher_no" ligeruiid="teacher_no">
 						<?php foreach($teacherData as $teacher){?>
     						<?php if(@teacher_no==($course['teacher_no'])){ ?>
     							<option value="<?php  echo $teacher['teacher_no'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
@@ -186,10 +197,8 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">状态:</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="status" id="status" ltype="select">
-					
+					<select name="status" id="status" ligeruiid="status">
 					<?php
-
 					foreach($statuses['STATUS'] as $key => $value) { ?>
 					  <?php if($key == @$status){?>
 					  <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
@@ -209,7 +218,7 @@ if(!empty($class_id)){
         </table>
     <br />
     <input type="hidden" name="class_id"  value="<?php echo @$class_id?>" />
-    <input type="hidden" name="subject_id"  value="<?php echo @$subject_id?>" />
+    <input type="hidden" name="subject_id"  id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="hidden" name="old_class_no"  value="<?php echo @$class_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
    
