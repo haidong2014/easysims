@@ -58,7 +58,29 @@ class Class_c extends MY_Controller {
         $courseData = $this->course_m->getList(null);
         
         $data['courseData'] = $courseData;
-	  $this->load->view('class_add_v',$data);
+        $subject_name ="";
+        /*if(!empty($subject_id)){
+           $subjectData = $this->class_m->getSubList($classData['class_no']);
+           $subject_id = "";
+           $subject_name = "";
+           $this->load->model('subject_m','subject_m');
+           foreach($subjectData as $value){
+         	 $subject = $this->subjet_m->getOne($value["subject_id"]);
+         	 if(empty($subject_id)){
+         		$subject_id = $value["subject_id"];
+         		$subject_name = $subject['subject_name'];
+         	 }else{
+         	 	$subject_id .= ",".$value["subject_id"];
+         	 	$subject_name = ",".$subject['subject_name'];
+         	 } 	
+          }
+          //var_dump($subjectData);
+          
+        }*/
+        $classData['subject_id'] = $subject_id;
+        $classData['subject_name'] = $subject_name;
+         
+	    $this->load->view('class_add_v',$data);
 	}
 	public function add_class(){
 	   log_message('info','add class '.var_export($_POST,true));
@@ -119,9 +141,24 @@ class Class_c extends MY_Controller {
          $status = $this->code_m->getList("05");
          $classData['statuses'] = $status;
         
+         $this->load->model('class_m','class_m');
          $this->load->model('subject_m','subject_m');
-         $this->subject_m->getList();
-        
+         $subjectData = $this->class_m->getSubList($classData['class_no']);
+         $subject_id = "";
+         $subject_name = "";
+         foreach($subjectData as $value){
+         	$subject = $this->subject_m->getOne($class_id,$value["subject_id"]);
+         	if(empty($subject_id)){
+         		$subject_id = $value["subject_id"];
+         		$subject_name = $subject['subject_name'];
+         	}else{
+         		$subject_id .= ",".$value["subject_id"];
+         		$subject_name = ",".$subject['subject_name'];
+         	} 	
+         }
+         //var_dump($subjectData);
+         $classData['subject_id'] = $subject_id;
+         $classData['subject_name'] = $subject_name;
 	     $this->load->view('class_add_v',$classData);
 	}
     public function upd_class($class_id = null){
@@ -142,7 +179,7 @@ class Class_c extends MY_Controller {
       $cost = $this->input->post('cost');
       $status = $this->input->post('status');
       $remarks = $this->input->post('remarks');
-          
+       $subject_id = $this->input->post('subject_id');
       $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
       $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
         

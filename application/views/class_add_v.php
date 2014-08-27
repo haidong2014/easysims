@@ -160,7 +160,7 @@ if(!empty($class_id)){
 					</select>
 					
                 </td>
-                <td align="left"></td>
+                <td align="left"><?php echo $subject_name?></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">班主任:</td>

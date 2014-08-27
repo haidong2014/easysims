@@ -127,4 +127,14 @@ class Class_m extends MY_Model
         }
         return count($subject_ids);
     }
+    
+    public function getSubList($class_no)
+    {
+        $this->db->select('class_no,subject_id,start_date,end_date,teacher_no');
+        $this->db->where( 'class_no', $class_no );
+
+        $this->db->where('delete_flg', 0);
+        $query =  $this->db->get("ss_class_course");
+        return $query->result_array();
+    }
 }
