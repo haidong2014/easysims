@@ -119,6 +119,9 @@ class Class_c extends MY_Controller {
          $status = $this->code_m->getList("05");
          $classData['statuses'] = $status;
         
+         $this->load->model('subject_m','subject_m');
+         $this->subject_m->getList();
+        
 	     $this->load->view('class_add_v',$classData);
 	}
     public function upd_class($class_id = null){

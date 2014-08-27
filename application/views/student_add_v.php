@@ -17,6 +17,12 @@
         var eee;
         $(function ()
         {
+        	$("#start_year").ligerComboBox(); 
+        	$("#start_month").ligerComboBox(); 
+        	$("#graduate").ligerComboBox(); 
+        	$("#course_no").ligerComboBox(); 
+        	//$("#course_no").ligerComboBox(); 
+        	
             $("form").ligerForm();
             $("#pageloading").hide();
         });
@@ -84,7 +90,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">入学年份:</td>
             <td align="left" class="l-table-edit-td">
-                <select name="start_year" id="start_year" ltype="select">
+                <select name="start_year" id="start_year" ligeruiid="start_year">
                     <?php for($i=0;$i<12;$i++){ ?>
                         <?php if(@$start_year==($i+2014)){ ?>
                             <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
@@ -99,7 +105,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">入学月份:</td>
             <td align="left" class="l-table-edit-td">
-                <select name="start_month" id="start_month" ltype="select">
+                <select name="start_month" id="start_month" ligeruiid="start_month">
                     <?php for($i=0;$i<12;$i++){ ?>
                       <?php if(@$start_month==($i+1)){ ?>
                           <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
@@ -161,7 +167,7 @@
             <tr>
                 <td align="right" class="l-table-edit-td">学历:</td>
         <td align="left" class="l-table-edit-td">
-          <select name="graduate" id="graduate" >
+          <select name="graduate" id="graduate" ligeruiid="graduate">
             <?php
           foreach($graduateData['GRADUATE'] as $key => $value) { ?>
             <?php if($key == @$graduate){?>
@@ -177,7 +183,7 @@
             <tr>
                 <td align="right" class="l-table-edit-td">课程:</td>
         <td align="left" class="l-table-edit-td">
-          <select name="course_no" id="course_no">
+          <select name="course_no" id="course_no" ligeruiid="course_no">
             <?php foreach($courseData as $course){?>
                 <?php if(@$course_id==($course['course_id'])){ ?>
                 <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
