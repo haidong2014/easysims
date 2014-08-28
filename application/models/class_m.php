@@ -13,7 +13,7 @@ class Class_m extends MY_Model
     {
         $this->db->select('t1.*,t2.teacher_name,t3.code_name,t4.course_name');
         $this->db->from('ss_class t1');
-        $this->db->join('ss_teachers t2', 't1.teacher_no = t2.teacher_no', 'left');
+        $this->db->join('ss_teachers t2', 't1.teacher_id = t2.teacher_id', 'left');
         $this->db->join('ss_code t3', 't1.status = t3.code_no and t3.code = '."05", 'left');
         $this->db->join('ss_course t4', 't1.course_id = t4.course_id', 'left');
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
@@ -31,11 +31,11 @@ class Class_m extends MY_Model
 
     public function addOne($class_no, $class_name,$start_year, $start_month,
         $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
-        
+
         log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
         $start_date."|".$end_date."|".$course_no."|".$teacher_no."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks);
-        
+
         $this->db->set( 'class_name',		$class_name );
         $this->db->set( 'class_no',		$class_no );
         $this->db->set( 'start_year',	$start_year );
@@ -94,28 +94,28 @@ class Class_m extends MY_Model
         $this->db->set( 'delete_flg',		1 );
         return $this->db->update( $this->table_name );
     }
-    
+
     public function checkRepeat($new_no, $old_no){
         $this->db->select('class_no');
         $this->db->where('class_no', $new_no);
         if(!empty($old_no)){
-        	$this->db->where('class_no !=', $old_no);
+          $this->db->where('class_no !=', $old_no);
         }
         log_message('info','class checkRepeat '.$new_no."|".$old_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
-    
+
     public function addSub($class_no ,$subject_no, $start_date,$end_date,$teacher_no ,$userInfo){
         $this->db->set( 'class_no',		$class_no );
         $this->db->set( 'subject_no',		$subject_no );
         $this->db->set( 'start_date',		$start_date );
         $this->db->set( 'end_date',		$end_date );
         $this->db->set( 'teacher_no',		$teacher_no );
-    	$this->db->set('insert_user', $userInfo);
-        $this->db->set('insert_time',date("Y-m-d H:i:s")); 
+      $this->db->set('insert_user', $userInfo);
+        $this->db->set('insert_time',date("Y-m-d H:i:s"));
         $this->db->set('update_user',$userInfo);
         $this->db->set('update_time', date("Y-m-d H:i:s"));
-    	return $this->db->insert( "ss_class_course" );
+      return $this->db->insert( "ss_class_course" );
     }
 }

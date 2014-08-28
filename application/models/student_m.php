@@ -5,7 +5,6 @@ class Student_m extends MY_Model
     public function __construct()
     {
         parent::__construct();
-        $this->CI->load->database();
         $this->table_name='ss_student';
     }
 
@@ -110,6 +109,7 @@ class Student_m extends MY_Model
         $this->db->select('t1.*,t2.*');
         $this->db->from('ss_student t1');
         $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id');
+        $this->db->where('t1.student_id', $student_id);
         $this->db->where('t1.delete_flg', 0);
         $query = $this->db->get();
         $student= null;
@@ -145,11 +145,10 @@ class Student_m extends MY_Model
         $this->db->set('update_time', date("Y-m-d H:i:s"));
         return $this->db->update( $this->table_name );
     }
-    public function updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
+    public function updateOneOther($student_id, $graduate_school, $specialty,$graduate
     ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
     $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userInfo ='sysuser'){
       $this->db->where('student_id', $student_id);
-      $this->db->set( 'student_no',	$student_no );
       $this->db->set( 'graduate_school',	$graduate_school );
       $this->db->set( 'specialty',	$specialty );
       $this->db->set( 'graduate',	$graduate );
