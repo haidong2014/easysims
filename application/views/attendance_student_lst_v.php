@@ -33,8 +33,8 @@
         return clause;
     }
     function returnPage() {
-        var class_no = document.form.txtClassNo.value;
-        location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_no;
+        var class_id = document.form.txtClassID.value;
+        location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_id;
     }
     function search_click()
     {
@@ -67,11 +67,11 @@
                 <?php } ?>
             </select>&nbsp
             <input type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassNo" value="<?php echo @$class_no?>" />
-            <input type="hidden" name="txtStudentNo" value="<?php echo @$student_no?>" />
+            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
+            <input type="hidden" name="txtStudentID" value="<?php echo @$student_id?>" />
         </tr>
     </table>
-&nbsp学生编号：<?php echo $student_no?> &nbsp&nbsp 学生姓名：<?php echo $student_name?>
+&nbsp学生编号：<?php echo $student_id?> &nbsp&nbsp 学生姓名：<?php echo $student_name?>
 <div id="maingrid" style="margin:0; padding:0"></div>
 </form>
 <div style="display:none;"></div>

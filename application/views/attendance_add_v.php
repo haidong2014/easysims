@@ -56,7 +56,7 @@
             &nbsp日期：<?php echo $today?>&nbsp
             <input type="submit" value=" 提交 " />&nbsp
             <input type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassNo" value="<?php echo @$class_no?>" />
+            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
         </tr>
     </table>
     <br>

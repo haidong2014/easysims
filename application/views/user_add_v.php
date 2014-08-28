@@ -16,7 +16,7 @@
             var user_id = document.form.txtUserId.value;
             var user = document.form.txtUser.value;
             var user_old = document.form.txtUserOld.value;
-            if (user_id != null) {
+            if (user_id != null && user_id != "") {
                 if (user != user_old) {
                     alert("登录ID不能变更！");
                     document.form.txtUser.value = user_old;

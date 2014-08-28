@@ -17,46 +17,13 @@
         var eee;
         $(function ()
         {
-          $("#start_year").ligerComboBox();
-          $("#start_month").ligerComboBox();
-          $("#course_id").ligerComboBox();
-          $("#teacher_no").ligerComboBox();
-          $("#status").ligerComboBox();
+            $("#start_year").ligerComboBox();
+            $("#start_month").ligerComboBox();
+            $("#course_id").ligerComboBox();
+            $("#graduate").ligerComboBox();
             $("form").ligerForm();
             $("#pageloading").hide();
         });
-
-        function checkStudent(){
-            var student_id = document.form.student_id.value;
-            var student_no = document.form.student_no.value;
-            var student_no_old = document.form.student_no_old.value;
-            if (student_id != null && student_id != "") {
-                if (student_no != student_no_old) {
-                    document.form.student_no.value = student_no_old;
-                    return;
-                }
-            }
-            var jqxhr = $.post("<?php echo SITE_URL.'/student_c/chk_student/';?>" + student_no, function(data) {
-                showMsg(data);
-            });
-        }
-        function showMsg(data){
-          if (data != "") {
-              alert(data.replace(/\"/g, ""));
-              document.form.student_no.value = "";
-          }
-        }
-        function addStudent(){
-            if(document.getElementById('student_no').value==""){
-                alert('学生编号不能为空！');
-                return;
-            }
-            if(document.getElementById('student_name').value==""){
-                alert('学生姓名不能为空！');
-                return;
-            }
-            document.form.submit();
-        }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -74,7 +41,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">学生编号:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="student_no" type="text" id="student_no" maxlength="10" onchange="checkStudent()" value="<?php echo @$student_no ?>" />
+                <input name="student_no" type="text" id="student_no" maxlength="10" value="<?php echo @$student_no ?>" />
             </td>
             <td align="left"></td>
         </tr>
@@ -189,7 +156,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">课程:</td>
             <td align="left" class="l-table-edit-td">
-            <select name="course_no" id="course_no" ltype="select" ligeruiid="course_no">
+            <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
             <?php foreach($courseData as $course){?>
             <?php if(@$course_id==($course['course_id'])){ ?>
                       <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>

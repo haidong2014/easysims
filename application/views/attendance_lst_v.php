@@ -56,7 +56,7 @@
             <input type="submit" value=" 查 询 " />&nbsp
             <input id="attendance" type="button" value=" 点 名 " onclick="attendance_click()" />&nbsp
             <input id="return" type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassNo" value="<?php echo @$class_no?>" />
+            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
         </tr>
     </table>
     <br>

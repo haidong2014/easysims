@@ -31,6 +31,7 @@
             var student_no_old = document.form.student_no_old.value;
             if (student_id != null && student_id != "") {
                 if (student_no != student_no_old) {
+                    alert("学生编号不能变更！");
                     document.form.student_no.value = student_no_old;
                     return;
                 }
