@@ -167,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `id_card` char(18) NULL,		
   `contact_way` varchar(20) NULL,		
   `parent_phone` varchar(12) NULL,		
-  `course_no` varchar(10) NULL,		
-  `class_no` varchar(10) NULL,		
+  `course_id` int(11) NULL,	
+  `class_id` int(11) NULL,	
   `cost` int(5) NULL,		
   `start_year` char(4) NULL,		
   `start_month` char(2) NULL,		
@@ -188,7 +188,6 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
 DROP TABLE IF EXISTS `ss_student_others`;		
 CREATE TABLE IF NOT EXISTS `ss_student_others` (	
   `student_id` int(11) NOT NULL,	
-  `student_no` varchar(10) NOT NULL,		
   `graduate_school` varchar(30) NOT NULL,	
   `specialty` varchar(30) NOT NULL,		  
   `graduate` varchar(1) NOT NULL,		
