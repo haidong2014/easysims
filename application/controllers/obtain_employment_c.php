@@ -79,7 +79,7 @@ class Obtain_employment_c extends MY_Controller {
         $classData = $this->class_m->getList($data);
 
         foreach($classData as &$temp){
-            $temp['class_no']="<a href=\"".SITE_URL."/obtain_employment_c/student_lst/".$temp['class_no']."\">".$temp['class_no']."</a>";
+            $temp['class_no']="<a href=\"".SITE_URL."/student_c/index/2/".$temp['class_id']."\">".$temp['class_no']."</a>";
         }
 
         $data['classData'] = @json_encode(array('Rows'=>$classData));
@@ -136,7 +136,7 @@ class Obtain_employment_c extends MY_Controller {
         $classData = $this->class_m->getList($data);
 
         foreach($classData as &$temp){
-            $temp['class_no']="<a href=\"".SITE_URL."/obtain_employment_c/student_lst/".$temp['class_no']."\">".$temp['class_no']."</a>";
+            $temp['class_no']="<a href=\"".SITE_URL."/student_c/index/2/".$temp['class_id']."\">".$temp['class_no']."</a>";
         }
 
         $data['classData'] = @json_encode(array('Rows'=>$classData));

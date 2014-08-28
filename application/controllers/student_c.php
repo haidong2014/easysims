@@ -7,7 +7,7 @@ class Student_c extends MY_Controller {
         $this->load->model('student_m','student_m');
     }
 
-    public function index()
+    public function index($mode = null, $class_id = null)
     {
         $data = array();
         $keyword = $this->input->post('txtKey');
@@ -53,6 +53,8 @@ class Student_c extends MY_Controller {
 
     public function add_student(){
         $userinfo = $this->session->userdata('user');
+
+        $student_id = $this->input->post('student_id');
         $student_no = $this->input->post('student_no');
         $student_name = $this->input->post('student_name');
         $sex = $this->input->post('sex');
@@ -100,7 +102,7 @@ class Student_c extends MY_Controller {
             $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way,
             $parent_phone, $course_id, $class_id, $cost, $start_year,$start_month,$start_date,$end_date,
             $attendance,$system_user,$remarks,$student_id,$userinfo);
-            $this->student_m->updateOneOther($student_id, $student_no, $graduate_school, $specialty,$graduate
+            $this->student_m->updateOneOther($student_id, $graduate_school, $specialty,$graduate
             ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
             $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userinfo);
         }
