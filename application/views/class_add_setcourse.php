@@ -41,7 +41,7 @@
 		function saveSubject(){
 			//alert(11);
 			var rows = grid.getSelecteds();
-			if(rows.length==0){alert('请选择一个科目')}
+			if(rows.length==0){alert('请选择一个科目');return;}
 			//alert(12);
 			
 			var subject_id ="";
@@ -52,6 +52,7 @@
 					subject_id = subject_id + "," + rows[i]['subject_id'];
 				}
 			}
+			//alert(subject_id);
 			document.getElementById('subject_id').value = subject_id;
 			document.form.submit();
 		}
@@ -67,7 +68,13 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>  
-<form name="form" method="post" action="<?php echo SITE_URL;?>/class_c/save_subject" id="form">
+<?php $action ="upd_class_init";
+if(empty($class_id)){
+	$action ="add_class_init";
+}
+?> 
+
+<form name="form" method="post" action="<?php echo SITE_URL;?>/class_c/<?php echo $action;?>" id="form">
 	<br />
 	<div id="maingrid" style="margin:0; padding:0"></div>
 	<br />
@@ -75,6 +82,12 @@
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="subject_id" id="subject_id" value="0" />
+    
+    <?php foreach($post as $key => $value ){
+    	if($key ==="subject_id"){continue;}
+    ?>
+    <input type="hidden" name="<?php echo $key;?>" id="course_id" value="<?php echo $value ?>" />
+    <?php }?>
 </form>
 <div style="display:none"></div>
 </body>

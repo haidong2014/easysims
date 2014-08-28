@@ -43,8 +43,11 @@ class Class_c extends MY_Controller {
     
 		$this->load->view('class_lst_v',$data);
 	}
-	public function add_class_init($subject_id = null){
-	  $data = array();
+	public function add_class_init(){
+		
+	    $data = $_POST;
+	    $subject_id = $this->input->post('subject_id');
+	    echo "subject_id".$subject_id;
 	    $this->load->model('code_m','code_m');
         $status = $this->code_m->getList("05");
         $data['statuses'] = $status;
@@ -77,8 +80,8 @@ class Class_c extends MY_Controller {
           //var_dump($subjectData);
           
         }*/
-        $classData['subject_id'] = $subject_id;
-        $classData['subject_name'] = $subject_name;
+        $data['subject_id'] = $subject_id;
+        $data['subject_name'] = $subject_name;
          
 	    $this->load->view('class_add_v',$data);
 	}
@@ -91,7 +94,7 @@ class Class_c extends MY_Controller {
         $start_month = $this->input->post('start_month');
         $start_date = $this->input->post('start_date');
         $end_date = $this->input->post('end_date');
-        $course_no = $this->input->post('course_no');
+        $course_id = $this->input->post('course_id');
         $teacher_no = $this->input->post('teacher_no');
         $class_room = $this->input->post('class_room');
         $numbers = $this->input->post('numbers');
@@ -101,7 +104,7 @@ class Class_c extends MY_Controller {
         $subject_id = $this->input->post('subject_id');
           
 	    $class_id = $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
+        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
         
         
         
@@ -110,7 +113,8 @@ class Class_c extends MY_Controller {
         redirect("class_c");
 	  
 	}
-	public function upd_class_init($class_id = null,$subject_id = null){
+	public function upd_class_init($class_id = null){
+		$subject_id = $this->input->post('subject_id');
 	    $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 	    $data = array();
@@ -132,6 +136,7 @@ class Class_c extends MY_Controller {
          }
 	 
 	     $classData = $this->class_m->getOne($class_id);
+	    
 	     //$classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
 	     //$classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
 		 $classData['teacherData'] = $teacherData;
@@ -144,18 +149,38 @@ class Class_c extends MY_Controller {
          $this->load->model('class_m','class_m');
          $this->load->model('subject_m','subject_m');
          $subjectData = $this->class_m->getSubList($classData['class_no']);
-         $subject_id = "";
-         $subject_name = "";
-         foreach($subjectData as $value){
-         	$subject = $this->subject_m->getOne($class_id,$value["subject_id"]);
-         	if(empty($subject_id)){
-         		$subject_id = $value["subject_id"];
-         		$subject_name = $subject['subject_name'];
-         	}else{
-         		$subject_id .= ",".$value["subject_id"];
-         		$subject_name = ",".$subject['subject_name'];
-         	} 	
+         //echo "course_id".$classData['course_id']."<br>";
+         if(empty($classData['course_id'])){
+         	$classData['course_id'] = $this->input->post('course_id');
+         	//echo "ddcourse_id".$course_id."<br>";
          }
+         $subject_name = "";
+
+         if(!empty($subjectData)){
+         	foreach($subjectData as $value){
+         		$subject = $this->subject_m->getOne($classData['course_id'],$value["subject_id"]);
+         		if(empty($subject_id)){
+         			$subject_id = $value["subject_id"];
+         			$subject_name = $subject['subject_name'];
+         		}else{
+         			$subject_id .= ",".$value["subject_id"];
+         			$subject_name = ",".$subject['subject_name'];
+         		} 	
+         	}
+         }else{
+         	if(!empty($subject_id)){
+         		$subs = explode(",",$subject_id);
+         		foreach($subs as $str){
+         			$subject = $this->subject_m->getOne($classData['course_id'], $str);
+         			if(empty($subject_name)){
+         				$subject_name = $subject['subject_name'];
+         			}else{
+         				$subject_name = ",".$subject['subject_name'];
+         			} 	
+         		}
+         	}
+         }
+         
          //var_dump($subjectData);
          $classData['subject_id'] = $subject_id;
          $classData['subject_name'] = $subject_name;
@@ -172,7 +197,7 @@ class Class_c extends MY_Controller {
       $start_month = $this->input->post('start_month');
       $start_date = $this->input->post('start_date');
       $end_date = $this->input->post('end_date');
-      $course_no = $this->input->post('course_no');
+      $course_id = $this->input->post('course_id');
       $teacher_no = $this->input->post('teacher_no');
       $class_room = $this->input->post('class_room');
       $numbers = $this->input->post('numbers');
@@ -181,7 +206,7 @@ class Class_c extends MY_Controller {
       $remarks = $this->input->post('remarks');
        $subject_id = $this->input->post('subject_id');
       $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
-      $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+      $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
         
         
        $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no , $userinfo);
@@ -233,9 +258,12 @@ class Class_c extends MY_Controller {
         log_message('info', "class chk_repeat end".var_export($checkuser,true));
     }
     
-    public function selectKemu($course_id ,$class_id = 0)
+    public function selectKemu()
     {
         $data = array();
+        $data['post'] = $_POST;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
         //echo "course_id;".$course_id;
         $this->load->model('subject_m','subject_m');
 		$subjectData = $this->subject_m->getList($course_id, null);
@@ -249,11 +277,11 @@ class Class_c extends MY_Controller {
     	//$userinfo = $this->session->userdata('user');
     	$class_id = $this->input->post('class_id');
     	$subject_id = $this->input->post('subject_id');
-    	
+    	$course_id = $this->input->post('course_id');
     	
     	//$this->class_m->addSub($class_id,　$subject_id, $start_date,　$end_date,　$teacher_no ,　$userInfo);
     	if(!empty($class_id)){
-    		redirect("class_c/upd_class_init/".$class_id."/".$subject_id);
+    		redirect("class_c/upd_class_init/".$class_id."/".$subject_id."/".$course_id);
     	}else{
     		redirect("class_c/add_class_init/".$subject_id);
     	}	

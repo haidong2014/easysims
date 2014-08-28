@@ -77,7 +77,10 @@ if(!empty($class_id)){
           document.form.submit();
         }
         function gotoSetSubject(){
-        	location.href = "<?php echo SITE_URL;?>/class_c/selectKemu/"+document.getElementById('course_id').value;
+        	document.form.action="<?php echo SITE_URL;?>/class_c/selectKemu/";
+        	document.form.submit();
+        	//location.href = "<?php echo SITE_URL;?>/class_c/selectKemu/"+document.getElementById('course_id').value
+        	//+"/"+document.getElementById('class_id').value;
         }
     </script>
     <style type="text/css">
@@ -158,9 +161,9 @@ if(!empty($class_id)){
     						<?php } ?>
 						<?php } ?>
 					</select>
-					
+					科目:<?php echo @$subject_name?>
                 </td>
-                <td align="left"><?php echo $subject_name?></td>
+                <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">班主任:</td>
@@ -217,7 +220,7 @@ if(!empty($class_id)){
             </tr>
         </table>
     <br />
-    <input type="hidden" name="class_id"  value="<?php echo @$class_id?>" />
+    <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
     <input type="hidden" name="subject_id"  id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="hidden" name="old_class_no"  value="<?php echo @$class_no?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="checkUser()"/>
