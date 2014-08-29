@@ -92,7 +92,7 @@ class Class_c extends MY_Controller {
         $start_date = $this->input->post('start_date');
         $end_date = $this->input->post('end_date');
         $course_id = $this->input->post('course_id');
-        $teacher_no = $this->input->post('teacher_no');
+        $teacher_id = $this->input->post('teacher_id');
         $class_room = $this->input->post('class_room');
         $numbers = $this->input->post('numbers');
         $cost = $this->input->post('cost');
@@ -101,11 +101,11 @@ class Class_c extends MY_Controller {
         $subject_id = $this->input->post('subject_id');
           
 	    $class_id = $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
+        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status, $remarks);
         
         
         
-        $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no, $userinfo);
+        $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_id, $userinfo);
         
         redirect("class_c");
 	  
@@ -202,7 +202,7 @@ class Class_c extends MY_Controller {
       $start_date = $this->input->post('start_date');
       $end_date = $this->input->post('end_date');
       $course_id = $this->input->post('course_id');
-      $teacher_no = $this->input->post('teacher_no');
+      $teacher_id = $this->input->post('teacher_id');
       $class_room = $this->input->post('class_room');
       $numbers = $this->input->post('numbers');
       $cost = $this->input->post('cost');
@@ -210,10 +210,10 @@ class Class_c extends MY_Controller {
       $remarks = $this->input->post('remarks');
        $subject_id = $this->input->post('subject_id');
       $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
-      $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+      $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status,$remarks,$class_id);
         
         
-       $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no , $userinfo);
+       $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_id , $userinfo);
         
       redirect("class_c");
 	}
@@ -231,7 +231,7 @@ class Class_c extends MY_Controller {
 	  $this->load->model('code_m','code_m');
 	  $status = $this->code_m->getList("05");
 	  $classData = $this->class_m->getOne($class_id);
-	  $teacher = $this->teacher_m->getOneByNo($classData['teacher_no']);
+	  $teacher = $this->teacher_m->getOneByNo($classData['teacher_id']);
 	  $course = $this->course_m->getOne($classData['course_id']);
 	  $subjectData = $this->class_m->getSubList($classData['class_no']);
 	   $subject_name = "";
@@ -299,7 +299,7 @@ class Class_c extends MY_Controller {
     	$subject_id = $this->input->post('subject_id');
     	$course_id = $this->input->post('course_id');
     	
-    	//$this->class_m->addSub($class_id,　$subject_id, $start_date,　$end_date,　$teacher_no ,　$userInfo);
+    	//$this->class_m->addSub($class_id,　$subject_id, $start_date,　$end_date,　$teacher_id ,　$userInfo);
     	if(!empty($class_id)){
     		redirect("class_c/upd_class_init/".$class_id."/".$subject_id."/".$course_id);
     	}else{

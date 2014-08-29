@@ -13,7 +13,7 @@ class Class_m extends MY_Model
     {
         $this->db->select('t1.*,t2.teacher_name,t3.code_name,t4.course_name');
         $this->db->from('ss_class t1');
-        $this->db->join('ss_teachers t2', 't1.teacher_no = t2.teacher_no', 'left');
+        $this->db->join('ss_teachers t2', 't1.teacher_id = t2.teacher_id', 'left');
         $this->db->join('ss_code t3', 't1.status = t3.code_no and t3.code = '."05", 'left');
         $this->db->join('ss_course t4', 't1.course_id = t4.course_id', 'left');
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
@@ -30,10 +30,10 @@ class Class_m extends MY_Model
     }
 
     public function addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
+        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status, $remarks){
         
         log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_id."|".$teacher_no."|".$class_room
+        $start_date."|".$end_date."|".$course_id."|".$teacher_id."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks);
         
         $this->db->set( 'class_name',		$class_name );
@@ -43,7 +43,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
         $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_no',		$teacher_no );
+        $this->db->set( 'teacher_id',		$teacher_id );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
         $this->db->set( 'cost',		$cost );
@@ -67,9 +67,9 @@ class Class_m extends MY_Model
     }
 
     public function updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id){
+        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status,$remarks,$class_id){
           log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_id."|".$teacher_no."|".$class_room
+        $start_date."|".$end_date."|".$course_id."|".$teacher_id."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks."|".$class_id);
         $this->db->where('class_id', $class_id);
         $this->db->set( 'class_name',		$class_name );
@@ -79,7 +79,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
         $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_no',		$teacher_no );
+        $this->db->set( 'teacher_id',		$teacher_id );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
         $this->db->set( 'cost',		$cost );
@@ -112,7 +112,7 @@ class Class_m extends MY_Model
         return $query->result_array();
     }
     
-    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_no , $userInfo){
+    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_id , $userInfo){
     
         $sql ="delete from ss_class_course  where class_no = '".$class_no."'";
         $this->db->query($sql);
@@ -123,7 +123,7 @@ class Class_m extends MY_Model
         	$this->db->set( 'subject_id',	$subject_id );
         	$this->db->set( 'start_date',	$start_date );
         	$this->db->set( 'end_date',		$end_date );
-        	$this->db->set( 'teacher_no',	$teacher_no );
+        	$this->db->set( 'teacher_id',	$teacher_id );
     		$this->db->set( 'insert_user',   $userInfo);
         	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
         	$this->db->set( 'update_user',   $userInfo);
@@ -135,7 +135,7 @@ class Class_m extends MY_Model
     
     public function getSubList($class_no)
     {
-        $this->db->select('class_no,subject_id,start_date,end_date,teacher_no');
+        $this->db->select('class_no,subject_id,start_date,end_date,teacher_id');
         $this->db->where( 'class_no', $class_no );
 
         $this->db->where('delete_flg', 0);

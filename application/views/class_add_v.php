@@ -43,7 +43,7 @@ if(!empty($class_id)){
         	$("#start_year").ligerComboBox(); 
         	$("#start_month").ligerComboBox(); 
         	$("#course_id").ligerComboBox(); 
-        	$("#teacher_no").ligerComboBox(); 
+        	$("#teacher_id").ligerComboBox(); 
         	$("#status").ligerComboBox(); 
             $("form").ligerForm();
         });
@@ -168,12 +168,12 @@ if(!empty($class_id)){
             <tr>
                 <td align="right" class="l-table-edit-td">班主任:</td>
                 <td align="left" class="l-table-edit-td">
-					<select name="teacher_no" id="teacher_no" ligeruiid="teacher_no">
+					<select name="teacher_id" id="teacher_id" ligeruiid="teacher_id">
 						<?php foreach($teacherData as $teacher){?>
-    						<?php if(@teacher_no==($course['teacher_no'])){ ?>
-    							<option value="<?php  echo $teacher['teacher_no'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
+    						<?php if(@teacher_id==($course['teacher_id'])){ ?>
+    							<option value="<?php  echo $teacher['teacher_id'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
     						<?php }else{?>
-    							<option value="<?php  echo $teacher['teacher_no'] ?>"><?php  echo $teacher['teacher_name'] ?></option>
+    							<option value="<?php  echo $teacher['teacher_id'] ?>"><?php  echo $teacher['teacher_name'] ?></option>
     						<?php }?>
 						<?php } ?>
 					</select>
