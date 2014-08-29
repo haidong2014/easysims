@@ -17,7 +17,6 @@ class Class_c extends MY_Controller {
         log_message('info', "####user".var_export($user,true));
         $keyword = $this->input->post('txtKey');
         $classData = $this->class_m->getList(array('search_key'=>$keyword));
-         //var_dump($classData);
         foreach($classData as &$data){
           $data['opt']="<a href=\"".SITE_URL."/class_c/view_class_init/".$data['class_id']."\">查看</a> |".
           "<a href=\"".SITE_URL."/class_c/upd_class_init/".$data['class_id']."\">编辑</a> |".
@@ -34,9 +33,6 @@ class Class_c extends MY_Controller {
         
         $data['courseData'] = $courseData;
         
-        
-        //$data['status'] = $status;
-        //var_dump($courseData);
         $data['txtKey'] = $keyword;
         $data['classData'] = $classData;
         $data['classsData'] = @json_encode(array('Rows'=>$classData));
@@ -44,10 +40,14 @@ class Class_c extends MY_Controller {
 		$this->load->view('class_lst_v',$data);
 	}
 	public function add_class_init(){
-	  $data = array();
+		
+	    $data = $_POST;
+	    $subject_id = $this->input->post('subject_id');
+	    echo "subject_id".$subject_id;
 	    $this->load->model('code_m','code_m');
-         $status = $this->code_m->getList("05");
+        $status = $this->code_m->getList("05");
         $data['statuses'] = $status;
+        $data['subject_id'] = $subject_id;
         $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 		$teacherData = $this->teacher_m->getList(null);
@@ -57,43 +57,50 @@ class Class_c extends MY_Controller {
         $courseData = $this->course_m->getList(null);
         
         $data['courseData'] = $courseData;
-	  $this->load->view('class_add_v',$data);
+        $subject_name ="";
+        $data['subject_id'] = $subject_id;
+        $data['subject_name'] = $subject_name;
+         
+	    $this->load->view('class_add_v',$data);
 	}
 	public function add_class(){
 	   log_message('info','add class '.var_export($_POST,true));
-	  $class_no = $this->input->post('class_no');
-      $class_name = $this->input->post('class_name');
-      $start_year = $this->input->post('start_year');
-      $start_month = $this->input->post('start_month');
-      $start_date = $this->input->post('start_date');
-      $end_date = $this->input->post('end_date');
-      $course_no = $this->input->post('course_no');
-      $teacher_no = $this->input->post('teacher_no');
-      $class_room = $this->input->post('class_room');
-      $numbers = $this->input->post('numbers');
-      $cost = $this->input->post('cost');
-      $status = $this->input->post('status');
-      $remarks = $this->input->post('remarks');
+	   $userinfo = $this->session->userdata('user');
+	    $class_no = $this->input->post('class_no');
+        $class_name = $this->input->post('class_name');
+        $start_year = $this->input->post('start_year');
+        $start_month = $this->input->post('start_month');
+        $start_date = $this->input->post('start_date');
+        $end_date = $this->input->post('end_date');
+        $course_id = $this->input->post('course_id');
+        $teacher_no = $this->input->post('teacher_no');
+        $class_room = $this->input->post('class_room');
+        $numbers = $this->input->post('numbers');
+        $cost = $this->input->post('cost');
+        $status = $this->input->post('status');
+        $remarks = $this->input->post('remarks');
+        $subject_id = $this->input->post('subject_id');
           
-	   $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
-     redirect("class_c");
+	    $class_id = $this->class_m->addOne($class_no, $class_name,$start_year, $start_month,
+        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks);
+        
+        
+        
+        $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no, $userinfo);
+        
+        redirect("class_c");
 	  
 	}
 	public function upd_class_init($class_id = null){
+		$subject_id = $this->input->post('subject_id');
 	    $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 	    $data = array();
-	    //var_dump($this->teacher_m);
 	    $teacherData = $this->teacher_m->getList(null);
-        //var_dump($teacherData);
         $data['teacherData'] = $teacherData;
-        
+        $data['subject_id'] = $subject_id;
         $courseData = $this->course_m->getList(null);
-        
-        //$data['courseData'] = $courseData;
-        //var_dump($courseData);
-        
+                
 	    if(empty($class_id)){
           $class_id = $this->input->get('class_id');
           if(empty($class_id)){
@@ -102,8 +109,7 @@ class Class_c extends MY_Controller {
          }
 	 
 	     $classData = $this->class_m->getOne($class_id);
-	     //$classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
-	     //$classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
+	    
 		 $classData['teacherData'] = $teacherData;
 		 $classData['courseData'] = $courseData;
 		 
@@ -111,28 +117,68 @@ class Class_c extends MY_Controller {
          $status = $this->code_m->getList("05");
          $classData['statuses'] = $status;
         
+         $this->load->model('class_m','class_m');
+         $this->load->model('subject_m','subject_m');
+         $subjectData = $this->class_m->getSubList($classData['class_no']);
+         if(empty($classData['course_id'])){
+         	$classData['course_id'] = $this->input->post('course_id');
+         }
+         $subject_name = "";
+
+         if(!empty($subjectData)){
+         	foreach($subjectData as $value){
+         		$subject = $this->subject_m->getOne($classData['course_id'],$value["subject_id"]);
+         		if(empty($subject_id)){
+         			$subject_id = $value["subject_id"];
+         			$subject_name = $subject['subject_name'];
+         		}else{
+         			$subject_id .= ",".$value["subject_id"];
+         			$subject_name = ",".$subject['subject_name'];
+         		} 	
+         	}
+         }else{
+         	if(!empty($subject_id)){
+         		$subs = explode(",",$subject_id);
+         		foreach($subs as $str){
+         			$subject = $this->subject_m->getOne($classData['course_id'], $str);
+         			if(empty($subject_name)){
+         				$subject_name = $subject['subject_name'];
+         			}else{
+         				$subject_name = ",".$subject['subject_name'];
+         			} 	
+         		}
+         	}
+         }
+         
+         $classData['subject_id'] = $subject_id;
+         $classData['subject_name'] = $subject_name;
 	     $this->load->view('class_add_v',$classData);
 	}
     public function upd_class($class_id = null){
       if(empty($class_id)){
         $class_id = $this->input->post('class_id');
       }
+      $userinfo = $this->session->userdata('user');
       $class_no = $this->input->post('class_no');
       $class_name = $this->input->post('class_name');
       $start_year = $this->input->post('start_year');
       $start_month = $this->input->post('start_month');
       $start_date = $this->input->post('start_date');
       $end_date = $this->input->post('end_date');
-      $course_no = $this->input->post('course_no');
+      $course_id = $this->input->post('course_id');
       $teacher_no = $this->input->post('teacher_no');
       $class_room = $this->input->post('class_room');
       $numbers = $this->input->post('numbers');
       $cost = $this->input->post('cost');
       $status = $this->input->post('status');
       $remarks = $this->input->post('remarks');
-          
+       $subject_id = $this->input->post('subject_id');
       $this->class_m->updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_no, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+      $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id);
+        
+        
+       $this->class_m->addSub($class_no, $subject_id, $start_date, $end_date, $teacher_no , $userinfo);
+        
       redirect("class_c");
 	}
 	public function view_class_init($class_id = null){
@@ -180,29 +226,29 @@ class Class_c extends MY_Controller {
         log_message('info', "class chk_repeat end".var_export($checkuser,true));
     }
     
-    public function selectKemu($course_id ,$class_id = 0)
+    public function selectKemu()
     {
         $data = array();
-        //echo "course_id;".$course_id;
+        $data['post'] = $_POST;
+        $course_id = $this->input->post('course_id');
+        $class_id = $this->input->post('class_id');
         $this->load->model('subject_m','subject_m');
 		$subjectData = $this->subject_m->getList($course_id, null);
-         //var_dump($subjectData);
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $data['course_id'] = $course_id;
         $data['class_id'] = $class_id;
         $this->load->view('class_add_setcourse',$data);
     }
     public function save_subject(){
-    	$userinfo = $this->session->userdata('user');
     	$class_id = $this->input->post('class_id');
     	$subject_id = $this->input->post('subject_id');
-    	$start_date = $this->input->post('start_date');
-   	 	$end_date = $this->input->post('end_date');
-    	$teacher_no = $this->input->post('teacher_no');
+    	$course_id = $this->input->post('course_id');
     	
-    	$this->class_m->addSub($class_id,$subject_id, $start_date,$end_date,$teacher_no ,$userInfo);
-    
-    	redirect("class_c/".$class_id);
+    	if(!empty($class_id)){
+    		redirect("class_c/upd_class_init/".$class_id."/".$subject_id."/".$course_id);
+    	}else{
+    		redirect("class_c/add_class_init/".$subject_id);
+    	}	
     
     }
 }
