@@ -30,8 +30,8 @@ class Class_m extends MY_Model
     }
 
     public function addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status, $remarks){
-        
+        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status, $remarks){
+
         $this->db->set( 'class_no',		$class_no );
         $this->db->set( 'class_name',		$class_name );
         $this->db->set( 'start_year',	$start_year );
@@ -39,7 +39,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
         $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_no',		$teacher_no );
+        $this->db->set( 'teacher_id',		$teacher_id );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
         $this->db->set( 'cost',		$cost );
@@ -64,9 +64,9 @@ class Class_m extends MY_Model
     }
 
     public function updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_no, $class_room, $numbers, $cost, $status,$remarks,$class_id){
+        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status,$remarks,$class_id){
           log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_id."|".$teacher_no."|".$class_room
+        $start_date."|".$end_date."|".$course_id."|".$teacher_id."|".$class_room
         ."|".$numbers."|".$cost."|".$status."|".$remarks."|".$class_id);
         $this->db->where('class_id', $class_id);
         $this->db->set( 'class_name',		$class_name );
@@ -76,7 +76,7 @@ class Class_m extends MY_Model
         $this->db->set( 'start_date',	$start_date );
         $this->db->set( 'end_date',		$end_date );
         $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_no',		$teacher_no );
+        $this->db->set( 'teacher_id',		$teacher_id );
         $this->db->set( 'class_room',		$class_room );
         $this->db->set( 'numbers',		$numbers );
         $this->db->set( 'cost',		$cost );
@@ -87,7 +87,11 @@ class Class_m extends MY_Model
     }
 
     public function deleteOne($class_id){
-          log_message('info', "del"."|".$class_id);
+        $class = self::getOne($class_id);
+        $sql = "delete from ss_class_course  where class_no = '".$class['class_no']."'";
+        $this->db->query($sql);
+        
+        log_message('info', "delclass"."|".$class_id."|".$sql);
         $this->db->where('class_id', $class_id);
         $this->db->set( 'delete_flg',		1 );
         return $this->db->update( $this->table_name );
@@ -103,9 +107,8 @@ class Class_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
-
-    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_no , $userInfo){
     
+    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_id , $userInfo){
         $sql ="delete from ss_class_course  where class_no = '".$class_no."'";
         $this->db->query($sql);
         $subject_ids = explode(",",$subject_id);
@@ -115,7 +118,7 @@ class Class_m extends MY_Model
         	$this->db->set( 'subject_id',	$subject_id );
         	$this->db->set( 'start_date',	$start_date );
         	$this->db->set( 'end_date',		$end_date );
-        	$this->db->set( 'teacher_no',	$teacher_no );
+        	$this->db->set( 'teacher_id',	$teacher_id );
     		$this->db->set( 'insert_user',   $userInfo);
         	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
         	$this->db->set( 'update_user',   $userInfo);
@@ -127,7 +130,7 @@ class Class_m extends MY_Model
     
     public function getSubList($class_no)
     {
-        $this->db->select('class_no,subject_id,start_date,end_date,teacher_no');
+        $this->db->select('class_no,subject_id,start_date,end_date,teacher_id');
         $this->db->where( 'class_no', $class_no );
 
         $this->db->where('delete_flg', 0);
