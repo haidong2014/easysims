@@ -37,6 +37,7 @@ class Course_m extends MY_Model
         $this->db->where('course_id', $course_id);
         $this->db->where('delete_flg', 0);
         $query = $this->db->get($this->table_name);
+        $course = null;
         foreach ($query->result_array() as $row){
             $course = $row;
         }

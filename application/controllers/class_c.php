@@ -47,7 +47,8 @@ class Class_c extends MY_Controller {
 		
 	    $data = $_POST;
 	    $subject_id = $this->input->post('subject_id');
-	    echo "subject_id".$subject_id;
+	    $course_id = $this->input->post('course_id');
+	    //echo "subject_id".$subject_id;
 	    $this->load->model('code_m','code_m');
         $status = $this->code_m->getList("05");
         $data['statuses'] = $status;
@@ -62,24 +63,20 @@ class Class_c extends MY_Controller {
         
         $data['courseData'] = $courseData;
         $subject_name ="";
-        /*if(!empty($subject_id)){
-           $subjectData = $this->class_m->getSubList($classData['class_no']);
-           $subject_id = "";
-           $subject_name = "";
-           $this->load->model('subject_m','subject_m');
-           foreach($subjectData as $value){
-         	 $subject = $this->subjet_m->getOne($value["subject_id"]);
-         	 if(empty($subject_id)){
-         		$subject_id = $value["subject_id"];
-         		$subject_name = $subject['subject_name'];
-         	 }else{
-         	 	$subject_id .= ",".$value["subject_id"];
-         	 	$subject_name = ",".$subject['subject_name'];
-         	 } 	
-          }
-          //var_dump($subjectData);
-          
-        }*/
+        if(!empty($subject_id)&&!empty($course_id)){
+              $subs = explode(",",$subject_id);
+              $this->load->model('subject_m','subject_m');
+         	   foreach($subs as $str){
+         	        //echo "dd".$course_id."aa".$str."end";
+         			$subject = $this->subject_m->getOne($course_id, $str);
+         			//var_dump($subject);
+         			if(empty($subject_name)){
+         				$subject_name = $subject['subject_name'];
+         			}else{
+         				$subject_name = ",".$subject['subject_name'];
+         			} 	
+         	  }
+        }
         $data['subject_id'] = $subject_id;
         $data['subject_name'] = $subject_name;
          
@@ -115,14 +112,16 @@ class Class_c extends MY_Controller {
 	}
 	public function upd_class_init($class_id = null){
 		$subject_id = $this->input->post('subject_id');
+		$course_id = $this->input->post('course_id');
 	    $this->load->model('teacher_m','teacher_m');
 		$this->load->model('course_m','course_m');
 	    $data = array();
-	    //var_dump($this->teacher_m);
+	    //echo "subject_id".$subject_id."::".$course_id;
 	    $teacherData = $this->teacher_m->getList(null);
         //var_dump($teacherData);
-        $data['teacherData'] = $teacherData;
-        $data['subject_id'] = $subject_id;
+        //$data['teacherData'] = $teacherData;
+        
+       
         $courseData = $this->course_m->getList(null);
         
         //$data['courseData'] = $courseData;
@@ -136,7 +135,12 @@ class Class_c extends MY_Controller {
          }
 	 
 	     $classData = $this->class_m->getOne($class_id);
-	    
+	    if(!empty($subject_id)){
+           $classData['subject_id'] = $subject_id;
+        }
+        if(!empty($course_id)){
+          $classData['course_id'] = $course_id;
+        }
 	     //$classData['start_date'] = substr($classData['start_date'],0,4)."-".substr($classData['start_date'],4,2)."-".substr($classData['start_date'],6,2);
 	     //$classData['end_date'] = substr($classData['end_date'],0,4)."-".substr($classData['end_date'],4,2)."-".substr($classData['end_date'],6,2);
 		 $classData['teacherData'] = $teacherData;
@@ -156,7 +160,7 @@ class Class_c extends MY_Controller {
          }
          $subject_name = "";
 
-         if(!empty($subjectData)){
+         if(!empty($subjectData) && empty($subject_id)){
          	foreach($subjectData as $value){
          		$subject = $this->subject_m->getOne($classData['course_id'],$value["subject_id"]);
          		if(empty($subject_id)){
@@ -223,13 +227,29 @@ class Class_c extends MY_Controller {
           $class_id = $this->input->post('class_id');
         }
       }
+      
 	  $this->load->model('code_m','code_m');
 	  $status = $this->code_m->getList("05");
 	  $classData = $this->class_m->getOne($class_id);
 	  $teacher = $this->teacher_m->getOneByNo($classData['teacher_no']);
-	  $course = $this->course_m->getOneByNo($classData['course_no']);
-	  
-	  
+	  $course = $this->course_m->getOne($classData['course_id']);
+	  $subjectData = $this->class_m->getSubList($classData['class_no']);
+	   $subject_name = "";
+
+      if(!empty($subjectData)){
+        $this->load->model('subject_m','subject_m');
+        foreach($subjectData as $value){
+       	  $subject = $this->subject_m->getOne($classData['course_id'],$value["subject_id"]);
+       		if(empty($subject_id)){
+       			$subject_id = $value["subject_id"];
+       			$subject_name = $subject['subject_name'];
+       		}else{
+       			$subject_id .= ",".$value["subject_id"];
+       			$subject_name = ",".$subject['subject_name'];
+       		} 	
+       	  }
+      }
+      $classData['subject_name'] = $subject_name;
 	  $classData['teacher_name'] = $teacher['teacher_name'];
 	  $classData['course_name'] = $course['course_name'];
 	  
@@ -241,7 +261,7 @@ class Class_c extends MY_Controller {
       if(empty($class_id)){
         $class_id = $this->input->post('class_id');
       }
-      
+      //$class = $this->class_m->getOne($class_id);
       $this->class_m->deleteOne($class_id);
       redirect("class_c");
 	}

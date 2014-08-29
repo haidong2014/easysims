@@ -126,7 +126,7 @@ $property_name = array(1=>'专职',2=>'兼职');
             <tr>
                 <td align="right" class="l-table-edit-td">课程:</td>
                 <td align="left" class="l-table-edit-td">
-					<?php  echo @$course_name ?>
+					<?php  echo @$course_name ?>科目:<?php echo @$subject_name?>
                 </td>
                 <td align="left"></td>
             </tr>

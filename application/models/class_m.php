@@ -90,7 +90,12 @@ class Class_m extends MY_Model
     }
 
     public function deleteOne($class_id){
-          log_message('info', "del"."|".$class_id);
+        $class = self::getOne($class_id);
+        $sql = "delete from ss_class_course  where class_no = '".$class['class_no']."'";
+        //echo $sql;
+        $this->db->query($sql);
+        
+        log_message('info', "delclass"."|".$class_id."|".$sql);
         $this->db->where('class_id', $class_id);
         $this->db->set( 'delete_flg',		1 );
         return $this->db->update( $this->table_name );
