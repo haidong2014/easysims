@@ -52,59 +52,62 @@ class Student_c extends MY_Controller {
     }
 
     public function add_student(){
-        $userinfo = $this->session->userdata('user');
+        $data = array();
 
+        $userinfo = $this->session->userdata('user');
         $student_id = $this->input->post('student_id');
         $student_no = $this->input->post('student_no');
         $student_name = $this->input->post('student_name');
-        $sex = $this->input->post('sex');
-        $birthday = $this->input->post('birthday');
-        $age = $this->input->post('age');
-        $id_card = $this->input->post('id_card');
-        $contact_way = $this->input->post('contact_way');
-        $parent_phone = $this->input->post('parent_phone');
-        $course_id = $this->input->post('course_id');
-        $class_id = $this->input->post('class_id');
-        $cost = $this->input->post('cost');
-        $start_year = $this->input->post('start_year');
+        $data['student_id'] = $student_id;
+        $data['student_no'] = $student_no;
+        $data['student_name'] = $student_name;
+        $data['sex'] = $this->input->post('sex');
+        $data['birthday'] = $this->input->post('birthday');
+        $data['age'] = $this->input->post('age');
+        $data['id_card'] = $this->input->post('id_card');
+        $data['contact_way'] = $this->input->post('contact_way');
+        $data['parent_phone'] = $this->input->post('parent_phone');
+        $data['course_id'] = $this->input->post('course_id');
+        $data['class_id'] = $this->input->post('class_id');
+        $data['cost'] = $this->input->post('cost');
+        $data['start_year'] = $this->input->post('start_year');
         $start_month = $this->input->post('start_month');
-        $start_month = substr("0".$start_month,-2);
-        $start_date = $this->input->post('start_date');
-        $end_date = $this->input->post('end_date');
-        $attendance = $this->input->post('attendance');
+        $data['start_month'] = substr("0".$start_month,-2);
+        $data['start_date'] = $this->input->post('start_date');
+        $data['end_date'] = $this->input->post('end_date');
+        $data['attendance'] = $this->input->post('attendance');
         $system_user = $this->input->post('system_user');
-        $remarks = $this->input->post('remarks');
+        $data['system_user'] = $system_user;
+        $data['remarks'] = $this->input->post('remarks');
         /*************other***************/
-        $graduate_school = $this->input->post('graduate_school');
-        $specialty = $this->input->post('specialty');
-        $graduate = $this->input->post('graduate');
-        $ancestralhome = $this->input->post('ancestralhome');
-        $know_school = $this->input->post('know_school');
-        $know_trade = $this->input->post('know_trade');
-        $preference = $this->input->post('preference');
-        $software_base = $this->input->post('software_base');
-        $purpose = $this->input->post('purpose');
-        $follow_city = $this->input->post('follow_city');
-        $follow_company = $this->input->post('follow_company');
-        $follow_salary = $this->input->post('follow_salary');
-        $follow_position = $this->input->post('follow_position');
-        $follow_remarks = $this->input->post('follow_remarks');
+        $data['graduate_school'] = $this->input->post('graduate_school');
+        $data['specialty'] = $this->input->post('specialty');
+        $data['graduate'] = $this->input->post('graduate');
+        $data['ancestralhome'] = $this->input->post('ancestralhome');
+        $data['know_school'] = $this->input->post('know_school');
+        $data['know_trade'] = $this->input->post('know_trade');
+        $data['preference'] = $this->input->post('preference');
+        $data['software_base'] = $this->input->post('software_base');
+        $data['purpose'] = $this->input->post('purpose');
+        $data['follow_city'] = $this->input->post('follow_city');
+        $data['follow_company'] = $this->input->post('follow_company');
+        $data['follow_salary'] = $this->input->post('follow_salary');
+        $data['follow_position'] = $this->input->post('follow_position');
+        $data['follow_remarks'] = $this->input->post('follow_remarks');
+        $data['delete_flg'] = "0";
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
 
         if (empty($student_id)) {
-            $student_id = $this->student_m->addOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way,
-            $parent_phone, $course_id, $class_id, $cost, $start_year,$start_month,$start_date,$end_date,
-            $attendance,$system_user,$remarks,$userinfo);
+            $student_id = $this->student_m->addOne($data);
             /***insert other**/
-            $this->student_m->addOneOther($student_id, $graduate_school, $specialty,$graduate
-            ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-            $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userinfo);
+            $data['student_id'] = $student_id;
+            $this->student_m->addOneOther($data);
         } else {
-            $this->student_m->updateOne($student_no,$student_name, $sex,$birthday, $age, $id_card, $contact_way,
-            $parent_phone, $course_id, $class_id, $cost, $start_year,$start_month,$start_date,$end_date,
-            $attendance,$system_user,$remarks,$student_id,$userinfo);
-            $this->student_m->updateOneOther($student_id, $graduate_school, $specialty,$graduate
-            ,$ancestralhome,$know_school,$know_trade,$preference,$software_base,$purpose,
-            $follow_city,$follow_company,$follow_salary,$follow_position,$follow_remarks,$userinfo);
+            $this->student_m->updateOne($data);
+            $this->student_m->updateOneOther($data);
         }
 
         if($system_user == "1"){
