@@ -29,23 +29,26 @@ class Class_m extends MY_Model
         return $query->result_array();
     }
 
-    public function addOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status, $remarks){
+    public function addOne($data){
 
-        $this->db->set( 'class_no',		$class_no );
-        $this->db->set( 'class_name',		$class_name );
-        $this->db->set( 'start_year',	$start_year );
-        $this->db->set( 'start_month',	$start_month );
-        $this->db->set( 'start_date',	$start_date );
-        $this->db->set( 'end_date',		$end_date );
-        $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_id',		$teacher_id );
-        $this->db->set( 'class_room',		$class_room );
-        $this->db->set( 'numbers',		$numbers );
-        $this->db->set( 'cost',		$cost );
-        $this->db->set( 'status',		$status );
-        $this->db->set( 'remarks',		$remarks );
-
+        $this->db->set( 'class_no',		$data['class_no'] );
+        $this->db->set( 'class_name',	$data['class_name'] );
+        $this->db->set( 'start_year',	$data['start_year'] );
+        $this->db->set( 'start_month',	$data['start_month'] );
+        $this->db->set( 'start_date',	$data['start_date'] );
+        $this->db->set( 'end_date',		$data['end_date'] );
+        $this->db->set( 'course_id',	$data['course_id'] );
+        $this->db->set( 'teacher_id',	$data['teacher_id'] );
+        $this->db->set( 'class_room',	$data['class_room'] );
+        $this->db->set( 'numbers',		$data['numbers'] );
+        $this->db->set( 'cost',		    $data['cost'] );
+        $this->db->set( 'status',		$data['status'] );
+        $this->db->set( 'remarks',		$data['remarks'] );
+        $this->db->set( 'delete_flg',	$data['delete_flg'] );
+        $this->db->set('insert_user',   $data['insert_user'] );
+        $this->db->set('insert_time',   $data['insert_time'] );
+        $this->db->set('update_user',   $data['update_user']);
+        $this->db->set('update_time',   $data['update_time']);
         $this->db->insert( $this->table_name );
         return $this->db->insert_id();
     }
@@ -63,77 +66,65 @@ class Class_m extends MY_Model
        return $class;
     }
 
-    public function updateOne($class_no, $class_name,$start_year, $start_month,
-        $start_date, $end_date,  $course_id, $teacher_id, $class_room, $numbers, $cost, $status,$remarks,$class_id){
-          log_message('info', "ddd".$class_no."|".$class_name."|".$start_year."|".$start_month."|".
-        $start_date."|".$end_date."|".$course_id."|".$teacher_id."|".$class_room
-        ."|".$numbers."|".$cost."|".$status."|".$remarks."|".$class_id);
-        $this->db->where('class_id', $class_id);
-        $this->db->set( 'class_name',		$class_name );
-        $this->db->set( 'class_no',		$class_no );
-        $this->db->set( 'start_year',	$start_year );
-        $this->db->set( 'start_month',	$start_month );
-        $this->db->set( 'start_date',	$start_date );
-        $this->db->set( 'end_date',		$end_date );
-        $this->db->set( 'course_id',		$course_id );
-        $this->db->set( 'teacher_id',		$teacher_id );
-        $this->db->set( 'class_room',		$class_room );
-        $this->db->set( 'numbers',		$numbers );
-        $this->db->set( 'cost',		$cost );
-        $this->db->set( 'status',		$status );
-        $this->db->set( 'remarks',		$remarks );
+    public function updateOne($data){
+        $this->db->where('class_id',    $data['class_id']);
+        $this->db->set( 'class_name',	$data['class_name'] );
+        $this->db->set( 'start_year',	$data['start_year'] );
+        $this->db->set( 'start_month',	$data['start_month'] );
+        $this->db->set( 'start_date',	$data['start_date'] );
+        $this->db->set( 'end_date',		$data['end_date'] );
+        $this->db->set( 'course_id',	$data['course_id'] );
+        $this->db->set( 'teacher_id',	$data['teacher_id'] );
+        $this->db->set( 'class_room',	$data['class_room'] );
+        $this->db->set( 'numbers',		$data['numbers'] );
+        $this->db->set( 'cost',		    $data['cost'] );
+        $this->db->set( 'status',		$data['status'] );
+        $this->db->set( 'remarks',		$data['remarks'] );
+        $this->db->set( 'delete_flg',	$data['delete_flg'] );
+        $this->db->set('update_user',   $data['update_user']);
+        $this->db->set('update_time',   $data['update_time']);
 
         return $this->db->update( $this->table_name );
     }
 
-    public function deleteOne($class_id){
-        $class = self::getOne($class_id);
-        $sql = "delete from ss_class_course  where class_no = '".$class['class_no']."'";
-        $this->db->query($sql);
-        
-        log_message('info', "delclass"."|".$class_id."|".$sql);
-        $this->db->where('class_id', $class_id);
-        $this->db->set( 'delete_flg',		1 );
+    public function deleteOne($data){
+        $this->db->where('class_id',  $data['class_id']);
+        $this->db->set( 'delete_flg',   $data['delete_flg']);
+        $this->db->set( 'update_user',	$data['update_user'] );
+        $this->db->set( 'update_time',	$data['update_time'] );
         return $this->db->update( $this->table_name );
     }
 
-    public function checkRepeat($new_no, $old_no){
-        $this->db->select('class_no');
-        $this->db->where('class_no', $new_no);
-        if(!empty($old_no)){
-          $this->db->where('class_no !=', $old_no);
-        }
-        log_message('info','class checkRepeat '.$new_no."|".$old_no);
+    public function checkClass($class_no){
+        $this->db->select('class_id,class_no');
+        $this->db->where('class_no', $class_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
-    
-    public function addSub($class_no ,$subject_id, $start_date, $end_date, $teacher_id , $userInfo){
-        $sql ="delete from ss_class_course  where class_no = '".$class_no."'";
-        $this->db->query($sql);
-        $subject_ids = explode(",",$subject_id);
-        
-        foreach($subject_ids as $id){
-         	$this->db->set( 'class_no',		$class_no );
-        	$this->db->set( 'subject_id',	$subject_id );
-        	$this->db->set( 'start_date',	$start_date );
-        	$this->db->set( 'end_date',		$end_date );
-        	$this->db->set( 'teacher_id',	$teacher_id );
-    		$this->db->set( 'insert_user',   $userInfo);
-        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
-        	$this->db->set( 'update_user',   $userInfo);
-        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
-    		 $this->db->insert( "ss_class_course" );
-        }
-        return count($subject_ids);
-    }
-    
-    public function getSubList($class_no)
-    {
-        $this->db->select('class_no,subject_id,start_date,end_date,teacher_id');
-        $this->db->where( 'class_no', $class_no );
 
-        $this->db->where('delete_flg', 0);
+    public function deleteSubject($data){
+        $sql ="delete from ss_class_course  where class_no = '".$data['$class_id']."'";
+        $this->db->query($sql);
+    }
+
+    public function addSubject($data){
+        $this->db->set( 'class_no',		$data['class_id'] );
+        $this->db->set( 'subject_id',	$data['subject_id'] );
+        $this->db->set( 'start_date',	$data['start_date'] );
+        $this->db->set( 'end_date',		$data['end_date'] );
+        $this->db->set( 'teacher_id',	$data['teacher_id'] );
+        $this->db->set( 'delete_flg',   $data['delete_flg'] );
+        $this->db->set( 'insert_user',  $data['insert_user'] );
+        $this->db->set( 'insert_time',  $data['insert_time'] );
+        $this->db->set( 'update_user',  $data['update_user'] );
+        $this->db->set( 'update_time',  $data['update_time'] );
+        $this->db->insert( "ss_class_course" );
+    }
+
+    public function getSubjectList($class_id)
+    {
+        $this->db->select('class_id,subject_id,start_date,end_date,teacher_id');
+        $this->db->where( 'class_id', $class_id );
         $query =  $this->db->get("ss_class_course");
         return $query->result_array();
     }
