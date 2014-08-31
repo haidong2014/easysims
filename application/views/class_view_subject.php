@@ -3,7 +3,6 @@
     var subjectData = <?php echo $subjectData?>;
     var grid = null;
     $(function () {
-        alert("请继续设定科目信息！");
         grid = $("#maingrid").ligerGrid({
             columns: [
             { display: '科目编号', name: 'subject_id', align: 'left', width: 80 },
@@ -38,10 +37,7 @@
     }
     function returnPage() {
         class_id = document.form.class_id.value;
-        location.href='<?php echo SITE_URL;?>/class_c/upd_class_init/'+class_id;
-    }
-    function addSubject() {
-        document.form.submit();
+        location.href='<?php echo SITE_URL;?>/class_c/view_class_init/'+class_id;
     }
 </script>
 <style type="text/css">
@@ -59,7 +55,6 @@
   <br />
   <div id="maingrid" style="margin:0; padding:0"></div>
   <br />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="addSubject()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id ?>" />

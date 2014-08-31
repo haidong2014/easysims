@@ -1,24 +1,23 @@
 ﻿<?php require_once("_header.php");?>
-<?php $sex_name=array(1=>'男',2=>'女');?>
 <script type="text/javascript">
 var classData = <?php echo $classsData ?>;
 var grid = null;
 $(function () {
-    grid = $("#maingrid4").ligerGrid({
+    grid = $("#maingrid").ligerGrid({
         columns: [
         { display: '班级编号', name: 'class_no', align: 'left', width: 80 },
         { display: '班级名称', name: 'class_name', align: 'left', width: 160 },
-        { display: '开始日期', name: 'start_date', align: 'left', width: 80 },
-        { display: '结束日期', name: 'end_date', align: 'left', width: 80 },
+        { display: '开课日期', name: 'start_date', align: 'left', width: 80 },
+        { display: '结课日期', name: 'end_date', align: 'left', width: 80 },
         { display: '班主任', name: 'teacher_name', align: 'left', width: 80 },
         { display: '教室', name: 'class_room', align: 'left', width: 80 },
         { display: '人数', name: 'numbers', align: 'left', width: 80 },
-        { display: '状态', name: 'status', align: 'left', width: 80 },
-        { display: '操作', name: 'opt', align: 'center'}
-        ],  
+        { display: '状态', name: 'code_name', align: 'left', width: 80 },
+        { display: '操作', name: 'opt', align: 'center', width: 160}
+        ],
         pageSize:10,
         where : f_getWhere(),
-        data: $.extend(true,{},classData), 
+        data: $.extend(true,{},classData),
         width: '100%',height:'100%'
     });
 
@@ -37,7 +36,7 @@ function f_getWhere()
         var key = $("#txtKey").val();
         return rowdata.CustomerID.indexOf(key) > -1;
     };
-    return clause; 
+    return clause;
 }
 function goreg(){
   location.href='<?php echo SITE_URL;?>/class_c/add_class_init';
@@ -51,15 +50,26 @@ function delclass(parm){
   });
 }
 function search_click(){
-	document.form.submit();
+  document.form.submit();
 }
 </script>
-<div id="searchbar">
-<form id="form" name="form" method="post" action="<?php echo SITE_URL."/class_c";?>" >
-    编号或名称：<input id="txtKey" name="txtKey"  type="text" value="<?php echo @$txtKey?>"/>
-    <input id="search" type="button" value=" 查 询 " onclick="search_click()" />
-  <input id="regist" type="button" value=" 班级信息登录 " onclick="goreg()" /></form>
-</div>
-  <br>
-  <div id="maingrid4" style="margin:0; padding:0"></div>
+
+</head>
+<body style="padding:6px; overflow:hidden;">
+<div id="pageloading"></div>
+<div id="searchbar"></div>
+<form name="form" method="post" action="<?php echo SITE_URL.'/class_c';?>" id="form">
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        <tr>
+            &nbsp班级名称：
+            <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
+            <input type="submit" value=" 查 询 " />&nbsp
+            <input type="button" value=" 班级信息登录 " onclick="goreg()" />
+        </tr>
+    </table>
+    <br>
+    <div id="maingrid" style="margin:0; padding:0"></div>
+</form>
 <div style="display:none;"></div>
+</body>
+</html>
