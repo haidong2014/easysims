@@ -3,8 +3,13 @@ class Class_c extends MY_Controller {
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100402");
+
         $this->load->model('class_m','class_m');
+        $this->load->model('subject_m','subject_m');
+        $this->load->model('code_m','code_m');
+        $this->load->model('teacher_m','teacher_m');
+        $this->load->model('course_m','course_m');
     }
 
     public function index(){
@@ -26,13 +31,13 @@ class Class_c extends MY_Controller {
     public function add_class_init(){
         $data = array();
 
-        $this->load->model('code_m','code_m');
+
         $status = $this->code_m->getList("05");
         $data['status'] = $status;
-        $this->load->model('teacher_m','teacher_m');
-        $teacherData = $this->teacher_m->getList(null);
+
+        $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
-        $this->load->model('course_m','course_m');
+
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
         $start_year = substr(date("Y-m-d"),0,4);
@@ -71,18 +76,19 @@ class Class_c extends MY_Controller {
 
         if (empty($class_id)) {
             $class_id = $this->class_m->addOne($data);
+
         } else {
             $this->class_m->updateOne($data);
+
+            $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
         }
 
-        $this->load->model('subject_m','subject_m');
-        $subjectData = $this->subject_m->getList($course_id, null);
-        foreach($subjectData as &$data){
-          $data['start_date']='<input name="'."start_date".$data['subject_id'].'" type="'."text".'" id="'."start_date".$data['subject_id'].'" ltype="'."date".'/>';
-          $data['end_date']='<input name="'."end_date".$data['subject_id'].'" type="'."text".'" id="'."end_date".$data['subject_id'].'" ltype="'."date".'/>';
-          $data['teacher']="";
+        if (empty($subjectData)) {
+            $subjectData = $this->subject_m->getList($course_id, null);
         }
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
+        $teacherData = $this->teacher_m->getTeacher();
+        $data['teacherData'] = @json_encode($teacherData);
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $this->load->view('class_add_setcourse',$data);
@@ -93,13 +99,10 @@ class Class_c extends MY_Controller {
 
         $classData = $this->class_m->getOne($class_id);
         $data = $classData;
-        $this->load->model('code_m','code_m');
         $status = $this->code_m->getList("05");
         $data['status'] = $status;
-        $this->load->model('teacher_m','teacher_m');
-        $teacherData = $this->teacher_m->getList(null);
+        $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
-        $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
 
@@ -111,13 +114,10 @@ class Class_c extends MY_Controller {
 
         $classData = $this->class_m->getOne($class_id);
         $data = $classData;
-        $this->load->model('code_m','code_m');
         $status = $this->code_m->getList("05");
         $data['status'] = $status;
-        $this->load->model('teacher_m','teacher_m');
-        $teacherData = $this->teacher_m->getList(null);
+        $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
-        $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
 
@@ -149,13 +149,12 @@ class Class_c extends MY_Controller {
     {
         $data = array();
         $data['post'] = $_POST;
-        $course_id = $this->input->post('course_id');
         $class_id = $this->input->post('class_id');
-        $this->load->model('subject_m','subject_m');
-        $subjectData = $this->subject_m->getList($course_id, null);
+        $course_id = $this->input->post('course_id');
+        $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
-        $data['course_id'] = $course_id;
         $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
         $this->load->view('class_view_subject',$data);
     }
 
