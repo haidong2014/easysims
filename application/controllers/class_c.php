@@ -57,7 +57,7 @@ class Class_c extends MY_Controller {
         $data['class_no'] = $this->input->post('class_no');
         $data['class_name'] = $this->input->post('class_name');
         $data['start_year'] = $this->input->post('start_year');
-        $data['start_month'] = $this->input->post('start_month');
+        $data['start_month'] = substr("0".$this->input->post('start_month'),-2);
         $data['start_date'] = $this->input->post('start_date');
         $data['end_date'] = $this->input->post('end_date');
         $course_id = $this->input->post('course_id');
