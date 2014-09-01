@@ -106,4 +106,13 @@ class Teacher_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+    public function getTeacher()
+    {
+        $this->db->select('teacher_id,teacher_name');
+        $this->db->from('ss_teachers');
+        $this->db->where('delete_flg', 0);
+        $this->db->order_by('teacher_id','esc');
+        $query =  $this->db->get();
+        return $query->result_array();
+    }
 }

@@ -121,10 +121,11 @@ class Class_m extends MY_Model
         $this->db->insert( "ss_class_course" );
     }
 
-    public function getSubjectList($class_id)
+    public function getSubjectList($class_id,$course_id)
     {
-        $this->db->select('class_id,subject_id,start_date,end_date,teacher_id');
+        $this->db->select('class_id,course_id,subject_id,start_date,end_date,teacher_id');
         $this->db->where( 'class_id', $class_id );
+        $this->db->where( 'course_id', $course_id );
         $query =  $this->db->get("ss_class_course");
         return $query->result_array();
     }
