@@ -19,9 +19,9 @@ class Class_m extends MY_Model
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.class_name like', '%'.$data['search_key'].'%');
         }
-        if(!empty($data['search_year']) && !empty($data['search_month'])){
-            $this->db->where('t1.start_year', $data['search_year']);
-            $this->db->where('t1.start_month', $data['search_month']);
+        if(!empty($data['start_year']) && !empty($data['start_month'])){
+            $this->db->where('t1.start_year', $data['start_year']);
+            $this->db->where('t1.start_month', $data['start_month']);
         }
         $this->db->where('t1.delete_flg', 0);
         $query =  $this->db->get();

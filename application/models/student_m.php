@@ -179,9 +179,9 @@ class Student_m extends MY_Model
         return $this->db->update( "ss_student_others" );
     }
 
-    public function getStudentName($student_no) {
+    public function getStudentName($student_id) {
         $this->db->select('student_name');
-        $this->db->where('student_no', $student_no);
+        $this->db->where('student_id', $student_id);
         $this->db->where('delete_flg', 0);
         $query = $this->db->get($this->table_name);
         return $query->result_array();

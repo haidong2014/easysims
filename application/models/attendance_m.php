@@ -9,7 +9,8 @@ class Attendance_m extends MY_Model
     }
 
     public function getAttendanceSumList($data){
-        $this->db->select('t1.student_id as student_id,t1.student_no as student_no, max(t1.student_name) as student_name, max(t1.contact_way) as contact_way,' .
+        $this->db->select('t1.student_id as student_id,t1.student_no as student_no, ' .
+            'max(t1.student_name) as student_name, max(t1.contact_way) as contact_way,' .
             'sum(case when am_status=1 then 1 else 0 end) + sum(case when pm_status=1 then 1 else 0 end) as status_1,' .
             'sum(case when am_status=2 then 1 else 0 end) + sum(case when pm_status=2 then 1 else 0 end) as status_2,' .
             'sum(case when am_status=3 then 1 else 0 end) + sum(case when pm_status=3 then 1 else 0 end) as status_3,' .
@@ -30,7 +31,8 @@ class Attendance_m extends MY_Model
     public function getAttendanceList($data){
         $this->db->select('t1.student_id,t1.student_no,t1.student_name,t1.contact_way,t2.am_status,t2.pm_status');
         $this->db->from('ss_student t1');
-        $this->db->join('ss_attendance t2', "t1.class_id = t2.class_id and t1.student_id = t2.student_id and t2.today = '".$data['today']."'" , 'left');
+        $this->db->join('ss_attendance t2', "t1.class_id = t2.class_id and t1.student_id = t2.student_id and " .
+                        "t2.today = '".$data['today']."'" , 'left');
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.student_name like', '%'.$data['search_key'].'%');
         }
