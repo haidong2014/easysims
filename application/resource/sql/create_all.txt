@@ -143,17 +143,18 @@ CREATE TABLE IF NOT EXISTS `ss_class` (
 		
 DROP TABLE IF EXISTS `ss_class_course`;		
 CREATE TABLE IF NOT EXISTS `ss_class_course` (		
-  `class_id` int(11) NOT NULL,		
-  `subject_id` int(11) NOT NULL,		
-  `start_date` char(10) NULL,		
-  `end_date` char(10) NULL,		
-  `teacher_id` int(11) NULL,			
-  `delete_flg` char(1) NULL DEFAULT '0',		
-  `insert_user` varchar(20) NULL DEFAULT 'system',		
-  `insert_time` timestamp NULL,		
-  `update_user` varchar(20) NULL DEFAULT 'system',		
-  `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`)		
+  `class_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `start_date` char(10) NULL,
+  `end_date` char(10) NULL,
+  `teacher_id` int(11) NULL,
+  `delete_flg` char(1) NULL DEFAULT '0',
+  `insert_user` varchar(20) NULL DEFAULT 'system',
+  `insert_time` timestamp NULL,
+  `update_user` varchar(20) NULL DEFAULT 'system',
+  `update_time` timestamp  NULL,
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_student`;		
