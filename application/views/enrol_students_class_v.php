@@ -49,18 +49,26 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/enrol_students_c/search_class';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/enrol_students_c/';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp年月:
-            <select name="ddlYear" id="ddlYear" onchange="search_click()">
-                <?php foreach($year as $y){?>
-                    <option value="<?php echo $y['id']?>" <?php echo $y['sel']?>><?php echo $y['name']?></option>
+            <select name="start_year" id="start_year" onchange="search_click()">
+                <?php for($i=0;$i<12;$i++){ ?>
+                    <?php if(@$start_year==($i+2014)){ ?>
+                        <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                    <?php } else {?>
+                        <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                    <?php } ?>
                 <?php } ?>
             </select>
-            <select name="ddlMonth" id="ddlMonth" onchange="search_click()">
-                <?php foreach($month as $m){?>
-                    <option value="<?php echo $m['id']?>" <?php echo $m['sel']?>><?php echo $m['name']?></option>
+            <select name="start_month" id="start_month" onchange="search_click()">
+                <?php for($i=0;$i<12;$i++){ ?>
+                  <?php if(@$start_month==($i+1)){ ?>
+                      <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
+                  <?php } ?>
                 <?php } ?>
             </select>
             &nbsp班级名称：

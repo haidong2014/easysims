@@ -33,7 +33,7 @@
         return clause;
     }
     function returnPage() {
-        var class_id = document.form.txtClassID.value;
+        var class_id = document.form.class_id.value;
         location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_id;
     }
     function search_click()
@@ -56,22 +56,30 @@
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp年月:
-            <select name="ddlYear" id="ddlYear" onchange="search_click()">
-                <?php foreach($year as $y){?>
-                    <option value="<?php echo $y['id']?>" <?php echo $y['sel']?>><?php echo $y['name']?></option>
+            <select name="start_year" id="start_year" ltype="select" ligeruiid="start_year">
+                <?php for($i=0;$i<12;$i++){ ?>
+                    <?php if(@$start_year==($i+2014)){ ?>
+                        <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                    <?php } else {?>
+                        <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                    <?php } ?>
                 <?php } ?>
             </select>
-            <select name="ddlMonth" id="ddlMonth" onchange="search_click()">
-                <?php foreach($month as $m){?>
-                    <option value="<?php echo $m['id']?>" <?php echo $m['sel']?>><?php echo $m['name']?></option>
+            <select name="start_month" id="start_month" ltype="select" ligeruiid="start_month">
+                <?php for($i=0;$i<12;$i++){ ?>
+                  <?php if(@$start_month==($i+1)){ ?>
+                      <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
+                  <?php } ?>
                 <?php } ?>
             </select>&nbsp
-            <input type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
-            <input type="hidden" name="txtStudentID" value="<?php echo @$student_id?>" />
+            <input type="button" value=" 返 回 " onclick="returnPage()" />&nbsp 学生姓名：<?php echo $student_name?>
+            <input type="hidden" name="class_id" value="<?php echo @$class_id?>" />
+            <input type="hidden" name="student_id" value="<?php echo @$student_id?>" />
         </tr>
     </table>
-&nbsp学生编号：<?php echo $student_id?> &nbsp&nbsp 学生姓名：<?php echo $student_name?>
+<br>
 <div id="maingrid" style="margin:0; padding:0"></div>
 </form>
 <div style="display:none;"></div>

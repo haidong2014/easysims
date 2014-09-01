@@ -35,8 +35,8 @@
         return clause;
     }
   function returnPage() {
-      var class_no = document.form.txtClassNo.value;
-      location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_no;
+      var class_id = document.form.class_id.value;
+      location.href='<?php echo SITE_URL;?>/attendance_c/student_lst/'+class_id;
   }
 </script>
 <style type="text/css">
@@ -56,7 +56,7 @@
             &nbsp日期：<?php echo $today?>&nbsp
             <input type="submit" value=" 提交 " />&nbsp
             <input type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
+            <input type="hidden" name="class_id" value="<?php echo @$class_id?>" />
         </tr>
     </table>
     <br>

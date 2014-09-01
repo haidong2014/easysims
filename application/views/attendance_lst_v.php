@@ -37,8 +37,8 @@
         return clause;
     }
     function attendance_click(){
-        var class_no = document.form.txtClassNo.value;
-        location.href = '<?php echo SITE_URL;?>/attendance_c/add_attendance_init/' + class_no;
+        var class_id = document.form.class_id.value;
+        location.href = '<?php echo SITE_URL;?>/attendance_c/add_attendance_init/' + class_id;
     }
     function returnPage() {
         location.href='<?php echo SITE_URL;?>/attendance_c';
@@ -48,7 +48,7 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/search_student';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/student_lst';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp学生姓名：
@@ -56,7 +56,7 @@
             <input type="submit" value=" 查 询 " />&nbsp
             <input id="attendance" type="button" value=" 点 名 " onclick="attendance_click()" />&nbsp
             <input id="return" type="button" value=" 返 回 " onclick="returnPage()" />
-            <input type="hidden" name="txtClassID" value="<?php echo @$class_id?>" />
+            <input type="hidden" name="class_id" value="<?php echo @$class_id?>" />
         </tr>
     </table>
     <br>
