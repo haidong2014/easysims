@@ -1,47 +1,71 @@
 ﻿<?php require_once("_header.php");?>
+
+    <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerDateEditor.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
 <script type="text/javascript">
     var subjectData = <?php echo $subjectData?>;
-    var grid = null;
+    var teacherData = <?php echo $teacherData?>;
+    var manager, g;
     $(function () {
-        alert("请继续设定科目信息！");
-        grid = $("#maingrid").ligerGrid({
+        alert("请继续设定课程的科目信息！");
+        g = manager = $("#maingrid").ligerGrid({
             columns: [
             { display: '科目编号', name: 'subject_id', align: 'left', width: 80 },
             { display: '科目名称', name: 'subject_name', align: 'left', width: 200 },
             { display: '周期', name: 'period', align: 'left', width: 80 },
-            { display: '开始日期', name: 'start_date', align: 'left', width: 120 },
-            { display: '结束日期', name: 'end_date', align: 'left', width: 120 },
-            { display: '任课教师', name: 'teacher', align: 'left', width: 120 }
+            { display: '开始日期', name: 'start_date', type: 'date', width: 100 ,
+                editor: { type: 'date' }
+            },
+            { display: '结束日期', name: 'end_date', type: 'date', width: 100 ,
+                editor: { type: 'date' }
+            },
+            { display: '任课教师', width: 120, name: 'teacher_id',
+                editor: { type: 'select', data: teacherData, valueField: 'teacher_id', textField: 'teacher_name' },
+                render: function (item){
+                         for (var i = 0; i < teacherData.length; i++)
+                         {
+                             if (teacherData[i]['teacher_id'] == item.teacher_id)
+                                 return teacherData[i]['teacher_name']
+                         }
+                         return item.teacher_name;
+                     }
+            },
+            { display: '操作', isSort: false, width: 120, render: function (rowdata, rowindex, value)
+            {
+                var h = "";
+                if (!rowdata._editing)
+                {
+                    h += "<a href='javascript:beginEdit(" + rowindex + ")'>修改</a> ";
+                }
+                else
+                {
+                    h += "<a href='javascript:endEdit(" + rowindex + ")'>提交</a> ";
+                }
+                return h;
+            }
+            }
             ],
-            pageSize:10,
-            where : f_getWhere(),
-            data: $.extend(true,{},subjectData),
-            width: '100%',height:'90%'
+            onSelectRow: function (rowdata, rowindex)
+            {
+                $("#txtrowindex").val(rowindex);
+            },
+            enabledEdit: true,clickToEdit:false, isScroll: false,
+            data: subjectData,
+            width: '60%'
         });
-
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
+    function beginEdit(rowid) {
+        manager.beginEdit(rowid);
     }
-    function f_getWhere()
+    function endEdit(rowid)
     {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
+        manager.endEdit(rowid);
     }
     function returnPage() {
         class_id = document.form.class_id.value;
         location.href='<?php echo SITE_URL;?>/class_c/upd_class_init/'+class_id;
-    }
-    function addSubject() {
-        document.form.submit();
     }
 </script>
 <style type="text/css">
@@ -55,11 +79,10 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/class_c/add_subject';?>" id="form">
+<form name="form" method="post" action="" id="form">
   <br />
   <div id="maingrid" style="margin:0; padding:0"></div>
   <br />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="addSubject()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id ?>" />
