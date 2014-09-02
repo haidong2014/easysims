@@ -129,4 +129,16 @@ class Class_m extends MY_Model
         $query =  $this->db->get("ss_class_course");
         return $query->result_array();
     }
+    
+    public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+        $this->db->where('class_id',    $class_id);
+        $this->db->where('course_id',    $course_id);
+        $this->db->where('subject_id',    $subject_id);
+        $this->db->set( 'start_date',	$start_date );
+        $this->db->set( 'end_date',	$end_date );
+        $this->db->set( 'teacher_id',	$teacher_id);
+        
+
+        return $this->db->update( "ss_class_course");
+    }
 }

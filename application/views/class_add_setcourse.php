@@ -63,12 +63,38 @@
     function beginEdit(rowid) {
         manager.beginEdit(rowid);
     }
+    function getYmd(date){
+    	var year = date.getYear();
+    	if(year<2000){
+    		year = year+1900;
+    	}
+    	var month = date.getMonth()+1;
+    	var day= date.getDay();
+    	var result = ''+ year;
+    	if(month<10){
+    		result+='-0'+month;
+    	}else{
+    		result+='-'+month;
+    	}
+    	if(day<10){
+    		result+='-0'+day;
+    	}else{
+    		result+='-'+day;
+    	}
+    	return result;
+    }
     function endEdit(rowid)
     {
         manager.endEdit(rowid);
         var row = g.getSelectedRow();
-		alert(row['teacher_id']);
-        var jqxhr = $.post("<?php echo SITE_URL.'/class_c/update_subject/';?>" + user, function(data) {
+        var start = row['start_date'];
+        var end = row['end_date'];
+        var subject_id = row['subject_id'];
+        var class_id = document.getElementById('class_id').value;
+        var course_id = document.getElementById('course_id').value;
+        //alert(getYmd(start));
+		var teacher_id = row['teacher_id'];
+        var jqxhr = $.post("<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id, function(data) {
                 showMsg(data);
             });
     }

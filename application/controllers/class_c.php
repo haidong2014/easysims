@@ -166,4 +166,14 @@ class Class_c extends MY_Controller {
 
         redirect("class_c");
     }
+    
+    public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+    
+    	
+     	//$msg = "必须项目没有输入";
+    	//if(empty() ||empty()||empty()||empty()||empty()){
+    	//	echo urldecode(json_encode(urlencode($msg)));
+    	//	}
+    
+    }
 }
