@@ -9,32 +9,54 @@ class Student_c extends MY_Controller {
 
     public function index($mode = null, $class_id = null)
     {
+        // $mode = 1 招生
+        // $mode = 2 就业
+        // $mode = null 基础信息-学生
         $data = array();
-        $keyword = $this->input->post('txtKey');
-        $start_year = $this->input->post('start_year');
-        if (empty($start_year)) {
-            $start_year = substr(date("Y-m-d"),0,4);
+        $keyword = null;
+        $start_year = null;
+        $start_month = null;
+        if (empty($mode)) {
+            $mode = $this->input->post('mode');
         }
-        $start_month = $this->input->post('start_month');
-        if (empty($start_month)) {
-            $start_month = substr(date("Y-m-d"),5,2);
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($mode)) {
+            $start_year = $this->input->post('start_year');
+            if (empty($start_year)) {
+                $start_year = substr(date("Y-m-d"),0,4);
+            }
+            $start_month = $this->input->post('start_month');
+            if (empty($start_month)) {
+                $start_month = substr(date("Y-m-d"),5,2);
+            } else {
+                $start_month = substr("0".$start_month,-2);
+            }
+            $data['start_year'] = $start_year;
+            $data['start_month'] = $start_month;
         } else {
-            $start_month = substr("0".$start_month,-2);
+          $data['class_id'] = $class_id;
         }
-        $studentData = $this->student_m->getList($keyword, $start_year, $start_month);
-        foreach($studentData as &$data){
-            $data['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".$data['student_id']."\">查看</a> |".
-            "<a href=\"".SITE_URL."/student_c/upd_student_init/".$data['student_id']."\">编辑</a> |".
-            "<a href=\"#\" onclick=\"delstudent('".SITE_URL."/student_c/delete_student/".$data['student_id']."')\">删除</a>";
-        }
-        $data['start_year'] = $start_year;
-        $data['start_month'] = $start_month;
+        $keyword = $this->input->post('txtKey');
         $data['txtKey'] = $keyword;
+        $data['mode'] = $mode;
+
+        $studentData = $this->student_m->getList($keyword, $start_year, $start_month, $class_id);
+        foreach($studentData as &$temp){
+            $temp['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".
+            $temp['student_id']."/".$mode."/".$class_id."\">查看</a> |".
+            "<a href=\"".SITE_URL."/student_c/upd_student_init/".
+            $temp['student_id']."/".$mode."/".$class_id."\">编辑</a> |".
+            "<a href=\"#\" onclick=\"delstudent('".SITE_URL."/student_c/delete_student/".
+            $temp['student_id']."/".$mode."/".$class_id."')\">删除</a>";
+        }
+
         $data['studentsData'] = @json_encode(array('Rows'=>$studentData));
         $this->load->view('student_lst_v',$data);
     }
 
-    public function add_student_init(){
+    public function add_student_init($mode = null, $class_id = null){
         $data = array();
         $this->load->model('code_m','code_m');
         $graduateData = $this->code_m->getList("06");
@@ -48,6 +70,8 @@ class Student_c extends MY_Controller {
         $data['start_year'] = $start_year;
         $data['start_month'] = $start_month;
         $data['system_user'] = "1";
+        $data['mode'] = $mode;
+        $data['class_id'] = $class_id;
         $this->load->view('student_add_v',$data);
     }
 
@@ -58,6 +82,10 @@ class Student_c extends MY_Controller {
         $student_id = $this->input->post('student_id');
         $student_no = $this->input->post('student_no');
         $student_name = $this->input->post('student_name');
+        $remarks = $this->input->post('remarks');
+        $mode = $this->input->post('mode');
+        $class_id = $this->input->post('class_id');
+
         $data['student_id'] = $student_id;
         $data['student_no'] = $student_no;
         $data['student_name'] = $student_name;
@@ -68,7 +96,7 @@ class Student_c extends MY_Controller {
         $data['contact_way'] = $this->input->post('contact_way');
         $data['parent_phone'] = $this->input->post('parent_phone');
         $data['course_id'] = $this->input->post('course_id');
-        $data['class_id'] = $this->input->post('class_id');
+        $data['class_id'] = $class_id;
         $data['cost'] = $this->input->post('cost');
         $data['start_year'] = $this->input->post('start_year');
         $start_month = $this->input->post('start_month');
@@ -78,7 +106,7 @@ class Student_c extends MY_Controller {
         $data['attendance'] = $this->input->post('attendance');
         $system_user = $this->input->post('system_user');
         $data['system_user'] = $system_user;
-        $data['remarks'] = $this->input->post('remarks');
+        $data['remarks'] = $remarks;
         /*************other***************/
         $data['graduate_school'] = $this->input->post('graduate_school');
         $data['specialty'] = $this->input->post('specialty');
@@ -111,12 +139,13 @@ class Student_c extends MY_Controller {
         }
 
         if($system_user == "1"){
-            self::addUser($student_no,$student_name);
+            self::addUser($student_no,$student_name,$remarks);
         }
-        redirect("student_c");
+
+        self::index($mode,$class_id);
     }
 
-    public function upd_student_init($student_id = null){
+    public function upd_student_init($student_id = null,$mode = null, $class_id = null){
         $data = array();
         $studentData = $this->student_m->getOneForUpd($student_id);
         $data = $studentData;
@@ -126,10 +155,12 @@ class Student_c extends MY_Controller {
         $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
+        $data['mode'] = $mode;
+        $data['class_id'] = $class_id;
         $this->load->view('student_add_v', $data);
     }
 
-    public function view_student_init($student_id = null){
+    public function view_student_init($student_id = null,$mode = null, $class_id = null){
         $data = array();
         $studentData = $this->student_m->getOneForUpd($student_id);
         $data = $studentData;
@@ -139,10 +170,12 @@ class Student_c extends MY_Controller {
         $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
+        $data['mode'] = $mode;
+        $data['class_id'] = $class_id;
         $this->load->view('student_view_v', $data);
     }
 
-    public function delete_student($student_id = null){
+    public function delete_student($student_id = null, $mode = null, $class_id = null){
         $data = array();
 
         $userinfo = $this->session->userdata('user');
@@ -153,7 +186,8 @@ class Student_c extends MY_Controller {
 
         $this->student_m->deleteOne($data);
         $this->student_m->deleteOneOther($data);
-        redirect("student_c");
+
+        self::index($mode,$class_id);
     }
 
     public function chk_student($student_no){
@@ -165,7 +199,7 @@ class Student_c extends MY_Controller {
         }
     }
 
-    private function addUser($student_no,$student_name){
+    private function addUser($student_no,$student_name,$remarks){
         $userinfo = $this->session->userdata('user');
 
         $this->load->model('user_m','user_m');
@@ -177,6 +211,7 @@ class Student_c extends MY_Controller {
         $userData['user'] = $student_no;
         $userData['user_name'] = $student_name;
         $userData['role_id'] = "1007";
+        $userData['remarks'] = $remarks;
         $userData['delete_flg'] = 0;
         $userData['insert_user'] = $userinfo;
         $userData['insert_time'] = date("Y-m-d H:i:s");

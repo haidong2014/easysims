@@ -12,8 +12,6 @@ class Obtain_employment_c extends MY_Controller {
         $data = array();
         $classData = array();
 
-        $user = $this->session->all_userdata();
-        log_message('info', "obtain_employment_c index user:".var_export($user,true));
         log_message('info', "obtain_employment_c index post:".var_export($_POST,true));
 
         $start_year = $this->input->post('start_year');

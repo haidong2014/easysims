@@ -12,8 +12,6 @@ class Enrol_students_c extends MY_Controller {
         $data = array();
         $classData = array();
 
-        $user = $this->session->all_userdata();
-        log_message('info', "enrol_students_c index user:".var_export($user,true));
         log_message('info', "enrol_students_c index post:".var_export($_POST,true));
 
         $start_year = $this->input->post('start_year');
