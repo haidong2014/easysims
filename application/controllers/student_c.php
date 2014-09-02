@@ -3,7 +3,7 @@ class Student_c extends MY_Controller {
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct("100404");
         $this->load->model('student_m','student_m');
     }
 

@@ -2,7 +2,7 @@
 class Subject_c extends MY_Controller {
   public function __construct()
    {
-        parent::__construct();
+        parent::__construct("100401");
         $this->load->model('subject_m','subject_m');
    }
 
