@@ -8,7 +8,7 @@ class Student_m extends MY_Model
         $this->table_name='ss_student';
     }
 
-    public function getList($keyword = null, $start_year = null, $start_month = null)
+    public function getList($keyword = null, $start_year = null, $start_month = null, $class_id = null)
     {
         $this->db->select('t1.student_id,t1.student_no,t1.student_name,t1.age,t1.contact_way,t1.parent_phone,t2.code_name as sex');
         $this->db->from('ss_student t1');
@@ -22,6 +22,9 @@ class Student_m extends MY_Model
         }
         if(!empty($start_month)){
             $this->db->like('t1.start_month', $start_month);
+        }
+        if(!empty($class_id)){
+            $this->db->like('t1.class_id', $class_id);
         }
         $query = $this->db->get();
         return $query->result_array();
@@ -128,7 +131,6 @@ class Student_m extends MY_Model
         $this->db->set( 'contact_way',	   $data['contact_way'] );
         $this->db->set( 'parent_phone',	   $data['parent_phone'] );
         $this->db->set( 'course_id',	   $data['course_id'] );
-        $this->db->set( 'class_id',        $data['class_id'] );
         $this->db->set( 'cost',	           $data['cost'] );
         $this->db->set( 'start_year',	   $data['start_year'] );
         $this->db->set( 'start_month',     $data['start_month'] );
