@@ -57,6 +57,15 @@
             }
             document.form.submit();
         }
+        function returnPage() {
+            var mode = document.form.mode.value;
+            var class_id = document.form.class_id.value;
+            if (mode == null || mode == "") {
+                location.href='<?php echo SITE_URL;?>/student_c';
+            } else {
+                location.href='<?php echo SITE_URL;?>/student_c/index/'+mode+'/'+class_id;
+            }
+        }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -137,7 +146,7 @@
             <td align="left"></td>
         </tr>
          <tr>
-            <td align="right" class="l-table-edit-td">身份证号::</td>
+            <td align="right" class="l-table-edit-td">身份证号:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="id_card" type="text" id="id_card" maxlength="18" value="<?php echo @$id_card ?>"/>
             </td>
@@ -208,7 +217,7 @@
             </td><td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">原籍</td>
+            <td align="right" class="l-table-edit-td">原籍:</td>
             <td align="left" class="l-table-edit-td">
             <textarea cols="100" rows="4" class="l-textarea" id="ancestralhome" name ="ancestralhome" maxlength="200" style="width:400px"><?php echo @$ancestralhome;?></textarea>
             </td><td align="left"></td>
@@ -311,8 +320,10 @@
     <br>
     <input type="hidden" name="student_id" id="student_id" value="<?php echo @$student_id?>" />
     <input type="hidden" name="student_no_old" id="student_no_old" value="<?php echo @$student_no?>" />
+    <input type="hidden" name="mode" id="mode" value="<?php echo @$mode?>" />
+    <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="addStudent()"/>
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="location.href='<?php echo SITE_URL.'/student_c/';?>'" />
+    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <br>
 </form>
 <div style="display:none"></div>

@@ -38,19 +38,31 @@ function f_getWhere()
     return clause;
 }
 function goreg(){
-  location.href='<?php echo SITE_URL;?>/student_c/add_student_init';
+    var mode = document.form.mode.value;
+    var class_id = document.form.class_id.value;
+    location.href='<?php echo SITE_URL;?>/student_c/add_student_init/'+mode+'/'+class_id;
 }
 function delstudent(parm){
-  $.ligerDialog.confirm('确定要删除这名学生吗？', function (yes)
-  {
-      if(yes){
-          location.href = parm;
-      }
-  });
+    $.ligerDialog.confirm('确定要删除这名学生吗？', function (yes)
+    {
+        if(yes){
+            location.href = parm;
+        }
+    });
 }
 function search_click()
 {
     document.form.submit();
+}
+function returnPage() {
+    var mode = document.form.mode.value;
+    if (mode == "1") {
+        location.href='<?php echo SITE_URL;?>/enrol_students_c';
+    } else if (mode == "2") {
+        location.href='<?php echo SITE_URL;?>/obtain_employment_c';
+    } else {
+        return;
+    }
 }
 </script>
 
@@ -60,29 +72,39 @@ function search_click()
 <form id="form" name="form" method="post" action="<?php echo SITE_URL."/student_c";?>" >
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
-          &nbsp入学年月：
-          <select name="start_year" id="start_year" onchange="search_click()">
-          <?php for($i=0;$i<12;$i++){ ?>
-              <?php if(@$start_year==($i+2014)){ ?>
-                  <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+          <?php if (empty($mode)) { ?>
+            &nbsp入学年月：
+            <select name="start_year" id="start_year" onchange="search_click()">
+            <?php for($i=0;$i<12;$i++){ ?>
+                <?php if(@$start_year==($i+2014)){ ?>
+                    <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                <?php } else {?>
+                    <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                <?php } ?>
+            <?php } ?>
+            </select>
+            <select name="start_month" id="start_month" onchange="search_click()">
+            <?php for($i=0;$i<12;$i++){ ?>
+              <?php if(@$start_month==($i+1)){ ?>
+                  <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
               <?php } else {?>
-                  <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
-              <?php } ?>
+                  <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
+              <?php }?>
+            <?php } ?>
+            </select>
           <?php } ?>
-          </select>
-          <select name="start_month" id="start_month" onchange="search_click()">
-          <?php for($i=0;$i<12;$i++){ ?>
-            <?php if(@$start_month==($i+1)){ ?>
-                <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
-            <?php } else {?>
-                <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
-            <?php }?>
-          <?php } ?>
-          </select>
           &nbsp学生姓名：
-          <input id="txtKey" type="text" name="txtKey" maxlength="20" style="width:200px" value="<?php echo $txtKey ?>" />&nbsp
-          <input id="search" type="submit" value=" 查 询 "  />&nbsp
-          <input id="regist" type="button" value=" 学生信息登录 " onclick="goreg()" />
+          <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:200px" value="<?php echo @$txtKey ?>" />&nbsp
+          <input type="submit" value=" 查 询 "  />&nbsp
+          <?php if ($mode == "1") { ?>
+              <input type="button" value=" 学生信息登录 " onclick="goreg()" />&nbsp
+              <input type="button" value=" 返回 " onclick="returnPage()" />
+          <?php } else if ($mode == "2") { ?>
+              <input type="button" value=" 返回 " onclick="returnPage()" />
+          <?php } else {?>
+          <?php } ?>
+          <input type="hidden" name="mode" id="mode" value="<?php echo @$mode?>" />
+          <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
         </tr>
     </table>
     <br>
