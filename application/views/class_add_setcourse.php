@@ -52,7 +52,11 @@
             },
             enabledEdit: true,clickToEdit:false, isScroll: false,
             data: subjectData,
-            width: '60%'
+            width: '100%', height: '97%',
+            rownumbers: true,
+            fixedCellHeight:false
+
+
         });
         $("#pageloading").hide();
     });
@@ -62,7 +66,19 @@
     function endEdit(rowid)
     {
         manager.endEdit(rowid);
+        var row = g.getSelectedRow();
+		alert(row['teacher_id']);
+        var jqxhr = $.post("<?php echo SITE_URL.'/class_c/update_subject/';?>" + user, function(data) {
+                showMsg(data);
+            });
     }
+    function showMsg(data){
+          if (data != "") {
+              alert(data.replace(/\"/g, ""));
+              //document.form.txtUser.value = "";
+              //document.form.txtPassword.value = "";
+          }
+        }
     function returnPage() {
         class_id = document.form.class_id.value;
         location.href='<?php echo SITE_URL;?>/class_c/upd_class_init/'+class_id;
@@ -79,9 +95,10 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
+<div id="maingrid" style="margin:0; padding:0;height:500px;"></div>
 <form name="form" method="post" action="" id="form">
   <br />
-  <div id="maingrid" style="margin:0; padding:0"></div>
+  
   <br />
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
