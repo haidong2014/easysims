@@ -32,6 +32,7 @@ class MY_Controller extends CI_Controller
         //$url_id = 100502 系统用户设定
         //$url_id = 100503 系统权限设定
         //$url_id = 100601 校长留言
+        $roleflg = "0";
         if (!empty($url_id)) {
             $this->load->model('rolesetup_m','rolesetup_m');
             $url = $this->rolesetup_m->getURL($role_id);
@@ -39,6 +40,18 @@ class MY_Controller extends CI_Controller
             for ($i=0; $i<count($url); $i++){
                 if ($url_id == $url[$i]['url_id']){
                    break;
+                }
+                if ("100001" == $url[$i]['url_id']){
+                   $roleflg = "1";
+                } else if ("100201" == $url[$i]['url_id']) {
+                   $roleflg = "1";
+                } else {
+                }
+            }
+            //具备招生信息和就业信息权限就可以操作学生信息。
+            if ($url_id == "100404") {
+                if ($roleflg == "1") {
+                    return;
                 }
             }
             if($i == count($url)){
