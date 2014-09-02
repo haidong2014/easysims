@@ -129,16 +129,42 @@ class Class_m extends MY_Model
         $query =  $this->db->get("ss_class_course");
         return $query->result_array();
     }
-    
-    public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+    public function getOneSubject($class_id,$course_id,$subject_id){
         $this->db->where('class_id',    $class_id);
         $this->db->where('course_id',    $course_id);
         $this->db->where('subject_id',    $subject_id);
-        $this->db->set( 'start_date',	$start_date );
-        $this->db->set( 'end_date',	$end_date );
-        $this->db->set( 'teacher_id',	$teacher_id);
+        
+       $this->db->where('delete_flg', 0);
+       $this->db->select('*');
+       $query = $this->db->get($this->table_name);
+       $class= null;
+       log_message('info','class getOneSubject'.$class_id."|".var_export($query->result_array(),true));
+       foreach ($query->result_array() as $row){
+         $class = $row;
+       }
+       return $class;
+    }
+    public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+    	$subject=self::getOneSubject($class_id,$course_id,$subject_id);
+    	if(0<count($subject)){
+        	$this->db->where('class_id',    $class_id);
+        	$this->db->where('course_id',    $course_id);
+        	$this->db->where('subject_id',    $subject_id);
+        	$this->db->set( 'start_date',	$start_date );
+        	$this->db->set( 'end_date',	$end_date );
+        	$this->db->set( 'teacher_id',	$teacher_id);
+        	return $this->db->update( "ss_class_course");
+        }else{
+         	$this->db->set('class_id',    $class_id);
+        	$this->db->set('course_id',    $course_id);
+        	$this->db->set('subject_id',    $subject_id);
+        	$this->db->set( 'start_date',	$start_date );
+        	$this->db->set( 'end_date',	$end_date );
+        	$this->db->set( 'teacher_id',	$teacher_id);
+        	return $this->db->insert( "ss_class_course" );
+        }
         
 
-        return $this->db->update( "ss_class_course");
+        
     }
 }

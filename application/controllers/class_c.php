@@ -169,7 +169,8 @@ class Class_c extends MY_Controller {
     
     public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
     
-    	
+    	$this->class_m->updateSubject($class_id,$course_id,$subject_id,$start_date,
+    	$end_date,$teacher_id);
      	//$msg = "必须项目没有输入";
     	//if(empty() ||empty()||empty()||empty()||empty()){
     	//	echo urldecode(json_encode(urlencode($msg)));
