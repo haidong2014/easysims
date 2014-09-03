@@ -98,6 +98,8 @@ class Class_c extends MY_Controller {
         $data['teacherData'] = @json_encode($teacherData);
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
+        $userinfo = $this->session->userdata('user');
+        $data['user'] =  $userinfo ;
         $this->load->view('class_add_setcourse',$data);
     }
 
@@ -181,10 +183,10 @@ class Class_c extends MY_Controller {
         redirect("class_c");
     }
     
-    public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+    public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id,$user='sysuser'){
         //echo "ddd".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id."<br>";
     	$this->class_m->updateSubject($class_id,$course_id,$subject_id,$start_date,
-    	$end_date,$teacher_id);
+    	$end_date,$teacher_id,$user);
      	//$msg = "必须项目没有输入";
     	//if(empty() ||empty()||empty()||empty()||empty()){
     	//	echo urldecode(json_encode(urlencode($msg)));

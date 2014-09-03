@@ -144,7 +144,7 @@ class Class_m extends MY_Model
        }
        return $class;
     }
-    public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+    public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id,$userInfo='sysuser'){
      //echo "ddd1a".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id;
     log_message('info', "class_m updateSubject subject:1");
     	$subject = self::getOneSubject($class_id,$course_id,$subject_id);
@@ -159,6 +159,11 @@ class Class_m extends MY_Model
         	$this->db->set( 'start_date',	$start_date );
         	$this->db->set( 'end_date',	$end_date );
         	$this->db->set( 'teacher_id',	$teacher_id);
+			$this->db->set( 'insert_user',   $userInfo);
+        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
+        	$this->db->set( 'update_user',   $userInfo);
+        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+
         	return $this->db->update( "ss_class_course");
         }else{
          	$this->db->set('class_id',    $class_id);
@@ -167,6 +172,11 @@ class Class_m extends MY_Model
         	$this->db->set( 'start_date',	$start_date );
         	$this->db->set( 'end_date',	$end_date );
         	$this->db->set( 'teacher_id',	$teacher_id);
+        	$this->db->set( 'insert_user',   $userInfo);
+        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
+        	$this->db->set( 'update_user',   $userInfo);
+        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+
         	return $this->db->insert( "ss_class_course" );
         }
         

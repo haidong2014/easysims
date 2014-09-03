@@ -64,6 +64,7 @@
         manager.beginEdit(rowid);
     }
     function getYmd(date){
+    	if(!date){return;}
     	var year = date.getYear();
     	if(year<2000){
     		year = year+1900;
@@ -86,7 +87,7 @@
     function endEdit(rowid)
     {
         manager.endEdit(rowid);
-        var row = g.getSelectedRow();
+        var row = manager.getSelectedRow();
         var start = row['start_date'];
         var end = row['end_date'];
         var subject_id = row['subject_id'];
@@ -94,10 +95,10 @@
         var course_id = document.getElementById('course_id').value;
         //alert(getYmd(start));
 		var teacher_id = row['teacher_id'];
-		if(start=="" || end=="" || teacher_id==""){
+		if(start==undefined || end==undefined || teacher_id==""){
 			alert('请确认数据全部输入了。');return;
 		}
-		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id;
+		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id+'/<?php echo $user;?>';
 		//alert(requestUrl);
 		//alert(class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id);
         var jqxhr = $.post(requestUrl, function(data) {
@@ -105,6 +106,7 @@
             });
     }
     function showMsg(data){
+    	
           if (data != "") {
               alert(data.replace(/\"/g, ""));
               //document.form.txtUser.value = "";
