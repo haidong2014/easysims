@@ -81,6 +81,13 @@ class Class_c extends MY_Controller {
             $this->class_m->updateOne($data);
 
             $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
+            foreach($subjectData as &$value){
+            	//echo "||||".$course_id."|".$value['subject_id'];
+        		$subject= $this->subject_m->getOne($course_id,$value['subject_id']);
+        		//var_dump($subject);
+        		$value['subject_name'] = $subject['subject_name'];
+        		$value['period'] = $subject['period'];
+        	}
         }
 
         if (empty($subjectData)) {
@@ -152,6 +159,13 @@ class Class_c extends MY_Controller {
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
+        
+        foreach($subjectData as &$value){
+        	echo "||||".$course_id."|".$value['subject_id'];
+        	$subjet= $this->subject_m->getOne($course_id,$value['subject_id']);
+        	var_dump($subject);
+        	$value['subject_name'] = $subject['subject_name'];
+        }
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
@@ -168,7 +182,7 @@ class Class_c extends MY_Controller {
     }
     
     public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
-    
+        //echo "ddd".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id."<br>";
     	$this->class_m->updateSubject($class_id,$course_id,$subject_id,$start_date,
     	$end_date,$teacher_id);
      	//$msg = "必须项目没有输入";

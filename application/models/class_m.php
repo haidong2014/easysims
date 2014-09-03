@@ -136,7 +136,7 @@ class Class_m extends MY_Model
         
        $this->db->where('delete_flg', 0);
        $this->db->select('*');
-       $query = $this->db->get($this->table_name);
+       $query = $this->db->get("ss_class_course");
        $class= null;
        log_message('info','class getOneSubject'.$class_id."|".var_export($query->result_array(),true));
        foreach ($query->result_array() as $row){
@@ -145,7 +145,13 @@ class Class_m extends MY_Model
        return $class;
     }
     public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
-    	$subject=self::getOneSubject($class_id,$course_id,$subject_id);
+     //echo "ddd1a".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id;
+    log_message('info', "class_m updateSubject subject:1");
+    	$subject = self::getOneSubject($class_id,$course_id,$subject_id);
+    	//var_dump($subject);
+    	log_message('info', "class_m updateSubject subject:".var_export($subject,true));
+    	log_message('info', "class_m updateSubject sql:".$this->db->last_query());
+    	
     	if(0<count($subject)){
         	$this->db->where('class_id',    $class_id);
         	$this->db->where('course_id',    $course_id);

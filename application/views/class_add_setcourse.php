@@ -94,7 +94,13 @@
         var course_id = document.getElementById('course_id').value;
         //alert(getYmd(start));
 		var teacher_id = row['teacher_id'];
-        var jqxhr = $.post("<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id, function(data) {
+		if(start=="" || end=="" || teacher_id==""){
+			alert('请确认数据全部输入了。');return;
+		}
+		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id;
+		//alert(requestUrl);
+		//alert(class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id);
+        var jqxhr = $.post(requestUrl, function(data) {
                 showMsg(data);
             });
     }
