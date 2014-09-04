@@ -163,11 +163,13 @@ class Class_c extends MY_Controller {
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
         
         foreach($subjectData as &$value){
-        	echo "||||".$course_id."|".$value['subject_id'];
-        	$subjet= $this->subject_m->getOne($course_id,$value['subject_id']);
-        	var_dump($subject);
-        	$value['subject_name'] = $subject['subject_name'];
+        	//echo "||||".$course_id."|".$value['subject_id'];
+        	$subject= $this->subject_m->getOne($course_id,$value['subject_id']);
+        		//var_dump($subject);
+        		$value['subject_name'] = $subject['subject_name'];
+        		$value['period'] = $subject['period'];
         }
+        
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
