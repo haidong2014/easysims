@@ -70,13 +70,14 @@
     		year = year+1900;
     	}
     	var month = date.getMonth()+1;
-    	var day= date.getDay();
+    	var day= date.getDate();
     	var result = ''+ year;
     	if(month<10){
     		result+='-0'+month;
     	}else{
     		result+='-'+month;
     	}
+    	//alert('day'+day);
     	if(day<10){
     		result+='-0'+day;
     	}else{
@@ -86,6 +87,7 @@
     }
     function endEdit(rowid)
     {
+        var manager = $("#maingrid").ligerGetGridManager();
         manager.endEdit(rowid);
         var row = manager.getSelectedRow();
         var start = row['start_date'];
@@ -93,6 +95,7 @@
         var subject_id = row['subject_id'];
         var class_id = document.getElementById('class_id').value;
         var course_id = document.getElementById('course_id').value;
+        //alert(start+'/'+getYmd(start));return;
         //alert(getYmd(start));
 		var teacher_id = row['teacher_id'];
 		if(start==undefined || end==undefined || teacher_id==""){
