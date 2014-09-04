@@ -24,6 +24,7 @@ class Class_m extends MY_Model
             $this->db->where('t1.start_month', $data['start_month']);
         }
         $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.class_id','esc');
         $query =  $this->db->get();
         log_message('info', "class_m getList sql:".$this->db->last_query());
         return $query->result_array();
@@ -133,7 +134,7 @@ class Class_m extends MY_Model
         $this->db->where('class_id',    $class_id);
         $this->db->where('course_id',    $course_id);
         $this->db->where('subject_id',    $subject_id);
-        
+
        $this->db->where('delete_flg', 0);
        $this->db->select('*');
        $query = $this->db->get("ss_class_course");
@@ -147,40 +148,37 @@ class Class_m extends MY_Model
     public function updateSubject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id,$userInfo='sysuser'){
      //echo "ddd1a".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id;
     log_message('info', "class_m updateSubject subject:1");
-    	$subject = self::getOneSubject($class_id,$course_id,$subject_id);
-    	//var_dump($subject);
-    	log_message('info', "class_m updateSubject subject:".var_export($subject,true));
-    	log_message('info', "class_m updateSubject sql:".$this->db->last_query());
-    	
-    	if(0<count($subject)){
-        	$this->db->where('class_id',    $class_id);
-        	$this->db->where('course_id',    $course_id);
-        	$this->db->where('subject_id',    $subject_id);
-        	$this->db->set( 'start_date',	$start_date );
-        	$this->db->set( 'end_date',	$end_date );
-        	$this->db->set( 'teacher_id',	$teacher_id);
-			$this->db->set( 'insert_user',   $userInfo);
-        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
-        	$this->db->set( 'update_user',   $userInfo);
-        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+      $subject = self::getOneSubject($class_id,$course_id,$subject_id);
+      //var_dump($subject);
+      log_message('info', "class_m updateSubject subject:".var_export($subject,true));
+      log_message('info', "class_m updateSubject sql:".$this->db->last_query());
 
-        	return $this->db->update( "ss_class_course");
+      if(0<count($subject)){
+          $this->db->where('class_id',    $class_id);
+          $this->db->where('course_id',    $course_id);
+          $this->db->where('subject_id',    $subject_id);
+          $this->db->set( 'start_date',	$start_date );
+          $this->db->set( 'end_date',	$end_date );
+          $this->db->set( 'teacher_id',	$teacher_id);
+      $this->db->set( 'insert_user',   $userInfo);
+          $this->db->set( 'insert_time',   date("Y-m-d H:i:s"));
+          $this->db->set( 'update_user',   $userInfo);
+          $this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+
+          return $this->db->update( "ss_class_course");
         }else{
-         	$this->db->set('class_id',    $class_id);
-        	$this->db->set('course_id',    $course_id);
-        	$this->db->set('subject_id',    $subject_id);
-        	$this->db->set( 'start_date',	$start_date );
-        	$this->db->set( 'end_date',	$end_date );
-        	$this->db->set( 'teacher_id',	$teacher_id);
-        	$this->db->set( 'insert_user',   $userInfo);
-        	$this->db->set( 'insert_time',   date("Y-m-d H:i:s")); 
-        	$this->db->set( 'update_user',   $userInfo);
-        	$this->db->set( 'update_time',   date("Y-m-d H:i:s"));
+           $this->db->set('class_id',    $class_id);
+          $this->db->set('course_id',    $course_id);
+          $this->db->set('subject_id',    $subject_id);
+          $this->db->set( 'start_date',	$start_date );
+          $this->db->set( 'end_date',	$end_date );
+          $this->db->set( 'teacher_id',	$teacher_id);
+          $this->db->set( 'insert_user',   $userInfo);
+          $this->db->set( 'insert_time',   date("Y-m-d H:i:s"));
+          $this->db->set( 'update_user',   $userInfo);
+          $this->db->set( 'update_time',   date("Y-m-d H:i:s"));
 
-        	return $this->db->insert( "ss_class_course" );
+          return $this->db->insert( "ss_class_course" );
         }
-        
-
-        
     }
 }
