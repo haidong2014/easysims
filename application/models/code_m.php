@@ -22,11 +22,11 @@ class Code_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         $res = array();
         foreach($query->result_array() as $value){
-        	$res[$value['remarks']][$value['code_no']] = $value['code_name'];
+            $res[$value['remarks']][$value['code_no']] = $value['code_name'];
         }
-        //var_dump($res);
+
         return $res;
     }
 
-   
+
 }

@@ -26,7 +26,7 @@ class Message_m extends MY_Model
         }
 
         $this->db->where('delete_flg', 0);
-
+        $this->db->order_by('message_id','desc');
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }

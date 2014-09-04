@@ -13,6 +13,7 @@ class Usergroups_m extends MY_Model
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('role_name like', '%'.$data['search_key'].'%');
         }
+        $this->db->order_by('role_id','esc');
         $this->db->where('delete_flg', "0");
         $query =  $this->db->get($this->table_name);
         return $query->result_array();

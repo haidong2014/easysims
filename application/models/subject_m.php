@@ -17,6 +17,7 @@ class Subject_m extends MY_Model
             $this->db->like('subject_name',$keyword);
         }
         $this->db->where('delete_flg', 0);
+        $this->db->order_by('course_id','esc');
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }

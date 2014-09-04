@@ -15,6 +15,7 @@ class User_m extends MY_Model
             $this->db->where('t1.user_name like', '%'.$data['search_key'].'%');
         }
         $this->db->join('ss_roles t2', 't1.role_id = t2.role_id');
+        $this->db->order_by('t1.user_id','esc');
         $query =  $this->db->get();
         return $query->result_array();
     }

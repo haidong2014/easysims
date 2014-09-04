@@ -26,6 +26,7 @@ class Student_m extends MY_Model
         if(!empty($class_id)){
             $this->db->like('t1.class_id', $class_id);
         }
+        $this->db->order_by('t1.student_id','esc');
         $query = $this->db->get();
         return $query->result_array();
     }
