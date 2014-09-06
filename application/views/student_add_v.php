@@ -271,16 +271,9 @@
             </td><td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">就业城市:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="follow_city" type="text" id="follow_city" maxlength="200" value="<?php echo @$follow_city?>" />
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
             <td align="right" class="l-table-edit-td">就业企业:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="follow_company" type="text" id="follow_company" maxlength="200" value="<?php echo @$follow_company?>" />
+                <input name="job_id" type="text" id="job_id" maxlength="200" value="<?php echo @$job_id?>" />
             </td>
             <td align="left"></td>
         </tr>
@@ -294,13 +287,13 @@
         <tr>
             <td align="right" class="l-table-edit-td">就业职位:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="follow_position" type="text" id="follow_position" maxlength="200" value="<?php echo @$follow_position;?>" /></td>
+                <input name="follow_position" type="text" id="follow_position" maxlength="30" value="<?php echo @$follow_position;?>" /></td>
             <td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
             <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" maxlength="200" style="width:400px"><?php echo @$follow_remarks;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" maxlength="1000" style="width:400px"><?php echo @$follow_remarks;?></textarea>
             </td><td align="left"></td>
         </tr>
         <tr>
@@ -313,7 +306,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
             <td align="left" class="l-table-edit-td">
-            <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="200" style="width:400px" ><?php echo @$remarks ?></textarea>
+            <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="1000" style="width:400px" ><?php echo @$remarks ?></textarea>
             </td><td align="left"></td>
         </tr>
     </table>

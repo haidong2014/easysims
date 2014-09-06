@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `ss_users` (
   `password` char(32) NOT NULL DEFAULT '1a1dc91c907325c69271ddf0c944bc72',	
   `user_name` varchar(30) NOT NULL,	
   `role_id` int(11) NULL,	
-  `remarks` varchar(100) NULL,	
+  `remarks` varchar(1000) NULL,	
   `delete_flg` char(1) NULL DEFAULT '0',	
   `insert_user` varchar(20) NULL DEFAULT 'system',	
   `insert_time` timestamp NULL,	
@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `ss_roles`;
 CREATE TABLE IF NOT EXISTS `ss_roles` (		
   `role_id` int(11) NOT NULL AUTO_INCREMENT,		
   `role_name` varchar(20) NOT NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `ss_functions`;
 CREATE TABLE IF NOT EXISTS `ss_functions` (		
   `function_id` int(11) NOT NULL AUTO_INCREMENT,		
   `function_name` varchar(20) NOT NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ss_url` (
   `url_id` char(6) NOT NULL,
   `url` varchar(20) NOT NULL,
   `url_name` varchar(20) NOT NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `ss_teachers` (
   `telephone` varchar(12) NULL,		
   `email` varchar(30) NULL,		
   `system_user` char(1) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `ss_course`;
 CREATE TABLE IF NOT EXISTS `ss_course` (	
   `course_id` int(11) NOT NULL AUTO_INCREMENT,	
   `course_name` varchar(30) NOT NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `ss_subject` (
   `subject_id` int(11) NOT NULL,	
   `subject_name` varchar(30) NOT NULL,		
   `period` int(3) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `ss_class` (
   `numbers` int(3) NULL,		
   `cost` int(5) NULL,		
   `status` varchar(10) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -161,7 +161,9 @@ DROP TABLE IF EXISTS `ss_student`;
 CREATE TABLE IF NOT EXISTS `ss_student` (	
   `student_id` int(11) NOT NULL AUTO_INCREMENT,		
   `student_no` varchar(10) NOT NULL,		
-  `student_name` varchar(30) NOT NULL,		
+  `student_name` varchar(30) NOT NULL,	
+  `start_year` char(4) NULL,		
+  `start_month` char(2) NULL,  
   `sex` char(1) NULL,		
   `birthday` char(10) NULL,		
   `age` char(2) NULL,		
@@ -170,14 +172,12 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `parent_phone` varchar(12) NULL,		
   `course_id` int(11) NULL,	
   `class_id` int(11) NULL,	
-  `cost` int(5) NULL,		
-  `start_year` char(4) NULL,		
-  `start_month` char(2) NULL,		
+  `cost` int(5) NULL,	
   `start_date` char(10) NULL,		
   `end_date` char(10) NULL,		
   `attendance` varchar(3) NULL,		
   `system_user` char(1) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -189,20 +189,20 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
 DROP TABLE IF EXISTS `ss_student_others`;		
 CREATE TABLE IF NOT EXISTS `ss_student_others` (	
   `student_id` int(11) NOT NULL,	
-  `graduate_school` varchar(30) NOT NULL,	
-  `specialty` varchar(30) NOT NULL,		  
-  `graduate` varchar(1) NOT NULL,		
-  `ancestralhome` varchar(200) NOT NULL,		
-  `know_school` varchar(200) NOT NULL,		
-  `know_trade` varchar(200) NOT NULL,		
-  `preference` varchar(200) NOT NULL,		
-  `software_base` varchar(200) NOT NULL,		
-  `purpose` varchar(200) NOT NULL,		
-  `follow_city` varchar(200) NOT NULL,		
-  `follow_company` varchar(200) NOT NULL,		
-  `follow_salary` varchar(200) NOT NULL,		
-  `follow_position` varchar(200) NOT NULL,		
-  `follow_remarks` varchar(200) NOT NULL,		
+  `graduate_school` varchar(30) NULL,	
+  `specialty` varchar(30) NULL,		
+  `graduate` varchar(1) NULL,		
+  `ancestralhome` varchar(200) NULL,		
+  `know_school` varchar(200) NULL,		
+  `know_trade` varchar(200) NULL,		
+  `preference` varchar(200) NULL,		
+  `software_base` varchar(200) NULL,		
+  `purpose` varchar(200) NULL,		
+  `job_id` int(11) NULL,		
+  `follow_salary` int(6) NULL,		
+  `follow_position` varchar(30) NULL,	
+  `follow_remarks` varchar(1000) NULL,
+  `remarks` varchar(1000) NULL,	  
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -210,7 +210,29 @@ CREATE TABLE IF NOT EXISTS `ss_student_others` (
   `update_time` timestamp  NULL,		
   PRIMARY KEY (`student_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
-		
+
+DROP TABLE IF EXISTS `ss_job`;		
+CREATE TABLE IF NOT EXISTS `ss_job` (	
+  `job_id` int(11) NOT NULL AUTO_INCREMENT,	
+  `job_company` varchar(100) NULL,	  
+  `job_city` varchar(100) NULL,		
+  `job_business` varchar(100) NULL,
+  `job_address` varchar(100) NULL,
+  `job_telephone` varchar(12) NULL,
+  `job_contacts` varchar(30) NULL,
+  `job_post` varchar(30) NULL,
+  `job_onjob` int(3) NULL,
+  `job_grade` char(1) NULL,
+  `job_cooperation` varchar(10) NULL,  
+  `remarks` varchar(1000) NULL,		
+  `delete_flg` char(1) NULL DEFAULT '0',		
+  `insert_user` varchar(20) NULL DEFAULT 'system',		
+  `insert_time` timestamp NULL,		
+  `update_user` varchar(20) NULL DEFAULT 'system',		
+  `update_time` timestamp  NULL,		
+  PRIMARY KEY (`job_id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;
+
 DROP TABLE IF EXISTS `ss_attendance`;		
 CREATE TABLE IF NOT EXISTS `ss_attendance` (		
   `class_id` int(11) NOT NULL,		
@@ -234,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `ss_works` (
   `works_no` varchar(32) NOT NULL,		
   `works_name` varchar(50) NOT NULL,		
   `path_name` varchar(100) NOT NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -250,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `ss_works_evaluation` (
   `student_id` int(11) NOT NULL,		
   `works_no` varchar(32) NOT NULL,		
   `scores` int(3) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -268,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `ss_student_evaluation` (
   `b_scores` int(3) NULL,		
   `c_scores` int(3) NULL,		
   `d_scores` int(3) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -283,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation` (
   `subject_id` int(11) NOT NULL,		
   `teacher_id` int(11) NOT NULL,			
   `scores` int(3) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -300,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation_others` (
   `student_id` int(11) NOT NULL,		
   `others_no` varchar(10) NOT NULL,		
   `scores` int(3) NULL,		
-  `remarks` varchar(100) NULL,		
+  `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
@@ -314,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `ss_code` (
   `code` varchar(2) NOT NULL,							
   `code_no` varchar(2) NOT NULL,							
   `code_name` varchar(10) NOT NULL,	
-  `remarks` varchar(100) NULL,		  
+  `remarks` varchar(1000) NULL,		  
   `delete_flg` char(1) NULL DEFAULT '0',							
   `insert_user` varchar(20) NULL DEFAULT 'system',							
   `insert_time` timestamp NULL,							
@@ -363,6 +385,12 @@ INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "2", "迟到", "AMPM_STATUS", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "3", "请假", "AMPM_STATUS", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("08", "4", "旷课", "AMPM_STATUS", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "1", "一颗星", "JOB_GRADE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "2", "二颗星", "JOB_GRADE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "3", "三颗星", "JOB_GRADE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "4", "四颗星", "JOB_GRADE", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "5", "五颗星", "JOB_GRADE", NOW(), NOW());
+
 
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("系统管理员", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("校长", NOW(), NOW());
@@ -392,6 +420,7 @@ INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "班级信息维护", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "教师信息维护", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100404", "student_c", "学生信息维护", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100405", "job_c", "就业企业维护", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100501", "usergroups_c", "系统角色设定", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100502", "user_c", "系统用户设定", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "系统权限设定", NOW(), NOW());

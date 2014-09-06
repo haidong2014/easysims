@@ -28,6 +28,7 @@ class MY_Controller extends CI_Controller
         //$url_id = 100402 班级信息维护
         //$url_id = 100403 教师信息维护
         //$url_id = 100404 学生信息维护
+        //$url_id = 100405 就业信息维护
         //$url_id = 100501 系统角色设定
         //$url_id = 100502 系统用户设定
         //$url_id = 100503 系统权限设定

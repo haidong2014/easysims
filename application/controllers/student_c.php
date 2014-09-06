@@ -5,6 +5,9 @@ class Student_c extends MY_Controller {
     {
         parent::__construct("100404");
         $this->load->model('student_m','student_m');
+        $this->load->model('code_m','code_m');
+        $this->load->model('course_m','course_m');
+        $this->load->model('job_m','job_m');
     }
 
     public function index($mode = null, $class_id = null)
@@ -58,10 +61,8 @@ class Student_c extends MY_Controller {
 
     public function add_student_init($mode = null, $class_id = null){
         $data = array();
-        $this->load->model('code_m','code_m');
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
         $data['sex'] = "1";
@@ -117,10 +118,19 @@ class Student_c extends MY_Controller {
         $data['preference'] = $this->input->post('preference');
         $data['software_base'] = $this->input->post('software_base');
         $data['purpose'] = $this->input->post('purpose');
+        $data['follow_date'] = $this->input->post('follow_date');
         $data['follow_city'] = $this->input->post('follow_city');
         $data['follow_company'] = $this->input->post('follow_company');
         $data['follow_salary'] = $this->input->post('follow_salary');
         $data['follow_position'] = $this->input->post('follow_position');
+        $data['follow_business'] = $this->input->post('follow_business');
+        $data['follow_address'] = $this->input->post('follow_address');
+        $data['follow_telephone'] = $this->input->post('follow_telephone');
+        $data['follow_contacts'] = $this->input->post('follow_contacts');
+        $data['follow_post'] = $this->input->post('follow_post');
+        $data['follow_onjob'] = $this->input->post('follow_onjob');
+        $data['follow_grade'] = $this->input->post('follow_grade');
+        $data['follow_cooperation'] = $this->input->post('follow_cooperation');
         $data['follow_remarks'] = $this->input->post('follow_remarks');
         $data['delete_flg'] = "0";
         $data['insert_user'] = $userinfo;
@@ -149,10 +159,8 @@ class Student_c extends MY_Controller {
         $data = array();
         $studentData = $this->student_m->getOneForUpd($student_id);
         $data = $studentData;
-        $this->load->model('code_m','code_m');
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
         $data['mode'] = $mode;
@@ -164,10 +172,8 @@ class Student_c extends MY_Controller {
         $data = array();
         $studentData = $this->student_m->getOneForUpd($student_id);
         $data = $studentData;
-        $this->load->model('code_m','code_m');
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $this->load->model('course_m','course_m');
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
         $data['mode'] = $mode;
@@ -201,8 +207,6 @@ class Student_c extends MY_Controller {
 
     private function addUser($student_no,$student_name,$remarks){
         $userinfo = $this->session->userdata('user');
-
-        $this->load->model('user_m','user_m');
 
         $chkuser= $this->user_m->checkUser($student_no);
         if(!empty($chkuser)){
