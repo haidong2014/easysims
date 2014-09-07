@@ -18,26 +18,22 @@ class Class_c extends MY_Controller {
         $search_key = $this->input->post('txtKey');
         $data['search_key'] = $search_key;
         $classData = $this->class_m->getList($data);
-        foreach($classData as &$data){
-          $data['opt']="<a href=\"".SITE_URL."/class_c/view_class_init/".$data['class_id']."\">查看</a> |".
-          "<a href=\"".SITE_URL."/class_c/upd_class_init/".$data['class_id']."\">编辑</a> |".
-          "<a href=\"#\" onclick=\"delclass('".SITE_URL."/class_c/delete_class/".$data['class_id']."')\">删除</a>";
+        foreach($classData as &$temp){
+          $temp['opt']="<a href=\"".SITE_URL."/class_c/view_class_init/".$temp['class_id']."\">查看</a> |".
+          "<a href=\"".SITE_URL."/class_c/upd_class_init/".$temp['class_id']."\">编辑</a> |".
+          "<a href=\"#\" onclick=\"delclass('".SITE_URL."/class_c/delete_class/".$temp['class_id']."')\">删除</a>";
         }
         $data['classsData'] = @json_encode(array('Rows'=>$classData));
-        $data['search_key'] = $search_key;
         $this->load->view('class_lst_v',$data);
     }
 
     public function add_class_init(){
         $data = array();
 
-
         $status = $this->code_m->getList("05");
         $data['status'] = $status;
-
         $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
-
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
         $start_year = substr(date("Y-m-d"),0,4);
@@ -82,12 +78,10 @@ class Class_c extends MY_Controller {
 
             $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
             foreach($subjectData as &$value){
-            	//echo "||||".$course_id."|".$value['subject_id'];
-        		$subject= $this->subject_m->getOne($course_id,$value['subject_id']);
-        		//var_dump($subject);
-        		$value['subject_name'] = $subject['subject_name'];
-        		$value['period'] = $subject['period'];
-        	}
+                $subject= $this->subject_m->getOne($course_id,$value['subject_id']);
+                $value['subject_name'] = $subject['subject_name'];
+                $value['period'] = $subject['period'];
+            }
         }
 
         if (empty($subjectData)) {
@@ -161,15 +155,13 @@ class Class_c extends MY_Controller {
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
-        
+
         foreach($subjectData as &$value){
-        	//echo "||||".$course_id."|".$value['subject_id'];
-        	$subject= $this->subject_m->getOne($course_id,$value['subject_id']);
-        		//var_dump($subject);
-        		$value['subject_name'] = $subject['subject_name'];
-        		$value['period'] = $subject['period'];
+            $subject= $this->subject_m->getOne($course_id,$value['subject_id']);
+            $value['subject_name'] = $subject['subject_name'];
+            $value['period'] = $subject['period'];
         }
-        
+
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
@@ -184,15 +176,23 @@ class Class_c extends MY_Controller {
 
         redirect("class_c");
     }
-    
-    public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id,$user='sysuser'){
-        //echo "ddd".$class_id."/".$course_id."/".$subject_id."/".$start_date."/".$end_date."/".$teacher_id."<br>";
-    	$this->class_m->updateSubject($class_id,$course_id,$subject_id,$start_date,
-    	$end_date,$teacher_id,$user);
-     	//$msg = "必须项目没有输入";
-    	//if(empty() ||empty()||empty()||empty()||empty()){
-    	//	echo urldecode(json_encode(urlencode($msg)));
-    	//	}
-    
+
+    public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){
+        $data = array();
+
+        $userinfo = $this->session->userdata('user');
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['teacher_id'] = $teacher_id;
+        $data['delete_flg'] = "0";
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+
+        $this->class_m->updateSubject($data);
     }
 }
