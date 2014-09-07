@@ -21,6 +21,7 @@
             $("#start_month").ligerComboBox();
             $("#course_id").ligerComboBox();
             $("#graduate").ligerComboBox();
+            $("#job_id").ligerComboBox();
             $("form").ligerForm();
             $("#pageloading").hide();
         });
@@ -45,12 +46,12 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/student_c/add_student';?>" id="form">
+<form name="form" method="post" action="" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             <td align="right" class="l-table-edit-td">学生编号:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="student_no" type="text" id="student_no" maxlength="10" value="<?php echo @$student_no ?>" />
+                <input name="student_no" type="text" id="student_no" maxlength="10" onchange="checkStudent()" value="<?php echo @$student_no ?>" />
             </td>
             <td align="left"></td>
         </tr>
@@ -165,15 +166,15 @@
         <tr>
             <td align="right" class="l-table-edit-td">课程:</td>
             <td align="left" class="l-table-edit-td">
-            <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
-            <?php foreach($courseData as $course){?>
-            <?php if(@$course_id==($course['course_id'])){ ?>
-                      <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
-            <?php }else{?>
-                      <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
-            <?php } ?>
-            <?php } ?>
-            </select>
+              <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
+              <?php foreach($courseData as $course){?>
+              <?php if(@$course_id==($course['course_id'])){ ?>
+                        <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
+              <?php }else{?>
+                        <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
+              <?php } ?>
+              <?php } ?>
+              </select>
             </td>
             <td align="left"></td>
         </tr>
@@ -238,16 +239,18 @@
             </td><td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">就业城市:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="follow_city" type="text" id="follow_city" maxlength="200" value="<?php echo @$follow_city?>" />
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
             <td align="right" class="l-table-edit-td">就业企业:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="follow_company" type="text" id="follow_company" maxlength="200" value="<?php echo @$follow_company?>" />
+              <select name="job_id" id="job_id" ltype="select" ligeruiid="job_id">
+                  <option value="0000" selected></option>
+              <?php foreach($jobData as $job){?>
+                  <?php if(@$job_id==($job['job_id'])){ ?>
+                        <option value="<?php  echo $job['job_id'] ?>" selected><?php  echo $job['job_company'] ?></option>
+                  <?php }else{?>
+                        <option value="<?php  echo $job['job_id'] ?>"><?php  echo $job['job_company'] ?></option>
+                  <?php } ?>
+              <?php } ?>
+              </select>
             </td>
             <td align="left"></td>
         </tr>
@@ -261,13 +264,13 @@
         <tr>
             <td align="right" class="l-table-edit-td">就业职位:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="follow_position" type="text" id="follow_position" maxlength="200" value="<?php echo @$follow_position;?>" /></td>
+                <input name="follow_position" type="text" id="follow_position" maxlength="30" value="<?php echo @$follow_position;?>" /></td>
             <td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">就业情况<br>备注:</td>
             <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" maxlength="200" style="width:400px"><?php echo @$follow_remarks;?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="follow_remarks" name="follow_remarks" maxlength="1000" style="width:400px"><?php echo @$follow_remarks;?></textarea>
             </td><td align="left"></td>
         </tr>
         <tr>
@@ -280,7 +283,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
             <td align="left" class="l-table-edit-td">
-            <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="200" style="width:400px" ><?php echo @$remarks ?></textarea>
+            <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="1000" style="width:400px" ><?php echo @$remarks ?></textarea>
             </td><td align="left"></td>
         </tr>
     </table>

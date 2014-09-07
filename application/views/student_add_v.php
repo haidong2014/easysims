@@ -21,6 +21,7 @@
             $("#start_month").ligerComboBox();
             $("#course_id").ligerComboBox();
             $("#graduate").ligerComboBox();
+            $("#job_id").ligerComboBox();
             $("form").ligerForm();
             $("#pageloading").hide();
         });
@@ -198,15 +199,15 @@
         <tr>
             <td align="right" class="l-table-edit-td">课程:</td>
             <td align="left" class="l-table-edit-td">
-            <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
-            <?php foreach($courseData as $course){?>
-            <?php if(@$course_id==($course['course_id'])){ ?>
-                      <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
-            <?php }else{?>
-                      <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
-            <?php } ?>
-            <?php } ?>
-            </select>
+              <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
+              <?php foreach($courseData as $course){?>
+              <?php if(@$course_id==($course['course_id'])){ ?>
+                        <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
+              <?php }else{?>
+                        <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
+              <?php } ?>
+              <?php } ?>
+              </select>
             </td>
             <td align="left"></td>
         </tr>
@@ -273,7 +274,16 @@
         <tr>
             <td align="right" class="l-table-edit-td">就业企业:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="job_id" type="text" id="job_id" maxlength="200" value="<?php echo @$job_id?>" />
+              <select name="job_id" id="job_id" ltype="select" ligeruiid="job_id">
+                  <option value="0000" selected></option>
+              <?php foreach($jobData as $job){?>
+                  <?php if(@$job_id==($job['job_id'])){ ?>
+                        <option value="<?php  echo $job['job_id'] ?>" selected><?php  echo $job['job_company'] ?></option>
+                  <?php }else{?>
+                        <option value="<?php  echo $job['job_id'] ?>"><?php  echo $job['job_company'] ?></option>
+                  <?php } ?>
+              <?php } ?>
+              </select>
             </td>
             <td align="left"></td>
         </tr>
