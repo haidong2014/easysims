@@ -40,7 +40,7 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-    <form name="form" method="post" action="<?php echo SITE_URL.'/class_c/add_class';?>" id="form">
+    <form name="form" method="post" action="" id="form">
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
                 <td align="right" class="l-table-edit-td">班级编号:</td>

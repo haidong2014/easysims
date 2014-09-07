@@ -12,14 +12,6 @@
         {
             $("#pageloading").hide();
         });
-        function addCourse(){
-            txtCourseName = document.form.course_name.value;
-            if (txtCourseName == ""){
-                alert("请输入课程名称！");
-                return;
-            }
-            document.form.submit();
-        }
         function returnPage(){
             location.href='<?php echo SITE_URL;?>/course_c';
         }
@@ -35,7 +27,7 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/course_c/add_course';?>" id="form">
+<form name="form" method="post" action="" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             <td align="right" class="l-table-edit-td">课程名称:</td>

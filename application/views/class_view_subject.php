@@ -51,7 +51,7 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/class_c/add_subject';?>" id="form">
+<form name="form" method="post" action="" id="form">
   <br />
   <div id="maingrid" style="margin:0; padding:0"></div>
   <br />

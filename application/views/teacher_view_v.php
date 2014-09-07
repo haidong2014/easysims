@@ -19,31 +19,6 @@
             $("#pageloading").hide();
         });
 
-        function checkTeacher(){
-            var teacher_no = document.form.teacher_no.value;
-            var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_teacher/';?>" + teacher_no, function(data) {
-                showMsg(data);
-            });
-        }
-        function showMsg(data){
-          if (data != "") {
-              alert(data.replace(/\"/g, ""));
-              document.form.teacher_no.value = "";
-          }
-        }
-        function addStudent(){
-            txtTeacherNo = document.form.teacher_no.value;
-            if (txtTeacherNo == ""){
-                alert("请输入教师编号！");
-                return;
-            }
-            txtTeacherName = document.form.teacher_name.value;
-            if (txtTeacherName == ""){
-                alert("请输入教师姓名！");
-                return;
-            }
-            document.form.submit();
-        }
         function returnPage(){
             location.href='<?php echo SITE_URL;?>/teacher_c';
         }
@@ -59,12 +34,12 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/teacher_c/add_teacher';?>" id="form">
+<form name="form" method="post" action="" id="form">
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
                 <td align="right" class="l-table-edit-td">教师编号:</td>
                 <td align="left" class="l-table-edit-td">
-                    <input name="teacher_no" type="text" id="teacher_no" maxlength="10" onchange="checkTeacher()" value="<?php echo @$teacher_no ?>" />
+                    <input name="teacher_no" type="text" id="teacher_no" maxlength="10" value="<?php echo @$teacher_no ?>" />
                 </td>
                 <td align="left"></td>
             </tr>

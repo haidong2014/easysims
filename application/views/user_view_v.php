@@ -26,8 +26,8 @@
 </head>
 
 <body style="padding:10px">
-<div id="pageloading"></div>  
-<form name="form" method="post" action="<?php echo SITE_URL.'/user_c/add_user';?>" id="form">
+<div id="pageloading"></div>
+<form name="form" method="post" action="" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             <td align="right" class="l-table-edit-td">登录ID:</td>
@@ -71,7 +71,7 @@
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
-            <td align="left" class="l-table-edit-td"> 
+            <td align="left" class="l-table-edit-td">
                 <textarea name="txtRemarks" id="txtRemarks" cols="100" rows="5" class="l-textarea" style="width:400px" maxlength="100"><?php echo @$remarks ?></textarea>
             </td>
             <td align="left"></td>

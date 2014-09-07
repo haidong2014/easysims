@@ -52,7 +52,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">留言内容:</td>
             <td align="left" class="l-table-edit-td">
-                <textarea name="txtMessage" id="txtMessage" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="200"></textarea>
+                <textarea name="txtMessage" id="txtMessage" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="1000"></textarea>
             </td>
             <td align="left"></td>
         </tr>

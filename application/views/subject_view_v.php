@@ -32,7 +32,7 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/subject_c/add_subject';?>" id="form">
+<form name="form" method="post" action="" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             <td align="right" class="l-table-edit-td">科目名称:</td>
