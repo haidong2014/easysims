@@ -8,7 +8,7 @@
             { display: '日期', name: 'message_date', align: 'left', width: 80 },
             { display: '姓名', name: 'message_user', align: 'left', width: 80 },
             { display: '标题', name: 'message_title', align: 'left', width: 260 },
-            { display: '内容', name: 'message_content', align: 'left', width: 600 }
+            { display: '内容', name: 'message_content', align: 'left', width: 610 }
             ],
             pageSize:10,
             where : f_getWhere(),
