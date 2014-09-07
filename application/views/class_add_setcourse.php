@@ -6,6 +6,8 @@
 <script type="text/javascript">
     var subjectData = <?php echo $subjectData?>;
     var teacherData = <?php echo $teacherData?>;
+     //var subjectData = {"Rows":[{"class_id":"1001","course_id":"1000","subject_id":"2","start_date":"2014-9-9","end_date":"2014-9-10","teacher_id":"1001","subject_name":"kemu1","period":"1"}]};
+    //var teacherData = [{"teacher_id":"1000","teacher_name":"li1"},{"teacher_id":"1001","teacher_name":"li2"}];
     var manager, g;
     $(function () {
         alert("请继续设定课程的科目信息！");
@@ -14,10 +16,10 @@
             { display: '科目编号', name: 'subject_id', align: 'left', width: 80 },
             { display: '科目名称', name: 'subject_name', align: 'left', width: 200 },
             { display: '周期', name: 'period', align: 'left', width: 80 },
-            { display: '开始日期', name: 'start_date', type: 'date', width: 100 ,
+            { display: '开始日期', name: 'start_date', format: 'yyyy年MM月dd',type: 'date', width: 100 ,
                 editor: { type: 'date' }
             },
-            { display: '结束日期', name: 'end_date', type: 'date', width: 100 ,
+            { display: '结束日期', name: 'end_date', format: 'yyyy年MM月dd', type: 'date', width: 100 ,
                 editor: { type: 'date' }
             },
             { display: '任课教师', width: 120, name: 'teacher_id',
@@ -64,7 +66,9 @@
         manager.beginEdit(rowid);
     }
     function getYmd(date){
-    	if(!date){return;}
+		//alert(date);
+    	if(date==undefined){return;}
+    	
     	var year = date.getYear();
     	if(year<2000){
     		year = year+1900;
@@ -87,22 +91,46 @@
     }
     function endEdit(rowid)
     {
+    	var oldrow = g.getSelectedRow();
+    	old_start = oldrow['start_date'];
+    	old_end = oldrow['end_date'];
+    	old_teacher_id = oldrow['teacher_id'];
+    	//alert(old_start+old_end+old_teacher_id);
         var manager = $("#maingrid").ligerGetGridManager();
         manager.endEdit(rowid);
         var row = manager.getSelectedRow();
-        var start = row['start_date'];
-        var end = row['end_date'];
+        var start = "";
+        var end = "";
         var subject_id = row['subject_id'];
         var class_id = document.getElementById('class_id').value;
         var course_id = document.getElementById('course_id').value;
+         //alert(start);
+        if(row['start_date']==undefined){
+        	start = old_start;
+        }else{
+        	start = getYmd(row['start_date']);
+        }
+        if(row['end_date']==undefined){
+        	end = old_end;
+        }else{
+        	end = getYmd(row['end_date']);
+        }
+        if(teacher_id==undefined){
+        	teacher_id = old_teacher_id;
+        }
+        row['start_date'] = start;
+        row['end_date'] = end;
+        row['teacher_id'] = teacher_id;
+        g.reRender({ rowdata: row });
         //alert(start+'/'+getYmd(start));return;
         //alert(getYmd(start));
 		var teacher_id = row['teacher_id'];
+		//alert(class_id+'/'+course_id+'/'+subject_id+'/' +start+'/'+end+'/'+teacher_id+'/');
 		if(start==undefined || end==undefined || teacher_id==""){
 			alert('请确认数据全部输入了。');return;
 		}
-		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id+'/<?php echo $user;?>';
-		//alert(requestUrl);
+		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + start+'/'+end+'/'+teacher_id+'/<?php echo $user;?>';
+	//alert(requestUrl);
 		//alert(class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id);
         var jqxhr = $.post(requestUrl, function(data) {
                 showMsg(data);
