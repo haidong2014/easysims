@@ -62,7 +62,20 @@ class Teacher_m extends MY_Model
        }
        return $teacher;
     }
-  public function getOneByNo($teacher_no){
+
+    public function getTeacherName($teacher_id){
+       $this->db->select('teacher_name');
+       $this->db->where('teacher_id', $teacher_id);
+       $this->db->where('delete_flg', 0);
+       $query = $this->db->get($this->table_name);
+       $teacher_name= null;
+       foreach ($query->result_array() as $row){
+         $teacher_name = $row['teacher_name'];
+       }
+       return $teacher_name;
+    }
+
+    public function getOneByNo($teacher_no){
        $this->db->where('teacher_no', $teacher_no);
        $this->db->where('delete_flg', 0);
        $this->db->select('*');
@@ -74,6 +87,7 @@ class Teacher_m extends MY_Model
        }
        return $teacher;
     }
+
     public function updateOne($data){
 
         $this->db->where('teacher_id', $data['teacher_id']);
@@ -106,6 +120,7 @@ class Teacher_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+
     public function getTeacher()
     {
         $this->db->select('teacher_id,teacher_name');

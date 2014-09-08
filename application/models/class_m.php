@@ -65,6 +65,18 @@ class Class_m extends MY_Model
        return $class;
     }
 
+    public function getClassName($class_id){
+       $this->db->select('class_name');
+       $this->db->where('class_id', $class_id);
+       $this->db->where('delete_flg', 0);
+       $query = $this->db->get($this->table_name);
+       $class_name = null;
+       foreach ($query->result_array() as $row){
+         $class_name = $row['class_name'];
+       }
+       return $class_name;
+    }
+
     public function updateOne($data){
         $this->db->where('class_id',    $data['class_id']);
         $this->db->set( 'class_name',	$data['class_name'] );

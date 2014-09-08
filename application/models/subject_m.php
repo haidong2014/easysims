@@ -49,6 +49,19 @@ class Subject_m extends MY_Model
         return $subject;
     }
 
+    public function getSubjectName($course_id,$subject_id){
+        $this->db->select('subject_name');
+        $this->db->where('course_id', $course_id);
+        $this->db->where('subject_id', $subject_id);
+        $this->db->where('delete_flg', 0);
+        $query = $this->db->get($this->table_name);
+        $subject_name =null;
+        foreach ($query->result_array() as $row){
+            $subject_name = $row['subject_name'];
+        }
+        return $subject_name;
+    }
+
     public function updateOne($data){
         $this->db->where('course_id',    $data['course_id']);
         $this->db->where('subject_id',   $data['subject_id']);

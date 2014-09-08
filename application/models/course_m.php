@@ -44,6 +44,18 @@ class Course_m extends MY_Model
         return $course;
     }
 
+    public function getCourseName($course_id){
+        $this->db->select('course_name');
+        $this->db->where('course_id', $course_id);
+        $this->db->where('delete_flg', 0);
+        $query = $this->db->get($this->table_name);
+        $course_name = null;
+        foreach ($query->result_array() as $row){
+            $course_name = $row['course_name'];
+        }
+        return $course_name;
+    }
+
     public function updateOne($data){
         $this->db->where('course_id',    $data['course_id']);
         $this->db->set( 'course_name',	 $data['course_name']);

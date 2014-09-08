@@ -11,8 +11,8 @@
             { display: '开始日期', name: 'start_date',  align: 'left', width: 80 },
             { display: '结束日期', name: 'end_date', align: 'left', width: 80 },
             { display: '任课教师', name: 'teacher_name', align: 'left', width: 80 },
-            { display: '教师满意度评价', name: 'evaluation', align: 'left', width: 120 },
-            { display: '教师出勤评价', name: 'attendance', align: 'left', width: 120 }
+            { display: '满意度调查', name: 'evaluation', align: 'left', width: 120 },
+            { display: '出勤评价', name: 'attendance', align: 'left', width: 120 }
             ],
             pageSize:10,
             where : f_getWhere(),
