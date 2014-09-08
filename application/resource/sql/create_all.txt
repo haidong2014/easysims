@@ -250,100 +250,93 @@ CREATE TABLE IF NOT EXISTS `ss_attendance` (
 		
 DROP TABLE IF EXISTS `ss_works`;		
 CREATE TABLE IF NOT EXISTS `ss_works` (		
-  `class_id` int(11) NOT NULL,		
+  `class_id` int(11) NOT NULL,	
+  `course_id` int(11) NOT NULL,  
   `subject_id` int(11) NOT NULL,		
   `student_id` int(11) NOT NULL,		
   `works_no` varchar(32) NOT NULL,		
   `works_name` varchar(50) NOT NULL,		
-  `path_name` varchar(100) NOT NULL,		
+  `works_path` varchar(100) NOT NULL,	
+  `scores` int(3) NULL,	  
   `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`,`student_id`,`works_no`)		
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`student_id`,`works_no`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
-		
-DROP TABLE IF EXISTS `ss_works_evaluation`;		
-CREATE TABLE IF NOT EXISTS `ss_works_evaluation` (		
-  `class_id` int(11) NOT NULL,		
-  `subject_id` int(11) NOT NULL,		
-  `student_id` int(11) NOT NULL,		
-  `works_no` varchar(32) NOT NULL,		
-  `scores` int(3) NULL,		
-  `remarks` varchar(1000) NULL,		
-  `delete_flg` char(1) NULL DEFAULT '0',		
-  `insert_user` varchar(20) NULL DEFAULT 'system',		
-  `insert_time` timestamp NULL,		
-  `update_user` varchar(20) NULL DEFAULT 'system',		
-  `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`,`student_id`,`works_no`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
-		
+
 DROP TABLE IF EXISTS `ss_student_evaluation`;		
 CREATE TABLE IF NOT EXISTS `ss_student_evaluation` (		
-  `class_id` int(11) NOT NULL,		
+  `class_id` int(11) NOT NULL,	
+  `course_id` int(11) NOT NULL,    
   `subject_id` int(11) NOT NULL,		
   `student_id` int(11) NOT NULL,		
-  `a_scores` int(3) NULL,		
-  `b_scores` int(3) NULL,		
-  `c_scores` int(3) NULL,		
-  `d_scores` int(3) NULL,		
+  `attendance_scores` int(3) NULL,		
+  `works_scores` int(3) NULL,		
+  `performance_scores` int(3) NULL,		
+  `homework_scores` int(3) NULL,	
+  `scores` int(3) NULL,		  
   `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`,`student_id`)		
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`student_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
 DROP TABLE IF EXISTS `ss_teacher_evaluation`;		
 CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation` (		
-  `class_id` int(11) NOT NULL,		
+  `class_id` int(11) NOT NULL,	
+  `course_id` int(11) NOT NULL,      
   `subject_id` int(11) NOT NULL,		
-  `teacher_id` int(11) NOT NULL,			
-  `scores` int(3) NULL,		
+  `teacher_id` int(11) NOT NULL,
+  `satisfaction_scores` int(3) NULL,	  
+  `attendance_scores` int(3) NULL,	
+  `scores` int(3) NULL,	  
   `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`,`teacher_id`)		
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`teacher_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
-DROP TABLE IF EXISTS `ss_teacher_evaluation_others`;		
-CREATE TABLE IF NOT EXISTS `ss_teacher_evaluation_others` (		
-  `class_id` int(11) NOT NULL,		
+DROP TABLE IF EXISTS `ss_teacher_satisfaction`;		
+CREATE TABLE IF NOT EXISTS `ss_teacher_satisfaction` (		
+  `class_id` int(11) NOT NULL,	
+  `course_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,		
-  `teacher_id` int(11) NOT NULL,			
-  `student_id` int(11) NOT NULL,		
-  `others_no` varchar(10) NOT NULL,		
-  `scores` int(3) NULL,		
+  `teacher_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `scores_01` int(3) NULL,	
+  `scores_02` int(3) NULL,	
+  `scores_03` int(3) NULL,	
+  `scores_04` int(3) NULL,	
+  `scores_05` int(3) NULL,	
+  `scores_06` int(3) NULL,	
+  `scores_07` int(3) NULL,	
+  `scores_08` int(3) NULL,	
+  `scores_09` int(3) NULL,	
+  `scores_10` int(3) NULL,	
+  `scores_11` int(3) NULL,	
+  `scores_12` int(3) NULL,	
+  `scores_13` int(3) NULL,	
+  `scores_14` int(3) NULL,	
+  `scores_15` int(3) NULL,	
+  `scores_16` int(3) NULL,
+  `scores` int(3) NULL,			  
   `remarks` varchar(1000) NULL,		
   `delete_flg` char(1) NULL DEFAULT '0',		
   `insert_user` varchar(20) NULL DEFAULT 'system',		
   `insert_time` timestamp NULL,		
   `update_user` varchar(20) NULL DEFAULT 'system',		
   `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`subject_id`,`teacher_id`,`student_id`,`others_no`)		
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`teacher_id`,`student_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
-		
-DROP TABLE IF EXISTS `ss_code`;							
-CREATE TABLE IF NOT EXISTS `ss_code` (							
-  `code` varchar(2) NOT NULL,							
-  `code_no` varchar(2) NOT NULL,							
-  `code_name` varchar(10) NOT NULL,	
-  `remarks` varchar(1000) NULL,		  
-  `delete_flg` char(1) NULL DEFAULT '0',							
-  `insert_user` varchar(20) NULL DEFAULT 'system',							
-  `insert_time` timestamp NULL,							
-  `update_user` varchar(20) NULL DEFAULT 'system',							
-  `update_time` timestamp  NULL,							
-  PRIMARY KEY (`code`,`code_no`)							
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;							
 		
 DROP TABLE IF EXISTS `ss_message`;		
 CREATE TABLE IF NOT EXISTS `ss_message` (		
@@ -361,6 +354,20 @@ CREATE TABLE IF NOT EXISTS `ss_message` (
   PRIMARY KEY (`message_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
 
+DROP TABLE IF EXISTS `ss_code`;							
+CREATE TABLE IF NOT EXISTS `ss_code` (							
+  `code` varchar(2) NOT NULL,							
+  `code_no` varchar(2) NOT NULL,							
+  `code_name` varchar(10) NOT NULL,	
+  `remarks` varchar(1000) NULL,		  
+  `delete_flg` char(1) NULL DEFAULT '0',							
+  `insert_user` varchar(20) NULL DEFAULT 'system',							
+  `insert_time` timestamp NULL,							
+  `update_user` varchar(20) NULL DEFAULT 'system',							
+  `update_time` timestamp  NULL,							
+  PRIMARY KEY (`code`,`code_no`)							
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;							
+		
 INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "未删除", "DELETE_FLG", NOW(), NOW());
