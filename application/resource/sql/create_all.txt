@@ -254,18 +254,20 @@ CREATE TABLE IF NOT EXISTS `ss_works` (
   `course_id` int(11) NOT NULL,  
   `subject_id` int(11) NOT NULL,		
   `student_id` int(11) NOT NULL,		
-  `works_no` varchar(32) NOT NULL,		
-  `works_name` varchar(50) NOT NULL,		
-  `works_path` varchar(100) NOT NULL,	
-  `scores` int(3) NULL,	  
-  `remarks` varchar(1000) NULL,		
-  `delete_flg` char(1) NULL DEFAULT '0',		
-  `insert_user` varchar(20) NULL DEFAULT 'system',		
-  `insert_time` timestamp NULL,		
-  `update_user` varchar(20) NULL DEFAULT 'system',		
-  `update_time` timestamp  NULL,		
-  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`student_id`,`works_no`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
+  `works_no` varchar(32) NOT NULL,
+  `works_name` varchar(50) NULL,
+  `works_path` varchar(100) NULL,
+  `works_description` varchar(200) NULL,
+  `works_scores` int(3) NULL,
+  `works_comment` varchar(200) NULL,
+  `remarks` varchar(1000) NULL,
+  `delete_flg` char(1) NULL DEFAULT '0',
+  `insert_user` varchar(20) NULL DEFAULT 'system',
+  `insert_time` timestamp NULL,
+  `update_user` varchar(20) NULL DEFAULT 'system',
+  `update_time` timestamp  NULL,
+  PRIMARY KEY (`class_id`,`course_id`,`subject_id`,`student_id`,`works_no`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 DROP TABLE IF EXISTS `ss_student_evaluation`;		
 CREATE TABLE IF NOT EXISTS `ss_student_evaluation` (		
