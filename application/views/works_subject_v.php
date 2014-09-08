@@ -38,7 +38,7 @@
         return clause;
     }
     function returnPage() {
-        location.href='<?php echo SITE_URL;?>/work_c';
+        location.href='<?php echo SITE_URL;?>/works_c';
     }
 </script>
 </head>
