@@ -41,6 +41,12 @@ class Evaluation_c extends MY_Controller {
         $data['course_id'] = $course_id;
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
 
+        foreach($subjectData as &$temp){
+            $temp['period']=$temp['period']."周";
+            $temp['subject_id']="<a href=\"".SITE_URL."/evaluation_c/evaluation_lst/".$temp['class_id']."/".
+                                $temp['course_id']."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
+        }
+
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $this->load->view('evaluation_subject_v',$data);
     }

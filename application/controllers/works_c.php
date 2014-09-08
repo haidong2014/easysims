@@ -4,6 +4,7 @@ class Works_c extends MY_Controller {
     {
         parent::__construct("100102");
         $this->load->model('class_m','class_m');
+        $this->load->model('works_m','works_m');
     }
 
     public function index()
@@ -40,6 +41,20 @@ class Works_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
+
+        foreach($subjectData as &$temp){
+            $temp['period']=$temp['period']."周";
+            $worksData = $this->works_m->getWorksInfo($class_id,$course_id,$temp['subject_id']);
+            $numbers = $worksData['numbers'];
+            $scores = $worksData['scores'];
+            if (!empty($numbers)) {
+                $scores = round($scores/$numbers);
+            }
+            $temp['numbers']=$numbers;
+            $temp['scores']=$scores;
+            $temp['subject_id']="<a href=\"".SITE_URL."/works_c/works_lst/".$temp['class_id']."/".
+                                $temp['course_id']."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
+        }
 
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $this->load->view('works_subject_v',$data);
