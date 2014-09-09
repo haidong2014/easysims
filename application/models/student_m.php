@@ -93,6 +93,18 @@ class Student_m extends MY_Model
        return $student;
     }
 
+    public function getStudentId($student_no){
+       $this->db->select('student_id');
+       $this->db->where('student_no', $student_no);
+       $this->db->where('delete_flg', 0);
+       $query = $this->db->get($this->table_name);
+       $student= null;
+       foreach ($query->result_array() as $row){
+         $student = $row;
+       }
+       return $student;
+    }
+
     public function getOneOther($student_id){
        $this->db->where('student_id', $student_id);
        $this->db->where('delete_flg', 0);

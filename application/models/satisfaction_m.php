@@ -84,4 +84,26 @@ class Satisfaction_m extends MY_Model
             return $this->db->update( $this->table_name );
         }
     }
+
+    public function selectTeacherEV($data){
+        $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t5.teacher_name,t6.student_name,' .
+                          '(t1.scores_01+t1.scores_02+t1.scores_03+t1.scores_04+t1.scores_05+t1.scores_06+t1.scores_07+' .
+                          't1.scores_08+t1.scores_09+t1.scores_10+t1.scores_11+t1.scores_12+t1.scores_13+t1.scores_14+' .
+                          't1.scores_15+t1.scores_16) as scores');
+        $this->db->from('ss_teacher_satisfaction t1');
+        $this->db->join('ss_class t2', 't2.class_id=t1.class_id', 'left');
+        $this->db->join('ss_course t3', 't3.course_id=t1.course_id', 'left');
+        $this->db->join('ss_subject t4', 't4.course_id=t1.course_id and t4.subject_id=t1.subject_id', 'left');
+        $this->db->join('ss_teachers t5', 't5.teacher_id=t1.teacher_id', 'left');
+        $this->db->join('ss_student t6', 't6.student_id=t1.student_id', 'left');
+        $this->db->where('t1.class_id',   $data['class_id']);
+        $this->db->where('t1.course_id',  $data['course_id']);
+        $this->db->where('t1.subject_id', $data['subject_id']);
+        $this->db->where('t1.teacher_id', $data['teacher_id']);
+        $this->db->where('t1.delete_flg', 0);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }

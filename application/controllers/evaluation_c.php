@@ -7,6 +7,7 @@ class Evaluation_c extends MY_Controller {
         $this->load->model('course_m','course_m');
         $this->load->model('subject_m','subject_m');
         $this->load->model('teacher_m','teacher_m');
+        $this->load->model('student_m','student_m');
         $this->load->model('evaluation_m','evaluation_m');
         $this->load->model('satisfaction_m','satisfaction_m');
     }
@@ -162,11 +163,13 @@ class Evaluation_c extends MY_Controller {
         $scores_15 = $this->input->post('scores_15');
         $scores_16 = $this->input->post('scores_16');
 
+        $student_id = $this->student_m->getStudentId($userinfo);
+
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
-        $data['student_id'] = $userinfo;
+        $data['student_id'] = $student_id['student_id'];
         $data['scores_01'] = $scores_01;
         $data['scores_02'] = $scores_02;
         $data['scores_03'] = $scores_03;
@@ -194,4 +197,31 @@ class Evaluation_c extends MY_Controller {
 
         self::subject_lst($class_id,$course_id);
     }
+
+    public function teacher_ev_lst($class_id,$course_id,$subject_id,$teacher_id){
+        $data = array();
+
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        if (empty($teacher_id)) {
+            $teacher_id = $this->input->post('teacher_id');
+        }
+
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['teacher_id'] = $teacher_id;
+        $teacherData = $this->satisfaction_m->selectTeacherEV($data);
+        $data['teacherData'] = @json_encode(array('Rows'=>$teacherData));;
+
+        $this->load->view('evaluation_teacher_v',$data);
+    }
+
 }
