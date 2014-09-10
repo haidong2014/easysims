@@ -106,4 +106,22 @@ class Satisfaction_m extends MY_Model
 
         return $query->result_array();
     }
+
+    public function getTeacherEV($data){
+        $this->db->select('sum(scores_01+scores_02+scores_03+scores_04+scores_05+scores_06+scores_07+' .
+                          'scores_08+scores_09+scores_10+scores_11+scores_12+scores_13+scores_14+' .
+                          'scores_15+scores_16)/count(student_id) as scores');
+        $this->db->where('class_id',   $data['class_id']);
+        $this->db->where('course_id',  $data['course_id']);
+        $this->db->where('subject_id', $data['subject_id']);
+        $this->db->where('teacher_id', $data['teacher_id']);
+        $this->db->where('delete_flg', 0);
+        $this->db->group_by('class_id,course_id,subject_id,teacher_id');
+        $query = $this->db->get($this->table_name);
+        $teacherEvData = null;
+        foreach ($query->result_array() as $row){
+            $teacherEvData = $row;
+        }
+        return $teacherEvData;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿<?php require_once("_header.php");?>
 <script type="text/javascript">
-    var teacherData = <?php echo $teacherData?>;
+    var studentData = <?php echo $studentData?>;
     var grid = null;
     $(function () {
         grid = $("#maingrid").ligerGrid({
@@ -8,13 +8,16 @@
             { display: '班级名称', name: 'class_name', align: 'left', width: 160 },
             { display: '课程名称', name: 'course_name', align: 'left', width: 160 },
             { display: '科目名称', name: 'subject_name', align: 'left', width: 160 },
-            { display: '任课教师', name: 'teacher_name', align: 'left', width: 80 },
-            { display: '学生姓名', name: 'student_name', align: 'left', width: 120 },
-            { display: '评分', name: 'scores', align: 'left', width: 120 }
+            { display: '学生姓名', name: 'student_name', align: 'left', width: 160 },
+            { display: '出勤分数', name: 'attendance_scores', align: 'left', width: 80 },
+            { display: '作品分数', name: 'works_scores', align: 'left', width: 80 },
+            { display: '课堂表现', name: 'performance_scores', align: 'left', width: 80 },
+            { display: '课后作业', name: 'homework_scores', align: 'left', width: 80 },
+            { display: '评分', name: 'scores', align: 'left', width: 80 }
             ],
             pageSize:10,
             where : f_getWhere(),
-            data: $.extend(true,{},teacherData),
+            data: $.extend(true,{},studentData),
             width: '100%',height:'100%'
         });
 
@@ -52,13 +55,9 @@
             <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
             <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
             <input type="hidden" name="subject_id" id="subject_id" value="<?php echo @$subject_id?>" />
-            <input type="hidden" name="teacher_id" id="teacher_id" value="<?php echo @$teacher_id?>" />
         </tr>
     </table>
     <br>
-    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
-        <tr>满意度平均分：<?php echo @$scores?>&nbsp&nbsp 出勤分数：<?php echo @$attendance_scores?></tr>
-    </table>
     <div id="maingrid" style="margin:0; padding:0"></div>
 </form>
 <div style="display:none;"></div>

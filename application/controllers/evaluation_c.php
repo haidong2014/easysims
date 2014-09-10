@@ -8,7 +8,8 @@ class Evaluation_c extends MY_Controller {
         $this->load->model('subject_m','subject_m');
         $this->load->model('teacher_m','teacher_m');
         $this->load->model('student_m','student_m');
-        $this->load->model('evaluation_m','evaluation_m');
+        $this->load->model('evaluationteacher_m','evaluationteacher_m');
+        $this->load->model('evaluationstudent_m','evaluationstudent_m');
         $this->load->model('satisfaction_m','satisfaction_m');
     }
 
@@ -75,7 +76,7 @@ class Evaluation_c extends MY_Controller {
         $course_name = $this->course_m->getCourseName($course_id);
         $subject_name = $this->subject_m->getSubjectName($course_id,$subject_id);
         $teacher_name = $this->teacher_m->getTeacherName($teacher_id);
-        $evaluationData = $this->evaluation_m->select($data);
+        $evaluationData = $this->evaluationteacher_m->select($data);
 
         $data = $evaluationData;
         $data['class_id'] = $class_id;
@@ -113,7 +114,7 @@ class Evaluation_c extends MY_Controller {
         $data['update_user'] = $userinfo;
         $data['update_time'] = date("Y-m-d H:i:s");
 
-        $this->evaluation_m->insertorupdate($data);
+        $this->evaluationteacher_m->insertorupdate($data);
 
         self::subject_lst($class_id,$course_id);
     }
@@ -221,7 +222,28 @@ class Evaluation_c extends MY_Controller {
         $teacherData = $this->satisfaction_m->selectTeacherEV($data);
         $data['teacherData'] = @json_encode(array('Rows'=>$teacherData));;
 
+        $evaluationData = $evaluationData = $this->evaluationteacher_m->select($data);
+        if (!empty($evaluationData)) {
+            $data['attendance_scores'] = $evaluationData['attendance_scores'];
+        }
+
+        $teacherEvData = $this->satisfaction_m->getTeacherEV($data);
+        if (!empty($evaluationData)) {
+            $data['scores'] = round($teacherEvData['scores']);
+        }
+
         $this->load->view('evaluation_teacher_v',$data);
     }
 
+    public function student_ev_lst($class_id,$course_id,$subject_id){
+        $data = array();
+
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $studentData = $this->evaluationstudent_m->selectStudentEV($data);
+        $data['studentData'] = @json_encode(array('Rows'=>$studentData));;
+
+        $this->load->view('evaluation_student_v',$data);
+    }
 }
