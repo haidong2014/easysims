@@ -59,4 +59,32 @@ class Works_c extends MY_Controller {
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $this->load->view('works_subject_v',$data);
     }
+    public function works_lst($class_id=null,$course_id=null,$subject_id=null){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        $search_key = $this->input->post('txtKey');
+        
+        $data['search_key'] = $search_key;
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['txtKey'] = $search_key;
+        $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
+		foreach($workData as &$value){
+			$st = $this->student_m->getOne($value['student_id']);
+			$value['student_name'] = $st['student_name'];
+		}
+        $data['workData'] = @json_encode(array('Rows'=>$workData));
+        $this->load->view('works_lst_v',$data);
+    }
 }
