@@ -83,8 +83,41 @@ class Works_c extends MY_Controller {
 		foreach($workData as &$value){
 			$st = $this->student_m->getOne($value['student_id']);
 			$value['student_name'] = $st['student_name'];
+			$value['works_no']="<a href=\"".SITE_URL."/works_c/works_detail/".$value['class_id']."/".
+                                $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">".$value['subject_id']."</a>";
 		}
         $data['workData'] = @json_encode(array('Rows'=>$workData));
         $this->load->view('works_lst_v',$data);
+    }
+    public function works_detail($class_id=null, $course_id=null, $subject_id=null, $works_no=null){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        if (empty($works_no)) {
+            $works_no = $this->input->post('works_no');
+        }
+        
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['works_no'] = $works_no;
+        $workData = $this->works_m->getOne($class_id,$course_id,$subject_id,$works_no);
+		//foreach($workData as &$value){
+			$st = $this->student_m->getOne($workData['student_id']);
+			$workData['student_name'] = $st['student_name'];
+			//$value['works_no']="<a href=\"".SITE_URL."/works_c/works_detail/".$value['class_id']."/".
+                                //$value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">".$value['subject_id']."</a>";
+		//}
+        $data = array_merge($data, $workData);
+        $this->load->view('works_detail_v',$data);
     }
 }
