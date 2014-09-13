@@ -220,9 +220,9 @@ class Evaluation_c extends MY_Controller {
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
         $teacherData = $this->satisfaction_m->selectTeacherEV($data);
-        $data['teacherData'] = @json_encode(array('Rows'=>$teacherData));;
+        $data['teacherData'] = @json_encode(array('Rows'=>$teacherData));
 
-        $evaluationData = $evaluationData = $this->evaluationteacher_m->select($data);
+        $evaluationData = $this->evaluationteacher_m->select($data);
         if (!empty($evaluationData)) {
             $data['attendance_scores'] = $evaluationData['attendance_scores'];
         }
@@ -241,9 +241,53 @@ class Evaluation_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
+        $data['student_id'] = null;
         $studentData = $this->evaluationstudent_m->selectStudentEV($data);
-        $data['studentData'] = @json_encode(array('Rows'=>$studentData));;
+        foreach($studentData as &$temp){
+            $temp['scores']="<a href=\"".SITE_URL."/evaluation_c/student_ev_add_init/".$class_id."/".
+                            $course_id."/".$subject_id."/".$temp['student_id']."\">"."评价"."</a>";
+        }
+        $data['studentData'] = @json_encode(array('Rows'=>$studentData));
 
         $this->load->view('evaluation_student_v',$data);
+    }
+
+    public function student_ev_add_init($class_id,$course_id,$subject_id,$student_id){
+        $data = array();
+
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['student_id'] = $student_id;
+        $studentData = $this->evaluationstudent_m->selectStudentEV($data);
+        $data = $studentData[0];
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['student_id'] = $student_id;
+
+        $this->load->view('evaluation_studentev_add_v',$data);
+    }
+
+    public function student_ev_add_init(){
+        $data = array();
+
+        $userinfo = $this->session->userdata('user');
+        $data['class_id'] = $this->input->post('class_id');
+        $data['course_id'] = $this->input->post('course_id');
+        $data['subject_id'] = $this->input->post('subject_id');
+        $data['student_id'] = $this->input->post('student_id');
+        $data['attendance_scores'] = $this->input->post('attendance_scores');
+        $data['works_scores'] = $this->input->post('works_scores');
+        $data['performance_scores'] = $this->input->post('performance_scores');
+        $data['homework_scores'] = $this->input->post('homework_scores');
+        $data['remarks'] = $this->input->post('remarks');
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->evaluationstudent_m->insertorupdate($data);
+
+        $this->load->view('evaluation_studentev_add_v',$data);
     }
 }

@@ -59,7 +59,7 @@ class EvaluationStudent_m extends MY_Model
     }
 
     public function selectStudentEV($data){
-        $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t1.student_name,' .
+        $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t1.student_id,t1.student_name,' .
                           't5.attendance_scores,t5.works_scores,t5.performance_scores,t5.homework_scores');
         $this->db->from('ss_student t1');
         $this->db->join('ss_class t2', 't2.class_id=t1.class_id', 'left');
@@ -69,12 +69,14 @@ class EvaluationStudent_m extends MY_Model
                         'and t5.course_id='.$data['course_id'].' and t5.subject_id='.$data['subject_id'], 'left');
         $this->db->where('t1.class_id',   $data['class_id']);
         $this->db->where('t1.course_id',  $data['course_id']);
+        if (!empty($data['student_id'])) {
+            $this->db->where('t1.student_id', $data['student_id']);
+        }
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id', 0);
 
         $query = $this->db->get();
 
         return $query->result_array();
-
     }
 }
