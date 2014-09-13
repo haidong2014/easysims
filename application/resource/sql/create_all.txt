@@ -157,34 +157,36 @@ CREATE TABLE IF NOT EXISTS `ss_class_course` (
   PRIMARY KEY (`class_id`,`course_id`,`subject_id`)		
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;		
 		
-DROP TABLE IF EXISTS `ss_student`;		
-CREATE TABLE IF NOT EXISTS `ss_student` (	
-  `student_id` int(11) NOT NULL AUTO_INCREMENT,		
-  `student_no` varchar(10) NOT NULL,		
-  `student_name` varchar(30) NOT NULL,	
-  `start_year` char(4) NULL,		
-  `start_month` char(2) NULL,  
-  `sex` char(1) NULL,		
-  `birthday` char(10) NULL,		
-  `age` char(2) NULL,		
-  `id_card` char(18) NULL,		
-  `contact_way` varchar(20) NULL,		
-  `parent_phone` varchar(12) NULL,		
-  `course_id` int(11) NULL,	
-  `class_id` int(11) NULL,	
-  `cost` int(5) NULL,	
-  `start_date` char(10) NULL,		
-  `end_date` char(10) NULL,		
-  `attendance` varchar(3) NULL,		
-  `system_user` char(1) NULL,		
-  `remarks` varchar(1000) NULL,		
-  `delete_flg` char(1) NULL DEFAULT '0',		
-  `insert_user` varchar(20) NULL DEFAULT 'system',		
-  `insert_time` timestamp NULL,		
-  `update_user` varchar(20) NULL DEFAULT 'system',		
-  `update_time` timestamp  NULL,		
-  PRIMARY KEY (`student_id`)		
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;		
+DROP TABLE IF EXISTS `ss_student`;
+CREATE TABLE IF NOT EXISTS `ss_student` (
+  `student_id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_no` varchar(10) NOT NULL,
+  `student_name` varchar(30) NOT NULL,
+  `start_year` char(4) NULL,
+  `start_month` char(2) NULL,
+  `sex` char(1) NULL,
+  `birthday` char(10) NULL,
+  `age` char(2) NULL,
+  `id_card` char(18) NULL,
+  `contact_way` varchar(20) NULL,
+  `parent_phone` varchar(12) NULL,
+  `course_id` int(11) NULL,
+  `class_id` int(11) NULL,
+  `cost` int(5) NULL,
+  `start_date` char(10) NULL,
+  `end_date` char(10) NULL,
+  `end_year` char(4) NULL,
+  `end_month` char(2) NULL,
+  `attendance` varchar(3) NULL,
+  `system_user` char(1) NULL,
+  `remarks` varchar(1000) NULL,
+  `delete_flg` char(1) NULL DEFAULT '0',
+  `insert_user` varchar(20) NULL DEFAULT 'system',
+  `insert_time` timestamp NULL,
+  `update_user` varchar(20) NULL DEFAULT 'system',
+  `update_time` timestamp  NULL,
+  PRIMARY KEY (`student_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;
 		
 DROP TABLE IF EXISTS `ss_student_others`;		
 CREATE TABLE IF NOT EXISTS `ss_student_others` (	
