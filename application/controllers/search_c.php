@@ -12,24 +12,46 @@ class Search_c extends MY_Controller {
         $data = array();
         $searchData = array();
 
-        $user = $this->session->all_userdata();
-        log_message('info', "search_c index user:".var_export($user,true));
-        log_message('info', "search_c index post:".var_export($_POST,true));
-
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('search_lst_v',$data);
     }
 
-    public function search()
-    {
+    public function search(){
         $data = array();
         $searchData = array();
 
-        $user = $this->session->all_userdata();
-        log_message('info', "search_c index user:".var_export($user,true));
         log_message('info', "search_c index post:".var_export($_POST,true));
 
+        $start_year = $this->input->post('start_year');
+        $start_month = $this->input->post('start_month');
+        $scores_from = $this->input->post('scores_from');
+        $scores_to = $this->input->post('scores_to');
+        $age = $this->input->post('age');
+        $graduate = $this->input->post('graduate');
+        $end_year = $this->input->post('end_year');
+        $end_month = $this->input->post('end_month');
+        $follow_salary_from = $this->input->post('follow_salary_from');
+        $follow_salary_to = $this->input->post('follow_salary_to');
+        $sex = $this->input->post('sex');
+        $keyword = $this->input->post('txtKey');
+
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
+        $data['start_year'] = $start_year;
+        $data['start_month'] = $start_month;
+        $data['scores_from'] = $scores_from;
+        $data['scores_to'] = $scores_to;
+        $data['age'] = $age;
+        $data['graduate'] = $graduate;
+        $data['end_year'] = $end_year;
+        $data['end_month'] = $end_month;
+        $data['follow_salary_from'] = $follow_salary_from;
+        $data['follow_salary_to'] = $follow_salary_to;
+        $data['sex'] = $sex;
+        $data['txtKey'] = $keyword;
+
+        $searchData = $this->student_m->search($data);
+        $data['searchData'] = @json_encode(array('Rows'=>$searchData));
+
         $this->load->view('search_lst_v',$data);
     }
 }

@@ -205,4 +205,26 @@ class Student_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+
+    public function search($data){
+        $this->db->select('t1.*,t2.*,t3.class_name,t4.course_name,t5.teacher_name,t6.job_company,t6.job_city,t7.code_name as sex,t8.code_name as graduate');
+        $this->db->from('ss_student t1');
+        $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id', 'left');
+        $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');
+        $this->db->join('ss_course t4', 't4.course_id=t1.course_id', 'left');
+        $this->db->join('ss_teachers t5', 't5.teacher_id=t3.teacher_id', 'left');
+        $this->db->join('ss_job t6', 't6.job_id=t2.job_id', 'left');
+        $this->db->join('ss_code t7', 't7.code_no=t1.sex and t7.code='."02", 'left');
+        $this->db->join('ss_code t8', 't8.code_no=t2.graduate and t8.code='."06", 'left');
+
+        if (!empty($data['txtKey'])) {
+            $this->db->like('t1.student_name', $data['txtKey']);
+        }
+        $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t1.student_id', 0);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }
