@@ -21,6 +21,37 @@ class Works_m extends MY_Model
         }
         return $works;
     }
+    public function getOne($class_id,$course_id,$subject_id,$works_no){
+    	$this->db->where('class_id',   $class_id);
+        $this->db->where('course_id',  $course_id);
+        $this->db->where('subject_id', $subject_id);
+        $this->db->where('works_no', $works_no);
+        $this->db->where('delete_flg', 0);
+        $this->db->select('*');
+        $query = $this->db->get($this->table_name);
+        $works= null;
+       foreach ($query->result_array() as $row){
+         $works = $row;
+       }
+       return $works;
+    }
+	public function getList($keyword = null, $class_id, $course_id, $subject_id)
+    {
+
+       
+        //$this->db->select('*');
+        $this->db->where( 'class_id', $class_id );
+        $this->db->where( 'course_id', $course_id );
+        $this->db->where( 'subject_id', $subject_id );
+        if(!empty($keyword)){
+            $this->db->like('works_name',$keyword);
+        }
+        $this->db->where('delete_flg', 0);
+        $this->db->order_by('works_no','desc');
+        $query =  $this->db->get($this->table_name);
+        log_message('info', "Works_m getList sql:".$this->db->last_query());
+        return $query->result_array();
+    }
 
     public function insert($data){
         $this->db->set( 'class_id',          $data['class_id'] );
