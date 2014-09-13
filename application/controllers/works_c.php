@@ -120,4 +120,48 @@ class Works_c extends MY_Controller {
         $data = array_merge($data, $workData);
         $this->load->view('works_detail_v',$data);
     }
+   public function works_upload_init($class_id=null, $course_id=null, $subject_id=null){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        
+        
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        //$data['works_no'] = $works_no;
+       
+        $this->load->view('works_upload_v',$data);
+    }
+   public function works_exec($class_id=null, $course_id=null, $subject_id=null){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        
+        
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        
+        //$this->load->view('works_detail_v',$data);
+        redirect("works_c/work_lst/".$class_id."/".$course_id."/".$subject_id);
+    }
 }
