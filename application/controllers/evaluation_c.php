@@ -269,25 +269,29 @@ class Evaluation_c extends MY_Controller {
         $this->load->view('evaluation_studentev_add_v',$data);
     }
 
-    public function student_ev_add_init(){
+    public function student_ev_add(){
         $data = array();
 
         $userinfo = $this->session->userdata('user');
-        $data['class_id'] = $this->input->post('class_id');
-        $data['course_id'] = $this->input->post('course_id');
-        $data['subject_id'] = $this->input->post('subject_id');
+        $class_id = $this->input->post('class_id');
+        $course_id = $this->input->post('course_id');
+        $subject_id = $this->input->post('subject_id');
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
         $data['student_id'] = $this->input->post('student_id');
         $data['attendance_scores'] = $this->input->post('attendance_scores');
         $data['works_scores'] = $this->input->post('works_scores');
         $data['performance_scores'] = $this->input->post('performance_scores');
         $data['homework_scores'] = $this->input->post('homework_scores');
         $data['remarks'] = $this->input->post('remarks');
+        $data['delete_flg'] = $this->input->post('delete_flg');
         $data['insert_user'] = $userinfo;
         $data['insert_time'] = date("Y-m-d H:i:s");
         $data['update_user'] = $userinfo;
         $data['update_time'] = date("Y-m-d H:i:s");
         $this->evaluationstudent_m->insertorupdate($data);
 
-        $this->load->view('evaluation_studentev_add_v',$data);
+        self::student_ev_lst($class_id,$course_id,$subject_id);
     }
 }
