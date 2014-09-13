@@ -142,7 +142,7 @@ class Works_c extends MY_Controller {
        
         $this->load->view('works_upload_v',$data);
     }
-   public function works_exec($class_id=null, $course_id=null, $subject_id=null){
+   public function works_upload_exec($class_id=null, $course_id=null, $subject_id=null){
         $data = array();
 
 		$this->load->model('student_m','student_m');
@@ -156,6 +156,32 @@ class Works_c extends MY_Controller {
             $subject_id = $this->input->post('subject_id');
         }
         
+        $varYear="year";
+         $varMonth="month";
+         $varDay="day";
+         $varSecondName="second_name";
+         $filename=$$varYear.$$varMonth.$$varDay;
+
+        //for($k=0;$k<6;$k++){
+           for($j=0;$j<count($_FILES["upfile"]["tmp_name"]);$j++){
+             //echo "upfile".$k."<br>";
+             $file=$_FILES["upfile".$k]["tmp_name"][$j];
+             $name=$_FILES["upfile".$k]["name"][$j];
+             $imageUpload = uploadfile($file, $name, $filename, $errmsg);
+             if($errmsg=="" && !empty($imageUpload)){
+            		$sql = " INSERT INTO images (name,second_name,path	 ) VALUES ( ";
+            		$sql.= $filename;
+            		$sql.=",'".$$varSecondName."'";
+            		$sql.=($imageUpload==""?",''":",'".$imageUpload."'");
+            		$sql.=");";
+            		//print "sql".$sql."<br>";
+            		if (!(mysql_query($sql))) {
+            			//err page 
+            		}
+             }	
+           }
+        //}
+        
         
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
@@ -163,5 +189,49 @@ class Works_c extends MY_Controller {
         
         //$this->load->view('works_detail_v',$data);
         redirect("works_c/work_lst/".$class_id."/".$course_id."/".$subject_id);
+    }
+    function uploadfile($file,$name,$filename,&$errmsg){
+    	$root="./";
+    
+    	if (is_uploaded_file($file)) {
+    		$temp = explode(".", $name);
+    
+    		if(count($temp)>1){
+    			$ext=$temp[count($temp)-1];
+    			if(strtolower($ext)!="jpg" && strtolower($ext)!="png" && strtolower($ext)!="gif"){
+    				$errmsg.="not support file type!";
+    			}
+    		}else{
+    			$errmsg.="file can't be empty!";
+    		}
+    
+    		if($errmsg==""){
+    			$filepath = $root."upload/image";
+                $fullname=$filepath."/".$filename.".".$ext;
+                if(file_exists($fullname)){
+                  $fullname=$filepath."/".$filename."_".mt_rand(1,999999).".".$ext;
+                }
+    			if (move_uploaded_file($file, $fullname)) {
+    			} else {
+    				echo "move_uploaded_file error";
+    			}
+                $thumb = new Imagick($fullname);
+                $d = $thumb->getImageGeometry(); 
+                $w = intval($d['width']); 
+                $h = intval($d['height']); 
+                $newWidth = round(($w/$h)*300.0);
+                
+                $thumb->resizeImage($newWidth,300,Imagick::FILTER_LANCZOS,1);
+                $thumb->writeImage($fullname);
+                
+                $thumb->destroy(); 
+    			
+    		}
+    		//return "../upload/tmp".$_SESSION['userid']."/".$filename.".".$ext;
+    		return $fullname;
+    	}else{
+    		return "";
+    	}
+    	
     }
 }
