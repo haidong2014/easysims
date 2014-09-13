@@ -44,6 +44,8 @@ class Student_m extends MY_Model
         $this->db->set( 'cost',	            $data['cost'] );
         $this->db->set( 'start_year',	    $data['start_year'] );
         $this->db->set( 'start_month',	    $data['start_month'] );
+        $this->db->set( 'end_year',	        $data['end_year'] );
+        $this->db->set( 'end_month',	    $data['end_month'] );
         $this->db->set( 'start_date',	    $data['start_date'] );
         $this->db->set( 'end_date',	        $data['end_date'] );
         $this->db->set( 'attendance',	    $data['attendance'] );
@@ -145,6 +147,8 @@ class Student_m extends MY_Model
         $this->db->set( 'cost',	           $data['cost'] );
         $this->db->set( 'start_year',	   $data['start_year'] );
         $this->db->set( 'start_month',     $data['start_month'] );
+        $this->db->set( 'end_year',	       $data['end_year'] );
+        $this->db->set( 'end_month',       $data['end_month'] );
         $this->db->set( 'start_date',	   $data['start_date'] );
         $this->db->set( 'end_date',	       $data['end_date'] );
         $this->db->set( 'attendance',	   $data['attendance'] );

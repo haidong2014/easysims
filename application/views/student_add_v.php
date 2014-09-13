@@ -56,6 +56,14 @@
                 alert('学生姓名不能为空！');
                 return;
             }
+            if(document.getElementById('start_date').value==""){
+                alert('开课日期不能为空！');
+                return;
+            }
+            if(document.getElementById('end_date').value==""){
+                alert('结课日期不能为空！');
+                return;
+            }
             document.form.submit();
         }
         function returnPage() {
@@ -96,34 +104,16 @@
             <td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">入学年份:</td>
+            <td align="right" class="l-table-edit-td">开课日期:</td>
             <td align="left" class="l-table-edit-td">
-                <select name="start_year" id="start_year" ltype="select" ligeruiid="start_year">
-                    <?php for($i=0;$i<12;$i++){ ?>
-                        <?php if(@$start_year==($i+2014)){ ?>
-                            <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
-                        <?php } else {?>
-                            <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
-                        <?php } ?>
-                    <?php } ?>
-                </select>
-            </td>
-            <td align="left"></td>
+                <input name="start_date" type="text" id="start_date" ltype="date" value="<?php echo @$start_date?>" />
+            </td><td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">入学月份:</td>
+            <td align="right" class="l-table-edit-td">结课日期:</td>
             <td align="left" class="l-table-edit-td">
-                <select name="start_month" id="start_month" ltype="select" ligeruiid="start_month">
-                    <?php for($i=0;$i<12;$i++){ ?>
-                      <?php if(@$start_month==($i+1)){ ?>
-                          <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
-                      <?php } else {?>
-                          <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
-                      <?php } ?>
-                    <?php } ?>
-                </select>
-            </td>
-            <td align="left"></td>
+                <input name="end_date" type="text" id="end_date" ltype="date" value="<?php echo @$end_date?>" />
+            </td><td align="left"></td>
         </tr>
         <tr>
             <td align="right" class="l-table-edit-td" valign="top">性别:</td>
@@ -251,18 +241,6 @@
             <td align="right" class="l-table-edit-td">来校学习<br>的目的:</td>
             <td align="left" class="l-table-edit-td">
             <textarea cols="100" rows="4" class="l-textarea" id="purpose" name="purpose" maxlength="200" style="width:400px" ><?php echo @$purpose?></textarea>
-            </td><td align="left"></td>
-        </tr>
-        <tr>
-            <td align="right" class="l-table-edit-td">开课日期:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="start_date" type="text" id="start_date" ltype="date" value="<?php echo @$start_date?>" />
-            </td><td align="left"></td>
-        </tr>
-        <tr>
-            <td align="right" class="l-table-edit-td">结课日期:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="end_date" type="text" id="end_date" ltype="date" value="<?php echo @$end_date?>" />
             </td><td align="left"></td>
         </tr>
         <tr>
