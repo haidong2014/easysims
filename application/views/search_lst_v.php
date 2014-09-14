@@ -9,11 +9,11 @@
             { display: '课程名称', name: 'course_name', align: 'left', width: 160 },
             { display: '班主任', name: 'teacher_name', align:'left', width: 60 },
             { display: '学生名称', name: 'student_name', align: 'left', width: 60 },
-            { display: '学生性别', name: 'sex', align: 'left', width: 60 },
+            { display: '学生性别', name: 'sex_nm', align: 'left', width: 60 },
             { display: '学生年龄', name: 'age', align: 'left', width: 60 },
             { display: '学生原籍', name: 'ancestralhome', align: 'left', width: 160 },
             { display: '毕业学校', name: 'graduate_school', align: 'left', width: 160 },
-            { display: '学生学历', name: 'graduate', align: 'left', width: 60 },
+            { display: '学生学历', name: 'graduate_nm', align: 'left', width: 60 },
             { display: '学生专业', name: 'specialty', align: 'left', width: 160 },
             { display: '开课日期', name: 'start_date', align: 'left', width: 80 },
             { display: '毕业日期', name: 'end_date', align: 'left', width: 80 },
@@ -253,7 +253,7 @@
         </tr>
     </table>
     <br>
-        本科以上：1人(10%)&nbsp&nbsp本科：2人(20%)&nbsp&nbsp专科：3人(30%)&nbsp&nbsp专科以下：4人(40%)
+        本科以上：<?php echo @$graduate_1 ?>人(<?php echo @$graduate_p_1 ?>%)&nbsp&nbsp本科：<?php echo @$graduate_2 ?>人(<?php echo @$graduate_p_2 ?>%)&nbsp&nbsp专科：<?php echo @$graduate_3 ?>人(<?php echo @$graduate_p_3 ?>%)&nbsp&nbsp专科以下：<?php echo @$graduate_4 ?>人(<?php echo @$graduate_p_4 ?>%)
     <div id="maingrid" style="margin:0; padding:0"></div>
 </form>
 <div style="display:none;"></div>
