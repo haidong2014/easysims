@@ -19,8 +19,7 @@ class Search_c extends MY_Controller {
     public function search(){
         $data = array();
         $searchData = array();
-
-        log_message('info', "search_c index post:".var_export($_POST,true));
+        log_message('info', "search_c search post:".var_export($_POST,true));
 
         $start_year = $this->input->post('start_year');
         $start_month = $this->input->post('start_month');
@@ -34,8 +33,8 @@ class Search_c extends MY_Controller {
         $follow_salary_to = $this->input->post('follow_salary_to');
         $sex = $this->input->post('sex');
         $keyword = $this->input->post('txtKey');
+        $download_flg = $this->input->post('download_flg');
 
-        $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $data['start_year'] = $start_year;
         $data['start_month'] = substr('0'.$start_month,-2);
         $data['scores_from'] = $scores_from;
@@ -92,7 +91,24 @@ class Search_c extends MY_Controller {
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
 
-        log_message('info', "search_c search data:".var_export($data,true));
+        if($download_flg == "1"){
+            $this->load->library('PHPExcel');
+            $this->load->library('PHPExcel/IOFactory');
+
+            $objPHPExcel = new PHPExcel();
+            $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+
+            $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', iconv('gbk', 'utf-8', '中文Hello'))
+            ->setCellValue('B2', 'world!')
+            ->setCellValue('C1', 'Hello');
+
+            $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename=”Products_'.date('dMy').'.xls”');
+            header('Cache-Control: max-age=0');
+            $objWriter->save('php://output');
+        }
 
         $this->load->view('search_lst_v',$data);
     }
