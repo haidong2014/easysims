@@ -58,7 +58,7 @@ class Works_m extends MY_Model
         $this->db->set( 'course_id',         $data['course_id'] );
         $this->db->set( 'subject_id',        $data['subject_id'] );
         $this->db->set( 'student_id',        $data['student_id'] );
-        $this->db->set( 'works_no',          $data['works_no'] );
+        //$this->db->set( 'works_no',          $data['works_no'] );
         $this->db->set( 'works_name',        $data['works_name'] );
         $this->db->set( 'works_path',        $data['works_path'] );
         $this->db->set( 'works_description', $data['works_description'] );

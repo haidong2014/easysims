@@ -164,6 +164,7 @@ class Works_c extends MY_Controller {
         //$up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/';
         //mkdir($up_path,777);
         $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id;
+        $up_path2 = "".$class_id.'/'.$course_id.'/'.$subject_id;
         if(!file_exists($up_path)){
         	mkdir($up_path,0777,true);
         }
@@ -174,11 +175,12 @@ class Works_c extends MY_Controller {
         $varSecondName="second_name";
         $filename = date('YmdHmis');
         $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
 		$insData =array();
 		$insData['class_id'] = $class_id;
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
-        $insData['student_id'] = $userinfo ;
+        $insData['student_id'] = $user_id ;
         $insData['works_no'] ='111';
         $insData['works_name'] = $works_name;
         $insData['works_path']  = '';
@@ -189,43 +191,39 @@ class Works_c extends MY_Controller {
         $insData['insert_time'] = date('Y/m/d H:mi:s');
         $insData['update_user'] = $userinfo;
         $insData['update_time'] = date('Y/m/d H:mi:s');
-        echo $up_path;
-        
-        for($j=0;$j<count($_FILES["upfile"]["tmp_name"]);$j++){
-             //echo "upfile".$k."<br>";
-             $file=$_FILES["upfile"]["tmp_name"][$j];
-             $name=$_FILES["upfile"]["name"][$j];
-             
-             $imageUpload = self::uploadfile($up_path.$file, $name, $filename, $errmsg);
+
+        if(!empty($_FILES["upfile"]["tmp_name"])){
+
+             $file = $_FILES["upfile"]["tmp_name"];
+             $name = $_FILES["upfile"]["name"];
+             $imageUpload = self::uploadfile($file, $name, $up_path."/".$filename, $up_path2."/".$filename );
              $insData['works_path'] = $imageUpload;
-             if($errmsg=="" && !empty($imageUpload)){
+             
+             if( !empty($imageUpload)){
              		$this->works_m->insert($insData);
-            		
+	
              }	
         }
 
-        
-        $data['class_id'] = $class_id;
-        $data['course_id'] = $course_id;
-        $data['subject_id'] = $subject_id;
-        
-        redirect("works_c/work_lst/".$class_id."/".$course_id."/".$subject_id);
-    }
-    function uploadfile($file, $name, $filename, &$errmsg){
+       // echo "0002"."<br>";
 
-    	if (is_uploaded_file($file)) {
+        //echo ""."works_c/works_lst/".$class_id."/".$course_id."/".$subject_id;
+        redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
+    }
+    function uploadfile($file, $name, $filename, $filename2){
+		$ext="";
+    	//if (is_uploaded_file($file)) {
     		$temp = explode(".", $name);
     
     		if(count($temp)>1){
     			$ext=$temp[count($temp)-1];
     			
     		}else{
-    			$errmsg.="file can't be empty!";
+    			//$errmsg.="file can't be empty!";
     		}
-    
-    		if($errmsg==""){
-                $fullname = $filepath."/".$filename.".".$ext;
-                echo "fullname".$fullname;
+
+    		
+                $fullname = $filename.".".$ext;
                 if(file_exists($fullname)){
                   $fullname=$filepath."/".$filename."_".mt_rand(1,999999).".".$ext;
                 }
@@ -233,11 +231,11 @@ class Works_c extends MY_Controller {
     			} else {
     				echo "move_uploaded_file error";
     			}
-    		}
-    		return $fullname;
-    	}else{
-    		return "";
-    	}
+    		
+    		return $filename2.".".$ext;
+    	//}else{echo $errmsg."aabb";
+    		//return "";
+    	//}
     	
     }
 }
