@@ -17,7 +17,7 @@
         {
         }
     function returnPage() {
-      location.href = "<?php echo SITE_URL?>/works_c/work_lst";
+      location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
     }
     </script>
     <style type="text/css">
