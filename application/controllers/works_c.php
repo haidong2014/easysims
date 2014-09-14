@@ -1,5 +1,6 @@
 <?php
 class Works_c extends MY_Controller {
+	const ROOTPATH="/home/shengyi/www/easyss/";
     public function __construct()
     {
         parent::__construct("100102");
@@ -41,7 +42,7 @@ class Works_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
-
+		
         foreach($subjectData as &$temp){
             $temp['period']=$temp['period']."周";
             $worksData = $this->works_m->getWorksInfo($class_id,$course_id,$temp['subject_id']);
@@ -144,7 +145,7 @@ class Works_c extends MY_Controller {
     }
    public function works_upload_exec($class_id=null, $course_id=null, $subject_id=null){
         $data = array();
-
+	
 		$this->load->model('student_m','student_m');
         if (empty($class_id)) {
             $class_id = $this->input->post('class_id');
@@ -155,59 +156,66 @@ class Works_c extends MY_Controller {
         if (empty($subject_id)) {
             $subject_id = $this->input->post('subject_id');
         }
-        
+        $works_name = $this->input->post('works_name');
+        $works_description = $this->input->post('works_description');
+        $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id.'/';
         $varYear="year";
-         $varMonth="month";
-         $varDay="day";
-         $varSecondName="second_name";
-         $filename=$$varYear.$$varMonth.$$varDay;
-
-        //for($k=0;$k<6;$k++){
-           for($j=0;$j<count($_FILES["upfile"]["tmp_name"]);$j++){
+        $varMonth="month";
+        $varDay="day";
+        $varSecondName="second_name";
+        $filename = $$varYear.$$varMonth.$$varDay;
+        $userinfo = $this->session->userdata('user');
+		$insData =array();
+		$insData['class_id'] = $class_id;
+        $insData['course_id'] = $course_id
+        $$insData['subject_id'] = $subject_id ;
+        $insData['student_id'] = $userinfo ;
+        $insData['works_no'] ='111';
+        $insData['works_name'] = $works_name;
+        $insData['works_path']  = '';
+        $insData['works_description']= $works_description;
+        $insData['remarks']  = '';
+        $insData['delete_flg'] 0;
+        $insData['insert_user'] = $userinfo;
+        $insData['insert_time'] = date('Y/m/d H:mi:s');
+        $insData['update_user'] = $userinfo
+        $insData['update_time'] = date('Y/m/d H:mi:s');
+        mkdir($up_path,777);
+        for($j=0;$j<count($_FILES["upfile"]["tmp_name"]);$j++){
              //echo "upfile".$k."<br>";
-             $file=$_FILES["upfile".$k]["tmp_name"][$j];
-             $name=$_FILES["upfile".$k]["name"][$j];
-             $imageUpload = uploadfile($file, $name, $filename, $errmsg);
+             $file=$_FILES["upfile"]["tmp_name"][$j];
+             $name=$_FILES["upfile"]["name"][$j];
+             
+             $imageUpload = uploadfile($up_path.$file, $name, $filename, $errmsg);
+             $insData['works_path'] = $imageUpload;
              if($errmsg=="" && !empty($imageUpload)){
-            		$sql = " INSERT INTO images (name,second_name,path	 ) VALUES ( ";
-            		$sql.= $filename;
-            		$sql.=",'".$$varSecondName."'";
-            		$sql.=($imageUpload==""?",''":",'".$imageUpload."'");
-            		$sql.=");";
-            		//print "sql".$sql."<br>";
-            		if (!(mysql_query($sql))) {
-            			//err page 
-            		}
+             		$this->works-m->insert($insData);
+            		
              }	
-           }
-        //}
-        
+        }
+
         
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         
-        //$this->load->view('works_detail_v',$data);
         redirect("works_c/work_lst/".$class_id."/".$course_id."/".$subject_id);
     }
-    function uploadfile($file,$name,$filename,&$errmsg){
-    	$root="./";
-    
+    function uploadfile($file, $name, $filename, &$errmsg){
+
     	if (is_uploaded_file($file)) {
     		$temp = explode(".", $name);
     
     		if(count($temp)>1){
     			$ext=$temp[count($temp)-1];
-    			if(strtolower($ext)!="jpg" && strtolower($ext)!="png" && strtolower($ext)!="gif"){
-    				$errmsg.="not support file type!";
-    			}
+    			
     		}else{
     			$errmsg.="file can't be empty!";
     		}
     
     		if($errmsg==""){
-    			$filepath = $root."upload/image";
-                $fullname=$filepath."/".$filename.".".$ext;
+                $fullname = $filepath."/".$filename.".".$ext;
+                echo "fullname".$fullname;
                 if(file_exists($fullname)){
                   $fullname=$filepath."/".$filename."_".mt_rand(1,999999).".".$ext;
                 }
@@ -215,19 +223,7 @@ class Works_c extends MY_Controller {
     			} else {
     				echo "move_uploaded_file error";
     			}
-                $thumb = new Imagick($fullname);
-                $d = $thumb->getImageGeometry(); 
-                $w = intval($d['width']); 
-                $h = intval($d['height']); 
-                $newWidth = round(($w/$h)*300.0);
-                
-                $thumb->resizeImage($newWidth,300,Imagick::FILTER_LANCZOS,1);
-                $thumb->writeImage($fullname);
-                
-                $thumb->destroy(); 
-    			
     		}
-    		//return "../upload/tmp".$_SESSION['userid']."/".$filename.".".$ext;
     		return $fullname;
     	}else{
     		return "";

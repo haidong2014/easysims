@@ -41,6 +41,9 @@
     <br />
     <input type="submit" value="提交" class="l-button l-button-submit" />
         <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+            <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
     </form>
 </div>
 </body>

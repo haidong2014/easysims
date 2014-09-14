@@ -40,7 +40,7 @@
         }
         function regist_click()
         {
-			location.href = "works_add.html";
+			location.href = "<?php echo SITE_URL.'/works_c/works_upload_init/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
         }
         function returnPage() {
             location.href = "works_subject.html";
