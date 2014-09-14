@@ -1,6 +1,6 @@
 <?php
 class Works_c extends MY_Controller {
-	const ROOTPATH="/home/shengyi/www/easyss/";
+	const ROOTPATH="/home/shengyi/www/easyss/images/upload/";
     public function __construct()
     {
         parent::__construct("100102");
@@ -158,38 +158,48 @@ class Works_c extends MY_Controller {
         }
         $works_name = $this->input->post('works_name');
         $works_description = $this->input->post('works_description');
-        $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id.'/';
+        
+        //$up_path = self::ROOTPATH.$class_id.'/';
+       // mkdir($up_path,777);
+        //$up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/';
+        //mkdir($up_path,777);
+        $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id;
+        if(!file_exists($up_path)){
+        	mkdir($up_path,0777,true);
+        }
+        
         $varYear="year";
         $varMonth="month";
         $varDay="day";
         $varSecondName="second_name";
-        $filename = $$varYear.$$varMonth.$$varDay;
+        $filename = date('YmdHmis');
         $userinfo = $this->session->userdata('user');
 		$insData =array();
 		$insData['class_id'] = $class_id;
-        $insData['course_id'] = $course_id
-        $$insData['subject_id'] = $subject_id ;
+        $insData['course_id'] = $course_id;
+        $insData['subject_id'] = $subject_id ;
         $insData['student_id'] = $userinfo ;
         $insData['works_no'] ='111';
         $insData['works_name'] = $works_name;
         $insData['works_path']  = '';
         $insData['works_description']= $works_description;
         $insData['remarks']  = '';
-        $insData['delete_flg'] 0;
+        $insData['delete_flg'] =0;
         $insData['insert_user'] = $userinfo;
         $insData['insert_time'] = date('Y/m/d H:mi:s');
-        $insData['update_user'] = $userinfo
+        $insData['update_user'] = $userinfo;
         $insData['update_time'] = date('Y/m/d H:mi:s');
-        mkdir($up_path,777);
+        echo $up_path;
+        
         for($j=0;$j<count($_FILES["upfile"]["tmp_name"]);$j++){
              //echo "upfile".$k."<br>";
              $file=$_FILES["upfile"]["tmp_name"][$j];
              $name=$_FILES["upfile"]["name"][$j];
              
-             $imageUpload = uploadfile($up_path.$file, $name, $filename, $errmsg);
+             $imageUpload = self::uploadfile($up_path.$file, $name, $filename, $errmsg);
              $insData['works_path'] = $imageUpload;
              if($errmsg=="" && !empty($imageUpload)){
-             		$this->works-m->insert($insData);
+             		$this->works_m->insert($insData);
             		
              }	
         }
