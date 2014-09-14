@@ -24,32 +24,18 @@
             { display: '就业薪资', name: 'follow_salary', align: 'left', width: 60 },
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},searchData),
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
-    }
     function search_click(){
+        document.form.download_flg.value = "0";
         document.form.submit();
     }
     function download_click(){
+        document.form.download_flg.value = "1";
         document.form.submit();
     }
 </script>
@@ -249,6 +235,7 @@
             <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:350px" value="<?php echo @$txtKey ?>" />&nbsp
             <input id="search" type="submit" value=" 查 询 " onclick="search_click()"/>&nbsp
             <input id="search" type="button" value=" EXCEL批量下载 " onclick="download_click()" />
+            <input type="hidden" name="download_flg" id="download_flg"/>
         </td>
         </tr>
     </table>
