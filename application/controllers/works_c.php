@@ -180,7 +180,7 @@ class Works_c extends MY_Controller {
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
         $insData['student_id'] = $user_id ;
-        $insData['works_no'] ='111';
+        $insData['works_no'] ='';
         $insData['works_name'] = $works_name;
         $insData['works_path']  = '';
         $insData['works_description']= $works_description;
@@ -267,5 +267,40 @@ class Works_c extends MY_Controller {
 			
         $data = array_merge($data, $workData);
         $this->load->view('works_grade_v',$data);
+    }
+    
+    public function works_grade_exec(){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        $class_id = $this->input->post('class_id');
+        $course_id = $this->input->post('course_id');
+        $subject_id = $this->input->post('subject_id');
+        $works_no = $this->input->post('works_no');
+        
+        $works_scores = $this->input->post('works_scores');
+        $works_comment = $this->input->post('works_comment');
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['works_no'] = $works_no;
+       $insData =array();
+		$insData['class_id'] = $class_id;
+        $insData['course_id'] = $course_id;
+        $insData['subject_id'] = $subject_id ;
+        $insData['student_id'] = $user_id ;
+        $insData['works_no'] ='';
+        $insData['works_name'] = $works_name;
+        $insData['works_path']  = '';
+        $insData['works_description']= $works_description;
+        $insData['remarks']  = '';
+        $insData['delete_flg'] =0;
+        $insData['insert_user'] = $userinfo;
+        $insData['insert_time'] = date('Y/m/d H:mi:s');
+        $insData['update_user'] = $userinfo;
+        $insData['update_time'] = date('Y/m/d H:mi:s');
+        $this->works_m->update($insData);
+       
+        redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
 }
