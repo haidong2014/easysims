@@ -1747,10 +1747,15 @@ class CI_DB_active_record extends CI_DB_driver {
 		{
 			if (count($this->ar_where) > 0)
 			{
-				$sql .= "\nAND ";
+				$sql .= "\nAND (";
 			}
 
 			$sql .= implode("\n", $this->ar_like);
+
+			if (count($this->ar_where) > 0)
+			{
+				$sql .= ")";
+			}
 		}
 
 		// ----------------------------------------------------------------
