@@ -246,7 +246,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">成绩:</td>
             <td align="left" class="l-table-edit-td">
-                <input name="attendance" type="text" id="attendance" ltype='spinner' ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" value="<?php echo @$attendance;?>" />
+                <input name="scores" type="text" id="scores" ltype='spinner' ligerui="{type:'int'}" validate="{digits:true,min:1,max:100}" value="<?php echo @$scores;?>" />
             </td><td align="left"></td>
         </tr>
         <tr>

@@ -17,7 +17,7 @@
             { display: '学生专业', name: 'specialty', align: 'left', width: 160 },
             { display: '开课日期', name: 'start_date', align: 'left', width: 80 },
             { display: '毕业日期', name: 'end_date', align: 'left', width: 80 },
-            { display: '学生成绩', name: 'attendance', align: 'left', width: 60 },
+            { display: '学生成绩', name: 'scores', align: 'left', width: 60 },
             { display: '就业城市', name: 'job_city', align: 'left', width: 160 },
             { display: '就业企业', name: 'job_company', align: 'left', width: 160 },
             { display: '就业职位', name: 'follow_position', align: 'left', width: 160 },

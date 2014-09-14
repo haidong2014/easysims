@@ -48,7 +48,7 @@ class Student_m extends MY_Model
         $this->db->set( 'end_month',	    $data['end_month'] );
         $this->db->set( 'start_date',	    $data['start_date'] );
         $this->db->set( 'end_date',	        $data['end_date'] );
-        $this->db->set( 'attendance',	    $data['attendance'] );
+        $this->db->set( 'scores',	        $data['scores'] );
         $this->db->set( 'system_user',	    $data['system_user'] );
         $this->db->set( 'remarks',		    $data['remarks'] );
         $this->db->set( 'delete_flg',		$data['delete_flg'] );
@@ -151,7 +151,7 @@ class Student_m extends MY_Model
         $this->db->set( 'end_month',       $data['end_month'] );
         $this->db->set( 'start_date',	   $data['start_date'] );
         $this->db->set( 'end_date',	       $data['end_date'] );
-        $this->db->set( 'attendance',	   $data['attendance'] );
+        $this->db->set( 'scores',	       $data['scores'] );
         $this->db->set( 'system_user',	   $data['system_user'] );
         $this->db->set( 'remarks',		   $data['remarks'] );
         $this->db->set('update_user',      $data['update_user']);
@@ -211,7 +211,8 @@ class Student_m extends MY_Model
     }
 
     public function search($data){
-        $this->db->select('t1.*,t2.*,t3.class_name,t4.course_name,t5.teacher_name,t6.job_company,t6.job_city,t7.code_name as sex,t8.code_name as graduate');
+        $this->db->select('t1.*,t2.*,t3.class_name,t4.course_name,t5.teacher_name,t6.job_company,t6.job_city,' .
+                          't7.code_name as sex,t8.code_name as graduate');
         $this->db->from('ss_student t1');
         $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id', 'left');
         $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');
@@ -221,8 +222,56 @@ class Student_m extends MY_Model
         $this->db->join('ss_code t7', 't7.code_no=t1.sex and t7.code='."02", 'left');
         $this->db->join('ss_code t8', 't8.code_no=t2.graduate and t8.code='."06", 'left');
 
+        if (!empty($data['start_year'])) {
+            $this->db->where('t1.start_year', $data['start_year']);
+        }
+        if (!empty($data['start_month'])) {
+            $this->db->where('t1.start_month', $data['start_month']);
+        }
+        if (!empty($data['end_year'])) {
+            $this->db->where('t1.end_year', $data['end_year']);
+        }
+        if (!empty($data['end_month'])) {
+            $this->db->where('t1.end_month', $data['end_month']);
+        }
+        if (!empty($data['sex'])) {
+            $this->db->where('t1.sex', $data['sex']);
+        }
+        if (!empty($data['age'])) {
+            if ($data['age'] == "00") {
+                $this->db->where('t1.age < ', '18');
+            } else if ($data['age'] == "99") {
+                $this->db->where('t1.age > ', '30');
+            } else {
+                $this->db->where('t1.age', $data['age']);
+            }
+        }
+        if (!empty($data['graduate'])) {
+            $this->db->where('t2.graduate', $data['graduate']);
+        }
+        if (!empty($data['scores_from'])) {
+            $this->db->where('t1.scores >=', $data['scores_from']);
+        }
+        if (!empty($data['scores_to'])) {
+            $this->db->where('t1.scores <=', $data['scores_to']);
+        }
+        if (!empty($data['follow_salary_from'])) {
+            $this->db->where('t2.follow_salary >=', $data['follow_salary_from']);
+        }
+        if (!empty($data['follow_salary_to'])) {
+            $this->db->where('t2.follow_salary <=', $data['follow_salary_to']);
+        }
         if (!empty($data['txtKey'])) {
             $this->db->like('t1.student_name', $data['txtKey']);
+            $this->db->or_like('t3.class_name', $data['txtKey']);
+            $this->db->or_like('t4.course_name', $data['txtKey']);
+            $this->db->or_like('t5.teacher_name', $data['txtKey']);
+            $this->db->or_like('t2.ancestralhome', $data['txtKey']);
+            $this->db->or_like('t2.graduate_school', $data['txtKey']);
+            $this->db->or_like('t2.specialty', $data['txtKey']);
+            $this->db->or_like('t6.job_city', $data['txtKey']);
+            $this->db->or_like('t6.job_company', $data['txtKey']);
+            $this->db->or_like('t2.follow_position', $data['txtKey']);
         }
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id', 0);

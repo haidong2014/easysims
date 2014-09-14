@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `end_date` char(10) NULL,
   `end_year` char(4) NULL,
   `end_month` char(2) NULL,
-  `attendance` varchar(3) NULL,
+  `scores` int(3) NULL,
   `system_user` char(1) NULL,
   `remarks` varchar(1000) NULL,
   `delete_flg` char(1) NULL DEFAULT '0',

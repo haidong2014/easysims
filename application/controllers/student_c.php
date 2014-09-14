@@ -110,7 +110,7 @@ class Student_c extends MY_Controller {
         $data['start_month'] = $start_month;
         $data['end_year'] = $end_year;
         $data['end_month'] = $end_month;
-        $data['attendance'] = $this->input->post('attendance');
+        $data['scores'] = $this->input->post('scores');
         $system_user = $this->input->post('system_user');
         $data['system_user'] = $system_user;
         $data['remarks'] = $remarks;

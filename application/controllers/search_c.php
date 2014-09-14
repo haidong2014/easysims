@@ -37,13 +37,13 @@ class Search_c extends MY_Controller {
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $data['start_year'] = $start_year;
-        $data['start_month'] = $start_month;
+        $data['start_month'] = substr('0'.$start_month,-2);
         $data['scores_from'] = $scores_from;
         $data['scores_to'] = $scores_to;
         $data['age'] = $age;
         $data['graduate'] = $graduate;
         $data['end_year'] = $end_year;
-        $data['end_month'] = $end_month;
+        $data['end_month'] = substr('0'.$end_month,-2);
         $data['follow_salary_from'] = $follow_salary_from;
         $data['follow_salary_to'] = $follow_salary_to;
         $data['sex'] = $sex;
