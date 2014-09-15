@@ -75,9 +75,9 @@ class Search_c extends MY_Controller {
             }
         }
         if ($graduate_total != 0) {
-            $graduate_p_1 = round(($graduate_1 / $graduate_total)*100,2);
-            $graduate_p_2 = round(($graduate_2 / $graduate_total)*100,2);
-            $graduate_p_3 = round(($graduate_3 / $graduate_total)*100,2);
+            $graduate_p_1 = round(($graduate_1 / $graduate_total)*100,0);
+            $graduate_p_2 = round(($graduate_2 / $graduate_total)*100,0);
+            $graduate_p_3 = round(($graduate_3 / $graduate_total)*100,0);
             $graduate_p_4 = 100 - $graduate_p_1 - $graduate_p_2 - $graduate_p_3;
         }
         $data['graduate_1'] = $graduate_1;
@@ -89,27 +89,87 @@ class Search_c extends MY_Controller {
         $data['graduate_p_3'] = $graduate_p_3;
         $data['graduate_p_4'] = $graduate_p_4;
 
-        $data['searchData'] = @json_encode(array('Rows'=>$searchData));
-
         if($download_flg == "1"){
             $this->load->library('PHPExcel');
             $this->load->library('PHPExcel/IOFactory');
 
             $objPHPExcel = new PHPExcel();
-            $objPHPExcel->getProperties()->setTitle("export")->setDescription("none");
+            $objPHPExcel->setActiveSheetIndex(0);
+            $objPHPExcel->getActiveSheet()->setCellValue('A1', '班级名称');
+            $objPHPExcel->getActiveSheet()->setCellValue('B1', '课程名称');
+            $objPHPExcel->getActiveSheet()->setCellValue('C1', '班主任');
+            $objPHPExcel->getActiveSheet()->setCellValue('D1', '学生名称');
+            $objPHPExcel->getActiveSheet()->setCellValue('E1', '学生性别');
+            $objPHPExcel->getActiveSheet()->setCellValue('F1', '学生年龄');
+            $objPHPExcel->getActiveSheet()->setCellValue('G1', '学生原籍');
+            $objPHPExcel->getActiveSheet()->setCellValue('H1', '毕业学校');
+            $objPHPExcel->getActiveSheet()->setCellValue('I1', '学生学历');
+            $objPHPExcel->getActiveSheet()->setCellValue('J1', '学生专业');
+            $objPHPExcel->getActiveSheet()->setCellValue('K1', '开课日期');
+            $objPHPExcel->getActiveSheet()->setCellValue('L1', '毕业日期');
+            $objPHPExcel->getActiveSheet()->setCellValue('M1', '学生成绩');
+            $objPHPExcel->getActiveSheet()->setCellValue('N1', '就业城市');
+            $objPHPExcel->getActiveSheet()->setCellValue('O1', '就业企业');
+            $objPHPExcel->getActiveSheet()->setCellValue('P1', '就业职位');
+            $objPHPExcel->getActiveSheet()->setCellValue('Q1', '就业薪资');
 
-            $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', iconv('gbk', 'utf-8', '中文Hello'))
-            ->setCellValue('B2', 'world!')
-            ->setCellValue('C1', 'Hello');
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(12);
 
-            $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename=”Products_'.date('dMy').'.xls”');
-            header('Cache-Control: max-age=0');
+            $i = 2;
+            foreach($searchData as $temp){
+                $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $temp['class_name']);
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $temp['course_name']);
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $temp['teacher_name']);
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $temp['student_name']);
+                $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $temp['sex_nm']);
+                $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $temp['age']);
+                $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $temp['ancestralhome']);
+                $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $temp['graduate_school']);
+                $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $temp['graduate_nm']);
+                $objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $temp['specialty']);
+                $objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $temp['start_date']);
+                $objPHPExcel->getActiveSheet()->setCellValue('L'.$i, $temp['end_date']);
+                $objPHPExcel->getActiveSheet()->setCellValue('M'.$i, $temp['scores']);
+                $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $temp['job_city']);
+                $objPHPExcel->getActiveSheet()->setCellValue('O'.$i, $temp['job_company']);
+                $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $temp['follow_position']);
+                $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $temp['follow_salary']);
+
+                $i = $i + 1;
+            }
+
+            $date = substr(date("Y-m-d"),0,4).substr(date("Y-m-d"),5,2).substr(date("Y-m-d"),8,2);
+            $outputFileName = 'student_info_list_'.$date.'.xls';
+            $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+            header('Pragma: public');
+            header('Expires: 0');
+            header('Cache-Control:must-revalidate, post-check=0, pre-check=0');
+            header('Content-Type:application/force-download');
+            header('Content-Type:application/vnd.ms-execl');
+            header('Content-Type:application/octet-stream');
+            header('Content-Type:application/download');;
+            header('Content-Disposition:attachment;filename='.$outputFileName);
+            header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
         }
 
+        $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('search_lst_v',$data);
     }
 }
