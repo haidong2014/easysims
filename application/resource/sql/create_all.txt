@@ -423,6 +423,8 @@ INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1002", "100201", "obtain_employment_c", "就业信息录入", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100301", "search_c", "高级查询", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100302", "art_c", "作品展示", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100303", "student_ev_c", "学生评价查询", NOW(), NOW());
+INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1003", "100304", "teacher_ev_c", "教师评价查询", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100401", "course_c", "课程信息维护", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100402", "class_c", "班级信息维护", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1004", "100403", "teacher_c", "教师信息维护", NOW(), NOW());
