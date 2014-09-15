@@ -24,6 +24,8 @@ class MY_Controller extends CI_Controller
         //$url_id = 100201 就业信息录入
         //$url_id = 100301 高级查询
         //$url_id = 100302 作品展示
+        //$url_id = 100303 学生评价查询
+        //$url_id = 100304 教师评价查询
         //$url_id = 100401 课程信息维护
         //$url_id = 100402 班级信息维护
         //$url_id = 100403 教师信息维护
