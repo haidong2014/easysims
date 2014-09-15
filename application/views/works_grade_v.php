@@ -27,39 +27,9 @@
         $(function ()
         {
             $.metadata.setType("attr", "validate");
-            var v = $("form").validate({
-                debug: true,
-                errorPlacement: function (lable, element)
-                {
-                    if (element.hasClass("l-textarea"))
-                    {
-                        element.ligerTip({ content: lable.html(), target: element[0] });
-                    }
-                    else if (element.hasClass("l-text-field"))
-                    {
-                        element.parent().ligerTip({ content: lable.html(), target: element[0] });
-                    }
-                    else
-                    {
-                        lable.appendTo(element.parents("td:first").next("td"));
-                    }
-                },
-                success: function (lable)
-                {
-                    lable.ligerHideTip();
-                    lable.remove();
-                },
-                submitHandler: function ()
-                {
-                    $("form .l-text,.l-textarea").ligerHideTip();
-                    alert("Submitted!")
-                }
-            });
+            
             $("form").ligerForm();
-            $(".l-button-test").click(function ()
-            {
-                alert(v.element($("#txtName")));
-            });
+            
 
       		$("#pageloading").hide();
        		$("#works_scores").ligerComboBox();
@@ -98,7 +68,7 @@
             <tr>
                 <td align="right" class="l-table-edit-td">作品分数</td>
                 <td align="left" class="l-table-edit-td">
-                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="90" class="required" ltype="select" ligeruiid="works_scores" />
+                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="90" class="required" validate="{digits:true,min:1,max:100}"  />
                 </td><td align="left"></td>
             </tr>
             <tr>

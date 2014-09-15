@@ -180,7 +180,7 @@ class Works_c extends MY_Controller {
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
         $insData['student_id'] = $user_id ;
-        $insData['works_no'] ='';
+        $insData['works_no'] =$class_id.'-'.$course_id.'-'.$user_id.'-'.$subject_id.'-'.$filename;
         $insData['works_name'] = $works_name;
         $insData['works_path']  = '';
         $insData['works_description']= $works_description;
@@ -277,7 +277,8 @@ class Works_c extends MY_Controller {
         $course_id = $this->input->post('course_id');
         $subject_id = $this->input->post('subject_id');
         $works_no = $this->input->post('works_no');
-        
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
         $works_scores = $this->input->post('works_scores');
         $works_comment = $this->input->post('works_comment');
         $data['class_id'] = $class_id;
@@ -289,16 +290,17 @@ class Works_c extends MY_Controller {
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
         $insData['student_id'] = $user_id ;
-        $insData['works_no'] ='';
-        $insData['works_name'] = $works_name;
+        $insData['works_no'] =$works_no;
+        
         $insData['works_path']  = '';
-        $insData['works_description']= $works_description;
-        $insData['remarks']  = '';
+        $insData['works_scores']  = $works_scores;
+        $insData['works_comment']  = $works_comment;
         $insData['delete_flg'] =0;
         $insData['insert_user'] = $userinfo;
         $insData['insert_time'] = date('Y/m/d H:mi:s');
         $insData['update_user'] = $userinfo;
         $insData['update_time'] = date('Y/m/d H:mi:s');
+        
         $this->works_m->update($insData);
        
         redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);

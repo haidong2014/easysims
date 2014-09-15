@@ -81,6 +81,7 @@ class Works_m extends MY_Model
         $this->db->set( 'works_comment',  $data['works_comment'] );
         $this->db->set( 'update_user',    $data['update_user'] );
         $this->db->set( 'update_time',    $data['update_time'] );
+        log_message('info', "Works_m update sql:".$this->db->last_query());
         return $this->db->update( $this->table_name );
     }
 }
