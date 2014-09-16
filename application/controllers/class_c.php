@@ -36,10 +36,6 @@ class Class_c extends MY_Controller {
         $data['teacherData'] = $teacherData;
         $courseData = $this->course_m->getList(null);
         $data['courseData'] = $courseData;
-        $start_year = substr(date("Y-m-d"),0,4);
-        $start_month = substr(date("Y-m-d"),5,2);
-        $data['start_year'] = $start_year;
-        $data['start_month'] = $start_month;
 
         $this->load->view('class_add_v',$data);
     }
@@ -52,9 +48,12 @@ class Class_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['class_no'] = $this->input->post('class_no');
         $data['class_name'] = $this->input->post('class_name');
-        $data['start_year'] = $this->input->post('start_year');
-        $data['start_month'] = substr("0".$this->input->post('start_month'),-2);
-        $data['start_date'] = $this->input->post('start_date');
+        $start_date = $this->input->post('start_date');
+        $start_year = substr($start_date,0,4);
+        $start_month = substr($start_date,5,2);
+        $data['start_year'] = $start_year;
+        $data['start_month'] = $start_month;
+        $data['start_date'] = $start_date;
         $data['end_date'] = $this->input->post('end_date');
         $course_id = $this->input->post('course_id');
         $data['course_id'] = $course_id;
@@ -156,11 +155,11 @@ class Class_c extends MY_Controller {
         $course_id = $this->input->post('course_id');
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id);
 
-        foreach($subjectData as &$value){
-            $subject= $this->subject_m->getOne($course_id,$value['subject_id']);
-            $value['subject_name'] = $subject['subject_name'];
-            $value['period'] = $subject['period'];
-        }
+        //foreach($subjectData as &$value){
+        ///    $subject= $this->subject_m->getOne($course_id,$value['subject_id']);
+        //    $value['subject_name'] = $subject['subject_name'];
+        //    $value['period'] = $subject['period'];
+        //}
 
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
         $data['class_id'] = $class_id;

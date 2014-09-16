@@ -1,13 +1,10 @@
 ﻿<?php require_once("_header.php");?>
-
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerDateEditor.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
 <script type="text/javascript">
     var subjectData = <?php echo $subjectData?>;
     var teacherData = <?php echo $teacherData?>;
-     //var subjectData = {"Rows":[{"class_id":"1001","course_id":"1000","subject_id":"2","start_date":"2014-9-9","end_date":"2014-9-10","teacher_id":"1001","subject_name":"kemu1","period":"1"}]};
-    //var teacherData = [{"teacher_id":"1000","teacher_name":"li1"},{"teacher_id":"1001","teacher_name":"li2"}];
     var manager, g;
     $(function () {
         alert("请继续设定课程的科目信息！");
@@ -54,11 +51,9 @@
             },
             enabledEdit: true,clickToEdit:false, isScroll: false,
             data: subjectData,
-            width: '100%', height: '97%',
+            width: '100%', height: '80%',
             rownumbers: true,
             fixedCellHeight:false
-
-
         });
         $("#pageloading").hide();
     });
@@ -66,84 +61,73 @@
         manager.beginEdit(rowid);
     }
     function getYmd(date){
-		//alert(date);
-    	if(date==undefined){return;}
-    	
-    	var year = date.getYear();
-    	if(year<2000){
-    		year = year+1900;
-    	}
-    	var month = date.getMonth()+1;
-    	var day= date.getDate();
-    	var result = ''+ year;
-    	if(month<10){
-    		result+='-0'+month;
-    	}else{
-    		result+='-'+month;
-    	}
-    	//alert('day'+day);
-    	if(day<10){
-    		result+='-0'+day;
-    	}else{
-    		result+='-'+day;
-    	}
-    	return result;
+        if(date==undefined){return;}
+
+        var year = date.getYear();
+        if(year<2000){
+            year = year+1900;
+        }
+        var month = date.getMonth()+1;
+        var day= date.getDate();
+        var result = ''+ year;
+        if(month<10){
+            result+='-0'+month;
+        }else{
+            result+='-'+month;
+        }
+        if(day<10){
+            result+='-0'+day;
+        }else{
+            result+='-'+day;
+        }
+        return result;
     }
-    function endEdit(rowid)
-    {
-    	var oldrow = g.getSelectedRow();
-    	old_start = oldrow['start_date'];
-    	old_end = oldrow['end_date'];
-    	old_teacher_id = oldrow['teacher_id'];
-    	//alert(old_start+old_end+old_teacher_id);
+
+    function endEdit(rowid){
+        var oldrow = g.getSelectedRow();
+        old_start = oldrow['start_date'];
+        old_end = oldrow['end_date'];
+        old_teacher_id = oldrow['teacher_id'];
         var manager = $("#maingrid").ligerGetGridManager();
         manager.endEdit(rowid);
         var row = manager.getSelectedRow();
         var start = "";
         var end = "";
         var subject_id = row['subject_id'];
+        var teacher_id = row['teacher_id'];
         var class_id = document.getElementById('class_id').value;
         var course_id = document.getElementById('course_id').value;
-         //alert(start);
         if(row['start_date']==undefined){
-        	start = old_start;
+            start = old_start;
         }else{
-        	start = getYmd(row['start_date']);
+            start = getYmd(row['start_date']);
         }
         if(row['end_date']==undefined){
-        	end = old_end;
+            end = old_end;
         }else{
-        	end = getYmd(row['end_date']);
+            end = getYmd(row['end_date']);
         }
         if(teacher_id==undefined){
-        	teacher_id = old_teacher_id;
+            teacher_id = old_teacher_id;
         }
         row['start_date'] = start;
         row['end_date'] = end;
         row['teacher_id'] = teacher_id;
         g.reRender({ rowdata: row });
-        //alert(start+'/'+getYmd(start));return;
-        //alert(getYmd(start));
-		var teacher_id = row['teacher_id'];
-		//alert(class_id+'/'+course_id+'/'+subject_id+'/' +start+'/'+end+'/'+teacher_id+'/');
-		if(start==undefined || end==undefined || teacher_id==""){
-			alert('请确认数据全部输入了。');return;
-		}
-		var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + start+'/'+end+'/'+teacher_id+'/<?php echo $user;?>';
-	//alert(requestUrl);
-		//alert(class_id+'/'+course_id+'/'+subject_id+'/' + getYmd(start)+'/'+getYmd(end)+'/'+teacher_id);
+        var teacher_id = row['teacher_id'];
+        if(start==undefined || end==undefined || teacher_id==""){
+            alert('请确认数据全部输入了。');return;
+        }
+        var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + start+'/'+end+'/'+teacher_id;
         var jqxhr = $.post(requestUrl, function(data) {
                 showMsg(data);
             });
     }
     function showMsg(data){
-    	
-          if (data != "") {
-              alert(data.replace(/\"/g, ""));
-              //document.form.txtUser.value = "";
-              //document.form.txtPassword.value = "";
-          }
-        }
+      if (data != "") {
+          alert(data.replace(/\"/g, ""));
+      }
+    }
     function returnPage() {
         class_id = document.form.class_id.value;
         location.href='<?php echo SITE_URL;?>/class_c/upd_class_init/'+class_id;
@@ -160,12 +144,10 @@
 
 <body style="padding:10px">
 <div id="pageloading"></div>
-<div id="maingrid" style="margin:0; padding:0;height:500px;"></div>
 <form name="form" method="post" action="" id="form">
-  <br />
-  
-  <br />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    <input type="button" value="返回" onclick="returnPage()"/>
+    <br>
+    <div id="maingrid" style="margin:0; padding:0;height:500px;"></div>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id ?>" />
 </form>

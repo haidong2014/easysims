@@ -10,12 +10,12 @@
             { display: '周期', name: 'period', align: 'left', width: 80 },
             { display: '开始日期', name: 'start_date', align: 'left', width: 120 },
             { display: '结束日期', name: 'end_date', align: 'left', width: 120 },
-            { display: '任课教师', name: 'teacher', align: 'left', width: 120 }
+            { display: '任课教师', name: 'teacher_name', align: 'left', width: 120 }
             ],
             pageSize:10,
             where : f_getWhere(),
             data: $.extend(true,{},subjectData),
-            width: '100%',height:'90%'
+            width: '100%',height:'60%'
         });
 
         $("#pageloading").hide();
@@ -52,9 +52,9 @@
 <body style="padding:10px">
 <div id="pageloading"></div>
 <form name="form" method="post" action="" id="form">
-  <br />
-  <div id="maingrid" style="margin:0; padding:0"></div>
-  <br />
+    <br>
+    <div id="maingrid" style="margin:0; padding:0"></div>
+    <br>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id ?>" />
