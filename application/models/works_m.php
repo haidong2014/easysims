@@ -75,13 +75,14 @@ class Works_m extends MY_Model
         $this->db->where('class_id',      $data['class_id']);
         $this->db->where('course_id',     $data['course_id']);
         $this->db->where('subject_id',    $data['subject_id']);
-        $this->db->where('student_id',    $data['student_id']);
+       // $this->db->where('student_id',    $data['student_id']);
         $this->db->where('works_no',      $data['works_no']);
         $this->db->set( 'works_scores',   $data['works_scores'] );
         $this->db->set( 'works_comment',  $data['works_comment'] );
         $this->db->set( 'update_user',    $data['update_user'] );
         $this->db->set( 'update_time',    $data['update_time'] );
+        $ret= $this->db->update( $this->table_name );
         log_message('info', "Works_m update sql:".$this->db->last_query());
-        return $this->db->update( $this->table_name );
+        return $ret;
     }
 }

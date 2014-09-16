@@ -300,7 +300,7 @@ class Works_c extends MY_Controller {
         $insData['insert_time'] = date('Y/m/d H:mi:s');
         $insData['update_user'] = $userinfo;
         $insData['update_time'] = date('Y/m/d H:mi:s');
-        
+        //var_dump($insData);
         $this->works_m->update($insData);
        
         redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);

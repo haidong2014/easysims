@@ -56,25 +56,25 @@
         <tr>
                 <td align="right" class="l-table-edit-td">作品名称</td>
                 <td align="left" class="l-table-edit-td">
-                    作品名称
+                    <?php echo $works_name?>
                 </td><td align="left"></td>
             </tr>
         <tr>
                 <td align="right" class="l-table-edit-td">作品作者</td>
                 <td align="left" class="l-table-edit-td">
-                    作品作者
+                   <?php echo $student_name;?>
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品分数</td>
                 <td align="left" class="l-table-edit-td">
-                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="90" class="required" validate="{digits:true,min:1,max:100}"  />
+                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $works_scores?>" class="required" validate="{digits:true,min:1,max:100}"  />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品点评</td>
                 <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" name="works_comment" id="works_comment" style="width:400px"></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" name="works_comment" id="works_comment" style="width:400px"><?php echo $works_comment?></textarea>
                 </td><td align="left"></td>
             </tr>
         </table>
