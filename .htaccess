@@ -1,6 +1,6 @@
 RewriteEngine On
-RewriteBase /easyss/
+RewriteBase /easysims/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|css|user_guide|.+\.gif$|.+\.jpg$|.+\.png$|.+\.js$)
-RewriteRule ^(.+)$ /easyss/index.php?/$1 [L]
+RewriteRule ^(.+)$ /easysims/index.php?/$1 [L]
