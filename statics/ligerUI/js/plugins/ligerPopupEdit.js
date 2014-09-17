@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.4
 * 
 * http://ligerui.com
 *  
@@ -37,7 +37,7 @@
         parms: null,
         onSelect: null,    //选择事件,可阻止
         onSelected: null,  //选择后事件
-        valueFieldCssClass : null
+        valueFieldCssClass: null
     };
 
 
@@ -98,6 +98,8 @@
             g.wrapper.append('<div class="l-text-l"></div><div class="l-text-r"></div>');
             g.wrapper.append(g.link);
             g.wrapper.append(g.valueField);
+            //修复popup控件没有data-ligerid的问题
+            g.valueField.attr("data-ligerid", g.id);
             g.inputText.addClass("l-text-field");
             //开关 事件
             g.link.hover(function ()
@@ -225,8 +227,8 @@
                 g.inputText.height(value - 2);
             }
         },
-        getData : function()
-        { 
+        getData: function ()
+        {
             var g = this, p = this.options;
             var data = [];
             var v = $(g.valueField).val(), t = $(g.inputText).val();
@@ -332,9 +334,19 @@
             var g = this, p = this.options;
             var gridOptions = $.extend({
                 parms: p.parms
-            }, p.grid); 
+            }, p.grid);
+            
             this.bind('buttonClick', function ()
             {
+                function getLastSelected()
+                {
+                    try{
+                        return g.getData();
+                    } catch (e)
+                    {
+                        return null;
+                    }
+                }
                 if (!g.popupFn)
                 {
                     var options = {
@@ -343,7 +355,7 @@
                         valueField: p.valueField,
                         textField: p.textField,
                         split: p.split,
-                        lastSelected : g.getData(),
+                        lastSelected: getLastSelected(),
                         onSelect: function (e)
                         {
                             if (g.trigger('select', e) == false) return;
@@ -357,7 +369,7 @@
                                 g.setText(e.text);
                             }
                             g.trigger('selected', e);
-                        }, 
+                        },
                         selectInit: function (rowdata)
                         {
                             var value = g.getValue();
@@ -377,7 +389,7 @@
 
     //创建一个可查询、可分页列表的选取弹出框 需要dialog,grid,form等插件的支持
     $.ligerui.getPopupFn = function (p)
-    { 
+    {
         p = $.extend({
             title: '选择数据',     //窗口标题
             width: 700,            //窗口宽度     
@@ -393,7 +405,7 @@
             selectInit: function (rowdata) { return false }  //选择初始化
         }, p);
         if (!p.grid) return;
-        var win, grid, condition, lastSelected = p.lastSelected || []; 
+        var win, grid, condition, lastSelected = p.lastSelected || [];
         return function ()
         {
             show();
@@ -420,11 +432,11 @@
             var gridPanel = $("<div></div>");
             panle.append(conditionPanel).append(gridPanel);
             if (p.condition)
-            {
+            { 
                 var conditionParm = $.extend({
                     labelWidth: 60,
                     space: 20
-                }, p.condition); 
+                }, p.condition);
                 condition = conditionPanel.ligerForm(conditionParm);
             } else
             {
@@ -486,7 +498,7 @@
 
             grid.refreshSize();
         }
-        function exist(value,data)
+        function exist(value, data)
         {
             for (var i = 0; data && data[i]; i++)
             {
@@ -508,7 +520,7 @@
                 data.push(o);
             });
             var unSelected = [];
-            $(lastSelected).each(function (i,item)
+            $(lastSelected).each(function (i, item)
             {
                 if (!exist(item[p.valueField], selected) && exist(item[p.valueField], grid.rows))
                 {

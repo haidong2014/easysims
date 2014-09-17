@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.4
 * 
 * http://ligerui.com
 *  
@@ -274,6 +274,11 @@
                 g.inputText.removeClass("l-text-field-null");
             }
             g.checkValue();
+        },
+        setValue: function (value)
+        {
+            this._setValue(value);
+            this.trigger('changeValue', [value]);
         }
     });
 

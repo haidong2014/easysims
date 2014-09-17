@@ -15,8 +15,7 @@
 {
     display:block; 
      height:22px; overflow:hidden; line-height:22px; position:relative; 
-     padding-left:15px; padding-right:15px; cursor:pointer;
-   
+     padding-left:15px; padding-right:15px; cursor:pointer; 
      text-align:center;color: #2C4D79;  text-decoration:none; cursor:pointer;
 }
 .l-panel-btn .l-panel-btn-l,.l-panel-btn .l-panel-btn-r{ display:none;}
@@ -81,9 +80,9 @@ background: url('../images/panel/header-bg.gif') repeat-x left -1px; position:re
 .l-grid-empty .l-grid-body-inner {
 	width:100%;
 }
-.l-grid-hashorizontal .l-grid-body1 .l-grid-body-inner {
-	margin-bottom:19px;
-}
+.l-grid-hashorizontal .l-grid-body1 .l-jplace {
+	height:19px;
+} 
 .l-grid td div
 {
     font-size:12px;
@@ -413,6 +412,7 @@ height: 22px;
 border: 0px;
 cursor: pointer;
 overflow: hidden;
+margin-top: 4px;
 }
 .l-bar-button-over
 {

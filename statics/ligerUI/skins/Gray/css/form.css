@@ -69,7 +69,7 @@ border-color: #F77;
 .l-trigger,.l-trigger-hover,.l-trigger-pressed
 {
     top:0px;right:0px;
-    width:16px;height:100%; border:0px; 
+    width:16px;height:100% !important;height:20px; border:0px; 
     background:none;
 }  
 /* 下拉框/日期 取消选择 */

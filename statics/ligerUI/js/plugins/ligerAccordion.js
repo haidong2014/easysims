@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.5
 * 
 * http://ligerui.com
 *  
@@ -65,6 +65,8 @@
                 $(box).before(header);
                 if (!$(box).hasClass("l-accordion-content")) $(box).addClass("l-accordion-content");
             });
+            $(".l-accordion-header", g.accordion).removeClass("l-accordion-header-downfirst");
+            $(".l-accordion-content:visible", g.accordion).next(".l-accordion-header:first").addClass("l-accordion-header-downfirst");
 
             //add Even
             $(".l-accordion-toggle", g.accordion).each(function ()
@@ -118,6 +120,8 @@
                     .addClass("l-accordion-toggle-close");
                     $(this).next(".l-accordion-content").hide(p.speed);
                 }
+                $(".l-accordion-header", g.accordion).removeClass("l-accordion-header-downfirst");
+                $(".l-accordion-content:visible", g.accordion).next(".l-accordion-header:first").addClass("l-accordion-header-downfirst");
             });
             //init
             g.headerHoldHeight = 0;

@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.4
 * 
 * http://ligerui.com
 *  
@@ -33,7 +33,7 @@
         onLoaded: null,
         onClose: null,
         onRegain: null,
-        onMax:null,
+        onMax: null,
         modal: false     //是否模态窗口
     };
 
@@ -128,13 +128,14 @@
             //拖动支持
             if ($.fn.ligerDrag)
             {
-                g.draggable = g.window.drag = g.window.ligerDrag({ handler: '.l-window-header-inner', onStartDrag: function ()
-                {
-                    g.active();
-                }, onStopDrag: function ()
-                {
-                    g._saveStatus();
-                }, animate: false
+                g.draggable = g.window.drag = g.window.ligerDrag({
+                    handler: '.l-window-header-inner', onStartDrag: function ()
+                    {
+                        g.active();
+                    }, onStopDrag: function ()
+                    {
+                        g._saveStatus();
+                    }, animate: false
                 });
             }
             //改变大小支持

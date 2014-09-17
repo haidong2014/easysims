@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.5
 * 
 * http://ligerui.com
 *  
@@ -46,7 +46,7 @@
             Form_condition: 'Form',
             Form_popup: 'PopupEdit',
             Form_buttons: 'Button',
-            Portal_panel:'Panel'
+            Portal_panel: 'Panel'
         },
         /*
         config里面配置了某插件参数或者复杂属性参数的类型(动态加载、数组、默认参数)
@@ -106,7 +106,7 @@
             CheckBoxList: {
                 dynamics: 'data,parms'
             },
-            Panel: { 
+            Panel: {
             },
             Portal: {
                 //动态
@@ -116,7 +116,7 @@
                 //复杂属性 columns
                 columns: {
                     dynamics: 'panels',
-                    arrays: 'panels' 
+                    arrays: 'panels'
                 },
                 //复杂属性 rows
                 rows: {
@@ -222,7 +222,7 @@
                     value = g.parse(jelement.attr("data-" + proName) || jelement.attr(proName));
                     if (value)
                     {
-                        options[proName] = g.fotmatValue(value);
+                        options[proName] = g.fotmatValue(value, typeof (defaults[proName]));
                     }
                 }
                     //默认处理
@@ -231,7 +231,7 @@
                     value = jelement.attr("data-" + proName) || jelement.attr(proName);
                     if (value)
                     {
-                        options[proName] = g.fotmatValue(value);
+                        options[proName] = g.fotmatValue(value, typeof (defaults[proName]));
                     }
                 }
             }
@@ -260,8 +260,8 @@
                     var jelement = $(this), value;
                     var defaults = $.extend({
                         onrender: null,
-                        onrendered : null 
-                    }, liger.defaults[controlName]); 
+                        onrendered: null
+                    }, liger.defaults[controlName]);
                     var options = g.getOptions({
                         defaults: defaults,
                         controlName: controlName,

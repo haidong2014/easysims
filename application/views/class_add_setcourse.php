@@ -120,13 +120,8 @@
         }
         var requestUrl= "<?php echo SITE_URL.'/class_c/update_subject/';?>"+class_id+'/'+course_id+'/'+subject_id+'/' + start+'/'+end+'/'+teacher_id;
         var jqxhr = $.post(requestUrl, function(data) {
-                showMsg(data);
+                return;
             });
-    }
-    function showMsg(data){
-      if (data != "") {
-          alert(data.replace(/\"/g, ""));
-      }
     }
     function returnPage() {
         class_id = document.form.class_id.value;

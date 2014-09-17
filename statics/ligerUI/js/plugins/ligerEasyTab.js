@@ -1,5 +1,5 @@
 ﻿/**
-* jQuery ligerUI 1.2.3
+* jQuery ligerUI 1.2.4
 * 
 * http://ligerui.com
 *  
@@ -53,7 +53,10 @@
                 if (i == selectedIndex)
                     $("span", li).addClass("l-selected");
                 if ($(box).attr("title"))
+                {
                     $("span", li).html($(box).attr("title"));
+                    $(box).removeAttr("title");
+                }
                 g.tabs.ul.append(li);
                 if (!$(box).hasClass("l-easytab-panelbox")) $(box).addClass("l-easytab-panelbox");
             });

@@ -29,7 +29,7 @@ margin-left: 40px;
 /* -------------
    * 多行文本框颜色 *
 * ------------- */ 
-.l-textarea{border:1px solid #A8AAAD; margin-left:-1px;outline:none;}
+.l-textarea{border:1px solid #A8AAAD; outline:none;}
  .l-textarea:hover{border-color:#01AAEE;}
 .l-textarea-invalid,.l-textarea:focus{ border-color:#FF8801;}
 .l-textarea-invalid{border-color:#FF7777; background:#FFEEEE url(../images/common/invalid-line.gif) repeat-x bottom;}
@@ -101,7 +101,7 @@ margin-left: 40px;
     cursor:pointer;
     position:absolute;
     top:1px;right:1px;
-    width:16px;height:16px;
+    width:16px; height:16px; 
     overflow:hidden;
 }
 .l-trigger
@@ -466,4 +466,87 @@ div.l-disabled a.l-radio-checked
 
 .l-box-select .l-grid-row {
 	cursor: pointer;
+}
+
+/* l-form-tabs */
+.l-form-tabs {
+    position: relative;
+    padding: 4px;
+    zoom: 1;
+    padding: 0;
+    background: none;
+    border-width: 0;
+}
+
+.l-form-tabs .ui-tabs-nav {
+    margin: 0;
+    padding: .2em .2em 0;
+    padding-left: 0;
+    background: transparent;
+    border-width: 0;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    line-height: 0.8em;
+    font-size: 95%;
+    color: #555;
+}
+
+.l-form-tabs .ui-tabs-nav li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 1px;
+    margin: 0 .2em 1px 0;
+    border-bottom: 0 !important;
+    padding: 0;
+    white-space: nowrap;
+    line-height: 24px;
+    cursor:pointer;
+}
+
+.l-form-tabs .ui-tabs-nav li a {
+    float: left;
+    padding:  0px 10px;
+    text-decoration: none;
+}
+
+.l-form-tabs .ui-tabs-nav li.ui-tabs-selected {
+    margin-bottom: 0;
+    padding-bottom: 1px;
+}
+
+.l-form-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    cursor: text;
+}
+
+.l-form-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    cursor: pointer;
+}
+
+.l-form-tabs .ui-tabs-panel {
+    display: block;
+    border-width: 0; 
+    background: none;
+    padding: 6px; padding-bottom:20px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.l-form-tabs .ui-tabs-hide {
+    display: none !important;
+}
+
+.l-form-tabs ul.ui-tabs-nav li {
+    font-weight: bold;
+}
+
+.l-form-tabs .ui-tabs-panel {
+    background: #fefefe;
+    border-width: 1px;
+}
+
+.l-form-tabs .ui-tabs-selected {
+    background: #fefefe;
 }
