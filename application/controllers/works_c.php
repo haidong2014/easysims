@@ -87,7 +87,7 @@ class Works_c extends MY_Controller {
 			$value['remarks']="<a href=\"".SITE_URL."/works_c/works_grade/".$value['class_id']."/".
                                 $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">点评</a>";
 			$value['works_no']="<a href=\"".SITE_URL."/works_c/works_detail/".$value['class_id']."/".
-                                $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">".$value['subject_id']."</a>";
+                                $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">".$value['works_no']."</a>";
         	
 		}
         $data['workData'] = @json_encode(array('Rows'=>$workData));
@@ -187,9 +187,9 @@ class Works_c extends MY_Controller {
         $insData['remarks']  = '';
         $insData['delete_flg'] =0;
         $insData['insert_user'] = $userinfo;
-        $insData['insert_time'] = date('Y/m/d H:mi:s');
+        $insData['insert_time'] = date("Y-m-d H:i:s");
         $insData['update_user'] = $userinfo;
-        $insData['update_time'] = date('Y/m/d H:mi:s');
+        $insData['update_time'] = date("Y-m-d H:i:s");
 
         if(!empty($_FILES["upfile"]["tmp_name"])){
 
@@ -297,11 +297,29 @@ class Works_c extends MY_Controller {
         $insData['works_comment']  = $works_comment;
         $insData['delete_flg'] =0;
         $insData['insert_user'] = $userinfo;
-        $insData['insert_time'] = date('Y/m/d H:mi:s');
+        $insData['insert_time'] = date("Y-m-d H:i:s");
         $insData['update_user'] = $userinfo;
-        $insData['update_time'] = date('Y/m/d H:mi:s');
+        $insData['update_time'] = date("Y-m-d H:i:s");
         //var_dump($insData);
         $this->works_m->update($insData);
+       
+        redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
+    }
+    public function works_download_exec(){
+        $data = array();
+
+		$this->load->model('student_m','student_m');
+        $class_id = $this->input->post('class_id');
+        $course_id = $this->input->post('course_id');
+        $subject_id = $this->input->post('subject_id');
+        $works_no = $this->input->post('works_no');
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $works_scores = $this->input->post('works_scores');
+        $works_comment = $this->input->post('works_comment');
+        $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
+		foreach($workData as &$value){
+		}
        
         redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
