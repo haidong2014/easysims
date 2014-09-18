@@ -15,28 +15,12 @@ $(function () {
         { display: '操作', name: 'opt', align: 'center', width: 120}
         ],
         pageSize:10,
-        where : f_getWhere(),
         data: $.extend(true,{},studentsData),
         width: '100%',height:'100%'
     });
 
     $("#pageloading").hide();
 });
-function f_search()
-{
-    grid.options.data = $.extend(true, {}, CustomersData);
-    grid.loadData(f_getWhere());
-}
-function f_getWhere()
-{
-    if (!grid) return null;
-    var clause = function (rowdata, rowindex)
-    {
-        var key = $("#txtKey").val();
-        return rowdata.CustomerID.indexOf(key) > -1;
-    };
-    return clause;
-}
 function goreg(){
     var mode = document.form.mode.value;
     var class_id = document.form.class_id.value;

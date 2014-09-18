@@ -18,28 +18,12 @@
             { display: '备注', name: 'remarks', align: 'left', width: 300 }
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},classData),
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
-    }
     function search_click()
     {
         document.form.submit();

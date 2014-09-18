@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  lang="zh-cn">
 <head>
-    <title>易用学生管理系统</title>
+    <title>学生信息管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo SITE_URL;?>/statics/default.css" rel="stylesheet" type="text/css" />
@@ -55,7 +55,7 @@
 <body style="padding:0px;background:#EAEEF5;">
     <div id="pageloading"></div>
     <div id="topmenu" class="l-topmenu">
-    <div ><font color=white size="4">&nbsp&nbsp易用学生信息管理系统</font></div>
+    <div ><font color=white size="4">&nbsp&nbsp学生信息管理系统</font></div>
     <div class="l-topmenu-welcome">
          <font color=white><?php echo $username;?></font>&nbsp&nbsp&nbsp&nbsp&nbsp<a href="<?php echo SITE_URL;?>/menu_c/logout" class="l-link2">退出</a>
     </div>

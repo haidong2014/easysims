@@ -10,29 +10,12 @@
             { display: '操作', name: 'opt', width: 160 }
             ],  
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},usergroupsData), 
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, UsergroupsData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause; 
-    }
-
     function regist_click()
     {
         location.href='<?php echo SITE_URL;?>/usergroups_c/add_usergroups_init';

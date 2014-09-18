@@ -14,28 +14,12 @@
             { display: '旷课次数', name: 'status_4' , width: 80}
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},studentData),
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
-    }
     function attendance_click(){
         var class_id = document.form.class_id.value;
         location.href = '<?php echo SITE_URL;?>/attendance_c/add_attendance_init/' + class_id;

@@ -13,28 +13,12 @@
             { display: '任课教师', name: 'teacher_name', align: 'left', width: 120 }
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},subjectData),
             width: '100%',height:'60%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
-    }
     function returnPage() {
         class_id = document.form.class_id.value;
         location.href='<?php echo SITE_URL;?>/class_c/view_class_init/'+class_id;

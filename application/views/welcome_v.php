@@ -33,9 +33,9 @@
         }
     </style>
 </head>
-<body style="background: white; font-size: 12px;"> 
- 
-    <h2>欢迎使用易用学生信息管理系统</h2>
+<body style="background: white; font-size: 12px;">
+
+    <h2>欢迎使用学生信息管理系统</h2>
     <p class="l-log-content">产品功能介绍</p>
 </body>
 </html>

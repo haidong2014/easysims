@@ -15,28 +15,12 @@
             { display: '状态', name: 'code_name', align: 'left', width: 80 }
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},classData),
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
-    }
 </script>
 </head>
 <body style="padding:6px; overflow:hidden;">
