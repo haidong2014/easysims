@@ -211,8 +211,8 @@ class Student_m extends MY_Model
     }
 
     public function search($data){
-        $this->db->select('t1.*,t2.*,t3.class_name,t4.course_name,t5.teacher_name,t6.job_company,t6.job_city,' .
-                          't7.code_name as sex_nm,t8.code_name as graduate_nm');
+        $this->db->select('t1.*,t2.*,t3.class_name,t4.course_name,t5.teacher_id,t5.teacher_name,t6.job_company,' .
+                          't6.job_city,t6.job_id,t7.code_name as sex_nm,t8.code_name as graduate_nm');
         $this->db->from('ss_student t1');
         $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id', 'left');
         $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');

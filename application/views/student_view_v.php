@@ -262,7 +262,9 @@
     <input type="hidden" name="student_no_old" id="student_no_old" value="<?php echo @$student_no?>" />
     <input type="hidden" name="mode" id="mode" value="<?php echo @$mode?>" />
     <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()" />
+    <?php if ($show_mode == "0") { ?>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()" />
+    <?php } ?>
     <br>
 </form>
 <div style="display:none"></div>

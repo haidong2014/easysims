@@ -108,7 +108,9 @@
         </table>
     <br />
     <input type="hidden" name="teacher_id"  value="<?php echo @$teacher_id?>" />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    <?php if ($show_mode == "0") { ?>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    <?php } ?>
 </form>
 <div style="display:none"></div>
 </body>

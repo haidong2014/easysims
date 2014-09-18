@@ -115,7 +115,9 @@
     </table>
     <br>
     <input type="hidden" name="job_id" value="<?php echo @$job_id?>" />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    <?php if ($show_mode == "0") { ?>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    <?php } ?>
 </form>
 <div style="display:none"></div>
 </body>

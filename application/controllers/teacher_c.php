@@ -112,10 +112,16 @@ class Teacher_c extends MY_Controller {
         $this->load->view('teacher_add_v',$data);
     }
 
-    public function view_teacher_init($teacher_id = null){
+    public function view_teacher_init($teacher_id = null, $show_mode = null){
         $data = array();
 
         $data = $this->teacher_m->getOne($teacher_id);
+        if (empty($show_mode)) {
+            $data['show_mode'] = "0";
+        } else {
+            $data['show_mode'] = "1";
+        }
+
         $this->load->view('teacher_view_v',$data);
     }
 

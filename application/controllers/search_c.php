@@ -58,7 +58,7 @@ class Search_c extends MY_Controller {
         $graduate_p_3 = 0;
         $graduate_p_4 = 0;
         $graduate_total = 0;
-        foreach($searchData as $temp){
+        foreach($searchData as &$temp){
             if ($temp['graduate'] == '1') {
                 $graduate_1 = $graduate_1 + 1;
                 $graduate_total = $graduate_total + 1;
@@ -73,6 +73,13 @@ class Search_c extends MY_Controller {
                 $graduate_total = $graduate_total + 1;
             } else {
             }
+
+            $temp['teacher_name'] = "<a href=\"#\" onclick=\"showTeacher('".SITE_URL."/teacher_c/view_teacher_init/".
+                                    $temp['teacher_id']."/1')\">".$temp['teacher_name']."</a>";
+            $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
+                                    $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";
+            $temp['job_company'] = "<a href=\"#\" onclick=\"showJobCompany('".SITE_URL."/job_c/view_job_init/".
+                                    $temp['job_id']."/1')\">".$temp['job_company']."</a>";
         }
         if ($graduate_total != 0) {
             $graduate_p_1 = round(($graduate_1 / $graduate_total)*100,0);

@@ -1,4 +1,6 @@
 ﻿<?php require_once("_header.php");?>
+    <script src="../../lib/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+    <script src="../../lib/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 <script type="text/javascript">
     var searchData = <?php echo $searchData?>;
     var grid = null;
@@ -37,6 +39,15 @@
     function download_click(){
         document.form.download_flg.value = "1";
         document.form.submit();
+    }
+    function showTeacher(parm){
+        $.ligerDialog.open({ url: parm, width: 500, height: 550, modal: false, isResize: true });
+    }
+    function showStudent(parm){
+        $.ligerDialog.open({ url: parm, width: 550, height: 550, modal: false, isResize: true });
+    }
+    function showJobCompany(parm){
+        $.ligerDialog.open({ url: parm, width: 600, height: 550, modal: false, isResize: true });
     }
 </script>
 </head>

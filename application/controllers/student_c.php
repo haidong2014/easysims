@@ -166,7 +166,7 @@ class Student_c extends MY_Controller {
         $this->load->view('student_add_v', $data);
     }
 
-    public function view_student_init($student_id = null,$mode = null, $class_id = null){
+    public function view_student_init($student_id = null,$mode = null, $class_id = null, $show_mode = null){
         $data = array();
         $studentData = $this->student_m->getOneForUpd($student_id);
         $data = $studentData;
@@ -178,6 +178,11 @@ class Student_c extends MY_Controller {
         $data['jobData'] = $jobData;
         $data['mode'] = $mode;
         $data['class_id'] = $class_id;
+        if (empty($show_mode)) {
+            $data['show_mode'] = "0";
+        } else {
+            $data['show_mode'] = "1";
+        }
         $this->load->view('student_view_v', $data);
     }
 

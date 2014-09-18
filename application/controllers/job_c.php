@@ -74,12 +74,17 @@ class Job_c extends MY_Controller {
         $this->load->view('job_add_v',$data);
     }
 
-    public function view_job_init($job_id = null){
+    public function view_job_init($job_id = null, $show_mode = null){
         $data = array();
         $jobData = $this->job_m->getOne($job_id);
         $data = $jobData;
         $jobgradeData = $this->code_m->getList("09");
         $data['jobgradeData'] = $jobgradeData;
+        if (empty($show_mode)) {
+            $data['show_mode'] = "0";
+        } else {
+            $data['show_mode'] = "1";
+        }
         $this->load->view('job_view_v',$data);
     }
 
