@@ -81,7 +81,7 @@ class EvaluationStudent_m extends MY_Model
     }
 
      public function selectEV($class_name,$student_name){
-        $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t1.student_name,' .
+        $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t1.student_id,t1.student_name,' .
                           't5.attendance_scores,t5.works_scores,t5.performance_scores,t5.homework_scores');
         $this->db->from('ss_student t1');
         $this->db->join('ss_class t2', 't2.class_id=t1.class_id', 'left');

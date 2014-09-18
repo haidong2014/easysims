@@ -27,7 +27,10 @@ class Student_Ev_c extends MY_Controller {
         $data['class_name'] = $class_name;
         $data['student_name'] = $student_name;
         $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
-
+        foreach($searchData as &$temp){
+            $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
+                                    $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";
+        }
         if($download_flg == "1"){
             $this->load->library('PHPExcel');
             $this->load->library('PHPExcel/IOFactory');
@@ -52,8 +55,9 @@ class Student_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(24);
 
+            $searchXlsData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
             $i = 2;
-            foreach($searchData as $temp){
+            foreach($searchXlsData as $temp){
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $temp['class_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $temp['course_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $temp['subject_name']);

@@ -138,8 +138,9 @@ class Search_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(12);
 
+            $searchXlsData = $this->student_m->search($data);
             $i = 2;
-            foreach($searchData as $temp){
+            foreach($searchXlsData as $temp){
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $temp['class_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $temp['course_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $temp['teacher_name']);
