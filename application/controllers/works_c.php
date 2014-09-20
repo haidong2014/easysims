@@ -312,15 +312,27 @@ class Works_c extends MY_Controller {
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
         $subject_id = $this->input->post('subject_id');
-        $works_no = $this->input->post('works_no');
+        $search_key = $this->input->post('txtKey');
+        $data['search_key'] = $search_key;
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['txtKey'] = $search_key;
+        //$works_no = $this->input->post('works_no');
         $userinfo = $this->session->userdata('user');
         $user_id = $this->session->userdata('user_id');
         $works_scores = $this->input->post('works_scores');
         $works_comment = $this->input->post('works_comment');
         $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
+        $zipfile = $user_id."_".date("YmdHis").".zip";
+		$command = "zip ".$zipfile." ";
 		foreach($workData as &$value){
+			$command.=$value["works_path"]." ";
 		}
-       
-        redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
+        $output = shell_exec($command);
+        header('Content-Type: application/octet-stream'); 
+		header('Content-Disposition: attachment; filename="'.$zipfile.'"'); 
+		readfile($zipfile);
+        //redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
 }

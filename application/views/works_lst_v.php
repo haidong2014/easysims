@@ -45,17 +45,27 @@
         function returnPage() {
             location.href = "<?php echo SITE_URL.'/works_c/subject_lst/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
         }
+        function download_click(){
+        	//location.href = "<?php echo SITE_URL.'/works_c/subject_lst/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
+        	document.dlform.submit();
+        }
     </script>
 </head>
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>  
 <div id="searchbar">
+
 <form name="form" method="post" action="<?php echo SITE_URL.'/works_c/works_lst';?>" id="form">
     编号或姓名：<input id="txtKey" name="txtKey" type="text" value="<?php echo $txtKey?>" />
     <input id="button" type="button" value=" 查 询 " onclick="javascript:document.form.submit();" />
 	<input id="regist" type="button" value=" 上 传 " onclick="regist_click()" />
 	<input id="download" type="button" value="批量下载" onclick="download_click()" />
     <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
+    <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
+    </form>
+    <form name="dlform"  method="post" action="<?php echo SITE_URL.'/works_c/works_download_exec';?>" >
     <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
     <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
