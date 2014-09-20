@@ -10,8 +10,6 @@ class Usergroups_c extends MY_Controller {
     {
         $data = array();
         $dataopt = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "usergroups_c index user:".var_export($user,true));
         log_message('info', "usergroups_c index post:".var_export($_POST,true));
 
         $data['search_key'] =  $this->input->post('txtKey');
@@ -31,8 +29,6 @@ class Usergroups_c extends MY_Controller {
     public function search_usergroups()
     {
         $data = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "usergroups_c search_usergroups user:".var_export($user,true));
         log_message('info', "usergroups_c search_usergroups post:".var_export($_POST,true));
 
         $data['search_key'] = $this->input->post('txtKey');

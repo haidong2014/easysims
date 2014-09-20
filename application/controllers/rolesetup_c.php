@@ -13,8 +13,6 @@ class Rolesetup_c extends MY_Controller {
         $functionlist = array();
         $usergroups = array();
         $userfunction = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "rolesetup_c index user:".var_export($user,true));
         log_message('info', "rolesetup_c index post:".var_export($_POST,true));
 
         $data['search_key'] = "";
@@ -44,8 +42,6 @@ class Rolesetup_c extends MY_Controller {
         $functionlist = array();
         $usergroups = array();
         $userfunction = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "search_role index user:".var_export($user,true));
         log_message('info', "search_role index post:".var_export($_POST,true));
 
         $data['search_key'] = "";
@@ -75,8 +71,6 @@ class Rolesetup_c extends MY_Controller {
         $functionlist = array();
         $usergroups = array();
         $dataforupd = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "rolesetup_c upd_role user:".var_export($user,true));
         log_message('info', "rolesetup_c upd_role post:".var_export($_POST,true));
 
         $role_id = $this->input->post('ddlUser');
