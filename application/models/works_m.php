@@ -22,7 +22,7 @@ class Works_m extends MY_Model
         return $works;
     }
     public function getOne($class_id,$course_id,$subject_id,$works_no){
-    	$this->db->where('class_id',   $class_id);
+      $this->db->where('class_id',   $class_id);
         $this->db->where('course_id',  $course_id);
         $this->db->where('subject_id', $subject_id);
         $this->db->where('works_no', $works_no);
@@ -35,10 +35,10 @@ class Works_m extends MY_Model
        }
        return $works;
     }
-	public function getList($keyword = null, $class_id, $course_id, $subject_id)
+  public function getList($keyword = null, $class_id, $course_id, $subject_id)
     {
 
-       
+
         //$this->db->select('*');
         $this->db->where( 'class_id', $class_id );
         $this->db->where( 'course_id', $course_id );
@@ -84,5 +84,66 @@ class Works_m extends MY_Model
         $ret= $this->db->update( $this->table_name );
         log_message('info', "Works_m update sql:".$this->db->last_query());
         return $ret;
+    }
+
+    public function search($data){
+        $this->db->select('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no,t1.works_name,' .
+                          't1.works_path,t1.works_description,t1.works_scores,t1.works_comment,t1.remarks,' .
+                          't2.student_name,t3.class_name,t4.course_name,t5.subject_name');
+        $this->db->from('ss_works t1');
+        $this->db->join('ss_student t2', 't2.student_id=t1.student_id', 'left');
+        $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');
+        $this->db->join('ss_course t4', 't4.course_id=t1.course_id', 'left');
+        $this->db->join('ss_subject t5', 't5.course_id=t1.course_id and t5.subject_id=t1.subject_id', 'left');
+        if (!empty($data['start_year'])) {
+            $this->db->where('t2.start_year', $data['start_year']);
+        }
+        if (!empty($data['start_month'])) {
+            $this->db->where('t2.start_month', $data['start_month']);
+        }
+        if (!empty($data['scores_from'])) {
+            $this->db->where('t1.works_scores >=', $data['scores_from']);
+        }
+        if (!empty($data['scores_to'])) {
+            $this->db->where('t1.works_scores <=', $data['scores_to']);
+        }
+        if (!empty($data['txtKey'])) {
+            $this->db->like('t2.student_name', $data['txtKey']);
+        }
+        $this->db->order_by('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no', 0);
+        $this->db->limit(($data['paging']-1)*8,8);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function getPagingMax($data){
+        $this->db->select('count(t1.student_id) as paging_max');
+        $this->db->from('ss_works t1');
+        $this->db->join('ss_student t2', 't2.student_id=t1.student_id', 'left');
+        if (!empty($data['start_year'])) {
+            $this->db->where('t2.start_year', $data['start_year']);
+        }
+        if (!empty($data['start_month'])) {
+            $this->db->where('t2.start_month', $data['start_month']);
+        }
+        if (!empty($data['scores_from'])) {
+            $this->db->where('t1.works_scores >=', $data['scores_from']);
+        }
+        if (!empty($data['scores_to'])) {
+            $this->db->where('t1.works_scores <=', $data['scores_to']);
+        }
+        if (!empty($data['txtKey'])) {
+            $this->db->like('t2.student_name', $data['txtKey']);
+        }
+        $this->db->limit(80);
+
+        $query = $this->db->get();
+        $paging_max= null;
+        foreach ($query->result_array() as $row){
+            $paging_max = $row['paging_max'];
+        }
+        return $paging_max;
     }
 }

@@ -1,6 +1,4 @@
 ﻿<?php require_once("_header.php");?>
-    <script src="../../lib/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-    <script src="../../lib/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 <script type="text/javascript">
     var searchData = <?php echo $searchData?>;
     var grid = null;
@@ -25,9 +23,9 @@
             { display: '就业职位', name: 'follow_position', align: 'left', width: 100 },
             { display: '就业薪资', name: 'follow_salary', align: 'left', width: 60 },
             ],
-            pageSize:10,
             data: $.extend(true,{},searchData),
-            width: '100%',height:'100%'
+            width: '100%',height:'100%',
+            pageSize:10
         });
 
         $("#pageloading").hide();
@@ -250,7 +248,7 @@
         </td>
         </tr>
     </table>
-    <br>
+        <span style="color:red">注：高级查询最多只能表示100条数据。如果您没有找到希望查看的数据，请从新设置查询条件。</span><br>
         本科以上：<?php echo @$graduate_1 ?>人(<?php echo @$graduate_p_1 ?>%)&nbsp&nbsp本科：<?php echo @$graduate_2 ?>人(<?php echo @$graduate_p_2 ?>%)&nbsp&nbsp专科：<?php echo @$graduate_3 ?>人(<?php echo @$graduate_p_3 ?>%)&nbsp&nbsp专科以下：<?php echo @$graduate_4 ?>人(<?php echo @$graduate_p_4 ?>%)
     <div id="maingrid" style="margin:0; padding:0"></div>
 </form>
