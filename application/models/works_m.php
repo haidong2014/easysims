@@ -111,7 +111,7 @@ class Works_m extends MY_Model
             $this->db->like('t2.student_name', $data['txtKey']);
         }
         $this->db->order_by('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no', 0);
-        $this->db->limit(($data['paging']-1)*8,8);
+        $this->db->limit(8,($data['paging']-1)*8);
 
         $query = $this->db->get();
 
@@ -137,7 +137,7 @@ class Works_m extends MY_Model
         if (!empty($data['txtKey'])) {
             $this->db->like('t2.student_name', $data['txtKey']);
         }
-        $this->db->limit(80);
+        $this->db->limit(160);
 
         $query = $this->db->get();
         $paging_max= null;

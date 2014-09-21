@@ -5,15 +5,14 @@
     });
 
     function search_click(){
-        document.form.run_mode.value = "0";
+        document.form.download_flg.value = "0";
         document.form.submit();
     }
     function download_click(){
-        document.form.run_mode.value = "1";
+        document.form.download_flg.value = "1";
         document.form.submit();
     }
     function paging_click(){
-        document.form.run_mode.value = "2";
         document.form.submit();
     }
 </script>
@@ -79,13 +78,13 @@
             <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:160px" value="<?php echo @$txtKey ?>" />&nbsp
             <input id="search" type="submit" value=" 查 询 " onclick="search_click()" />
             <input id="search" type="submit" value=" 作品批量下载 " onclick="download_click()" />
-            <input type="hidden" name="run_mode" id="run_mode"/>
+            <input type="hidden" name="download_flg" id="download_flg"/>
         </td>
         </tr>
     </table>
-    <table>
+    <table style="width:840px;">
       <tr>
-        <td colspan="3">&nbsp<span style="color:red">注：作品展示最多只能表示10页数据。如果您没有找到希望查看的作品，请从新设置查询条件。</span></td>
+        <td colspan="3">&nbsp<span style="color:red">注：作品展示最多只能表示20页数据。如果您没有找到希望查看的作品，请从新设置查询条件。</span></td>
         <td style="text-align:right">
             &nbsp翻页：
             <select name="paging" id="paging" ltype="select" onchange="paging_click()">
@@ -100,16 +99,29 @@
         </td>
       </tr>
       <tr>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>赵小燕&nbsp;90分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>钱小燕&nbsp;80分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>孙小燕&nbsp;80分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>李小燕&nbsp;85分</td>
+      <?php $j = 1; ?>
+      <?php foreach(@$searchData as $temp){ ?>
+          <?php if ($j <= 4) { ?>
+              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>"><image src="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
+          <?php } else { ?>
+          <?php } ?>
+          <?php $j = $j + 1; ?>
+      <?php } ?>
+      <?php if ($j < 5) { ?>
+          <?php for($i=$j;$i<5;$i++) { ?>
+              <td align="left" style="padding:5px;width:200px;"></td>
+          <?php } ?>
+      <?php } ?>
       </tr>
       <tr>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>周小燕&nbsp;95分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>吴小燕&nbsp;80分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>郑小燕&nbsp;90分</td>
-        <td align="center" style="padding:5px;"><image src="" width="200" height="150"><br>王小燕&nbsp;80分</td>
+      <?php $j = 1; ?>
+      <?php foreach(@$searchData as $temp){ ?>
+          <?php if ($j <= 4) { ?>
+          <?php } else { ?>
+              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>"><image src="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
+          <?php } ?>
+          <?php $j = $j + 1; ?>
+      <?php } ?>
       </tr>
     </table>
 </form>

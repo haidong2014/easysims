@@ -9,8 +9,15 @@ class Art_c extends MY_Controller {
     public function index()
     {
         $data = array();
+        $searchData = array();
+        $data['start_year'] = "";
+        $data['start_month'] = "";
+        $data['scores_from'] = "";
+        $data['scores_to'] = "";
+        $data['txtKey'] = "";
         $data['paging'] = 1;
         $data['paging_max'] = 1;
+        $data['searchData'] = $searchData;
         $this->load->view('art_lst_v',$data);
     }
 
@@ -33,11 +40,15 @@ class Art_c extends MY_Controller {
         $data['scores_to'] = $scores_to;
         $data['txtKey'] = $keyword;
         $data['paging'] = $paging;
-        $searchData = $this->works_m->search($data);
         $paging_max = $this->works_m->getPagingMax($data);
         $data['paging_max'] = ceil($paging_max/8);
-
-        log_message('info', "art_c search searchData:".var_export($searchData,true));
+        $searchData = $this->works_m->search($data);
+        $data['searchData'] = $searchData;
+        if (count($searchData) == 0) {
+            $data['paging'] = 1;
+            $data['paging_max'] = 1;
+        }
+        log_message('info', "art_c search data:".var_export($data,true));
 
         $this->load->view('art_lst_v',$data);
     }
