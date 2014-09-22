@@ -33,6 +33,7 @@ class Art_c extends MY_Controller {
         $scores_to = $this->input->post('scores_to');
         $keyword = $this->input->post('txtKey');
         $paging = $this->input->post('paging');
+        $download_flg = $this->input->post('download_flg');
 
         $data['start_year'] = $start_year;
         $data['start_month'] = substr('0'.$start_month,-2);
@@ -49,6 +50,24 @@ class Art_c extends MY_Controller {
             $data['paging_max'] = 1;
         }
         log_message('info', "art_c search data:".var_export($data,true));
+
+        if ($download_flg == "1") {
+            //$this->load->helper('download');
+            //$zipname = 'my_images';
+            //$ZipArchive = new ZipArchive();
+            //$ZipArchive->open($zipname.'.zip',ZipArchive::OVERWRITE);
+            $this->load->library('zip');
+            foreach($searchData as &$temp){
+                $path = SITE_URL."/images/upload/".$temp['works_path'];
+                //$ZipArchive->addFile($path, basename($path));
+                //$dl_data = file_get_contents(SITE_URL."/images/upload/".$temp['works_path']);
+                //log_message('info', "art_c search images_url:".var_export(SITE_URL."/images/upload/".$temp['works_path'],true));
+                //$name = 'my_images';
+                //force_download($name, $ZipArchive);
+                $this->zip->read_file($path);
+            }
+            $this->zip->download('imgs_1.zip');
+        }
 
         $this->load->view('art_lst_v',$data);
     }
