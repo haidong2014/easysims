@@ -10,6 +10,9 @@
  function returnPage() {
       location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
     }
+    function dlfl(){
+    	document.dlform.submit();
+    }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -50,8 +53,14 @@
             </tr>
         </table>
     <br />
-    <input type="submit" value="下载" class="l-button l-button-submit" />
+    <input type="button" value="下载" class="l-button l-button-submit" onclick="dlfl()"/>
         <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+    </form>
+    <form name="dlform"  method="post" action="<?php echo SITE_URL.'/works_c/works_download_one_exec';?>" >
+    <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
+    <input type="hidden" name="works_no" value="<?php echo $works_no ?>" />
     </form>
 </div>
 </body>
