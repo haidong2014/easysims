@@ -54,15 +54,19 @@
         }
         function addClass(){
             if(document.getElementById('class_no').value==""){
-              alert('班级编号不能为空');
+              alert('班级编号不能为空！');
               return;
             }
             if(document.getElementById('class_name').value==""){
-              alert('班级名不能为空');
+              alert('班级名不能为空！');
               return;
             }
             if(document.getElementById('start_date').value==""){
-              alert('开课日期不能为空');
+              alert('开课日期不能为空！');
+              return;
+            }
+            if(document.getElementById('end_date').value==""){
+              alert('结课日期不能为空！');
               return;
             }
             document.form.submit();
@@ -129,7 +133,7 @@
                 <td align="left" class="l-table-edit-td">
                 <select name="teacher_id" id="teacher_id" ligeruiid="teacher_id">
                     <?php foreach($teacherData as $teacher){?>
-                        <?php if(@teacher_id==($course['teacher_id'])){ ?>
+                        <?php if(@$teacher_id==($teacher['teacher_id'])){ ?>
                             <option value="<?php  echo $teacher['teacher_id'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
                         <?php }else{?>
                             <option value="<?php  echo $teacher['teacher_id'] ?>"><?php  echo $teacher['teacher_name'] ?></option>

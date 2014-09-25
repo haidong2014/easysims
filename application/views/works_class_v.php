@@ -15,27 +15,14 @@
             { display: '状态', name: 'code_name', align: 'left', width: 80 }
             ],
             pageSize:10,
-            where : f_getWhere(),
             data: $.extend(true,{},classData),
             width: '100%',height:'100%'
         });
 
         $("#pageloading").hide();
     });
-    function f_search()
-    {
-        grid.options.data = $.extend(true, {}, CustomersData);
-        grid.loadData(f_getWhere());
-    }
-    function f_getWhere()
-    {
-        if (!grid) return null;
-        var clause = function (rowdata, rowindex)
-        {
-            var key = $("#txtKey").val();
-            return rowdata.CustomerID.indexOf(key) > -1;
-        };
-        return clause;
+    function search_click(){
+        document.form.submit();
     }
 </script>
 </head>
@@ -45,6 +32,16 @@
 <form name="form" method="post" action="<?php echo SITE_URL.'/works_c';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
+            &nbsp状态：
+            <select name="status" id="status" ligeruiid="status" onchange="search_click()">
+                <?php foreach($statusLst['STATUS'] as $key => $value) { ?>
+                    <?php if($key == @$status){?>
+                        <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+                    <?php }else{?>
+                        <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                    <?php } ?>
+                <?php } ?>
+            </select>
             &nbsp班级名称：
             <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
             <input type="submit" value=" 查 询 " />&nbsp

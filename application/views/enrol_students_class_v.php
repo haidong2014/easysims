@@ -36,7 +36,7 @@
 <form name="form" method="post" action="<?php echo SITE_URL.'/enrol_students_c/';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
-            &nbsp年月:
+            &nbsp开课年月:
             <select name="start_year" id="start_year" onchange="search_click()">
                 <?php for($i=0;$i<12;$i++){ ?>
                     <?php if(@$start_year==($i+2014)){ ?>

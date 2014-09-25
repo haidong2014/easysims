@@ -21,6 +21,9 @@
 
         $("#pageloading").hide();
     });
+    function search_click(){
+        document.form.submit();
+    }
 </script>
 </head>
 <body style="padding:6px; overflow:hidden;">
@@ -29,6 +32,16 @@
 <form name="form" method="post" action="<?php echo SITE_URL.'/evaluation_c';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
+            &nbsp状态：
+            <select name="status" id="status" ligeruiid="status" onchange="search_click()">
+                <?php foreach($statusLst['STATUS'] as $key => $value) { ?>
+                    <?php if($key == @$status){?>
+                        <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+                    <?php }else{?>
+                        <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                    <?php } ?>
+                <?php } ?>
+            </select>
             &nbsp班级名称：
             <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
             <input type="submit" value=" 查 询 " />&nbsp

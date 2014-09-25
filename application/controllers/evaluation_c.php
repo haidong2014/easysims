@@ -11,6 +11,7 @@ class Evaluation_c extends MY_Controller {
         $this->load->model('evaluationteacher_m','evaluationteacher_m');
         $this->load->model('evaluationstudent_m','evaluationstudent_m');
         $this->load->model('satisfaction_m','satisfaction_m');
+        $this->load->model('code_m','code_m');
     }
 
     public function index()
@@ -21,13 +22,18 @@ class Evaluation_c extends MY_Controller {
         log_message('info', "evaluation_c index post:".var_export($_POST,true));
 
         $data['search_key'] =  $this->input->post('txtKey');
+        $status =  $this->input->post('status');
+        if (empty($status)) {
+          $status = "2";
+        }
+        $data['status'] = $status;
         $classData = $this->class_m->getList($data);
-
         foreach($classData as &$temp){
             $temp['class_no']="<a href=\"".SITE_URL."/evaluation_c/subject_lst/".
                               $temp['class_id']."/".$temp['course_id']."\">".$temp['class_no']."</a>";
         }
-
+        $statusLst = $this->code_m->getList("05");
+        $data['statusLst'] = $statusLst;
         $data['classData'] = @json_encode(array('Rows'=>$classData));
         $this->load->view('evaluation_class_v',$data);
     }

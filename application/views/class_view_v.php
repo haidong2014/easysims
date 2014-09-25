@@ -90,7 +90,7 @@
                 <td align="left" class="l-table-edit-td">
                 <select name="teacher_id" id="teacher_id" ligeruiid="teacher_id">
                     <?php foreach($teacherData as $teacher){?>
-                        <?php if(@teacher_id==($course['teacher_id'])){ ?>
+                        <?php if(@$teacher_id==($teacher['teacher_id'])){ ?>
                             <option value="<?php  echo $teacher['teacher_id'] ?>" selected><?php  echo $teacher['teacher_name'] ?></option>
                         <?php }else{?>
                             <option value="<?php  echo $teacher['teacher_id'] ?>"><?php  echo $teacher['teacher_name'] ?></option>

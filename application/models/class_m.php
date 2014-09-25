@@ -22,6 +22,13 @@ class Class_m extends MY_Model
             $this->db->where('t1.start_year', $data['start_year']);
             $this->db->where('t1.start_month', $data['start_month']);
         }
+        if(!empty($data['end_year']) && !empty($data['end_month'])){
+            $this->db->where('t1.end_year', $data['end_year']);
+            $this->db->where('t1.end_month', $data['end_month']);
+        }
+        if(!empty($data['status'])){
+            $this->db->where('t1.status', $data['status']);
+        }
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.class_id','esc');
         $query =  $this->db->get();
@@ -33,10 +40,12 @@ class Class_m extends MY_Model
 
         $this->db->set( 'class_no',		$data['class_no'] );
         $this->db->set( 'class_name',	$data['class_name'] );
-        $this->db->set( 'start_year',	$data['start_year'] );
-        $this->db->set( 'start_month',	$data['start_month'] );
         $this->db->set( 'start_date',	$data['start_date'] );
         $this->db->set( 'end_date',		$data['end_date'] );
+        $this->db->set( 'start_year',	$data['start_year'] );
+        $this->db->set( 'start_month',	$data['start_month'] );
+        $this->db->set( 'end_year',  	$data['end_year'] );
+        $this->db->set( 'end_month',	$data['end_month'] );
         $this->db->set( 'course_id',	$data['course_id'] );
         $this->db->set( 'teacher_id',	$data['teacher_id'] );
         $this->db->set( 'class_room',	$data['class_room'] );
@@ -80,10 +89,12 @@ class Class_m extends MY_Model
     public function updateOne($data){
         $this->db->where('class_id',    $data['class_id']);
         $this->db->set( 'class_name',	$data['class_name'] );
-        $this->db->set( 'start_year',	$data['start_year'] );
-        $this->db->set( 'start_month',	$data['start_month'] );
         $this->db->set( 'start_date',	$data['start_date'] );
         $this->db->set( 'end_date',		$data['end_date'] );
+        $this->db->set( 'start_year',	$data['start_year'] );
+        $this->db->set( 'start_month',	$data['start_month'] );
+        $this->db->set( 'end_year',	    $data['end_year'] );
+        $this->db->set( 'end_month',	$data['end_month'] );
         $this->db->set( 'course_id',	$data['course_id'] );
         $this->db->set( 'teacher_id',	$data['teacher_id'] );
         $this->db->set( 'class_room',	$data['class_room'] );
