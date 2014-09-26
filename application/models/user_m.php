@@ -22,9 +22,6 @@ class User_m extends MY_Model
 
     public function addOne($data){
         $this->db->set( 'user',          $data['user'] );
-        if(!empty($data['password'])){
-            $this->db->set( 'password',  $data['password'] );
-        }
         $this->db->set( 'user_name',     $data['user_name'] );
         $this->db->set( 'role_id',       $data['role_id'] );
         $this->db->set( 'remarks',       $data['remarks'] );
@@ -36,12 +33,8 @@ class User_m extends MY_Model
         return $this->db->insert( $this->table_name );
     }
 
-
     public function updOne($data){
         $this->db->where('user_id',      $data['user_id']);
-        if(!empty($data['password'])){
-            $this->db->set( 'password',  $data['password'] );
-        }
         $this->db->set( 'user_name',     $data['user_name'] );
         $this->db->set( 'role_id',       $data['role_id'] );
         $this->db->set( 'remarks',       $data['remarks'] );
@@ -52,7 +45,7 @@ class User_m extends MY_Model
     }
 
     public function getOne($user_id){
-        $this->db->select('user_id,user,password,user_name,role_id,remarks,delete_flg');
+        $this->db->select('user_id,user,user_name,role_id,remarks,delete_flg');
         $this->db->where('user_id', $user_id);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
@@ -65,9 +58,11 @@ class User_m extends MY_Model
         return $query->result_array();
     }
 
-    public function deleteOne($user_id){
-        $this->db->where('user_id', $user_id);
-        $this->db->set( 'delete_flg',		1 );
+    public function reSetPwd($data){
+        $this->db->where('user_id',      $data['user_id']);
+        $this->db->set( 'password',      $data['password'] );
+        $this->db->set( 'update_user',   $data['update_user'] );
+        $this->db->set( 'update_time',   $data['update_time'] );
         return $this->db->update( $this->table_name );
     }
 }

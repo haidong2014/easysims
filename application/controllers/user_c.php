@@ -11,8 +11,6 @@ class User_c extends MY_Controller {
     {
         $data = array();
         $dataopt = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "user_c index user:".var_export($user,true));
         log_message('info', "user_c index post:".var_export($_POST,true));
 
         $data['search_key'] =  $this->input->post('txtKey');
@@ -20,32 +18,10 @@ class User_c extends MY_Controller {
 
         foreach($userData as &$dataopt){
             $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
-            if($dataopt['delete_flg'] == "0") {
-                $dataopt['status'] = "有效";
-            } else {
-                $dataopt['status'] = "无效";
-            }
-        }
+                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> |".
+                         "<a href=\"#\" onclick=\"reSetPwd('".SITE_URL."/user_c/reset_pwd/".
+                         $dataopt['user_id']."')\">密码重置</a>";
 
-        $data['userData'] = @json_encode(array('Rows'=>$userData));
-
-        $this->load->view('user_lst_v',$data);
-    }
-
-    public function search_user()
-    {
-        $data = array();
-        $user = $this->session->all_userdata();
-        log_message('info', "user_c search_user user:".var_export($user,true));
-        log_message('info', "user_c search_user post:".var_export($_POST,true));
-
-        $data['search_key'] = $this->input->post('txtKey');
-        $userData = $this->user_m->getList($data);
-
-        foreach($userData as &$dataopt){
-            $dataopt['opt']="<a href=\"".SITE_URL."/user_c/view_user_init/".$dataopt['user_id']."\">查看</a> |".
-                         "<a href=\"".SITE_URL."/user_c/upd_user_init/".$dataopt['user_id']."\">编辑</a> ";
             if($dataopt['delete_flg'] == "0") {
                 $dataopt['status'] = "有效";
             } else {
@@ -90,7 +66,6 @@ class User_c extends MY_Controller {
 
         $user_id = $this->input->post('txtUserId');
         $user = $this->input->post('txtUser');
-        $password = $this->input->post('txtPassword');
         $user_name = $this->input->post('txtName');
         $role_id = $this->input->post('ddlRole');
         $remarks = $this->input->post('txtRemarks');
@@ -102,11 +77,6 @@ class User_c extends MY_Controller {
 
         $data['user_id'] = $user_id;
         $data['user'] = $user;
-        if (empty($password)){
-            $data['password'] = "";
-        } else {
-            $data['password'] = md5($password);
-        }
         $data['user_name'] = $user_name;
         $data['role_id'] = $role_id;
         $data['remarks'] = $remarks;
@@ -132,16 +102,14 @@ class User_c extends MY_Controller {
         if(count($userData) == 1){
             $data = $userData[0];
         }
-
-        $data['search_key'] = "";
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
-      if ($dataug['role_id'] == $userData[0]['role_id']){
+            if ($dataug['role_id'] == $userData[0]['role_id']){
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
-      } else {
+            } else {
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
-      }
+            }
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;
@@ -161,11 +129,11 @@ class User_c extends MY_Controller {
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
-        if ($dataug['role_id'] == $userData[0]['role_id']){
+            if ($dataug['role_id'] == $userData[0]['role_id']){
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"selected");
-        } else {
+            } else {
                 $usergroups[$i] = array("id"=>"".$dataug['role_id'],"name"=>"".$dataug['role_name'],"sel"=>"");
-        }
+            }
             $i = $i+1;
         }
         $data['usergroups'] = $usergroups;
@@ -179,5 +147,20 @@ class User_c extends MY_Controller {
         if(!empty($checkuser)){
             echo urldecode(json_encode(urlencode($msg)));
         }
+    }
+
+    public function reset_pwd($user_id = null){
+        $data = array();
+        $userinfo = $this->session->userdata('user');
+        $update_user = $userinfo;
+        $update_time = date("Y-m-d H:i:s");
+        $data['user_id'] = $user_id;
+        $data['password'] = "1a1dc91c907325c69271ddf0c944bc72";
+        $data['update_user'] = $update_user;
+        $data['update_time'] = $update_time;
+
+        $this->user_m->reSetPwd($data);
+        $msg = "密码重置成功！";
+        echo urldecode(json_encode(urlencode($msg)));
     }
 }

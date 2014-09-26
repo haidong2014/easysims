@@ -31,7 +31,6 @@
           if (data != "") {
               alert(data.replace(/\"/g, ""));
               document.form.txtUser.value = "";
-              document.form.txtPassword.value = "";
           }
         }
         function addUser() {
@@ -72,13 +71,6 @@
             <td align="right" class="l-table-edit-td">登录ID:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="txtUser" type="text" id="txtUser" maxlength="10" onchange="checkUser()" value="<?php echo @$user ?>"/>
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
-            <td align="right" class="l-table-edit-td">登录密码:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="txtPassword" type="password" id="txtPassword" maxlength="10" value=""/>
             </td>
             <td align="left"></td>
         </tr>

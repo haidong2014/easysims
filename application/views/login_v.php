@@ -14,16 +14,21 @@
             //布局
             $("#layout1").ligerLayout({ leftWidth: 190, height: '100%',heightDiff:-34,space:4 });
             $("#pageloading").hide();
-            <?php if($errFlg==3){?>
-                    $.ligerDialog.error('错误的用户名称或密码!');
+            <?php if($errFlg==1){?>
+                    $.ligerDialog.error('您输入的用户名不存在！');
+            <?php }?>
+            <?php if($errFlg==2){?>
+                    $.ligerDialog.error('您输入的密码不正确！');
             <?php }?>
         });
         function chkSubmit(){
             if(jQuery.trim(document.getElementById('txtUser').value)==""){
-              $.ligerDialog.error('请输入用户名称!');return false;
+                $.ligerDialog.error('请输入用户名称！');
+                return false;
             }
             if(jQuery.trim(document.getElementById('txtPassword').value)==""){
-              $.ligerDialog.error('请输入用户密码!');return false;
+                $.ligerDialog.error('请输入用户密码！');
+                return false;
             }
             return true;
         }

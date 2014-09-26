@@ -37,13 +37,6 @@
             <td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">登录密码:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="txtPassword" type="password" id="txtPassword" maxlength="10" value=""/>
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
             <td align="right" class="l-table-edit-td">用户姓名:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="txtName" type="text" id="txtName" maxlength="30" value="<?php echo @$user_name ?>"/>

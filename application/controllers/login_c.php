@@ -3,6 +3,7 @@ class Login_c extends Login_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('login_m','login_m');
     }
 
     public function index()
@@ -15,31 +16,31 @@ class Login_c extends Login_Controller {
 
     public function doLogin(){
         $data = array();
-        $this->load->model('login_m','login_m');
+
         $user = $this->input->post('txtUser');
         $password = $this->input->post('txtPassword');
 
         $data["errFlg"] = 0;
         $data["txtUser"] = $user;
-        if(empty($user)){
-            $data["errFlg"] = 1;
-            $this->load->view('login_v', $data);
-            return ;
-        }
 
-        if(empty($password)){
-            $data["errFlg"] = 2;
-            $this->load->view('login_v', $data);
-            return;
-        }
+        $userinfo = $this->login_m->getUser($user);
 
-        $user = $this->login_m->getUser($user);
-        $this->session->set_userdata($user);
-        log_message('info', "login_c doLogin user:".var_export($user,true));
-        if(!empty($user) && $user['password']==md5($password)){
-            redirect("menu_c");
+        if (!empty($userinfo)) {
+            $pwdinfo = $this->login_m->getPwd($user);
+            if ($pwdinfo['password']==md5($password)) {
+                if (md5($password)!="1a1dc91c907325c69271ddf0c944bc72") {
+                    $this->session->set_userdata($userinfo);
+                    redirect("menu_c");
+                } else {
+                    $data["errFlg"] = 3;
+                    $this->load->view('passwordset_v', $data);
+                }
+            } else {
+                $data["errFlg"] = 2;
+                $this->load->view('login_v', $data);
+            }
         }else{
-            $data["errFlg"] = 3;
+            $data["errFlg"] = 1;
             $this->load->view('login_v', $data);
         }
     }

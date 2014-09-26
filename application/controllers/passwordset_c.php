@@ -1,10 +1,5 @@
 <?php
 class Passwordset_c extends Login_Controller {
-    const INPUT_REQUIRE_USERID = 1;
-    const INPUT_REQUIRE_PWD = 2;
-    const INPUT_REQUIRE_NEWPWD = 4;
-    const INPUT_REQUIRE_NGPWD = 3;
-    const RESULT_OK = 99;
 
     public function __construct()
     {
@@ -16,7 +11,6 @@ class Passwordset_c extends Login_Controller {
         $data = array();
         $data["errFlg"] = 0;
         $user = $this->session->userdata('user');
-        log_message('info', "passwordset_c index user:".$user);
         $data["isLogin"] =false;
         if(!empty($user)){
             $data["txtUser"] = $user;
@@ -35,19 +29,17 @@ class Passwordset_c extends Login_Controller {
         $password = $this->input->post('txtPassword');
 
         $newPassword = $this->input->post('txtNewPassword');
-        log_message('info', "passwordset_c resetPwd username&password&newPassword:".$user."|".$password."|".$newPassword);
 
         $this->load->model('login_m','login_m');
         $userinfo = $this->login_m->getUser($user);
-        log_message('info', "passwordset_c resetPwd user:".var_export($userinfo,true));
 
         if(!empty($userinfo) && $userinfo['password']==md5($password)){
             $this->load->model('passwordset_m','passwordset_m');
             $ret = $this->passwordset_m->setPwd($user,$newPassword);
-            $data["errFlg"] = self::RESULT_OK;
+            $data["errFlg"] = 1;
             $this->load->view('passwordset_v', $data);
         }else{
-            $data["errFlg"] = self::INPUT_REQUIRE_NGPWD;
+            $data["errFlg"] = 2;
             $this->load->view('passwordset_v', $data);
       }
     }
