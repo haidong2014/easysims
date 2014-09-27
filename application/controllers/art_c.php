@@ -59,19 +59,24 @@ class Art_c extends MY_Controller {
             //echo "/home/shengyi/www/easyss/images/upload/".$zipfile;
             if ($res === TRUE) {
 				foreach($searchData as &$temp){
-					$path = SITE_URL."/images/upload/".$temp['works_path'];
-					//echo $path;
-					$zip->addFile($path);
+					$path = "/home/shengyi/www/easyss/images/upload/".$temp['works_path'];
+					//echo $path." :: ".self::getFName($temp['works_path'])."<br>";
+					$zip->addFile($path, self::getFName($temp['works_path']));
 				}
 				$zip->close();
             }
             
-			 header('Content-Type: application/octet-stream');
+			
+			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="'.$zipfile.'"');
 			readfile($zipfile);
-            exit();
+            exit();/**/
         }
 
         $this->load->view('art_lst_v',$data);
+    }
+    private function getFName($prm){
+    	$strs=explode('/',$prm);
+    	return $strs[count($strs)-1];
     }
 }
