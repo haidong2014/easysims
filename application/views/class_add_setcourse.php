@@ -7,7 +7,13 @@
     var teacherData = <?php echo $teacherData?>;
     var manager, g;
     $(function () {
-        alert("请继续设定课程的科目信息！");
+        $.ligerDialog.confirm('是否要继续设置科目信息？', function (yes)
+        {
+            if(yes){
+            } else {
+                location.href='<?php echo SITE_URL;?>/class_c/';
+            }
+        });
         g = manager = $("#maingrid").ligerGrid({
             columns: [
             { display: '科目编号', name: 'subject_id', align: 'left', width: 80 },
@@ -124,8 +130,7 @@
             });
     }
     function returnPage() {
-        class_id = document.form.class_id.value;
-        location.href='<?php echo SITE_URL;?>/class_c/upd_class_init/'+class_id;
+        location.href='<?php echo SITE_URL;?>/class_c/';
     }
 </script>
 <style type="text/css">

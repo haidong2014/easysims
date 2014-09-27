@@ -85,14 +85,11 @@
                       <input type="button" value="返回" id="reset" class="l-button l-button" onclick="return rtnLogin();"/>
                    </td>
                 </tr>
-                <tr>
-                    <td colspan="2" align="left" class="l-table-edit-td"><span style="color:red">注：请输入4-10位的密码。</span></td>
-                </tr>
             </form>
     </table>
     </div>
     <div style="height:32px; line-height:32px; text-align:center;">
-            Copyright © 2014 www.crystaledu.com
+            Copyright © 2014 www.easyss.cn
     </div>
     <div style="display:none"></div>
 </body>

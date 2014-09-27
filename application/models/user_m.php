@@ -14,6 +14,9 @@ class User_m extends MY_Model
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.user_name like', '%'.$data['search_key'].'%');
         }
+        if(!empty($data['status'])){
+            $this->db->where('t1.delete_flg', $data['status']);
+        }
         $this->db->join('ss_roles t2', 't1.role_id = t2.role_id');
         $this->db->order_by('t1.user_id','esc');
         $query =  $this->db->get();

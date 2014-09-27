@@ -80,7 +80,7 @@
         </div>
     </div>
     <div  style="height:32px; line-height:32px; text-align:center;">
-            Copyright © 2014 www.crystaledu.com
+            Copyright © 2014 www.easyss.cn
     </div>
     <div style="display:none"></div>
 </body>

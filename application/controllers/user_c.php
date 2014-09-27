@@ -5,6 +5,7 @@ class User_c extends MY_Controller {
         parent::__construct("100502");
         $this->load->model('user_m','user_m');
         $this->load->model('usergroups_m','usergroups_m');
+        $this->load->model('code_m','code_m');
     }
 
     public function index()
@@ -13,6 +14,11 @@ class User_c extends MY_Controller {
         $dataopt = array();
         log_message('info', "user_c index post:".var_export($_POST,true));
 
+        $status =  $this->input->post('status');
+        if (empty($status)) {
+          $status = "0";
+        }
+        $data['status'] = $status;
         $data['search_key'] =  $this->input->post('txtKey');
         $userData = $this->user_m->getList($data);
 
@@ -28,7 +34,8 @@ class User_c extends MY_Controller {
                 $dataopt['status'] = "无效";
             }
         }
-
+        $statusLst = $this->code_m->getList("04");
+        $data['statusLst'] = $statusLst;
         $data['userData'] = @json_encode(array('Rows'=>$userData));
 
         $this->load->view('user_lst_v',$data);
@@ -102,6 +109,7 @@ class User_c extends MY_Controller {
         if(count($userData) == 1){
             $data = $userData[0];
         }
+        $data['search_key'] = "";
         $usergroupsData = $this->usergroups_m->getList($data);
         $i = 0;
         foreach($usergroupsData as $dataug){
