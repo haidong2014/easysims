@@ -52,21 +52,24 @@ class Art_c extends MY_Controller {
         log_message('info', "art_c search data:".var_export($data,true));
 
         if ($download_flg == "1") {
-            //$this->load->helper('download');
-            //$zipname = 'my_images';
-            //$ZipArchive = new ZipArchive();
-            //$ZipArchive->open($zipname.'.zip',ZipArchive::OVERWRITE);
-            $this->load->library('zip');
-            foreach($searchData as &$temp){
-                $path = SITE_URL."/images/upload/".$temp['works_path'];
-                //$ZipArchive->addFile($path, basename($path));
-                //$dl_data = file_get_contents(SITE_URL."/images/upload/".$temp['works_path']);
-                //log_message('info', "art_c search images_url:".var_export(SITE_URL."/images/upload/".$temp['works_path'],true));
-                //$name = 'my_images';
-                //force_download($name, $ZipArchive);
-                $this->zip->read_file($path);
+	        $user_id = $this->session->userdata('user_id');
+         	$zipfile = $user_id."_".date("YmdHis").".zip";
+         	$zip = new ZipArchive;
+            $res = $zip->open("/home/shengyi/www/easyss/images/upload/".$zipfile, ZipArchive::CREATE);
+            //echo "/home/shengyi/www/easyss/images/upload/".$zipfile;
+            if ($res === TRUE) {
+				foreach($searchData as &$temp){
+					$path = SITE_URL."/images/upload/".$temp['works_path'];
+					//echo $path;
+					$zip->addFile($path);
+				}
+				$zip->close();
             }
-            $this->zip->download('imgs_1.zip');
+            
+			 header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="'.$zipfile.'"');
+			readfile($zipfile);
+            exit();
         }
 
         $this->load->view('art_lst_v',$data);

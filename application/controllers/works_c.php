@@ -350,35 +350,35 @@ class Works_c extends MY_Controller {
         $works_comment = $this->input->post('works_comment');
         $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
         $zipfile = $user_id."_".date("YmdHis").".zip";
-    $command = "zip ".$zipfile." ";
-    foreach($workData as &$value){
-      $command.=$value["works_path"]." ";
-    }
-        $output = shell_exec($command);
-        header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="'.$zipfile.'"');
-    readfile($zipfile);
+		$command = "zip ".$zipfile." ";
+		foreach($workData as &$value){
+		  $command.=$value["works_path"]." ";
+		}
+		$output = shell_exec($command);
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="'.$zipfile.'"');
+		readfile($zipfile);
         //redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
     public function works_download_one_exec(){
-        $data = array();
+		$data = array();
 
-    $this->load->model('student_m','student_m');
-        $class_id = $this->input->post('class_id');
-        $course_id = $this->input->post('course_id');
-        $subject_id = $this->input->post('subject_id');
-        $works_no = $this->input->post('works_no');
-        $user_id = $this->session->userdata('user_id');
-        $workData = $this->works_m->getOne($class_id,$course_id,$subject_id,$works_no);
-        $filename = $user_id."_".date("YmdHis").self::getExt($workData["works_path"]);
-        $filepath =  SITE_URL."/images/upload/".$workData["works_path"];
-        header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="'.$filename.'"');
-    readfile($filepath);
+		$this->load->model('student_m','student_m');
+		$class_id = $this->input->post('class_id');
+		$course_id = $this->input->post('course_id');
+		$subject_id = $this->input->post('subject_id');
+		$works_no = $this->input->post('works_no');
+		$user_id = $this->session->userdata('user_id');
+		$workData = $this->works_m->getOne($class_id,$course_id,$subject_id,$works_no);
+		$filename = $user_id."_".date("YmdHis").self::getExt($workData["works_path"]);
+		$filepath =  SITE_URL."/images/upload/".$workData["works_path"];
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		readfile($filepath);
 
-    }
-    function getExt($str){
-      $arr = explode(".",$str);
-      return $arr[count($arr)-1];
-    }
+	}
+	function getExt($str){
+		$arr = explode(".",$str);
+		return $arr[count($arr)-1];
+	}
 }
