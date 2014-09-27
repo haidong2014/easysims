@@ -69,11 +69,13 @@ class Art_c extends MY_Controller {
 			
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="'.$zipfile.'"');
-			readfile($zipfile);
-            exit();/**/
+			readfile("/home/shengyi/www/easyss/images/upload/".$zipfile);
+            //exit();/**/
+        }else{
+        	$this->load->view('art_lst_v',$data);
         }
 
-        $this->load->view('art_lst_v',$data);
+        
     }
     private function getFName($prm){
     	$strs=explode('/',$prm);
