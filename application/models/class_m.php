@@ -157,6 +157,7 @@ class Class_m extends MY_Model
         }
         $this->db->order_by('t1.subject_id');
         $query =  $this->db->get();
+        log_message('info', "class_m getSubjectList sql:".$this->db->last_query());
         return $query->result_array();
     }
 

@@ -49,7 +49,7 @@
                 <td align="left"></td>
             </tr>
       <tr>
-          <td colspan="3" align="center" style="padding:5px;" ><image src="<?php echo SITE_URL."/images/upload/".$works_path?>" width="400" height="300" /></td>
+          <td colspan="3" align="center" style="padding:5px;" ><image src="<?php echo SITE_URL."/images/uploads/".$works_path?>" height="300" /></td>
             </tr>
         </table>
     <br />

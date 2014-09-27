@@ -1,6 +1,7 @@
 <?php
 class Works_c extends MY_Controller {
   const ROOTPATH="/home/shengyi/www/easyss/images/upload/";
+  const ROOTPATHS="/home/shengyi/www/easyss/images/uploads/";
     public function __construct()
     {
         parent::__construct("100102");
@@ -29,6 +30,7 @@ class Works_c extends MY_Controller {
         }
         $statusLst = $this->code_m->getList("05");
         $data['statusLst'] = $statusLst;
+        
         $data['classData'] = @json_encode(array('Rows'=>$classData));
         $this->load->view('works_class_v',$data);
     }
@@ -170,10 +172,14 @@ class Works_c extends MY_Controller {
 
         $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id;
         $up_path2 = "".$class_id.'/'.$course_id.'/'.$subject_id;
+        
         if(!file_exists($up_path)){
           mkdir($up_path,0777,true);
         }
-
+		$up_paths = self::ROOTPATHS.$class_id.'/'.$course_id.'/'.$subject_id;
+		if(!file_exists($up_paths)){
+          mkdir($up_paths,0777,true);
+        }
         $varYear="year";
         $varMonth="month";
         $varDay="day";
@@ -181,8 +187,8 @@ class Works_c extends MY_Controller {
         $filename = date('YmdHmis');
         $userinfo = $this->session->userdata('user');
         $user_id = $this->session->userdata('user_id');
-    $insData =array();
-    $insData['class_id'] = $class_id;
+    	$insData =array();
+    	$insData['class_id'] = $class_id;
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
         $insData['student_id'] = $user_id ;
@@ -201,7 +207,7 @@ class Works_c extends MY_Controller {
 
              $file = $_FILES["upfile"]["tmp_name"];
              $name = $_FILES["upfile"]["name"];
-             $imageUpload = self::uploadfile($file, $name, $up_path."/".$filename, $up_path2."/".$filename );
+             $imageUpload = self::uploadfile($file, $name, $up_path."/".$filename, $up_path2."/".$filename ,$up_paths."/".$filename);
              $insData['works_path'] = $imageUpload;
 
              if( !empty($imageUpload)){
@@ -215,9 +221,9 @@ class Works_c extends MY_Controller {
         //echo ""."works_c/works_lst/".$class_id."/".$course_id."/".$subject_id;
         redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
-    function uploadfile($file, $name, $filename, $filename2){
-    $ext="";
-      //if (is_uploaded_file($file)) {
+    function uploadfile($file, $name, $filename, $filename2, $filenames){
+    	$ext="";
+        //if (is_uploaded_file($file)) {
         $temp = explode(".", $name);
 
         if(count($temp)>1){
@@ -228,19 +234,32 @@ class Works_c extends MY_Controller {
         }
 
 
-                $fullname = $filename.".".$ext;
-                if(file_exists($fullname)){
-                  $fullname=$filepath."/".$filename."_".mt_rand(1,999999).".".$ext;
-                }
-          if (move_uploaded_file($file, $fullname)) {
-          } else {
-            echo "move_uploaded_file error";
-          }
+		$fullname = $filename.".".$ext;
+		$sfullname = $filenames.".".$ext;
+		if(file_exists($fullname)){
+		  //$fullname = $filepath."/".$filename."_".mt_rand(1,999999).".".$ext;
+		   unlink($fullname);
+		}
+		//create samnil
+		
+		if (move_uploaded_file($file, $fullname)) {
+		} else {
+			echo "move_uploaded_file error";
+		}
+		if(file_exists($sfullname)){
+			unlink($sfullname);
+		}
+		$thumb = new Imagick($fullname);
+		$d = $thumb->getImageGeometry(); 
+		$w = intval($d['width']); 
+		$h = intval($d['height']); 
+		$newWidth = round(($w/$h)*300.0);
+		$thumb->resizeImage($newWidth,300,Imagick::FILTER_LANCZOS,1);
+      	$thumb->writeImage($sfullname);      
+      	$thumb->destroy(); 
+
 
         return $filename2.".".$ext;
-      //}else{echo $errmsg."aabb";
-        //return "";
-      //}
 
     }
 
