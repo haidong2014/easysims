@@ -9,8 +9,8 @@
             { display: '课程名称', name: 'course_name', align: 'left', width: 160 },
             { display: '科目名称', name: 'subject_name', align: 'left', width: 160 },
             { display: '学生姓名', name: 'student_name', align: 'left', width: 160 },
-            { display: '出勤分数', name: 'attendance_scores', align: 'left', width: 80 },
             { display: '作品分数', name: 'works_scores', align: 'left', width: 80 },
+            { display: '出勤分数', name: 'attendance_scores', align: 'left', width: 80 },
             { display: '课堂表现', name: 'performance_scores', align: 'left', width: 80 },
             { display: '课后作业', name: 'homework_scores', align: 'left', width: 80 },
             { display: '评分', name: 'scores', align: 'left', width: 80 }

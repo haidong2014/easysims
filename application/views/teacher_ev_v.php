@@ -9,7 +9,7 @@
             { display: '课程名称', name: 'course_name', align: 'left', width: 160 },
             { display: '科目名称', name: 'subject_name', align: 'left', width: 160 },
             { display: '任课教师', name: 'teacher_name', align: 'left', width: 80 },
-            { display: '满意度平均分', name: 'scores', align: 'left', width: 120 },
+            { display: '满意度分数', name: 'scores', align: 'left', width: 120 },
             { display: '考勤分数', name: 'attendance_scores', align: 'left', width: 120 }
             ],
             pageSize:10,

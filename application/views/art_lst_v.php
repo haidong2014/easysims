@@ -99,6 +99,9 @@
         </td>
       </tr>
       <tr>
+          <td colspan="4"><hr size=1></td>
+      </tr>
+      <tr>
       <?php $j = 1; ?>
       <?php foreach(@$searchData as $temp){ ?>
           <?php if ($j <= 4) { ?>

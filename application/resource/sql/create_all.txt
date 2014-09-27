@@ -399,7 +399,10 @@ INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "3", "三颗星", "JOB_GRADE", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "4", "四颗星", "JOB_GRADE", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("09", "5", "五颗星", "JOB_GRADE", NOW(), NOW());
-
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "1", "60", "作品分数", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "2", "20", "出勤分数", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "3", "10", "课堂表现", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "4", "10", "课后作业", NOW(), NOW());
 
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("系统管理员", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("校长", NOW(), NOW());

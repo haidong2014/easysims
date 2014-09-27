@@ -41,7 +41,7 @@
     </table>
     <br>
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
-        <tr>满意度平均分：<?php echo @$scores?>&nbsp&nbsp 出勤分数：<?php echo @$attendance_scores?></tr>
+        <tr>满意度分数：<?php echo @$scores?>&nbsp&nbsp 出勤分数：<?php echo @$attendance_scores?></tr>
     </table>
     <div id="maingrid" style="margin:0; padding:0"></div>
 </form>

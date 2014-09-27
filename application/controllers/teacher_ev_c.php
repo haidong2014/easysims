@@ -26,11 +26,7 @@ class Teacher_Ev_c extends MY_Controller {
 
         $data['class_name'] = $class_name;
         $data['teacher_name'] = $teacher_name;
-        $searchData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name);
-        foreach($searchData as &$temp){
-            $temp['teacher_name'] = "<a href=\"#\" onclick=\"showTeacher('".SITE_URL."/teacher_c/view_teacher_init/".
-                                    $temp['teacher_id']."/1')\">".$temp['teacher_name']."</a>";
-        }
+
         if($download_flg == "1"){
             $this->load->library('PHPExcel');
             $this->load->library('PHPExcel/IOFactory');
@@ -41,7 +37,7 @@ class Teacher_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('B1', '课程名称');
             $objPHPExcel->getActiveSheet()->setCellValue('C1', '科目名称');
             $objPHPExcel->getActiveSheet()->setCellValue('D1', '任课教师');
-            $objPHPExcel->getActiveSheet()->setCellValue('E1', '满意度平均分');
+            $objPHPExcel->getActiveSheet()->setCellValue('E1', '满意度分数');
             $objPHPExcel->getActiveSheet()->setCellValue('F1', '考勤分数');
 
             $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(24);
@@ -77,6 +73,12 @@ class Teacher_Ev_c extends MY_Controller {
             header('Content-Disposition:attachment;filename='.$outputFileName);
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
+        } else {
+            $searchData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name);
+            foreach($searchData as &$temp){
+                $temp['teacher_name'] = "<a href=\"#\" onclick=\"showTeacher('".SITE_URL."/teacher_c/view_teacher_init/".
+                                        $temp['teacher_id']."/1')\">".$temp['teacher_name']."</a>";
+            }
         }
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));

@@ -108,9 +108,9 @@ class Satisfaction_m extends MY_Model
     }
 
     public function getTeacherEV($data){
-        $this->db->select('sum(scores_01+scores_02+scores_03+scores_04+scores_05+scores_06+scores_07+' .
+        $this->db->select('round((sum(scores_01+scores_02+scores_03+scores_04+scores_05+scores_06+scores_07+' .
                           'scores_08+scores_09+scores_10+scores_11+scores_12+scores_13+scores_14+' .
-                          'scores_15+scores_16)/count(student_id) as scores');
+                          'scores_15+scores_16)/count(student_id))*1.25) as scores');
         $this->db->where('class_id',   $data['class_id']);
         $this->db->where('course_id',  $data['course_id']);
         $this->db->where('subject_id', $data['subject_id']);

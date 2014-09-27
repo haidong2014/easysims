@@ -68,15 +68,15 @@
             <td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">出勤分数:</td>
-            <td align="left" class="l-table-edit-td">
-                <input name="attendance_scores" type="text" id="attendance_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$attendance_scores;?>"/>
-            <td align="left"></td>
-        </tr>
-        <tr>
             <td align="right" class="l-table-edit-td">作品分数:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="works_scores" type="text" id="works_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$works_scores;?>"/>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">出勤分数:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="attendance_scores" type="text" id="attendance_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$attendance_scores;?>"/>
             <td align="left"></td>
         </tr>
         <tr>

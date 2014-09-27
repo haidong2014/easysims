@@ -4,6 +4,7 @@ class Student_Ev_c extends MY_Controller {
     {
         parent::__construct("100303");
         $this->load->model('evaluationstudent_m','evaluationstudent_m');
+        $this->load->model('code_m','code_m');
     }
 
     public function index()
@@ -26,11 +27,11 @@ class Student_Ev_c extends MY_Controller {
 
         $data['class_name'] = $class_name;
         $data['student_name'] = $student_name;
-        $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
-        foreach($searchData as &$temp){
-            $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
-                                    $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";
-        }
+        $ev = $this->code_m->getList("10");
+        $works_ev = $ev['作品分数']['1']/100;
+        $attendance_ev = $ev['出勤分数']['2']/100;
+        $performance_ev = $ev['课堂表现']['3']/100;
+        $homework_ev = $ev['课后作业']['4']/100;
         if($download_flg == "1"){
             $this->load->library('PHPExcel');
             $this->load->library('PHPExcel/IOFactory');
@@ -45,6 +46,7 @@ class Student_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('F1', '作品分数');
             $objPHPExcel->getActiveSheet()->setCellValue('G1', '课堂表现');
             $objPHPExcel->getActiveSheet()->setCellValue('H1', '课后作业');
+            $objPHPExcel->getActiveSheet()->setCellValue('I1', '学生成绩');
 
             $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(24);
             $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(24);
@@ -53,19 +55,23 @@ class Student_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(12);
-            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(24);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(12);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(12);
 
             $searchXlsData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
             $i = 2;
             foreach($searchXlsData as $temp){
+                $scores = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
+                                  $temp['performance_scores']*$performance_ev+$temp['homework_scores']*$homework_ev);
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $temp['class_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $temp['course_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $temp['subject_name']);
                 $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $temp['student_name']);
-                $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $temp['attendance_scores']);
                 $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $temp['works_scores']);
+                $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $temp['attendance_scores']);
                 $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $temp['performance_scores']);
                 $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $temp['homework_scores']);
+                $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $scores);
 
                 $i = $i + 1;
             }
@@ -83,6 +89,14 @@ class Student_Ev_c extends MY_Controller {
             header('Content-Disposition:attachment;filename='.$outputFileName);
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
+        } else {
+            $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
+            foreach($searchData as &$temp){
+                $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
+                                        $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";
+                $temp['scores'] = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
+                                  $temp['performance_scores']*$performance_ev+$temp['homework_scores']*$homework_ev);
+            }
         }
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
