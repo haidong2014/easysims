@@ -105,7 +105,7 @@
       <?php $j = 1; ?>
       <?php foreach(@$searchData as $temp){ ?>
           <?php if ($j <= 4) { ?>
-              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>"><image src="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
+              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo @$files_path.$temp['works_path'] ?>"><image src="<?php echo @$files_path.$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
           <?php } else { ?>
           <?php } ?>
           <?php $j = $j + 1; ?>
@@ -121,7 +121,7 @@
       <?php foreach(@$searchData as $temp){ ?>
           <?php if ($j <= 4) { ?>
           <?php } else { ?>
-              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>"><image src="<?php echo SITE_URL."/images/upload/".$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
+              <td align="left" style="padding:5px;width:200px;"><a href="<?php echo @$files_path.$temp['works_path'] ?>"><image src="<?php echo @$files_path.$temp['works_path'] ?>" width="200" height="150" title="<?php echo "班级：".$temp['class_name']."  课程：".$temp['course_name']."  科目：".$temp['subject_name'] ?>"></a><br><?php echo $temp['student_name'] ?>&nbsp;<?php echo $temp['works_scores'] ?>分</td>
           <?php } ?>
           <?php $j = $j + 1; ?>
       <?php } ?>

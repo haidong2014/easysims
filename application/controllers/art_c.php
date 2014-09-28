@@ -4,6 +4,7 @@ class Art_c extends MY_Controller {
     {
         parent::__construct("100302");
         $this->load->model('works_m','works_m');
+        $this->load->model('code_m','code_m');
     }
 
     public function index()
@@ -49,36 +50,31 @@ class Art_c extends MY_Controller {
             $data['paging'] = 1;
             $data['paging_max'] = 1;
         }
-        log_message('info', "art_c search data:".var_export($data,true));
-
+        $files = $this->code_m->getList("11");
+        $files_path = $files['FILES_PATH']['1'];
+        $data['files_path'] = $files_path;
         if ($download_flg == "1") {
-	        $user_id = $this->session->userdata('user_id');
-         	$zipfile = $user_id."_".date("YmdHis").".zip";
-         	$zip = new ZipArchive;
-            $res = $zip->open("/home/shengyi/www/easyss/images/upload/".$zipfile, ZipArchive::CREATE);
-            //echo "/home/shengyi/www/easyss/images/upload/".$zipfile;
-            if ($res === TRUE) {
-				foreach($searchData as &$temp){
-					$path = "/home/shengyi/www/easyss/images/upload/".$temp['works_path'];
-					//echo $path." :: ".self::getFName($temp['works_path'])."<br>";
-					$zip->addFile($path, self::getFName($temp['works_path']));
-				}
-				$zip->close();
+            $user_id = $this->session->userdata('user_id');
+            $zipfile = $user_id."_".date("YmdHis").".zip";
+            $zip = new ZipArchive;
+            $res = $zip->open($files_path.$zipfile, ZipArchive::CREATE);
+            if ($res == true) {
+                foreach($searchData as &$temp){
+                    $path = $files_path.$temp['works_path'];
+                    $zip->addFile($path, self::getFName($temp['works_path']));
+                }
+               $zip->close();
             }
-            
-			
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="'.$zipfile.'"');
-			readfile("/home/shengyi/www/easyss/images/upload/".$zipfile);
-            //exit();/**/
-        }else{
-        	$this->load->view('art_lst_v',$data);
-        }
 
-        
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.$zipfile.'"');
+            readfile($files_path.$zipfile);
+        }else{
+          $this->load->view('art_lst_v',$data);
+        }
     }
     private function getFName($prm){
-    	$strs=explode('/',$prm);
-    	return $strs[count($strs)-1];
+        $strs=explode('/',$prm);
+        return $strs[count($strs)-1];
     }
 }
