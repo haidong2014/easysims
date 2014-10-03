@@ -9,35 +9,22 @@
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script>
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerForm.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerDateEditor.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerComboBox.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerButton.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerRadio.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerSpinner.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerTextBox.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/ligerUI/js/plugins/ligerTip.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
     <script src="<?php echo SITE_URL;?>/statics/jquery-validation/jquery.metadata.js" type="text/javascript"></script>
-    <script src="<?php echo SITE_URL;?>/statics/jquery-validation/messages_cn.js" type="text/javascript"></script>
-
     <script type="text/javascript">
         var eee;
         $(function ()
         {
             $.metadata.setType("attr", "validate");
-            
             $("form").ligerForm();
-            
-
-      		$("#pageloading").hide();
-       		$("#works_scores").ligerComboBox();
-
+            $("#works_scores").ligerComboBox();
+            $("#pageloading").hide();
         });
-    function returnPage() {
-      location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
-    }
+        function returnPage() {
+            location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
+        }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -53,38 +40,42 @@
   <br>
     <form name="form1" method="post" action="<?php echo SITE_URL?>/works_c/works_grade_exec" id="form1">
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
-        <tr>
+            <tr>
                 <td align="right" class="l-table-edit-td">作品名称</td>
                 <td align="left" class="l-table-edit-td">
                     <?php echo $works_name?>
-                </td><td align="left"></td>
+                </td>
+                <td align="left"></td>
             </tr>
-        <tr>
+            <tr>
                 <td align="right" class="l-table-edit-td">作品作者</td>
                 <td align="left" class="l-table-edit-td">
                    <?php echo $student_name;?>
-                </td><td align="left"></td>
+                </td>
+                <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品分数</td>
                 <td align="left" class="l-table-edit-td">
-                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $works_scores?>" class="required" validate="{digits:true,min:1,max:100}"  />
-                </td><td align="left"></td>
+                    <input type="text" id="works_scores" name="works_scores" ltype='spinner' ligerui="{type:'int'}" value="<?php echo $works_scores?>" />
+                </td>
+                <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品点评</td>
                 <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" name="works_comment" id="works_comment" style="width:400px"><?php echo $works_comment?></textarea>
-                </td><td align="left"></td>
+                    <textarea cols="100" rows="4" class="l-textarea" name="works_comment" id="works_comment" style="width:400px"><?php echo $works_comment?></textarea>
+                </td>
+                <td align="left"></td>
             </tr>
         </table>
-    <br />
-    <input type="submit" value="提交" class="l-button l-button-submit" />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
-    <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
-    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
-    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
-    <input type="hidden" name="works_no" value="<?php echo $works_no ?>" />
+    <br>
+        <input type="submit" value="提交" class="l-button l-button-submit" />
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+        <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+        <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+        <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
+        <input type="hidden" name="works_no" value="<?php echo $works_no ?>" />
     </form>
 </div>
 </body>

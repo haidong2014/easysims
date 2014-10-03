@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  lang="zh-cn">
 <head>
-    <title>易用学生管理系统</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo SITE_URL;?>/statics/default.css" rel="stylesheet" type="text/css" />
@@ -13,12 +13,22 @@
 
             $("#pageloading").hide();
         });
-        function f_search()
-        {
+        function upload() {
+            var upfile = document.form.upfile.value;
+            var works_name = document.form.works_name.value;
+            if (upfile == ""){
+                alert("请选择作品文件！");
+                return;
+            }
+            if (works_name == ""){
+                alert("请输入作品名称！");
+                return;
+            }
+            document.form.submit();
         }
-    function returnPage() {
-      location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
-    }
+        function returnPage() {
+            location.href = "<?php echo SITE_URL?>/works_c/works_lst/<?php echo $class_id.'/'.$course_id.'/'.$subject_id ?>";
+        }
     </script>
     <style type="text/css">
         body{ font-size:12px;}
@@ -30,35 +40,35 @@
 </head>
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
-  <br>
+<br>
 <div>
-    <form name="main" method="post" action="<?php echo SITE_URL.'/works_c/works_upload_exec';?>"  enctype="multipart/form-data" style="width:100%">
+    <form name="form" id="form" method="post" action="<?php echo SITE_URL.'/works_c/works_upload_exec';?>"  enctype="multipart/form-data" style="width:100%">
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
                 <td align="right" class="l-table-edit-td">作品上传:</td>
                 <td align="left" class="l-table-edit-td">
-                <input type="file" name="upfile" multiple></td>
+                    <input type="file" name="upfile" id="upfile" multiple></td>
                 <td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品名称:</td>
                 <td align="left" class="l-table-edit-td">
-                <input type="text" class="l-text" id="works_name" name="works_name" style="width:400px" />
+                    <input type="text" class="l-text" id="works_name" name="works_name" style="width:400px" />
                 </td><td align="left"></td>
             </tr>
             <tr>
                 <td align="right" class="l-table-edit-td">作品描述:</td>
                 <td align="left" class="l-table-edit-td">
-                <textarea cols="100" rows="4" class="l-textarea" id="works_description" name="works_description" style="width:400px"></textarea>
+                    <textarea cols="100" rows="4" class="l-textarea" id="works_description" name="works_description" style="width:400px"></textarea>
                 </td><td align="left"></td>
             </tr>
         </table>
-    <br />
-    <input type="submit" value="提交" class="l-button l-button-submit" />
-    <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
-    <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
-    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
-    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
+        <br>
+        <input type="button" value="提交" class="l-button l-button-submit" onclick="upload()"/>
+        <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
+        <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+        <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+        <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
     </form>
 </div>
 </body>

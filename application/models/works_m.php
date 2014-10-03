@@ -21,8 +21,9 @@ class Works_m extends MY_Model
         }
         return $works;
     }
+
     public function getOne($class_id,$course_id,$subject_id,$works_no){
-      $this->db->where('class_id',   $class_id);
+        $this->db->where('class_id',   $class_id);
         $this->db->where('course_id',  $course_id);
         $this->db->where('subject_id', $subject_id);
         $this->db->where('works_no', $works_no);
@@ -30,16 +31,14 @@ class Works_m extends MY_Model
         $this->db->select('*');
         $query = $this->db->get($this->table_name);
         $works= null;
-       foreach ($query->result_array() as $row){
-         $works = $row;
-       }
-       return $works;
+        foreach ($query->result_array() as $row){
+            $works = $row;
+        }
+        return $works;
     }
-  public function getList($keyword = null, $class_id, $course_id, $subject_id)
+
+    public function getList($keyword = null, $class_id, $course_id, $subject_id)
     {
-
-
-        //$this->db->select('*');
         $this->db->where( 'class_id', $class_id );
         $this->db->where( 'course_id', $course_id );
         $this->db->where( 'subject_id', $subject_id );
@@ -49,7 +48,6 @@ class Works_m extends MY_Model
         $this->db->where('delete_flg', 0);
         $this->db->order_by('works_no','desc');
         $query =  $this->db->get($this->table_name);
-        log_message('info', "Works_m getList sql:".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -75,14 +73,12 @@ class Works_m extends MY_Model
         $this->db->where('class_id',      $data['class_id']);
         $this->db->where('course_id',     $data['course_id']);
         $this->db->where('subject_id',    $data['subject_id']);
-       // $this->db->where('student_id',    $data['student_id']);
         $this->db->where('works_no',      $data['works_no']);
         $this->db->set( 'works_scores',   $data['works_scores'] );
         $this->db->set( 'works_comment',  $data['works_comment'] );
         $this->db->set( 'update_user',    $data['update_user'] );
         $this->db->set( 'update_time',    $data['update_time'] );
         $ret= $this->db->update( $this->table_name );
-        log_message('info', "Works_m update sql:".$this->db->last_query());
         return $ret;
     }
 
@@ -112,9 +108,7 @@ class Works_m extends MY_Model
         }
         $this->db->order_by('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no', 0);
         $this->db->limit(8,($data['paging']-1)*8);
-
         $query = $this->db->get();
-
         return $query->result_array();
     }
 
@@ -138,7 +132,6 @@ class Works_m extends MY_Model
             $this->db->like('t2.student_name', $data['txtKey']);
         }
         $this->db->limit(160);
-
         $query = $this->db->get();
         $paging_max= null;
         foreach ($query->result_array() as $row){

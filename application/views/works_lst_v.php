@@ -11,66 +11,48 @@
                 { display: '上传时间', name: 'update_time', align: 'left', width: 120 },
                 { display: '作品分数', name: 'works_scores', align: 'left', width: 120 },
                 { display: '作品点评', name: 'remarks', align: 'left', width: 120 }
-                ],  
+                ],
                 pageSize:10,
-                where : f_getWhere(),
-                data: $.extend(true,{},WorkslstData), 
+                data: $.extend(true,{},WorkslstData),
                 width: '100%',height:'100%'
             });
 
             $("#pageloading").hide();
         });
-        function f_search()
-        {
-            grid.options.data = $.extend(true, {}, CustomersData);
-            grid.loadData(f_getWhere());
-        }
-        function f_getWhere()
-        {
-            if (!grid) return null;
-            var clause = function (rowdata, rowindex)
-            {
-                var key = $("#txtKey").val();
-                return rowdata.CustomerID.indexOf(key) > -1;
-            };
-            return clause; 
-        }
-        function search_click()
-        {
-        }
-        function regist_click()
-        {
-			location.href = "<?php echo SITE_URL.'/works_c/works_upload_init/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
+        function regist_click(){
+            location.href = "<?php echo SITE_URL.'/works_c/works_upload_init/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
         }
         function returnPage() {
             location.href = "<?php echo SITE_URL.'/works_c/subject_lst/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
         }
         function download_click(){
-        	//location.href = "<?php echo SITE_URL.'/works_c/subject_lst/'.$class_id.'/'.$course_id.'/'.$subject_id;?>";
-        	document.dlform.submit();
+            document.dlform.submit();
         }
     </script>
 </head>
 <body style="padding:6px; overflow:hidden;">
-<div id="pageloading"></div>  
-<div id="searchbar">
-
+<div id="pageloading"></div>
+<div id="searchbar"></div>
 <form name="form" method="post" action="<?php echo SITE_URL.'/works_c/works_lst';?>" id="form">
-    编号或姓名：<input id="txtKey" name="txtKey" type="text" value="<?php echo $txtKey?>" />
-    <input id="button" type="button" value=" 查 询 " onclick="javascript:document.form.submit();" />
-	<input id="regist" type="button" value=" 上 传 " onclick="regist_click()" />
-	<input id="download" type="button" value="批量下载" onclick="download_click()" />
-    <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
+    <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+        <tr>
+            &nbsp作品名称：
+            <input id="txtKey" name="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo $txtKey?>" />&nbsp
+            <input id="button" type="button" value=" 查 询 " onclick="javascript:document.form.submit();" />&nbsp
+            <input id="regist" type="button" value=" 上 传 " onclick="regist_click()" />&nbsp
+            <input id="download" type="button" value="批量下载" onclick="download_click()" />&nbsp
+            <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
+            <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
+            <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
+            <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
+        </tr>
+    </table>
+</form>
+<form name="dlform"  method="post" action="<?php echo SITE_URL.'/works_c/works_download_exec';?>" >
     <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
     <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
     <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
-    </form>
-    <form name="dlform"  method="post" action="<?php echo SITE_URL.'/works_c/works_download_exec';?>" >
-    <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />
-    <input type="hidden" name="course_id" value="<?php echo $course_id ?>" />
-    <input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
-    </form>
-</div>
+</form>
 <br>
 <div id="maingrid" style="margin:0; padding:0"></div>
 <div style="display:none;"></div>
