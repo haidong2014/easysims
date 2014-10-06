@@ -51,22 +51,42 @@ class Works_m extends MY_Model
         return $query->result_array();
     }
 
-    public function insert($data){
-        $this->db->set( 'class_id',          $data['class_id'] );
-        $this->db->set( 'course_id',         $data['course_id'] );
-        $this->db->set( 'subject_id',        $data['subject_id'] );
-        $this->db->set( 'student_id',        $data['student_id'] );
-        $this->db->set( 'works_no',          $data['works_no'] );
-        $this->db->set( 'works_name',        $data['works_name'] );
-        $this->db->set( 'works_path',        $data['works_path'] );
-        $this->db->set( 'works_description', $data['works_description'] );
-        $this->db->set( 'remarks',           $data['remarks'] );
-        $this->db->set( 'delete_flg',        $data['delete_flg'] );
-        $this->db->set( 'insert_user',       $data['insert_user'] );
-        $this->db->set( 'insert_time',       $data['insert_time'] );
-        $this->db->set( 'update_user',       $data['update_user'] );
-        $this->db->set( 'update_time',       $data['update_time'] );
-        $this->db->insert( $this->table_name );
+    public function insertorupdate($data){
+
+        $worksData = self::getOne($data['class_id'],$data['course_id'],$data['subject_id'],$data['works_no']);
+
+        if (empty($worksData)) {
+            $this->db->set( 'class_id',          $data['class_id'] );
+            $this->db->set( 'course_id',         $data['course_id'] );
+            $this->db->set( 'subject_id',        $data['subject_id'] );
+            $this->db->set( 'student_id',        $data['student_id'] );
+            $this->db->set( 'works_no',          $data['works_no'] );
+            $this->db->set( 'works_name',        $data['works_name'] );
+            $this->db->set( 'works_path',        $data['works_path'] );
+            $this->db->set( 'works_description', $data['works_description'] );
+            $this->db->set( 'remarks',           $data['remarks'] );
+            $this->db->set( 'delete_flg',        $data['delete_flg'] );
+            $this->db->set( 'insert_user',       $data['insert_user'] );
+            $this->db->set( 'insert_time',       $data['insert_time'] );
+            $this->db->set( 'update_user',       $data['update_user'] );
+            $this->db->set( 'update_time',       $data['update_time'] );
+            $this->db->insert( $this->table_name );
+        } else {
+            $this->db->where('class_id',         $data['class_id']);
+            $this->db->where('course_id',        $data['course_id']);
+            $this->db->where('student_id',       $data['student_id']);
+            $this->db->where('subject_id',       $data['subject_id']);
+            $this->db->where('works_no',         $data['works_no']);
+            $this->db->set( 'works_name',        $data['works_name'] );
+            $this->db->set( 'works_path',        $data['works_path'] );
+            $this->db->set( 'works_description', $data['works_description'] );
+            $this->db->set( 'works_scores',      0 );
+            $this->db->set( 'works_comment',     '' );
+            $this->db->set( 'remarks',           $data['remarks'] );
+            $this->db->set( 'update_user',       $data['update_user'] );
+            $this->db->set( 'update_time',       $data['update_time'] );
+            $this->db->update( $this->table_name );
+        }
     }
 
     public function update($data){

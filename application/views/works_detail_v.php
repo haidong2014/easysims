@@ -27,24 +27,24 @@
     <form name="form" method="post" action="" id="form">
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             <tr>
-                <td align="left" class="l-table-edit-td" width="50">作品名称</td>
-                <td align="left" class="l-table-edit-td" width="249"><?php echo $works_name?></td>
-                <td align="left" width="1"></td>
+                <td align="left" class="l-table-edit-td" width="55">作品名称:</td>
+                <td align="left" class="l-table-edit-td" width="240"><?php echo $works_name?></td>
+                <td align="left" width="5"></td>
             </tr>
             <tr>
-                <td align="left" class="l-table-edit-td" width="50">作品描述</td>
-                <td align="left" class="l-table-edit-td" width="249"><?php echo $works_description?></td>
-                <td align="left" width="1"></td>
+                <td align="left" class="l-table-edit-td" width="55">作品描述:</td>
+                <td align="left" class="l-table-edit-td" width="240"><?php echo $works_description?></td>
+                <td align="left" width="5"></td>
             </tr>
             <tr>
-                <td align="left" class="l-table-edit-td" width="50">作品分数</td>
-                <td align="left" class="l-table-edit-td" width="249"><?php echo $works_scores?></td>
-                <td align="left" width="1"></td>
+                <td align="left" class="l-table-edit-td" width="55">作品分数:</td>
+                <td align="left" class="l-table-edit-td" width="240"><?php echo $works_scores?></td>
+                <td align="left" width="5"></td>
             </tr>
             <tr>
-                <td align="left" class="l-table-edit-td" width="50">作品点评</td>
-                <td align="left" class="l-table-edit-td" width="249"><?php echo $works_comment?></td>
-                <td align="left" width="1"></td>
+                <td align="left" class="l-table-edit-td" width="55">作品点评:</td>
+                <td align="left" class="l-table-edit-td" width="240"><?php echo $works_comment?></td>
+                <td align="left" width="5"></td>
             </tr>
             <tr>
                 <td colspan="3" align="center" style="padding:5px;" ><image src="<?php echo SITE_URL."/upload/".$works_path?>" height="200" width="300" /></td>

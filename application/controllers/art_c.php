@@ -64,9 +64,14 @@ class Art_c extends MY_Controller {
             $res = $zip->open($temp_path.$zipfile, ZipArchive::CREATE);
             if ($res == true) {
                 foreach($searchData as &$temp){
-                    $path = $files_path.$temp['works_path'];
+                    if (empty($temp["remarks"])) {
+                        $works_path = $temp["works_path"];
+                    } else {
+                        $works_path = $temp["remarks"];
+                    }
+                    $path = $files_path.$works_path;
                     if(file_exists($path)){
-                        $zip->addFile($path, self::getFName($temp['works_path']));
+                        $zip->addFile($path, self::getFName($works_path));
                     }
                 }
                $zip->close();

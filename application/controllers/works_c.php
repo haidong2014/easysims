@@ -146,6 +146,7 @@ class Works_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
+        $data['msg_flg'] = "0";
 
         $this->load->view('works_upload_v',$data);
     }
@@ -176,7 +177,11 @@ class Works_c extends MY_Controller {
         if(!file_exists($up_path_url)){
             mkdir($up_path_url,0777,true);
         }
-
+        $path_temp = $pathLst['FILES_PATH']['3'];
+        $up_path_temp = $path_temp;
+        if(!file_exists($up_path_temp)){
+            mkdir($up_path_temp,0777,true);
+        }
         $filename = date('YmdHmis');
         $userinfo = $this->session->userdata('user');
         $user_id = $this->session->userdata('user_id');
@@ -200,30 +205,63 @@ class Works_c extends MY_Controller {
         $insData['update_time'] = date("Y-m-d H:i:s");
 
         $config['upload_path']=$up_path;
-        $config['allowed_types']="jpg|png";
-        $config['max_size']="20000";
+        $config['allowed_types']="jpg|wmv|zip";
+        $config['max_size']="0";
+        $config['max_width']="0";
+        $config['max_height']="0";
         $this->load->library("upload",$config);
         if($this->upload->do_upload('upfile')){
             $data = $this->upload->data();
-            $this->load->library("image_lib");
-            $config_big_thumb['image_library'] = 'gd2';
-            $config_big_thumb['source_image'] = $data['full_path'];
-            $config_big_thumb['new_image'] = $up_path_url."/".$data['file_name'];
-            $config_big_thumb['create_thumb'] = true;
-            $config_big_thumb['maintain_ratio'] = true;
-            $config_big_thumb['width'] = 300;
-            $config_big_thumb['height'] = 300;
-            $config_big_thumb['thumb_marker']="";
-            $this->image_lib->initialize($config_big_thumb);
-            $this->image_lib->resize();
-
+            $path_remarks = $class_id.'/'.$course_id.'/'.$subject_id."/".$data['file_name'];
+            if (self::getExt($data['file_name']) == "jpg") {
+                $this->load->library("image_lib");
+                $config_big_thumb['image_library'] = 'gd2';
+                $config_big_thumb['source_image'] = $data['full_path'];
+                $config_big_thumb['new_image'] = $up_path_url."/".$data['file_name'];
+                $config_big_thumb['create_thumb'] = true;
+                $config_big_thumb['maintain_ratio'] = true;
+                $config_big_thumb['width'] = 300;
+                $config_big_thumb['height'] = 300;
+                $config_big_thumb['thumb_marker']="";
+                $this->image_lib->initialize($config_big_thumb);
+                $this->image_lib->resize();
+            } else {
+                $config['upload_path']=$up_path_temp;
+                $config['allowed_types']="jpg|wmv|zip";
+                $config['max_size']="0";
+                $config['max_width']="0";
+                $config['max_height']="0";
+                $this->load->library("upload",$config);
+                if($this->upload->do_upload('upsmallfile')){
+                    $data = $this->upload->data();
+                    $this->load->library("image_lib");
+                    $config_big_thumb['image_library'] = 'gd2';
+                    $config_big_thumb['source_image'] = $data['full_path'];
+                    $config_big_thumb['new_image'] = $up_path_url."/".$data['file_name'];
+                    $config_big_thumb['create_thumb'] = true;
+                    $config_big_thumb['maintain_ratio'] = true;
+                    $config_big_thumb['width'] = 300;
+                    $config_big_thumb['height'] = 300;
+                    $config_big_thumb['thumb_marker']="";
+                    $this->image_lib->initialize($config_big_thumb);
+                    $this->image_lib->resize();
+                }
+            }
             if(!empty($data)){
                 $path_save = $class_id.'/'.$course_id.'/'.$subject_id."/".$data['file_name'];
                 $insData['works_path']  = $path_save;
-                $this->works_m->insert($insData);
+                $insData['remarks']  = $path_remarks;
+                $this->works_m->insertorupdate($insData);
             }
+
+            redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
+        } else {
+            $data['class_id'] = $class_id;
+            $data['course_id'] = $course_id;
+            $data['subject_id'] = $subject_id;
+            $data['msg_flg'] = "1";
+            $this->load->view('works_upload_v',$data);
         }
-        redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
     }
 
     public function works_grade($class_id=null, $course_id=null, $subject_id=null, $works_no=null){
@@ -315,14 +353,18 @@ class Works_c extends MY_Controller {
         $res = $zip->open($temp_path.$zipfile, ZipArchive::CREATE);
         if ($res == true) {
             foreach($workData as &$temp){
-                $path = $files_path.$temp['works_path'];
+                if (empty($temp["remarks"])) {
+                    $works_path = $temp["works_path"];
+                } else {
+                    $works_path = $temp["remarks"];
+                }
+                $path = $files_path.$works_path;
                 if(file_exists($path)){
-                    $zip->addFile($path, self::getFName($temp['works_path']));
+                    $zip->addFile($path, self::getFName($works_path));
                 }
             }
            $zip->close();
         }
-
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="'.$zipfile.'"');
         readfile($temp_path.$zipfile);
@@ -340,8 +382,13 @@ class Works_c extends MY_Controller {
         $works_no = $this->input->post('works_no');
         $user_id = $this->session->userdata('user_id');
         $workData = $this->works_m->getOne($class_id,$course_id,$subject_id,$works_no);
-        $filename = $works_no.".".self::getExt($workData["works_path"]);
-        $filepath =  $path.$workData["works_path"];
+        if (empty($workData["remarks"])) {
+            $works_path = $workData["works_path"];
+        } else {
+            $works_path = $workData["remarks"];
+        }
+        $filename = $works_no.".".self::getExt($works_path);
+        $filepath =  $path.$works_path;
         if(file_exists($filepath)){
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.$filename.'"');
