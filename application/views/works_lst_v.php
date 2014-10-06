@@ -39,7 +39,9 @@
             &nbsp作品名称：
             <input id="txtKey" name="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo $txtKey?>" />&nbsp
             <input id="button" type="button" value=" 查 询 " onclick="javascript:document.form.submit();" />&nbsp
-            <input id="regist" type="button" value=" 上 传 " onclick="regist_click()" />&nbsp
+            <?php if($works_flg == '1'){?>
+                <input id="regist" type="button" value=" 上 传 " onclick="regist_click()" />&nbsp
+            <?php }?>
             <input id="download" type="button" value="批量下载" onclick="download_click()" />&nbsp
             <input id="search" type="button" value=" 返 回 " onclick="returnPage()" />
             <input type="hidden" name="class_id" value="<?php echo $class_id ?>" />

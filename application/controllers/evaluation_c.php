@@ -12,6 +12,7 @@ class Evaluation_c extends MY_Controller {
         $this->load->model('evaluationstudent_m','evaluationstudent_m');
         $this->load->model('satisfaction_m','satisfaction_m');
         $this->load->model('code_m','code_m');
+        $this->load->model('user_m','user_m');
     }
 
     public function index()
@@ -27,6 +28,18 @@ class Evaluation_c extends MY_Controller {
           $status = "2";
         }
         $data['status'] = $status;
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        if($role_id == '1007'){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         $classData = $this->class_m->getList($data);
         foreach($classData as &$temp){
             $temp['class_no']="<a href=\"".SITE_URL."/evaluation_c/subject_lst/".
@@ -53,15 +66,36 @@ class Evaluation_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
-
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+        if($role_id == '1007'){
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         foreach($subjectData as &$temp){
             $temp['period']=$temp['period']."周";
-            $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$temp['class_id']."/".
-                                $temp['course_id']."/".$temp['subject_id']."/".$temp['teacher_id']."\">".$temp['teacher_name']."</a>";
-            $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".$temp['class_id']."/".
-                                $temp['course_id']."/".$temp['subject_id']."/".$temp['teacher_id']."\">"."评价"."</a>";
-            $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".$temp['class_id']."/".
-                                $temp['course_id']."/".$temp['subject_id']."/".$temp['teacher_id']."\">"."评价"."</a>";
+
+            if($role_id == '1007'){
+                $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".
+                                    $temp['class_id']."/".$temp['course_id']."/".$temp['subject_id']."/".
+                                    $temp['teacher_id']."\">"."评价"."</a>";
+                $temp['attendance']="";
+             } else {
+                $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$temp['class_id']."/".
+                                      $temp['course_id']."/".$temp['subject_id']."/".$temp['teacher_id']."\">".
+                                      $temp['teacher_name']."</a>";
+                $temp['evaluation']="";
+                $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".
+                                    $temp['class_id']."/".$temp['course_id']."/".$temp['subject_id']."/".
+                                    $temp['teacher_id']."\">"."评价"."</a>";
+             }
+
             $temp['subject_id']="<a href=\"".SITE_URL."/evaluation_c/student_ev_lst/".$temp['class_id']."/".
                                 $temp['course_id']."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
         }
@@ -128,20 +162,28 @@ class Evaluation_c extends MY_Controller {
     public function satisfaction_add_init($class_id,$course_id,$subject_id,$teacher_id){
         $data = array();
 
-        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+        $student = $this->student_m->getStudentId($user['0']['user']);
+        $student_id = $student['student_id'];
+
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
-        $data['student_id'] = $userinfo;
+        $data['student_id'] = $student_id;
         $satisfactionData = $this->satisfaction_m->select($data);
-
+        if(empty($satisfactionData)){
+            $satisfaction_add_flg = "0";
+        } else {
+            $satisfaction_add_flg = "1";
+        }
         $data = $satisfactionData;
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
-
+        $data['satisfaction_add_flg'] = $satisfaction_add_flg;
         $this->load->view('satisfaction_add_v',$data);
     }
 
@@ -170,13 +212,16 @@ class Evaluation_c extends MY_Controller {
         $scores_15 = $this->input->post('scores_15');
         $scores_16 = $this->input->post('scores_16');
 
-        $student_id = $this->student_m->getStudentId($userinfo);
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+        $student = $this->student_m->getStudentId($user['0']['user']);
+        $student_id = $student['student_id'];
 
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
-        $data['student_id'] = $student_id['student_id'];
+        $data['student_id'] = $student_id;
         $data['scores_01'] = $scores_01;
         $data['scores_02'] = $scores_02;
         $data['scores_03'] = $scores_03;
@@ -247,11 +292,28 @@ class Evaluation_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
-        $data['student_id'] = null;
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        $data['student_ev_flg'] = '0';
+        if($role_id == '1007'){
+            $data['student_ev_flg'] = '1';
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         $studentData = $this->evaluationstudent_m->selectStudentEV($data);
         foreach($studentData as &$temp){
-            $temp['scores']="<a href=\"".SITE_URL."/evaluation_c/student_ev_add_init/".$class_id."/".
+            if ($data['student_ev_flg'] == '1') {
+                $temp['scores']="";
+            } else {
+                $temp['scores']="<a href=\"".SITE_URL."/evaluation_c/student_ev_add_init/".$class_id."/".
                             $course_id."/".$subject_id."/".$temp['student_id']."\">"."评价"."</a>";
+            }
         }
         $data['studentData'] = @json_encode(array('Rows'=>$studentData));
 

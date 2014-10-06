@@ -223,7 +223,9 @@
     <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
     <input type="hidden" name="subject_id" id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="hidden" name="teacher_id" id="teacher_id" value="<?php echo @$teacher_id?>" />
-    <input type="button" value="提交" class="l-button l-button-submit" onclick="addSatisfaction()"/>
+    <?php if($satisfaction_add_flg == '0'){?>
+        <input type="button" value="提交" class="l-button l-button-submit" onclick="addSatisfaction()"/>
+    <?php }?>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
 </form>
 <div style="display:none"></div>

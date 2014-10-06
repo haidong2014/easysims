@@ -23,6 +23,18 @@ class Works_c extends MY_Controller {
           $status = "2";
         }
         $data['status'] = $status;
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        if($role_id == '1007'){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         $classData = $this->class_m->getList($data);
         foreach($classData as &$temp){
             $temp['class_no']="<a href=\"".SITE_URL."/works_c/subject_lst/".
@@ -89,11 +101,29 @@ class Works_c extends MY_Controller {
         $data['subject_id'] = $subject_id;
         $data['txtKey'] = $search_key;
         $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        $data['works_flg'] = '0';
+        if($role_id == '1007'){
+            $data['works_flg'] = '1';
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         foreach($workData as &$value){
             $st = $this->student_m->getOne($value['student_id']);
             $value['student_name'] = $st['student_name'];
-            $value['remarks']="<a href=\"".SITE_URL."/works_c/works_grade/".$value['class_id']."/".
-                                $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">点评</a>";
+            if ($data['works_flg'] == '0'){
+                $value['remarks']="<a href=\"".SITE_URL."/works_c/works_grade/".$value['class_id']."/".
+                                  $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">点评</a>";
+            } else {
+                $value['remarks']="";
+            }
             $value['works_no']="<a href=\"".SITE_URL."/works_c/works_detail/".$value['class_id']."/".
                                 $value['course_id']."/".$value['subject_id']."/".$value['works_no']."\">".$value['works_no']."</a>";
 
