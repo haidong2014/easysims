@@ -1,7 +1,5 @@
 <?php
 class Works_c extends MY_Controller {
-    const ROOTPATH="/home/shengyi/www/easyss/images/upload/";
-    const ROOTPATHS="/home/shengyi/www/easyss/images/uploads/";
     public function __construct()
     {
         parent::__construct("100102");
@@ -9,6 +7,7 @@ class Works_c extends MY_Controller {
         $this->load->model('works_m','works_m');
         $this->load->model('code_m','code_m');
         $this->load->model('student_m','student_m');
+        $this->load->model('user_m','user_m');
     }
 
     public function index()
@@ -166,29 +165,30 @@ class Works_c extends MY_Controller {
         $works_name = $this->input->post('works_name');
         $works_description = $this->input->post('works_description');
 
-        $up_path = self::ROOTPATH.$class_id.'/'.$course_id.'/'.$subject_id;
-        $up_path2 = "".$class_id.'/'.$course_id.'/'.$subject_id;
-
+        $pathLst = $this->code_m->getList("11");
+        $path = $pathLst['FILES_PATH']['1'];
+        $up_path = $path.$class_id.'/'.$course_id.'/'.$subject_id;
         if(!file_exists($up_path)){
-          mkdir($up_path,0777,true);
+            mkdir($up_path,0777,true);
         }
-        $up_paths = self::ROOTPATHS.$class_id.'/'.$course_id.'/'.$subject_id;
-        if(!file_exists($up_paths)){
-            mkdir($up_paths,0777,true);
+        $path_url = $pathLst['FILES_PATH']['2'];
+        $up_path_url = $path_url.$class_id.'/'.$course_id.'/'.$subject_id;
+        if(!file_exists($up_path_url)){
+            mkdir($up_path_url,0777,true);
         }
-        $varYear="year";
-        $varMonth="month";
-        $varDay="day";
-        $varSecondName="second_name";
+
         $filename = date('YmdHmis');
         $userinfo = $this->session->userdata('user');
         $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+        $student = $this->student_m->getStudentId($user['0']['user']);
+        $student_id = $student['student_id'];
         $insData =array();
         $insData['class_id'] = $class_id;
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
-        $insData['student_id'] = $user_id ;
-        $insData['works_no'] =$class_id.'-'.$course_id.'-'.$subject_id.'-'.$user_id.'-'.$filename;
+        $insData['student_id'] = $student_id ;
+        $insData['works_no'] = $class_id.$course_id.$subject_id.$student_id;
         $insData['works_name'] = $works_name;
         $insData['works_path']  = '';
         $insData['works_description']= $works_description;
@@ -199,48 +199,31 @@ class Works_c extends MY_Controller {
         $insData['update_user'] = $userinfo;
         $insData['update_time'] = date("Y-m-d H:i:s");
 
-        if(!empty($_FILES["upfile"]["tmp_name"])){
-            $file = $_FILES["upfile"]["tmp_name"];
-            $name = $_FILES["upfile"]["name"];
-            $imageUpload = self::uploadfile($file, $name, $up_path."/".$filename, $up_path2."/".$filename ,$up_paths."/".$filename);
-            $insData['works_path'] = $imageUpload;
+        $config['upload_path']=$up_path;
+        $config['allowed_types']="jpg|png";
+        $config['max_size']="20000";
+        $this->load->library("upload",$config);
+        if($this->upload->do_upload('upfile')){
+            $data = $this->upload->data();
+            $this->load->library("image_lib");
+            $config_big_thumb['image_library'] = 'gd2';
+            $config_big_thumb['source_image'] = $data['full_path'];
+            $config_big_thumb['new_image'] = $up_path_url."/".$data['file_name'];
+            $config_big_thumb['create_thumb'] = true;
+            $config_big_thumb['maintain_ratio'] = true;
+            $config_big_thumb['width'] = 300;
+            $config_big_thumb['height'] = 300;
+            $config_big_thumb['thumb_marker']="";
+            $this->image_lib->initialize($config_big_thumb);
+            $this->image_lib->resize();
 
-            if(!empty($imageUpload)){
+            if(!empty($data)){
+                $path_save = $class_id.'/'.$course_id.'/'.$subject_id."/".$data['file_name'];
+                $insData['works_path']  = $path_save;
                 $this->works_m->insert($insData);
             }
         }
         redirect("works_c/works_lst/".$class_id."/".$course_id."/".$subject_id);
-    }
-
-    function uploadfile($file, $name, $filename, $filename2, $filenames){
-        $ext="";
-
-        $temp = explode(".", $name);
-        if(count($temp)>1){
-          $ext=$temp[count($temp)-1];
-        }
-        $fullname = $filename.".".$ext;
-        $sfullname = $filenames.".".$ext;
-        if(file_exists($fullname)){
-            unlink($fullname);
-        }
-
-        if (move_uploaded_file($file, $fullname)) {
-        } else {
-            echo "move_uploaded_file error";
-        }
-        if(file_exists($sfullname)){
-            unlink($sfullname);
-        }
-        $thumb = new Imagick($fullname);
-        $d = $thumb->getImageGeometry();
-        $w = intval($d['width']);
-        $h = intval($d['height']);
-        $newWidth = round(($w/$h)*300.0);
-        $thumb->resizeImage($newWidth,300,Imagick::FILTER_LANCZOS,1);
-        $thumb->writeImage($sfullname);
-        $thumb->destroy();
-        return $filename2.".".$ext;
     }
 
     public function works_grade($class_id=null, $course_id=null, $subject_id=null, $works_no=null){
@@ -286,12 +269,14 @@ class Works_c extends MY_Controller {
         $data['subject_id'] = $subject_id;
         $data['works_no'] = $works_no;
         $insData =array();
+        $user = $this->user_m->getOne($user_id);
+        $student = $this->student_m->getStudentId($user['0']['user']);
+        $student_id = $student['student_id'];
         $insData['class_id'] = $class_id;
         $insData['course_id'] = $course_id;
         $insData['subject_id'] = $subject_id ;
-        $insData['student_id'] = $user_id ;
+        $insData['student_id'] = $student_id ;
         $insData['works_no'] =$works_no;
-
         $insData['works_path']  = '';
         $insData['works_scores']  = $works_scores;
         $insData['works_comment']  = $works_comment;
@@ -317,24 +302,37 @@ class Works_c extends MY_Controller {
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['txtKey'] = $search_key;
-        $userinfo = $this->session->userdata('user');
-        $user_id = $this->session->userdata('user_id');
-        $works_scores = $this->input->post('works_scores');
-        $works_comment = $this->input->post('works_comment');
         $workData = $this->works_m->getList($search_key,$class_id,$course_id,$subject_id);
-        $zipfile = $user_id."_".date("YmdHis").".zip";
-        $command = "zip ".$zipfile." ";
-        foreach($workData as &$value){
-            $command.=$value["works_path"]." ";
+        $files = $this->code_m->getList("11");
+        $files_path = $files['FILES_PATH']['1'];
+        $temp_path = $files['FILES_PATH']['3'];
+
+        if(!file_exists($temp_path)){
+            mkdir($temp_path,0777,true);
         }
-        $output = shell_exec($command);
+        $zipfile = "files".date("YmdHis").".zip";
+        $zip = new ZipArchive;
+        $res = $zip->open($temp_path.$zipfile, ZipArchive::CREATE);
+        if ($res == true) {
+            foreach($workData as &$temp){
+                $path = $files_path.$temp['works_path'];
+                if(file_exists($path)){
+                    $zip->addFile($path, self::getFName($temp['works_path']));
+                }
+            }
+           $zip->close();
+        }
+
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="'.$zipfile.'"');
-        readfile($zipfile);
+        readfile($temp_path.$zipfile);
     }
 
     public function works_download_one_exec(){
         $data = array();
+
+        $pathLst = $this->code_m->getList("11");
+        $path = $pathLst['FILES_PATH']['1'];
 
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
@@ -342,15 +340,22 @@ class Works_c extends MY_Controller {
         $works_no = $this->input->post('works_no');
         $user_id = $this->session->userdata('user_id');
         $workData = $this->works_m->getOne($class_id,$course_id,$subject_id,$works_no);
-        $filename = $user_id."_".date("YmdHis").self::getExt($workData["works_path"]);
-        $filepath =  SITE_URL."/images/upload/".$workData["works_path"];
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        readfile($filepath);
+        $filename = $works_no.".".self::getExt($workData["works_path"]);
+        $filepath =  $path.$workData["works_path"];
+        if(file_exists($filepath)){
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.$filename.'"');
+            readfile($filepath);
+        }
      }
 
-    function getExt($str){
+    private function getExt($str){
         $arr = explode(".",$str);
         return $arr[count($arr)-1];
+    }
+
+    private function getFName($prm){
+        $strs=explode('/',$prm);
+        return $strs[count($strs)-1];
     }
 }

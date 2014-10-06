@@ -50,25 +50,31 @@ class Art_c extends MY_Controller {
             $data['paging'] = 1;
             $data['paging_max'] = 1;
         }
-        $files = $this->code_m->getList("11");
-        $files_path = $files['FILES_PATH']['1'];
-        $data['files_path'] = $files_path;
+
         if ($download_flg == "1") {
-            $user_id = $this->session->userdata('user_id');
-            $zipfile = $user_id."_".date("YmdHis").".zip";
+            $files = $this->code_m->getList("11");
+            $files_path = $files['FILES_PATH']['1'];
+            $temp_path = $files['FILES_PATH']['3'];
+
+            if(!file_exists($temp_path)){
+                mkdir($temp_path,0777,true);
+            }
+            $zipfile = "files".date("YmdHis").".zip";
             $zip = new ZipArchive;
-            $res = $zip->open($files_path.$zipfile, ZipArchive::CREATE);
+            $res = $zip->open($temp_path.$zipfile, ZipArchive::CREATE);
             if ($res == true) {
                 foreach($searchData as &$temp){
                     $path = $files_path.$temp['works_path'];
-                    $zip->addFile($path, self::getFName($temp['works_path']));
+                    if(file_exists($path)){
+                        $zip->addFile($path, self::getFName($temp['works_path']));
+                    }
                 }
                $zip->close();
             }
 
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.$zipfile.'"');
-            readfile($files_path.$zipfile);
+            readfile($temp_path.$zipfile);
         }else{
           $this->load->view('art_lst_v',$data);
         }

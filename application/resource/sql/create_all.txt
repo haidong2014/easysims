@@ -369,9 +369,11 @@ CREATE TABLE IF NOT EXISTS `ss_code` (
   `update_time` timestamp  NULL,							
   PRIMARY KEY (`code`,`code_no`)							
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;							
-		
+
+DELETE FROM ss_users;
 INSERT INTO ss_users (user, user_name, role_id, insert_time, update_time) values ("admin", "系统管理员", "1000", NOW(), NOW());
 
+DELETE FROM ss_code;
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "0", "未删除", "DELETE_FLG", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("01", "1", "删除", "DELETE_FLG", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("02", "1", "男", "SEX", NOW(), NOW());
@@ -403,8 +405,11 @@ INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "2", "20", "出勤分数", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "3", "10", "课堂表现", NOW(), NOW());
 INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("10", "4", "10", "课后作业", NOW(), NOW());
-INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("11", "1", "/home/www/easysims/images/upload/", "FILES_PATH", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("11", "1", "d:/easysims/upload/", "FILES_PATH", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("11", "2", "d:/xampp/htdocs/easysims/upload/", "FILES_PATH", NOW(), NOW());
+INSERT INTO ss_code (code, code_no, code_name, remarks, insert_time, update_time) values ("11", "3", "d:/easysims/upload/temp/", "FILES_PATH", NOW(), NOW());
 
+DELETE FROM ss_roles;
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("系统管理员", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("校长", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("招生总监", NOW(), NOW());
@@ -414,6 +419,7 @@ INSERT INTO ss_roles (role_name, insert_time, update_time) values ("班主任", 
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("教师", NOW(), NOW());
 INSERT INTO ss_roles (role_name, insert_time, update_time) values ("学生", NOW(), NOW());
 
+DELETE FROM ss_functions;
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("招生管理", NOW(), NOW());
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("学生管理", NOW(), NOW());
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("就业管理", NOW(), NOW());
@@ -422,6 +428,7 @@ INSERT INTO ss_functions (function_name, insert_time, update_time) values ("基�
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("用户权限", NOW(), NOW());
 INSERT INTO ss_functions (function_name, insert_time, update_time) values ("校长留言", NOW(), NOW());
 
+DELETE FROM ss_url;
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1000", "100001", "enrol_students_c", "招生信息录入", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100101", "attendance_c", "学生出勤管理", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1001", "100102", "works_c", "学生作品管理", NOW(), NOW());
@@ -441,6 +448,7 @@ INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1005", "100503", "rolesetup_c", "系统权限设定", NOW(), NOW());
 INSERT INTO ss_url (function_id, url_id, url, url_name, insert_time, update_time) values ("1006", "100601", "message_c", "校长留言", NOW(), NOW());
 
+DELETE FROM ss_roles_functions_relation;
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1000", NOW(), NOW());
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1001", NOW(), NOW());
 INSERT INTO ss_roles_functions_relation (role_id, function_id, insert_time, update_time) values ("1000", "1002", NOW(), NOW());

@@ -5,7 +5,7 @@
         $(function () {
             grid = $("#maingrid").ligerGrid({
                 columns: [
-                { display: '作品编号', name: 'works_no', align: 'left', width: 80 },
+                { display: '作品编号', name: 'works_no', align: 'left', width: 150 },
                 { display: '作品名称', name: 'works_name', align: 'left', width: 200 },
                 { display: '作品作者', name: 'student_name', align: 'left', width: 80 },
                 { display: '上传时间', name: 'update_time', align: 'left', width: 120 },

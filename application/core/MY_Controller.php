@@ -10,7 +10,6 @@ class MY_Controller extends CI_Controller
         $this->load->library('session');
 
         $user = $this->session->all_userdata();
-        log_message('info', "my_controller __construct user:".var_export($user,true));
 
         $role_id = $this->session->userdata('role_id');
         if (empty($role_id)){
