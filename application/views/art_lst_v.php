@@ -84,7 +84,7 @@
     </table>
     <table style="width:840px;">
       <tr>
-        <td colspan="3">&nbsp<span style="color:red">注：作品展示最多只能表示20页数据。如果您没有找到希望查看的作品，请从新设置查询条件。</span></td>
+        <td colspan="3">&nbsp<span style="color:red">注：作品展示最多只能表示20页数据。如果您没有找到希望查看的作品，请重新设置查询条件。</span></td>
         <td style="text-align:right">
             &nbsp翻页：
             <select name="paging" id="paging" ltype="select" onchange="paging_click()">

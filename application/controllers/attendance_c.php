@@ -7,6 +7,7 @@ class Attendance_c extends MY_Controller {
         $this->load->model('student_m','student_m');
         $this->load->model('attendance_m','attendance_m');
         $this->load->model('code_m','code_m');
+        $this->load->model('user_m','user_m');
     }
 
     public function index()
@@ -22,6 +23,18 @@ class Attendance_c extends MY_Controller {
           $status = "2";
         }
         $data['status'] = $status;
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        if($role_id == '1007'){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         $classData = $this->class_m->getList($data);
         foreach($classData as &$temp){
             $temp['class_no']="<a href=\"".SITE_URL."/attendance_c/student_lst/".$temp['class_id']."\">".$temp['class_no']."</a>";
@@ -44,6 +57,20 @@ class Attendance_c extends MY_Controller {
         }
         $data['class_id'] =  $class_id;
         $data['today'] = date("Y-m-d");
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        $data['attendance_flg'] = '0';
+        if($role_id == '1007'){
+            $data['attendance_flg'] = '1';
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
         $studentData = $this->attendance_m->getAttendanceSumList($data);
         foreach($studentData as &$temp){
             $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/show_student/".$class_id."/".$temp['student_id']."\">".$temp['student_no']."</a>";
@@ -133,6 +160,7 @@ class Attendance_c extends MY_Controller {
         foreach($studentData as &$temp){
             $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/show_student/".$data['class_id']."/".$temp['student_id']."\">".$temp['student_no']."</a>";
         }
+        $data['attendance_flg'] = '0';
         $data['studentData'] = @json_encode(array('Rows'=>$studentData));
         $this->load->view('attendance_lst_v',$data);
     }

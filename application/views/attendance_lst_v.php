@@ -38,7 +38,9 @@
             &nbsp学生姓名：
             <input name="txtKey" id="txtKey" type="text" maxlength="20" style="width:200px" value="<?php echo @$search_key ?>" />&nbsp
             <input type="submit" value=" 查 询 " />&nbsp
-            <input id="attendance" type="button" value=" 点 名 " onclick="attendance_click()" />&nbsp
+            <?php if($attendance_flg == '0'){ ?>
+                <input id="attendance" type="button" value=" 点 名 " onclick="attendance_click()" />&nbsp
+            <?php } ?>
             <input id="return" type="button" value=" 返 回 " onclick="returnPage()" />
             <input type="hidden" name="class_id" value="<?php echo @$class_id?>" />
         </tr>
