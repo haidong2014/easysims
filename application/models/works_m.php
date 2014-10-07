@@ -46,7 +46,7 @@ class Works_m extends MY_Model
             $this->db->like('works_name',$keyword);
         }
         $this->db->where('delete_flg', 0);
-        $this->db->order_by('works_no','desc');
+        $this->db->order_by('works_no','asc');
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
