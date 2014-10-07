@@ -8,6 +8,7 @@ class Works_c extends MY_Controller {
         $this->load->model('code_m','code_m');
         $this->load->model('student_m','student_m');
         $this->load->model('user_m','user_m');
+        $this->load->model('session_m','session_m');
     }
 
     public function index()
@@ -15,14 +16,24 @@ class Works_c extends MY_Controller {
         $data = array();
         $classData = array();
 
-        log_message('info', "works_c index post:".var_export($_POST,true));
+        //---------------------------------------------------------//
+        $sessionData = array();
+        $status = null;
+        $search_key = null;
 
-        $data['search_key'] =  $this->input->post('txtKey');
-        $status =  $this->input->post('status');
-        if (empty($status)) {
-          $status = "2";
+        $user_id = $this->session->userdata('user_id');
+        $data['user_id'] = $user_id;
+        $data['url_sub_id'] = "10010201";
+        $sessionData = $this->session_m->select($data);
+        if(empty($sessionData)){
+            $status = "2";
+        } else {
+            $status = $sessionData['session_01'];
+            $search_key = $sessionData['session_02'];
         }
+        //---------------------------------------------------------//
         $data['status'] = $status;
+        $data['search_key'] =  $search_key;
         //---------------------------------------------------------------//
         $role_id = $this->session->userdata('role_id');
         $data['role_id'] = $role_id;
@@ -44,6 +55,54 @@ class Works_c extends MY_Controller {
         $data['statusLst'] = $statusLst;
 
         $data['classData'] = @json_encode(array('Rows'=>$classData));
+        $this->load->view('works_class_v',$data);
+    }
+
+    public function search()
+    {
+        $data = array();
+        $classData = array();
+
+        log_message('info', "works_c search post:".var_export($_POST,true));
+
+        $search_key =  $this->input->post('txtKey');
+        $status =  $this->input->post('status');
+        $data['status'] = $status;
+        $data['search_key'] = $search_key;
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        $data['student_id'] = '';
+        if($role_id == '1007'){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
+        $classData = $this->class_m->getList($data);
+        foreach($classData as &$temp){
+            $temp['class_no']="<a href=\"".SITE_URL."/works_c/subject_lst/".
+                              $temp['class_id']."/".$temp['course_id']."\">".$temp['class_no']."</a>";
+        }
+        $statusLst = $this->code_m->getList("05");
+        $data['statusLst'] = $statusLst;
+        $data['classData'] = @json_encode(array('Rows'=>$classData));
+        //---------------------------------------------------------//
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $data['user_id'] = $user_id;
+        $data['url_sub_id'] = "10010201";
+        $data['session_01'] = $status;
+        $data['session_02'] = $search_key;
+        $data['session_03'] = null;
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->session_m->insertorupdate($data);
+        //---------------------------------------------------------//
         $this->load->view('works_class_v',$data);
     }
 

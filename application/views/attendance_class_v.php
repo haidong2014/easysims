@@ -29,7 +29,7 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/attendance_c/search/';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp状态：
