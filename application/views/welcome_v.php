@@ -34,8 +34,27 @@
     </style>
 </head>
 <body style="background: white; font-size: 12px;">
-
     <h2>欢迎使用学生信息管理系统</h2>
-    <p class="l-log-content">产品功能介绍</p>
+    <p class="l-log-content">作者：张海东、李伟</p>
+    <p class="l-log-content">官方网站：www.easyss.cn</p>
+    <h2>V1.0.0发布记录</h2>
+    <p class="l-log-content">100001：招生信息录入</p>
+    <p class="l-log-content">100101：学生出勤管理</p>
+    <p class="l-log-content">100102：学生作品管理</p>
+    <p class="l-log-content">100103：课程评价管理</p>
+    <p class="l-log-content">100201：就业信息录入</p>
+    <p class="l-log-content">100301：高级查询</p>
+    <p class="l-log-content">100302：作品展示</p>
+    <p class="l-log-content">100303：学生评价查询</p>
+    <p class="l-log-content">100304：教师评价查询</p>
+    <p class="l-log-content">100401：课程信息维护</p>
+    <p class="l-log-content">100402：班级信息维护</p>
+    <p class="l-log-content">100403：教师信息维护</p>
+    <p class="l-log-content">100404：学生信息维护</p>
+    <p class="l-log-content">100405：就业企业维护</p>
+    <p class="l-log-content">100501：系统角色设定</p>
+    <p class="l-log-content">100502：系统用户设定</p>
+    <p class="l-log-content">100503：系统权限设定</p>
+    <p class="l-log-content">100601：校长留言</p>
 </body>
 </html>
