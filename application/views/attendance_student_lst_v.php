@@ -40,16 +40,16 @@
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp年月:
-            <select name="start_year" id="start_year" ltype="select" ligeruiid="start_year">
+            <select name="start_year" id="start_year" ltype="select" ligeruiid="start_year" onchange="search_click()">
                 <?php for($i=0;$i<12;$i++){ ?>
-                    <?php if(@$start_year==($i+2014)){ ?>
-                        <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                    <?php if(@$start_year==($i+2010)){ ?>
+                        <option value="<?php echo ($i+2010); ?>" selected><?php echo ($i+2010); ?></option>
                     <?php } else {?>
-                        <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                        <option value="<?php echo ($i+2010); ?>"><?php echo ($i+2010); ?></option>
                     <?php } ?>
                 <?php } ?>
             </select>
-            <select name="start_month" id="start_month" ltype="select" ligeruiid="start_month">
+            <select name="start_month" id="start_month" ltype="select" ligeruiid="start_month" onchange="search_click()">
                 <?php for($i=0;$i<12;$i++){ ?>
                   <?php if(@$start_month==($i+1)){ ?>
                       <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>

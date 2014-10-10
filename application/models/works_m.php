@@ -123,8 +123,11 @@ class Works_m extends MY_Model
         if (!empty($data['scores_to'])) {
             $this->db->where('t1.works_scores <=', $data['scores_to']);
         }
-        if (!empty($data['txtKey'])) {
-            $this->db->like('t2.student_name', $data['txtKey']);
+        if (!empty($data['class_name'])) {
+            $this->db->like('t3.class_name', $data['class_name']);
+        }
+        if (!empty($data['student_name'])) {
+            $this->db->like('t2.student_name', $data['student_name']);
         }
         $this->db->order_by('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no', 0);
         $this->db->limit(8,($data['paging']-1)*8);
@@ -136,6 +139,7 @@ class Works_m extends MY_Model
         $this->db->select('count(t1.student_id) as paging_max');
         $this->db->from('ss_works t1');
         $this->db->join('ss_student t2', 't2.student_id=t1.student_id', 'left');
+        $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');
         if (!empty($data['start_year'])) {
             $this->db->where('t2.start_year', $data['start_year']);
         }
@@ -148,8 +152,11 @@ class Works_m extends MY_Model
         if (!empty($data['scores_to'])) {
             $this->db->where('t1.works_scores <=', $data['scores_to']);
         }
-        if (!empty($data['txtKey'])) {
-            $this->db->like('t2.student_name', $data['txtKey']);
+        if (!empty($data['class_name'])) {
+            $this->db->like('t3.class_name', $data['class_name']);
+        }
+        if (!empty($data['student_name'])) {
+            $this->db->like('t2.student_name', $data['student_name']);
         }
         $this->db->limit(160);
         $query = $this->db->get();

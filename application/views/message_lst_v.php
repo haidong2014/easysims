@@ -7,8 +7,9 @@
             columns: [
             { display: '日期', name: 'message_date', align: 'left', width: 80 },
             { display: '姓名', name: 'message_user', align: 'left', width: 80 },
-            { display: '标题', name: 'message_title', align: 'left', width: 260 },
-            { display: '内容', name: 'message_content', align: 'left', width: 610 }
+            { display: '标题', name: 'message_title', align: 'left', width: 150 },
+            { display: '校长留言', name: 'message_content', align: 'left', width: 400 },
+            { display: '校长反馈', name: 'message_feedback', align: 'left', width: 400 }
             ],
             pageSize:10,
             data: $.extend(true,{},messageData),
@@ -37,10 +38,10 @@
             &nbsp年月:
             <select name="start_year" id="start_year" onchange="search_click()">
             <?php for($i=0;$i<12;$i++){ ?>
-                <?php if(@$start_year==($i+2014)){ ?>
-                    <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                <?php if(@$start_year==($i+2010)){ ?>
+                    <option value="<?php echo ($i+2010); ?>" selected><?php echo ($i+2010); ?></option>
                 <?php } else {?>
-                    <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                    <option value="<?php echo ($i+2010); ?>"><?php echo ($i+2010); ?></option>
                 <?php } ?>
             <?php } ?>
             </select>

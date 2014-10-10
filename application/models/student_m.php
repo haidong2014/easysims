@@ -281,4 +281,13 @@ class Student_m extends MY_Model
 
         return $query->result_array();
     }
+
+    public function updateScores($data){
+        $this->db->where('student_id',     $data['student_id'] );
+        $this->db->set( 'scores',	       $data['scores'] );
+        $this->db->set('update_user',      $data['update_user']);
+        $this->db->set('update_time',      $data['update_time']);
+        return $this->db->update( $this->table_name );
+    }
+
 }

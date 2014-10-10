@@ -28,10 +28,10 @@
             <select name="start_year" id="start_year" ltype="select" onchange="search_click()">
             <option value=""></option>
             <?php for($i=0;$i<12;$i++){ ?>
-                <?php if(@$start_year==($i+2014)){ ?>
-                    <option value="<?php echo ($i+2014); ?>" selected><?php echo ($i+2014); ?></option>
+                <?php if(@$start_year==($i+2010)){ ?>
+                    <option value="<?php echo ($i+2010); ?>" selected><?php echo ($i+2010); ?></option>
                 <?php } else {?>
-                    <option value="<?php echo ($i+2014); ?>"><?php echo ($i+2014); ?></option>
+                    <option value="<?php echo ($i+2010); ?>"><?php echo ($i+2010); ?></option>
                 <?php } ?>
             <?php } ?>
             </select>
@@ -73,9 +73,15 @@
         <td></td>
         </tr>
         <tr>
-        <td colspan="2">
+        <td>
+            &nbsp班级名称：
+            <input type="text" name="class_name" id="class_name" maxlength="30" style="width:160px" value="<?php echo @$class_name ?>" />&nbsp
+		</td>
+        <td>
             &nbsp学生姓名：
-            <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:160px" value="<?php echo @$txtKey ?>" />&nbsp
+            <input type="text" name="student_name" id="student_name" maxlength="30" style="width:160px" value="<?php echo @$student_name ?>" />&nbsp
+		</td>
+        <td>
             <input id="search" type="submit" value=" 查 询 " onclick="search_click()" />
             <input id="search" type="submit" value=" 作品批量下载 " onclick="download_click()" />
             <input type="hidden" name="download_flg" id="download_flg"/>

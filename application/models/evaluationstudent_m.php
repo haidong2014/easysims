@@ -102,4 +102,15 @@ class EvaluationStudent_m extends MY_Model
 
         return $query->result_array();
     }
+
+    public function selectForS($data){
+        $this->db->select('*');
+        $this->db->where('class_id',   $data['class_id']);
+        $this->db->where('course_id',  $data['course_id']);
+        $this->db->where('student_id', $data['student_id']);
+        $this->db->where('delete_flg', 0);
+        $query = $this->db->get($this->table_name);
+        return $query->result_array();
+    }
+
 }

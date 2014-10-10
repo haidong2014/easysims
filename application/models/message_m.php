@@ -10,7 +10,7 @@ class Message_m extends MY_Model
 
     public function getList($data)
     {
-        $this->db->select('message_date,message_user,message_title,message_content');
+        $this->db->select('message_id,message_date,message_user,message_title,message_content,message_feedback');
 
         if($data['search_ym'] <> null && trim($data['search_ym']) <> ""){
             $this->db->where('message_ym', $data['search_ym']);
@@ -30,6 +30,19 @@ class Message_m extends MY_Model
         return $query->result_array();
     }
 
+    public function getOne($data)
+    {
+        $this->db->select('message_id,message_date,message_user,message_title,message_content,message_feedback');
+        $this->db->where('message_id', $data['message_id']);
+        $this->db->where('delete_flg', 0);
+        $query =  $this->db->get($this->table_name);
+        $message= null;
+        foreach ($query->result_array() as $row){
+            $message = $row;
+        }
+        return $message;
+    }
+
     public function addOne($data){
         $this->db->set( 'message_date',     $data['message_date'] );
         $this->db->set( 'message_ym',       $data['message_ym'] );
@@ -43,4 +56,14 @@ class Message_m extends MY_Model
 
         return $this->db->insert( $this->table_name );
     }
+
+    public function updateOne($data){
+        $this->db->where('message_id',      $data['message_id']);
+        $this->db->set( 'message_feedback', $data['message_feedback'] );
+        $this->db->set( 'update_user',      $data['update_user'] );
+        $this->db->set( 'update_time',      $data['update_time'] );
+
+        return $this->db->update( $this->table_name );
+    }
+
 }

@@ -403,10 +403,11 @@ class Evaluation_c extends MY_Controller {
         $class_id = $this->input->post('class_id');
         $course_id = $this->input->post('course_id');
         $subject_id = $this->input->post('subject_id');
+        $student_id = $this->input->post('student_id');
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
-        $data['student_id'] = $this->input->post('student_id');
+        $data['student_id'] = $student_id;
         $data['attendance_scores'] = $this->input->post('attendance_scores');
         $data['works_scores'] = $this->input->post('works_scores');
         $data['performance_scores'] = $this->input->post('performance_scores');
@@ -419,6 +420,41 @@ class Evaluation_c extends MY_Controller {
         $data['update_time'] = date("Y-m-d H:i:s");
         $this->evaluationstudent_m->insertorupdate($data);
 
+        self::student_ev_update($class_id,$course_id,$student_id);
+
         self::student_ev_lst($class_id,$course_id,$subject_id);
+    }
+
+    private function student_ev_update($class_id,$course_id,$student_id){
+        $data = array();
+        $scores = 0;
+        $scores_sum = 0;
+        $scores_avg = 0;
+
+        $ev = $this->code_m->getList("10");
+        $works_ev = $ev['作品分数']['1']/100;
+        $attendance_ev = $ev['出勤分数']['2']/100;
+        $performance_ev = $ev['课堂表现']['3']/100;
+        $homework_ev = $ev['课后作业']['4']/100;
+
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['student_id'] = $student_id;
+
+        $subjectData = $this->evaluationstudent_m->selectForS($data);
+        foreach($subjectData as $temp){
+            $scores = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
+                            $temp['performance_scores']*$performance_ev+$temp['homework_scores']*$homework_ev);
+            $scores_sum = $scores_sum + $scores;
+        }
+        if (count($subjectData) > 0) {
+            $scores_avg = round($scores_sum/count($subjectData));
+            $userinfo = $this->session->userdata('user');
+            $data['student_id'] = $student_id;
+            $data['scores'] = $scores_avg;
+            $data['update_user'] = $userinfo;
+            $data['update_time'] = date("Y-m-d H:i:s");
+            $this->student_m->updateScores($data);
+        }
     }
 }

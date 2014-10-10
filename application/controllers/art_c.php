@@ -15,7 +15,8 @@ class Art_c extends MY_Controller {
         $data['start_month'] = "";
         $data['scores_from'] = "";
         $data['scores_to'] = "";
-        $data['txtKey'] = "";
+        $data['class_name'] = "";
+        $data['student_name'] = "";
         $data['paging'] = 1;
         $data['paging_max'] = 1;
         $data['searchData'] = $searchData;
@@ -32,7 +33,8 @@ class Art_c extends MY_Controller {
         $start_month = $this->input->post('start_month');
         $scores_from = $this->input->post('scores_from');
         $scores_to = $this->input->post('scores_to');
-        $keyword = $this->input->post('txtKey');
+        $class_name = $this->input->post('class_name');
+        $student_name = $this->input->post('student_name');
         $paging = $this->input->post('paging');
         $download_flg = $this->input->post('download_flg');
 
@@ -40,7 +42,8 @@ class Art_c extends MY_Controller {
         $data['start_month'] = substr('0'.$start_month,-2);
         $data['scores_from'] = $scores_from;
         $data['scores_to'] = $scores_to;
-        $data['txtKey'] = $keyword;
+        $data['class_name'] = $class_name;
+        $data['student_name'] = $student_name;
         $data['paging'] = $paging;
         $paging_max = $this->works_m->getPagingMax($data);
         $data['paging_max'] = ceil($paging_max/8);
