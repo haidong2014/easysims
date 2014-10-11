@@ -35,8 +35,6 @@
 </head>
 <body style="background: white; font-size: 12px;">
     <h2>欢迎使用学生信息管理系统</h2>
-    <p class="l-log-content">作者：张海东、李伟</p>
-    <p class="l-log-content">官方网站：www.easyss.cn</p>
     <h2>V1.0.0发布记录</h2>
     <p class="l-log-content">100001：招生信息录入</p>
     <p class="l-log-content">100101：学生出勤管理</p>
