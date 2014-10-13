@@ -252,17 +252,22 @@ class Works_c extends MY_Controller {
         if (empty($subject_id)) {
             $subject_id = $this->input->post('subject_id');
         }
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+        $student = $this->student_m->getStudentId($user['0']['user']);
+        $student_id = $student['student_id'];
         $works_name = $this->input->post('works_name');
         $works_description = $this->input->post('works_description');
 
         $pathLst = $this->code_m->getList("11");
         $path = $pathLst['FILES_PATH']['1'];
-        $up_path = $path.$class_id.'/'.$course_id.'/'.$subject_id;
+        $up_path = $path.$class_id.'/'.$course_id.'/'.$subject_id.'/'.$student_id;
         if(!file_exists($up_path)){
             mkdir($up_path,0777,true);
         }
         $path_url = $pathLst['FILES_PATH']['2'];
-        $up_path_url = $path_url.$class_id.'/'.$course_id.'/'.$subject_id;
+        $up_path_url = $path_url.$class_id.'/'.$course_id.'/'.$subject_id.'/'.$student_id;
         if(!file_exists($up_path_url)){
             mkdir($up_path_url,0777,true);
         }
@@ -272,11 +277,6 @@ class Works_c extends MY_Controller {
             mkdir($up_path_temp,0777,true);
         }
         $filename = date('YmdHmis');
-        $userinfo = $this->session->userdata('user');
-        $user_id = $this->session->userdata('user_id');
-        $user = $this->user_m->getOne($user_id);
-        $student = $this->student_m->getStudentId($user['0']['user']);
-        $student_id = $student['student_id'];
         $insData =array();
         $insData['class_id'] = $class_id;
         $insData['course_id'] = $course_id;
@@ -301,7 +301,7 @@ class Works_c extends MY_Controller {
         $this->load->library("upload",$config);
         if($this->upload->do_upload('upfile')){
             $data = $this->upload->data();
-            $path_remarks = $class_id.'/'.$course_id.'/'.$subject_id."/".$data['file_name'];
+            $path_remarks = $class_id.'/'.$course_id.'/'.$subject_id.'/'.$student_id."/".$data['file_name'];
             if (self::getExt($data['file_name']) == "jpg") {
                 $this->load->library("image_lib");
                 $config_big_thumb['image_library'] = 'gd2';
@@ -337,7 +337,7 @@ class Works_c extends MY_Controller {
                 }
             }
             if(!empty($data)){
-                $path_save = $class_id.'/'.$course_id.'/'.$subject_id."/".$data['file_name'];
+                $path_save = $class_id.'/'.$course_id.'/'.$subject_id.'/'.$student_id."/".$data['file_name'];
                 $insData['works_path']  = $path_save;
                 $insData['remarks']  = $path_remarks;
                 $this->works_m->insertorupdate($insData);
