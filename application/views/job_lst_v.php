@@ -6,7 +6,7 @@ $(function () {
     grid = $("#maingrid").ligerGrid({
         columns: [
         { display: '企业ID', name: 'job_id', align: 'left', width: 80 },
-        { display: '企业名称', name: 'job_company', align: 'left', width: 160 },
+        { display: '企业名称', name: 'job_company', align: 'left', width: 300 },
         { display: '操作', name: 'opt', align: 'center', width: 120}
         ],
         pageSize:10,
