@@ -146,21 +146,6 @@
             <td align="left"></td>
         </tr>
         <tr>
-            <td align="right" class="l-table-edit-td">课程:</td>
-            <td align="left" class="l-table-edit-td">
-              <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
-              <?php foreach($courseData as $course){?>
-              <?php if(@$course_id==($course['course_id'])){ ?>
-                        <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
-              <?php }else{?>
-                        <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
-              <?php } ?>
-              <?php } ?>
-              </select>
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
             <td align="right" class="l-table-edit-td">学费:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="cost" type="text" id="cost" ltype='spinner' ligerui="{type:'int'}" value="<?php echo @$cost;?>"/>

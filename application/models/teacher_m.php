@@ -22,6 +22,7 @@ class Teacher_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.teacher_id','esc');
         $query =  $this->db->get();
+        log_message('info', "Teacher_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
     public function addOne($data){
@@ -89,8 +90,8 @@ class Teacher_m extends MY_Model
 
     public function updateOne($data){
 
-        $this->db->where('teacher_id', $data['teacher_id']);
-
+        $this->db->where('teacher_id',  $data['teacher_id']);
+        $this->db->set( 'teacher_no',	$data['teacher_no'] );
         $this->db->set( 'teacher_name',	$data['teacher_name'] );
         $this->db->set( 'sex',	        $data['sex'] );
         $this->db->set( 'birthday',		$data['birthday'] );

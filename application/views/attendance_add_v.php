@@ -41,6 +41,7 @@
             <input type="submit" value=" 提交 " />&nbsp
             <input type="button" value=" 返 回 " onclick="returnPage()" />
             <input type="hidden" name="class_id" value="<?php echo @$class_id?>" />
+            <input type="hidden" name="today" value="<?php echo @$today?>" />
         </tr>
     </table>
     <br>

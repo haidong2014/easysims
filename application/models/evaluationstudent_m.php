@@ -63,43 +63,44 @@ class EvaluationStudent_m extends MY_Model
                           't5.attendance_scores,t5.works_scores,t5.performance_scores,t5.homework_scores,t5.remarks');
         $this->db->from('ss_student t1');
         $this->db->join('ss_class t2', 't2.class_id=t1.class_id', 'left');
-        $this->db->join('ss_course t3', 't3.course_id=t1.course_id', 'left');
-        $this->db->join('ss_subject t4', 't4.course_id=t1.course_id and t4.subject_id='.$data['subject_id'], 'left');
+        $this->db->join('ss_course t3', 't3.course_id=t2.course_id', 'left');
+        $this->db->join('ss_subject t4', 't4.course_id=t3.course_id and t4.subject_id='.$data['subject_id'], 'left');
         $this->db->join('ss_student_evaluation t5', 't5.student_id=t1.student_id and t5.class_id='.$data['class_id'].' ' .
                         'and t5.course_id='.$data['course_id'].' and t5.subject_id='.$data['subject_id'], 'left');
-        $this->db->where('t1.class_id',   $data['class_id']);
-        $this->db->where('t1.course_id',  $data['course_id']);
+        $this->db->where('t2.class_id',   $data['class_id']);
+        $this->db->where('t3.course_id',  $data['course_id']);
         if (!empty($data['student_id'])) {
             $this->db->where('t1.student_id', $data['student_id']);
         }
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id', 0);
-
         $query = $this->db->get();
-
+        log_message('info', "EvaluationStudent_m selectStudentEV SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
-     public function selectEV($class_name,$student_name){
+     public function selectEV($class_name,$student_name,$student_id){
         $this->db->select('t2.class_name,t3.course_name,t4.subject_name,t1.student_id,t1.student_name,' .
                           't5.attendance_scores,t5.works_scores,t5.performance_scores,t5.homework_scores');
         $this->db->from('ss_student t1');
         $this->db->join('ss_class t2', 't2.class_id=t1.class_id', 'left');
-        $this->db->join('ss_course t3', 't3.course_id=t1.course_id', 'left');
-        $this->db->join('ss_subject t4', 't4.course_id=t1.course_id', 'left');
-        $this->db->join('ss_student_evaluation t5', 't5.student_id=t1.student_id and t5.class_id=t1.class_id' .
-                        ' and t5.course_id=t1.course_id and t5.subject_id=t4.subject_id', 'left');
+        $this->db->join('ss_course t3', 't3.course_id=t2.course_id', 'left');
+        $this->db->join('ss_subject t4', 't4.course_id=t3.course_id', 'left');
+        $this->db->join('ss_student_evaluation t5', 't5.student_id=t1.student_id and t5.class_id=t2.class_id' .
+                        ' and t5.course_id=t3.course_id and t5.subject_id=t4.subject_id', 'left');
         if (!empty($class_name)) {
             $this->db->like('t2.class_name', $class_name);
         }
         if (!empty($student_name)) {
             $this->db->like('t1.student_name', $student_name);
         }
+        if (!empty($student_id)) {
+            $this->db->like('t1.student_id', $student_id);
+        }
         $this->db->where('t1.delete_flg', 0);
-        $this->db->order_by('t1.class_id,t1.course_id,t4.subject_id,t1.student_id', 0);
-
+        $this->db->order_by('t2.class_id,t3.course_id,t4.subject_id,t1.student_id', 0);
         $query = $this->db->get();
-
+        log_message('info', "EvaluationStudent_m selectEV SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

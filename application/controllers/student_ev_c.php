@@ -5,6 +5,8 @@ class Student_Ev_c extends MY_Controller {
         parent::__construct("100303");
         $this->load->model('evaluationstudent_m','evaluationstudent_m');
         $this->load->model('code_m','code_m');
+        $this->load->model('user_m','user_m');
+        $this->load->model('student_m','student_m');
     }
 
     public function index()
@@ -12,6 +14,8 @@ class Student_Ev_c extends MY_Controller {
         $data = array();
         $searchData = array();
 
+        $data['class_name'] = "";
+        $data['student_name'] = "";
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('student_ev_v',$data);
     }
@@ -23,10 +27,24 @@ class Student_Ev_c extends MY_Controller {
 
         $class_name = $this->input->post('class_name');
         $student_name = $this->input->post('student_name');
+        $student_id = "";
         $download_flg = $this->input->post('download_flg');
-
         $data['class_name'] = $class_name;
         $data['student_name'] = $student_name;
+        $data['student_id'] = "";
+
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        if($role_id == '1007'){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+            $data['student_id'] = $student_id;
+        }
+        //---------------------------------------------------------------//
+
         $ev = $this->code_m->getList("10");
         $works_ev = $ev['作品分数']['1']/100;
         $attendance_ev = $ev['出勤分数']['2']/100;
@@ -58,7 +76,7 @@ class Student_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(12);
 
-            $searchXlsData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
+            $searchXlsData = $this->evaluationstudent_m->selectEV($class_name,$student_name,$student_id);
             $i = 2;
             foreach($searchXlsData as $temp){
                 $scores = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
@@ -90,7 +108,7 @@ class Student_Ev_c extends MY_Controller {
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
         } else {
-            $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name);
+            $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name,$student_id);
             foreach($searchData as &$temp){
                 $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
                                         $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";

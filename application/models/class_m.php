@@ -21,12 +21,16 @@ class Class_m extends MY_Model
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.class_name like', '%'.$data['search_key'].'%');
         }
-        if(!empty($data['start_year']) && !empty($data['start_month'])){
+        if(!empty($data['start_year'])){
             $this->db->where('t1.start_year', $data['start_year']);
+        }
+        if(!empty($data['start_month'])){
             $this->db->where('t1.start_month', $data['start_month']);
         }
-        if(!empty($data['end_year']) && !empty($data['end_month'])){
+        if(!empty($data['end_year'])){
             $this->db->where('t1.end_year', $data['end_year']);
+        }
+        if(!empty($data['end_month'])){
             $this->db->where('t1.end_month', $data['end_month']);
         }
         if(!empty($data['status'])){
@@ -35,6 +39,7 @@ class Class_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.class_id','esc');
         $query =  $this->db->get();
+        log_message('info', "Class_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -90,6 +95,7 @@ class Class_m extends MY_Model
 
     public function updateOne($data){
         $this->db->where('class_id',    $data['class_id']);
+        $this->db->set( 'class_no',	    $data['class_no'] );
         $this->db->set( 'class_name',	$data['class_name'] );
         $this->db->set( 'start_date',	$data['start_date'] );
         $this->db->set( 'end_date',		$data['end_date'] );
@@ -159,7 +165,7 @@ class Class_m extends MY_Model
         }
         $this->db->order_by('t1.subject_id');
         $query =  $this->db->get();
-        log_message('info', "class_m getSubjectList sql:".$this->db->last_query());
+        log_message('info', "Class_m getSubjectList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

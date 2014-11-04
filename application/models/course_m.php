@@ -17,6 +17,7 @@ class Course_m extends MY_Model
         $this->db->where('delete_flg', 0);
         $this->db->order_by('course_id','esc');
         $query =  $this->db->get($this->table_name);
+        log_message('info', "Course_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

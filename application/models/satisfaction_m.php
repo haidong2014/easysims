@@ -101,9 +101,8 @@ class Satisfaction_m extends MY_Model
         $this->db->where('t1.subject_id', $data['subject_id']);
         $this->db->where('t1.teacher_id', $data['teacher_id']);
         $this->db->where('t1.delete_flg', 0);
-
         $query = $this->db->get();
-
+        log_message('info', "Satisfaction_m selectTeacherEV SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

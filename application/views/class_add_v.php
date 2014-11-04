@@ -26,25 +26,25 @@
         });
 
         function checkClass(){
-
             var class_id = document.form.class_id.value;
             var class_no = document.form.class_no.value;
             var class_no_old = document.form.class_no_old.value;
             if (class_id != null && class_id != "") {
                 if (class_no != class_no_old) {
-                    alert("班级编号不能变更！");
-                    document.form.class_no.value = class_no_old;
-                    return;
+                    var jqxhr = $.post("<?php echo SITE_URL.'/class_c/chk_class/';?>" + class_no +'/'+'<?php echo @$class_no?>', function(data) {
+                        showMsg(data);
+                    });
                 }
+            } else {
+                var jqxhr = $.post("<?php echo SITE_URL.'/class_c/chk_class/';?>" + class_no +'/'+'<?php echo @$class_no?>', function(data) {
+                    showMsg(data);
+                });
             }
-            var jqxhr = $.post("<?php echo SITE_URL.'/class_c/chk_class/';?>" + class_no +'/'+'<?php echo @$class_no?>', function(data) {
-                showMsg(data);
-            });
         }
         function showMsg(data){
           if (data != "") {
               alert(data.replace(/\"/g, ""));
-              document.form.class_no.value = "";
+              document.form.class_no.value = document.form.class_no_old.value;
               return ;
           }
         }

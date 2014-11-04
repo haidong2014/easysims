@@ -4,6 +4,8 @@ class Teacher_Ev_c extends MY_Controller {
     {
         parent::__construct("100304");
         $this->load->model('evaluationteacher_m','evaluationteacher_m');
+        $this->load->model('teacher_m','teacher_m');
+        $this->load->model('user_m','user_m');
     }
 
     public function index()
@@ -11,6 +13,8 @@ class Teacher_Ev_c extends MY_Controller {
         $data = array();
         $searchData = array();
 
+        $data['class_name'] = "";
+        $data['teacher_name'] = "";
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('teacher_ev_v',$data);
     }
@@ -23,9 +27,27 @@ class Teacher_Ev_c extends MY_Controller {
         $class_name = $this->input->post('class_name');
         $teacher_name = $this->input->post('teacher_name');
         $download_flg = $this->input->post('download_flg');
-
+        $teacher_id = "";
         $data['class_name'] = $class_name;
         $data['teacher_name'] = $teacher_name;
+        $data['teacher_id'] = "";
+
+        //---------------------------------------------------------------//
+        $role_id = $this->session->userdata('role_id');
+        $data['role_id'] = $role_id;
+        if($role_id == '1007'){
+            $data['searchData'] = @json_encode(array('Rows'=>$searchData));
+            $this->load->view('teacher_ev_v',$data);
+			return;
+        } else if($role_id == '1006') {
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $teacher = $this->teacher_m->getOneByNo($user['0']['user']);
+            $teacher_id = $teacher['teacher_id'];
+            $data['teacher_id'] = $teacher_id;
+		} else {
+		}
+        //---------------------------------------------------------------//
 
         if($download_flg == "1"){
             $this->load->library('PHPExcel');
@@ -47,7 +69,7 @@ class Teacher_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(12);
 
-            $searchXlsData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name);
+            $searchXlsData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name,$teacher_id);
             $i = 2;
             foreach($searchXlsData as $temp){
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $temp['class_name']);
@@ -74,7 +96,7 @@ class Teacher_Ev_c extends MY_Controller {
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
         } else {
-            $searchData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name);
+            $searchData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name,$teacher_id);
             foreach($searchData as &$temp){
                 $temp['teacher_name'] = "<a href=\"#\" onclick=\"showTeacher('".SITE_URL."/teacher_c/view_teacher_init/".
                                         $temp['teacher_id']."/1')\">".$temp['teacher_name']."</a>";

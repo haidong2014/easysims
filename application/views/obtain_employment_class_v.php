@@ -38,6 +38,7 @@
         <tr>
             &nbsp结课年月:
             <select name="end_year" id="end_year" onchange="search_click()">
+            <option value=""></option>
                 <?php for($i=0;$i<12;$i++){ ?>
                     <?php if(@$end_year==($i+2010)){ ?>
                         <option value="<?php echo ($i+2010); ?>" selected><?php echo ($i+2010); ?></option>
@@ -47,6 +48,7 @@
                 <?php } ?>
             </select>
             <select name="end_month" id="end_month" onchange="search_click()">
+            <option value=""></option>
                 <?php for($i=0;$i<12;$i++){ ?>
                   <?php if(@$end_month==($i+1)){ ?>
                       <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>

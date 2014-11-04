@@ -12,8 +12,12 @@ class Message_m extends MY_Model
     {
         $this->db->select('message_id,message_date,message_user,message_title,message_content,message_feedback');
 
-        if($data['search_ym'] <> null && trim($data['search_ym']) <> ""){
-            $this->db->where('message_ym', $data['search_ym']);
+        if($data['start_year'] <> null && trim($data['start_year']) <> ""){
+            $this->db->where('message_year', $data['start_year']);
+        }
+
+        if($data['start_month'] <> null && trim($data['start_month']) <> ""){
+            $this->db->where('message_month', $data['start_month']);
         }
 
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
@@ -27,6 +31,7 @@ class Message_m extends MY_Model
         $this->db->where('delete_flg', 0);
         $this->db->order_by('message_id','desc');
         $query =  $this->db->get($this->table_name);
+        log_message('info', "Message_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -45,7 +50,8 @@ class Message_m extends MY_Model
 
     public function addOne($data){
         $this->db->set( 'message_date',     $data['message_date'] );
-        $this->db->set( 'message_ym',       $data['message_ym'] );
+        $this->db->set( 'message_year',     $data['message_year'] );
+        $this->db->set( 'message_month',    $data['message_month'] );
         $this->db->set( 'message_user',     $data['message_user'] );
         $this->db->set( 'message_title',    $data['message_title'] );
         $this->db->set( 'message_content',  $data['message_content'] );

@@ -20,6 +20,7 @@ class Job_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.job_id','esc');
         $query =  $this->db->get($this->table_name);
+        log_message('info', "Job_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

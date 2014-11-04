@@ -176,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `ss_student` (
   `id_card` char(18) NULL,
   `contact_way` varchar(20) NULL,
   `parent_phone` varchar(12) NULL,
-  `course_id` int(11) NULL,
   `class_id` int(11) NULL,
   `cost` int(5) NULL,
   `scores` int(3) NULL,
@@ -344,7 +343,8 @@ DROP TABLE IF EXISTS `ss_message`;
 CREATE TABLE IF NOT EXISTS `ss_message` (		
   `message_id` int(11) NOT NULL AUTO_INCREMENT,		
   `message_date` char(10) NOT NULL,	
-  `message_ym` char(6) NOT NULL,		
+  `message_year` char(4) NOT NULL,	
+  `message_month` char(2) NOT NULL,		  
   `message_user` varchar(30) NOT NULL,		
   `message_title` varchar(20) NOT NULL,		
   `message_content` varchar(1000) NOT NULL,	

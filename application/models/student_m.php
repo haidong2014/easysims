@@ -27,6 +27,7 @@ class Student_m extends MY_Model
         }
         $this->db->order_by('t1.student_id','esc');
         $query = $this->db->get();
+        log_message('info', "Student_m getList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -39,7 +40,6 @@ class Student_m extends MY_Model
         $this->db->set( 'id_card',		    $data['id_card'] );
         $this->db->set( 'contact_way',		$data['contact_way'] );
         $this->db->set( 'parent_phone',		$data['parent_phone'] );
-        $this->db->set( 'course_id',	    $data['course_id'] );
         $this->db->set( 'class_id',	        $data['class_id'] );
         $this->db->set( 'cost',	            $data['cost'] );
         $this->db->set( 'start_year',	    $data['start_year'] );
@@ -143,7 +143,6 @@ class Student_m extends MY_Model
         $this->db->set( 'id_card',		   $data['id_card'] );
         $this->db->set( 'contact_way',	   $data['contact_way'] );
         $this->db->set( 'parent_phone',	   $data['parent_phone'] );
-        $this->db->set( 'course_id',	   $data['course_id'] );
         $this->db->set( 'cost',	           $data['cost'] );
         $this->db->set( 'start_year',	   $data['start_year'] );
         $this->db->set( 'start_month',     $data['start_month'] );
@@ -216,7 +215,7 @@ class Student_m extends MY_Model
         $this->db->from('ss_student t1');
         $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id', 'left');
         $this->db->join('ss_class t3', 't3.class_id=t1.class_id', 'left');
-        $this->db->join('ss_course t4', 't4.course_id=t1.course_id', 'left');
+        $this->db->join('ss_course t4', 't4.course_id=t3.course_id', 'left');
         $this->db->join('ss_teachers t5', 't5.teacher_id=t3.teacher_id', 'left');
         $this->db->join('ss_job t6', 't6.job_id=t2.job_id', 'left');
         $this->db->join('ss_code t7', 't7.code_no=t1.sex and t7.code='."02", 'left');
@@ -276,9 +275,8 @@ class Student_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id', 0);
         $this->db->limit(100);
-
         $query = $this->db->get();
-
+        log_message('info', "Student_m search SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

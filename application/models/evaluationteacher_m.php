@@ -52,7 +52,7 @@ class EvaluationTeacher_m extends MY_Model
         }
     }
 
-    public function selectEV($class_name,$teacher_name){
+    public function selectEV($class_name,$teacher_name,$teacher_id){
         $this->db->select('max(t2.class_name) as class_name,max(t3.course_name) as course_name,' .
                           'max(t4.subject_name) as subject_name,max(t5.teacher_name) as teacher_name,max(t1.teacher_id) as teacher_id,' .
                           'round((sum(t1.scores_01+t1.scores_02+t1.scores_03+t1.scores_04+t1.scores_05+t1.scores_06+t1.scores_07+' .
@@ -71,11 +71,14 @@ class EvaluationTeacher_m extends MY_Model
         if (!empty($teacher_name)) {
             $this->db->like('t5.teacher_name', $teacher_name);
         }
+        if (!empty($teacher_id)) {
+            $this->db->where('t1.teacher_id', $teacher_id);
+        }
         $this->db->where('t1.delete_flg', 0);
         $this->db->group_by('t1.class_id,t1.course_id,t1.subject_id,t1.teacher_id');
         $this->db->order_by('t1.class_id,t1.course_id,t4.subject_id,t1.teacher_id', 0);
         $query = $this->db->get();
-
+        log_message('info', "EvaluationTeacher_m selectEV SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 }

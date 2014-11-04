@@ -23,21 +23,22 @@
             var teacher_id = document.form.teacher_id.value;
             var teacher_no = document.form.teacher_no.value;
             var teacher_no_old = document.form.teacher_no_old.value;
-            if (teacher_id != null) {
+            if (teacher_id != null && teacher_id != "") {
                 if (teacher_no != teacher_no_old) {
-                    alert("教师编号不能变更！");
-                    document.form.teacher_no.value = teacher_no_old;
-                    return;
+                    var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_teacher/';?>" + teacher_no, function(data) {
+                        showMsg(data);
+                    });
                 }
+            } else {
+                var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_teacher/';?>" + teacher_no, function(data) {
+                    showMsg(data);
+                });
             }
-            var jqxhr = $.post("<?php echo SITE_URL.'/teacher_c/chk_teacher/';?>" + teacher_no, function(data) {
-                showMsg(data);
-            });
         }
         function showMsg(data){
           if (data != "") {
               alert(data.replace(/\"/g, ""));
-              document.form.teacher_no.value = "";
+              document.form.teacher_no.value = teacher_no_old = document.form.teacher_no_old.value;
           }
         }
         function addTeacher(){

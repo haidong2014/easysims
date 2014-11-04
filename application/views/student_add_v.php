@@ -32,19 +32,20 @@
             var student_no_old = document.form.student_no_old.value;
             if (student_id != null && student_id != "") {
                 if (student_no != student_no_old) {
-                    alert("学生编号不能变更！");
-                    document.form.student_no.value = student_no_old;
-                    return;
+                    var jqxhr = $.post("<?php echo SITE_URL.'/student_c/chk_student/';?>" + student_no, function(data) {
+                        showMsg(data);
+                    });
                 }
+            } else {
+                var jqxhr = $.post("<?php echo SITE_URL.'/student_c/chk_student/';?>" + student_no, function(data) {
+                    showMsg(data);
+                });
             }
-            var jqxhr = $.post("<?php echo SITE_URL.'/student_c/chk_student/';?>" + student_no, function(data) {
-                showMsg(data);
-            });
         }
         function showMsg(data){
           if (data != "") {
               alert(data.replace(/\"/g, ""));
-              document.form.student_no.value = "";
+              document.form.student_no.value = document.form.student_no_old.value;
           }
         }
         function addStudent(){
@@ -183,21 +184,6 @@
                 <?php } ?>
                 <?php } ?>
                 </select>
-            </td>
-            <td align="left"></td>
-        </tr>
-        <tr>
-            <td align="right" class="l-table-edit-td">课程:</td>
-            <td align="left" class="l-table-edit-td">
-              <select name="course_id" id="course_id" ltype="select" ligeruiid="course_id">
-              <?php foreach($courseData as $course){?>
-              <?php if(@$course_id==($course['course_id'])){ ?>
-                        <option value="<?php  echo $course['course_id'] ?>" selected><?php  echo $course['course_name'] ?></option>
-              <?php }else{?>
-                        <option value="<?php  echo $course['course_id'] ?>"><?php  echo $course['course_name'] ?></option>
-              <?php } ?>
-              <?php } ?>
-              </select>
             </td>
             <td align="left"></td>
         </tr>

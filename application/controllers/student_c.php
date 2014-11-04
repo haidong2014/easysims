@@ -6,9 +6,10 @@ class Student_c extends MY_Controller {
         parent::__construct("100404");
         $this->load->model('student_m','student_m');
         $this->load->model('code_m','code_m');
-        $this->load->model('course_m','course_m');
         $this->load->model('user_m','user_m');
         $this->load->model('job_m','job_m');
+        $this->load->model('class_m','class_m');
+        $this->load->model('session_m','session_m');
     }
 
     public function index($mode = null, $class_id = null)
@@ -17,7 +18,7 @@ class Student_c extends MY_Controller {
         // $mode = 2 就业
         // $mode = null 基础信息-学生
         $data = array();
-        $keyword = null;
+        $search_key = null;
         $start_year = null;
         $start_month = null;
         if (empty($mode)) {
@@ -27,26 +28,34 @@ class Student_c extends MY_Controller {
             $class_id = $this->input->post('class_id');
         }
         if (empty($mode)) {
-            $start_year = $this->input->post('start_year');
-            if (empty($start_year)) {
+            //---------------------------------------------------------//
+            $sessionData = array();
+            $start_year = null;
+            $start_month = null;
+            $search_key = null;
+
+            $user_id = $this->session->userdata('user_id');
+            $data['user_id'] = $user_id;
+            $data['url_sub_id'] = "10040401";
+            $sessionData = $this->session_m->select($data);
+            if(empty($sessionData)){
                 $start_year = substr(date("Y-m-d"),0,4);
-            }
-            $start_month = $this->input->post('start_month');
-            if (empty($start_month)) {
                 $start_month = substr(date("Y-m-d"),5,2);
             } else {
-                $start_month = substr("0".$start_month,-2);
+                $start_year = $sessionData['session_01'];
+                $start_month = $sessionData['session_02'];
+                $search_key = $sessionData['session_03'];
             }
+            //---------------------------------------------------------//
             $data['start_year'] = $start_year;
             $data['start_month'] = $start_month;
+            $data['txtKey'] = $search_key;
         } else {
           $data['class_id'] = $class_id;
         }
-        $keyword = $this->input->post('txtKey');
-        $data['txtKey'] = $keyword;
         $data['mode'] = $mode;
 
-        $studentData = $this->student_m->getList($keyword, $start_year, $start_month, $class_id);
+        $studentData = $this->student_m->getList($search_key, $start_year, $start_month, $class_id);
         foreach($studentData as &$temp){
             $temp['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".
             $temp['student_id']."/".$mode."/".$class_id."\">查看</a> |".
@@ -60,14 +69,71 @@ class Student_c extends MY_Controller {
         $this->load->view('student_lst_v',$data);
     }
 
+    public function search()
+    {
+        // $mode = 1 招生
+        // $mode = 2 就业
+        // $mode = null 基础信息-学生
+        $data = array();
+        $search_key = null;
+        $start_year = null;
+        $start_month = null;
+        if (empty($mode)) {
+            $mode = $this->input->post('mode');
+        }
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($mode)) {
+            $start_year = $this->input->post('start_year');
+            $start_month = $this->input->post('start_month');
+            $start_month = substr("0".$start_month,-2);
+            $data['start_year'] = $start_year;
+            $data['start_month'] = $start_month;
+        } else {
+          $data['class_id'] = $class_id;
+        }
+        $search_key = $this->input->post('txtKey');
+        $data['txtKey'] = $search_key;
+        $data['mode'] = $mode;
+
+        $studentData = $this->student_m->getList($search_key, $start_year, $start_month, $class_id);
+        foreach($studentData as &$temp){
+            $temp['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".
+            $temp['student_id']."/".$mode."/".$class_id."\">查看</a> |".
+            "<a href=\"".SITE_URL."/student_c/upd_student_init/".
+            $temp['student_id']."/".$mode."/".$class_id."\">编辑</a> |".
+            "<a href=\"#\" onclick=\"delstudent('".SITE_URL."/student_c/delete_student/".
+            $temp['student_id']."/".$mode."/".$class_id."')\">删除</a>";
+        }
+
+        $data['studentsData'] = @json_encode(array('Rows'=>$studentData));
+        //---------------------------------------------------------//
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $data['user_id'] = $user_id;
+        $data['url_sub_id'] = "10040401";
+        $data['session_01'] = $start_year;
+        $data['session_02'] = $start_month;
+        $data['session_03'] = $search_key;
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->session_m->insertorupdate($data);
+        //---------------------------------------------------------//
+        $this->load->view('student_lst_v',$data);
+    }
+
     public function add_student_init($mode = null, $class_id = null){
         $data = array();
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $courseData = $this->course_m->getList(null);
-        $data['courseData'] = $courseData;
         $jobData = $this->job_m->getList(null);
         $data['jobData'] = $jobData;
+        $classData = $this->class_m->getOne($class_id);
+        $data['start_date'] = $classData['start_date'];
+        $data['end_date'] = $classData['end_date'];
         $data['sex'] = "1";
         $data['system_user'] = "1";
         $data['mode'] = $mode;
@@ -99,7 +165,6 @@ class Student_c extends MY_Controller {
         $data['id_card'] = $this->input->post('id_card');
         $data['contact_way'] = $this->input->post('contact_way');
         $data['parent_phone'] = $this->input->post('parent_phone');
-        $data['course_id'] = $this->input->post('course_id');
         $data['class_id'] = $class_id;
         $data['cost'] = $this->input->post('cost');
         $start_year = substr($start_date,0,4);
@@ -157,8 +222,6 @@ class Student_c extends MY_Controller {
         $data = $studentData;
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $courseData = $this->course_m->getList(null);
-        $data['courseData'] = $courseData;
         $jobData = $this->job_m->getList(null);
         $data['jobData'] = $jobData;
         $data['mode'] = $mode;
@@ -172,8 +235,6 @@ class Student_c extends MY_Controller {
         $data = $studentData;
         $graduateData = $this->code_m->getList("06");
         $data['graduateData'] = $graduateData;
-        $courseData = $this->course_m->getList(null);
-        $data['courseData'] = $courseData;
         $jobData = $this->job_m->getList(null);
         $data['jobData'] = $jobData;
         $data['mode'] = $mode;

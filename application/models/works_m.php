@@ -132,6 +132,7 @@ class Works_m extends MY_Model
         $this->db->order_by('t1.class_id,t1.course_id,t1.subject_id,t1.student_id,t1.works_no', 0);
         $this->db->limit(8,($data['paging']-1)*8);
         $query = $this->db->get();
+        log_message('info', "Works_m search SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

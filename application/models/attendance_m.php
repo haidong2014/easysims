@@ -19,6 +19,12 @@ class Attendance_m extends MY_Model
         if($data['search_key'] <> null && trim($data['search_key']) <> ""){
             $this->db->where('t1.student_name like', '%'.$data['search_key'].'%');
         }
+        if($data['start_date'] <> null && trim($data['start_date']) <> ""){
+            $this->db->where('t2.today >=', $data['start_date']);
+        }
+        if($data['end_date'] <> null && trim($data['end_date']) <> ""){
+            $this->db->where('t2.today <=', $data['end_date']);
+        }
         $this->db->where('t1.class_id', $data['class_id']);
         if(!empty($data['student_id'])){
             $this->db->where('t1.student_id', $data['student_id']);
@@ -27,6 +33,7 @@ class Attendance_m extends MY_Model
         $this->db->group_by('t1.student_id');
         $this->db->order_by('t1.student_id','esc');
         $query = $this->db->get();
+        log_message('info', "Attendance_m getAttendanceSumList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -42,6 +49,7 @@ class Attendance_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id','esc');
         $query = $this->db->get();
+        log_message('info', "Attendance_m getAttendanceList SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 
@@ -59,6 +67,7 @@ class Attendance_m extends MY_Model
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.today','esc');
         $query = $this->db->get();
+        log_message('info', "Attendance_m getAttendanceForStudent SQL : ".$this->db->last_query());
         return $query->result_array();
     }
 

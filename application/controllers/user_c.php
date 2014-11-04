@@ -16,10 +16,12 @@ class User_c extends MY_Controller {
 
         $status =  $this->input->post('status');
         if (empty($status)) {
-          $status = "0";
+            $status = "0";
         }
         $data['status'] = $status;
         $data['search_key'] =  $this->input->post('txtKey');
+        log_message('info', "user_c add_user data:".var_export($data,true));
+
         $userData = $this->user_m->getList($data);
 
         foreach($userData as &$dataopt){

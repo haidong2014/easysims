@@ -106,15 +106,36 @@ class Attendance_c extends MY_Controller {
     public function student_lst($class_id=null){
         $data = array();
         $studentData = array();
+        $today = "";
+        $start_date = "";
+        $end_date = "";
 
         log_message('info', "attendance_c student_lst post:".var_export($_POST,true));
 
-        $data['search_key'] =  $this->input->post('txtKey');
+        $data['search_key'] = $this->input->post('txtKey');
         if (empty($class_id)) {
             $class_id =  $this->input->post('class_id');
         }
         $data['class_id'] =  $class_id;
-        $data['today'] = date("Y-m-d");
+
+        $today = $this->input->post('today');
+        if (empty($today)) {
+            $today = date("Y-m-d");
+        }
+        $start_date = $this->input->post('start_date');
+        if (empty($start_date)) {
+            $start_date = substr(date("Y-m-d"),0,8)."01";
+        }
+        $end_date = $this->input->post('end_date');
+        if (empty($end_date)) {
+            $this->load->helper('date');
+            $month = substr(date("Y-m-d"),5,6);
+            $day = days_in_month($month);
+            $end_date = substr(date("Y-m-d"),0,8).$day;
+        }
+        $data['today'] = $today;
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
         //---------------------------------------------------------------//
         $role_id = $this->session->userdata('role_id');
         $data['role_id'] = $role_id;
@@ -130,15 +151,30 @@ class Attendance_c extends MY_Controller {
         }
         //---------------------------------------------------------------//
         $studentData = $this->attendance_m->getAttendanceSumList($data);
+        $attendance_sum = 0;
+        $attendance_fact = 0;
+        $attendance_percent = 0;
         foreach($studentData as &$temp){
             $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/show_student/".$class_id."/".$temp['student_id']."\">".$temp['student_no']."</a>";
+            $attendance_sum = $attendance_sum + $temp['status_1'] + $temp['status_2'] + $temp['status_3'] + $temp['status_4'];
+            $attendance_fact = $attendance_fact + $temp['status_1'];
         }
+        if($attendance_sum !=0 ) {
+            $attendance_percent = round($attendance_fact/$attendance_sum,2);
+        }
+        $attendance_percent = $attendance_percent*100;
+        $attendance_percent = $attendance_percent."%";
+        $data['attendance_sum'] = $attendance_sum;
+        $data['attendance_fact'] = $attendance_fact;
+        $data['attendance_percent'] = $attendance_percent;
 
         $data['studentData'] = @json_encode(array('Rows'=>$studentData));
+        log_message('info', "attendance_c student_lst data:".var_export($data,true));
+
         $this->load->view('attendance_lst_v',$data);
     }
 
-    public function add_attendance_init($class_id)
+    public function add_attendance_init($class_id,$attendance_date)
     {
         $data = array();
         $studentData = array();
@@ -147,7 +183,7 @@ class Attendance_c extends MY_Controller {
 
         $data['search_key'] =  "";
         $data['class_id'] =  $class_id;
-        $data['today'] = date("Y-m-d");
+        $data['today'] = $attendance_date;
         $studentData = $this->attendance_m->getAttendanceList($data);
         $i = 0;
         foreach($studentData as &$temp){
@@ -188,13 +224,14 @@ class Attendance_c extends MY_Controller {
 
         log_message('info', "attendance_c add_attendance post:".var_export($_POST,true));
 
+        $class_id = $this->input->post('class_id');
         $data['search_key'] =  "";
-        $data['class_id'] =  $this->input->post('class_id');
-        $data['today'] = date("Y-m-d");
+        $data['class_id'] = $this->input->post('class_id');
+        $data['today'] = $this->input->post('today');
         $studentData = $this->attendance_m->getAttendanceList($data);
 
         $datatmp['class_id'] = $this->input->post('class_id');
-        $datatmp['today'] = date("Y-m-d");
+        $datatmp['today'] = $this->input->post('today');
         $datatmp['insert_user'] = $this->session->userdata('user');
         $datatmp['insert_time'] = date("Y-m-d H:i:s");
         $datatmp['update_user'] = $this->session->userdata('user');
@@ -214,13 +251,8 @@ class Attendance_c extends MY_Controller {
             $i = $i + 1;
         }
 
-        $studentData = $this->attendance_m->getAttendanceSumList($data);
-        foreach($studentData as &$temp){
-            $temp['student_no']="<a href=\"".SITE_URL."/attendance_c/show_student/".$data['class_id']."/".$temp['student_id']."\">".$temp['student_no']."</a>";
-        }
-        $data['attendance_flg'] = '0';
-        $data['studentData'] = @json_encode(array('Rows'=>$studentData));
-        $this->load->view('attendance_lst_v',$data);
+        redirect("attendance_c/student_lst/".$class_id);
+
     }
 
      public function show_student($class_id=null,$student_id=null){
