@@ -46,6 +46,7 @@ class Attendance_m extends MY_Model
             $this->db->where('t1.student_name like', '%'.$data['search_key'].'%');
         }
         $this->db->where('t1.class_id', $data['class_id']);
+        $this->db->where('t1.end_date >=', $data['today']);
         $this->db->where('t1.delete_flg', 0);
         $this->db->order_by('t1.student_id','esc');
         $query = $this->db->get();

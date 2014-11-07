@@ -4,6 +4,7 @@ class Login_c extends Login_Controller {
     {
         parent::__construct();
         $this->load->model('login_m','login_m');
+        $this->load->model('student_m','student_m');
     }
 
     public function index()
@@ -29,8 +30,21 @@ class Login_c extends Login_Controller {
             $pwdinfo = $this->login_m->getPwd($user);
             if ($pwdinfo['password']==md5($password)) {
                 if (md5($password)!="1a1dc91c907325c69271ddf0c944bc72") {
-                    $this->session->set_userdata($userinfo);
-                    redirect("menu_c");
+                    $studentData = $this->student_m->checkStudent($user);
+                    if(empty($studentData)) {
+                        $this->session->set_userdata($userinfo);
+                        redirect("menu_c");
+                    } else {
+                        $end_date = $studentData[0]['end_date'];
+                        $today = date("Y-m-d");
+                        if ($today > $end_date) {
+                            $data["errFlg"] = 4;
+                            $this->load->view('login_v', $data);
+                        } else {
+                            $this->session->set_userdata($userinfo);
+                            redirect("menu_c");
+                        }
+                    }
                 } else {
                     $data["errFlg"] = 3;
                     $this->load->view('passwordset_v', $data);

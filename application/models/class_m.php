@@ -153,15 +153,14 @@ class Class_m extends MY_Model
 
     public function getSubjectList($class_id,$course_id,$search_key=null)
     {
-        $this->db->select('t1.class_id,t1.course_id,t1.subject_id,t1.start_date,t1.end_date,t1.teacher_id,' .
-                          't2.subject_name,t2.period,t3.teacher_name');
-        $this->db->from('ss_class_course t1');
-        $this->db->join('ss_subject t2', 't1.course_id = t2.course_id and t1.subject_id = t2.subject_id', 'left');
-        $this->db->join('ss_teachers t3', 't1.teacher_id = t3.teacher_id', 'left');
-        $this->db->where( 't1.class_id', $class_id );
+        $this->db->select('t1.course_id,t1.subject_id,t1.subject_name,t1.period,' .
+                          't2.class_id,t2.start_date,t2.end_date,t2.teacher_id,t3.teacher_name');
+        $this->db->from('ss_subject t1');
+        $this->db->join('ss_class_course t2', 't1.course_id = t2.course_id and t1.subject_id = t2.subject_id and t2.class_id = '.$class_id, 'left');
+        $this->db->join('ss_teachers t3', 't2.teacher_id = t3.teacher_id', 'left');
         $this->db->where( 't1.course_id', $course_id );
         if($search_key <> null && trim($search_key) <> ""){
-            $this->db->where('t2.subject_name like', '%'.$search_key.'%');
+            $this->db->where('t1.subject_name like', '%'.$search_key.'%');
         }
         $this->db->order_by('t1.subject_id');
         $query =  $this->db->get();

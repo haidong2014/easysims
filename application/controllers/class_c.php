@@ -30,8 +30,8 @@ class Class_c extends MY_Controller {
     public function add_class_init(){
         $data = array();
 
-        $status = $this->code_m->getList("05");
-        $data['status'] = $status;
+        $statusData = $this->code_m->getList("05");
+        $data['statusData'] = $statusData;
         $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
         $courseData = $this->course_m->getList(null);
@@ -106,8 +106,8 @@ class Class_c extends MY_Controller {
 
         $classData = $this->class_m->getOne($class_id);
         $data = $classData;
-        $status = $this->code_m->getList("05");
-        $data['status'] = $status;
+        $statusData = $this->code_m->getList("05");
+        $data['statusData'] = $statusData;
         $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
         $courseData = $this->course_m->getList(null);
@@ -121,8 +121,8 @@ class Class_c extends MY_Controller {
 
         $classData = $this->class_m->getOne($class_id);
         $data = $classData;
-        $status = $this->code_m->getList("05");
-        $data['status'] = $status;
+        $statusData = $this->code_m->getList("05");
+        $data['statusData'] = $statusData;
         $teacherData = $this->teacher_m->getTeacher();
         $data['teacherData'] = $teacherData;
         $courseData = $this->course_m->getList(null);
@@ -164,15 +164,6 @@ class Class_c extends MY_Controller {
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $this->load->view('class_view_subject',$data);
-    }
-
-    public function add_subject(){
-        log_message('info', "class_c add_subject post:".var_export($_POST,true));
-
-        $class_id = $this->input->post('class_id');
-        $course_id = $this->input->post('course_id');
-
-        redirect("class_c");
     }
 
     public function update_subject($class_id,$course_id,$subject_id,$start_date,$end_date,$teacher_id){

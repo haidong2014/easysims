@@ -203,7 +203,7 @@ class Student_m extends MY_Model
     }
 
     public function checkStudent($student_no){
-        $this->db->select('student_id,student_no');
+        $this->db->select('student_id,student_no,end_date');
         $this->db->where('student_no', $student_no);
         $query =  $this->db->get($this->table_name);
         return $query->result_array();

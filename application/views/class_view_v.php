@@ -125,7 +125,7 @@
                 <td align="right" class="l-table-edit-td">状态:</td>
                 <td align="left" class="l-table-edit-td">
                 <select name="status" id="status" ligeruiid="status">
-                <?php foreach($status['STATUS'] as $key => $value) { ?>
+                <?php foreach($statusData['STATUS'] as $key => $value) { ?>
                     <?php if($key == @$status){?>
                         <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
                     <?php }else{?>

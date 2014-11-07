@@ -20,6 +20,9 @@
             <?php if($errFlg==2){?>
                     $.ligerDialog.error('您输入的密码不正确！');
             <?php }?>
+            <?php if($errFlg==4){?>
+                    $.ligerDialog.error('系统检测到您当前的用户已经结课，<br>不能登录系统！<br>如果有疑问，请联系系统管理员！');
+            <?php }?>
         });
         function chkSubmit(){
             if(jQuery.trim(document.getElementById('txtUser').value)==""){
