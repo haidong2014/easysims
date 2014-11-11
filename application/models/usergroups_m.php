@@ -53,4 +53,16 @@ class Usergroups_m extends MY_Model
         $query =  $this->db->get($this->table_name);
         return $query->result_array();
     }
+
+    public function getRoleList()
+    {
+        $this->db->select('role_id,role_name');
+        $this->db->where('delete_flg', 0);
+        $query =  $this->db->get($this->table_name);
+        $res = array();
+        foreach($query->result_array() as $value){
+            $res['ROLE'][$value['role_id']] = $value['role_name'];
+        }
+        return $res;
+    }
 }

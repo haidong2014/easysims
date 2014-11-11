@@ -44,13 +44,24 @@
 <body style="padding:6px; overflow:hidden;">
 <div id="pageloading"></div>
 <div id="searchbar"></div>
-<form name="form" method="post" action="<?php echo SITE_URL.'/user_c';?>" id="form">
+<form name="form" method="post" action="<?php echo SITE_URL.'/user_c/search';?>" id="form">
     <table cellpadding="0" cellspacing="0" class="l-table-edit" >
         <tr>
             &nbsp状态：
             <select name="status" id="status" ligeruiid="status" onchange="search_click()">
                 <?php foreach($statusLst['SYSTEM_USER'] as $key => $value) { ?>
                     <?php if($key == @$status){?>
+                        <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+                    <?php }else{?>
+                        <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                    <?php } ?>
+                <?php } ?>
+            </select>
+            &nbsp用户角色：
+            <select name="role" id="role" ligeruiid="role" onchange="search_click()">
+                <option value=""></option>
+                <?php foreach($roleLst['ROLE'] as $key => $value) { ?>
+                    <?php if($key == @$role){?>
                         <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
                     <?php }else{?>
                         <option value="<?php echo $key;?>"><?php echo $value;?></option>

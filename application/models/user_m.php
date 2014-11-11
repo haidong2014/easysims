@@ -17,6 +17,9 @@ class User_m extends MY_Model
         if($data['status'] <> null && trim($data['status']) <> ""){
             $this->db->where('t1.delete_flg', $data['status']);
         }
+        if($data['role'] <> null && trim($data['role']) <> ""){
+            $this->db->where('t1.role_id', $data['role']);
+        }
         $this->db->join('ss_roles t2', 't1.role_id = t2.role_id');
         $this->db->order_by('t1.user_id','esc');
         $query =  $this->db->get();

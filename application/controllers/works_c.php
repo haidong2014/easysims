@@ -132,8 +132,8 @@ class Works_c extends MY_Controller {
             }
             $temp['numbers']=$numbers;
             $temp['scores']=$scores;
-            $temp['subject_id']="<a href=\"".SITE_URL."/works_c/works_lst/".$temp['class_id']."/".
-                                $temp['course_id']."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
+            $temp['subject_id']="<a href=\"".SITE_URL."/works_c/works_lst/".$class_id."/".
+                                $course_id."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
         }
 
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));

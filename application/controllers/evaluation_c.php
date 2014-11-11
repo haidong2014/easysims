@@ -137,26 +137,36 @@ class Evaluation_c extends MY_Controller {
             $data['student_id'] = $student_id;
         }
         //---------------------------------------------------------------//
+        log_message('info', "evaluation_c search subjectData:".var_export($subjectData,true));
+
         foreach($subjectData as &$temp){
             $temp['period']=$temp['period']."周";
 
             if($role_id == '1007'){
-                $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".
-                                    $temp['class_id']."/".$temp['course_id']."/".$temp['subject_id']."/".
-                                    $temp['teacher_id']."\">"."评价"."</a>";
+                if(empty($temp['teacher_id'])){
+                    $temp['evaluation']="";
+                } else {
+                    $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".
+                                        $class_id."/".$course_id."/".$temp['subject_id']."/".
+                                        $temp['teacher_id']."\">"."评价"."</a>";
+                }
                 $temp['attendance']="";
              } else {
-                $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$temp['class_id']."/".
-                                      $temp['course_id']."/".$temp['subject_id']."/".$temp['teacher_id']."\">".
+                if(empty($temp['teacher_id'])){
+                    $temp['attendance']="";
+                } else {
+                    $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".
+                                        $class_id."/".$course_id."/".$temp['subject_id']."/".
+                                        $temp['teacher_id']."\">"."评价"."</a>";
+                }
+                $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$class_id."/".
+                                      $course_id."/".$temp['subject_id']."/".$temp['teacher_id']."\">".
                                       $temp['teacher_name']."</a>";
                 $temp['evaluation']="";
-                $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".
-                                    $temp['class_id']."/".$temp['course_id']."/".$temp['subject_id']."/".
-                                    $temp['teacher_id']."\">"."评价"."</a>";
              }
 
-            $temp['subject_id']="<a href=\"".SITE_URL."/evaluation_c/student_ev_lst/".$temp['class_id']."/".
-                                $temp['course_id']."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
+            $temp['subject_id']="<a href=\"".SITE_URL."/evaluation_c/student_ev_lst/".$class_id."/".
+                                $course_id."/".$temp['subject_id']."\">".$temp['subject_id']."</a>";
         }
 
         $data['subjectData'] = @json_encode(array('Rows'=>$subjectData));
