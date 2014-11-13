@@ -280,6 +280,7 @@ class Evaluation_c extends MY_Controller {
         $scores_14 = $this->input->post('scores_14');
         $scores_15 = $this->input->post('scores_15');
         $scores_16 = $this->input->post('scores_16');
+        $remarks = $this->input->post('remarks');
 
         $user_id = $this->session->userdata('user_id');
         $user = $this->user_m->getOne($user_id);
@@ -307,7 +308,7 @@ class Evaluation_c extends MY_Controller {
         $data['scores_14'] = $scores_14;
         $data['scores_15'] = $scores_15;
         $data['scores_16'] = $scores_16;
-        $data['remarks'] = "";
+        $data['remarks'] = $remarks;
         $data['delete_flg'] = "0";
         $data['insert_user'] = $userinfo;
         $data['insert_time'] = date("Y-m-d H:i:s");

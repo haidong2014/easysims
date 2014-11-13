@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>教师满意度调查</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo SITE_URL;?>/statics/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
@@ -214,6 +215,13 @@
                 <input id="scores_16_3" type="radio" name="scores_16" value="3" <?php echo (@$scores_16==3?"checked":"")?>/><label for="scores_16_3">C.3</label>
                 <input id="scores_16_2" type="radio" name="scores_16" value="2" <?php echo (@$scores_16==2?"checked":"")?>/><label for="scores_16_2">D.2</label>
                 <input id="scores_16_1" type="radio" name="scores_16" value="1" <?php echo (@$scores_16==1?"checked":"")?>/><label for="scores_16_1">E.1</label>
+            </td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="left" class="l-table-edit-td">意见栏:</td>
+            <td align="left" class="l-table-edit-td">
+                <textarea name="remarks" id="remarks" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="1000"><?php echo @$remarks ?></textarea>
             </td>
             <td align="left"></td>
         </tr>

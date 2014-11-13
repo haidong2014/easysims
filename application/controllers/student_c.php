@@ -55,6 +55,10 @@ class Student_c extends MY_Controller {
         }
         $data['mode'] = $mode;
 
+        $classData = $this->class_m->getOne($class_id);
+        $status = $classData['status'];
+        $data['status'] = $status;
+
         $studentData = $this->student_m->getList($search_key, $start_year, $start_month, $class_id);
         foreach($studentData as &$temp){
             $temp['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".
@@ -97,6 +101,10 @@ class Student_c extends MY_Controller {
         $data['txtKey'] = $search_key;
         $data['mode'] = $mode;
 
+        $classData = $this->class_m->getOne($class_id);
+        $status = $classData['status'];
+        $data['status'] = $status;
+
         $studentData = $this->student_m->getList($search_key, $start_year, $start_month, $class_id);
         foreach($studentData as &$temp){
             $temp['opt']="<a href=\"".SITE_URL."/student_c/view_student_init/".
@@ -138,6 +146,8 @@ class Student_c extends MY_Controller {
         $data['system_user'] = "1";
         $data['mode'] = $mode;
         $data['class_id'] = $class_id;
+        $classData = $this->class_m->getClassList();
+        $data['classData'] = $classData;
         $this->load->view('student_add_v',$data);
     }
 
@@ -226,6 +236,8 @@ class Student_c extends MY_Controller {
         $data['jobData'] = $jobData;
         $data['mode'] = $mode;
         $data['class_id'] = $class_id;
+        $classData = $this->class_m->getClassList();
+        $data['classData'] = $classData;
         $this->load->view('student_add_v', $data);
     }
 
@@ -239,6 +251,8 @@ class Student_c extends MY_Controller {
         $data['jobData'] = $jobData;
         $data['mode'] = $mode;
         $data['class_id'] = $class_id;
+        $classData = $this->class_m->getClassList();
+        $data['classData'] = $classData;
         if (empty($show_mode)) {
             $data['show_mode'] = "0";
         } else {

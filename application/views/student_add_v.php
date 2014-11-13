@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>学生信息登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo SITE_URL;?>/statics/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo SITE_URL;?>/statics/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
@@ -17,9 +18,6 @@
         var eee;
         $(function ()
         {
-            $("#start_year").ligerComboBox();
-            $("#start_month").ligerComboBox();
-            $("#course_id").ligerComboBox();
             $("#graduate").ligerComboBox();
             $("#job_id").ligerComboBox();
             $("form").ligerForm();
@@ -101,6 +99,21 @@
             <td align="right" class="l-table-edit-td">学生姓名:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="student_name" type="text" id="student_name" maxlength="30" value="<?php echo @$student_name ?>" />
+            </td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">班级:</td>
+            <td align="left" class="l-table-edit-td">
+                <select name="class_id" id="class_id" ltype="select" ligeruiid="class_id">
+                <?php foreach($classData['CLASS'] as $key => $value) { ?>
+                <?php if($key == @$class_id){?>
+                          <option value="<?php echo $key;?>" selected><?php echo $value;?></option>
+                <?php }else{?>
+                          <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                <?php } ?>
+                <?php } ?>
+                </select>
             </td>
             <td align="left"></td>
         </tr>
@@ -288,7 +301,6 @@
     <input type="hidden" name="student_id" id="student_id" value="<?php echo @$student_id?>" />
     <input type="hidden" name="student_no_old" id="student_no_old" value="<?php echo @$student_no?>" />
     <input type="hidden" name="mode" id="mode" value="<?php echo @$mode?>" />
-    <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
     <input type="button" value="提交" class="l-button l-button-submit" onclick="addStudent()"/>
     <input type="button" value="返回" class="l-button l-button-submit" onclick="returnPage()"/>
     <br>

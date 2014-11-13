@@ -213,4 +213,21 @@ class Class_m extends MY_Model
           return $this->db->insert( "ss_class_course" );
       }
     }
+
+    public function getClassList()
+    {
+        $this->db->select('class_id,class_no,class_name');
+
+        $where = "(status='1' OR status='2') AND delete_flg='0'";
+        $this->db->where($where);
+
+        $query =  $this->db->get($this->table_name);
+        $res = array();
+        foreach($query->result_array() as $value){
+            $res['CLASS'][$value['class_id']] = $value['class_name'];
+        }
+
+        return $res;
+    }
+
 }

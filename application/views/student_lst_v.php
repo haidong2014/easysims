@@ -81,7 +81,9 @@ function returnPage() {
           <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:200px" value="<?php echo @$txtKey ?>" />&nbsp
           <input type="submit" value=" 查 询 "  />&nbsp
           <?php if ($mode == "1") { ?>
-              <input type="button" value=" 学生信息登录 " onclick="goreg()" />&nbsp
+              <?php if ($status == "1" || $status == "2") { ?>
+                  <input type="button" value=" 学生信息登录 " onclick="goreg()" />&nbsp
+              <?php } ?>
               <input type="button" value=" 返回 " onclick="returnPage()" />
           <?php } else if ($mode == "2") { ?>
               <input type="button" value=" 返回 " onclick="returnPage()" />

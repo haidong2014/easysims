@@ -143,6 +143,7 @@ class Student_m extends MY_Model
         $this->db->set( 'id_card',		   $data['id_card'] );
         $this->db->set( 'contact_way',	   $data['contact_way'] );
         $this->db->set( 'parent_phone',	   $data['parent_phone'] );
+        $this->db->set( 'class_id',	       $data['class_id'] );
         $this->db->set( 'cost',	           $data['cost'] );
         $this->db->set( 'start_year',	   $data['start_year'] );
         $this->db->set( 'start_month',     $data['start_month'] );
