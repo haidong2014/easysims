@@ -26,7 +26,14 @@
         function returnPage(){
             var class_id = document.form.class_id.value;
             var course_id = document.form.course_id.value;
-            location.href='<?php echo SITE_URL;?>/evaluation_c/subject_lst/'+class_id+"/"+course_id;
+            var subject_id = document.form.subject_id.value;
+            var teacher_id = document.form.teacher_id.value;
+            var return_flg = document.form.return_flg.value;
+            if(return_flg == "1"){
+                location.href='<?php echo SITE_URL;?>/evaluation_c/satisfaction_list_init/'+class_id+"/"+course_id+"/"+subject_id+"/"+teacher_id;
+            }else{
+                location.href='<?php echo SITE_URL;?>/evaluation_c/subject_lst/'+class_id+"/"+course_id;
+            }
         }
     </script>
     <style type="text/css">
@@ -219,11 +226,18 @@
             <td align="left"></td>
         </tr>
         <tr>
-            <td align="left" class="l-table-edit-td">意见栏:</td>
+            <td colspan="3"><hr size=1></td>
+        </tr>
+        <tr>
+            <td align="left" class="l-table-edit-td"><span style="font-weight:bold;">与我们分享您对老师教学的意见和想法:</span></td>
             <td align="left" class="l-table-edit-td">
-                <textarea name="remarks" id="remarks" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="1000"><?php echo @$remarks ?></textarea>
             </td>
             <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2" class="l-table-edit-td">
+                <textarea name="remarks" id="remarks" cols="100" rows="8" class="l-textarea" style="width:400px" maxlength="1000"><?php echo @$remarks ?></textarea>
+            </td>
         </tr>
     </table>
     <br>
@@ -231,6 +245,8 @@
     <input type="hidden" name="course_id" id="course_id" value="<?php echo @$course_id?>" />
     <input type="hidden" name="subject_id" id="subject_id" value="<?php echo @$subject_id?>" />
     <input type="hidden" name="teacher_id" id="teacher_id" value="<?php echo @$teacher_id?>" />
+    <input type="hidden" name="return_flg" id="return_flg" value="<?php echo @$return_flg?>" />
+
     <?php if($satisfaction_add_flg == '0'){?>
         <input type="button" value="提交" class="l-button l-button-submit" onclick="addSatisfaction()"/>
     <?php }?>

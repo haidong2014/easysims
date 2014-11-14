@@ -137,7 +137,6 @@ class Evaluation_c extends MY_Controller {
             $data['student_id'] = $student_id;
         }
         //---------------------------------------------------------------//
-        log_message('info', "evaluation_c search subjectData:".var_export($subjectData,true));
 
         foreach($subjectData as &$temp){
             $temp['period']=$temp['period']."周";
@@ -162,7 +161,13 @@ class Evaluation_c extends MY_Controller {
                 $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$class_id."/".
                                       $course_id."/".$temp['subject_id']."/".$temp['teacher_id']."\">".
                                       $temp['teacher_name']."</a>";
-                $temp['evaluation']="";
+                if($role_id == '1000' || $role_id == '1001' || $role_id == '1002' || $role_id == '1003' || $role_id == '1004'){
+                    $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_list_init/".
+                                        $class_id."/".$course_id."/".$temp['subject_id']."/".
+                                        $temp['teacher_id']."\">"."查看"."</a>";
+                } else {
+                    $temp['evaluation']="";
+                }
              }
 
             $temp['subject_id']="<a href=\"".SITE_URL."/evaluation_c/student_ev_lst/".$class_id."/".
@@ -228,14 +233,15 @@ class Evaluation_c extends MY_Controller {
         self::subject_lst($class_id,$course_id);
     }
 
-    public function satisfaction_add_init($class_id,$course_id,$subject_id,$teacher_id){
+    public function satisfaction_add_init($class_id,$course_id,$subject_id,$teacher_id,$student_id=null,$return_flg=null){
         $data = array();
 
-        $user_id = $this->session->userdata('user_id');
-        $user = $this->user_m->getOne($user_id);
-        $student = $this->student_m->getStudentId($user['0']['user']);
-        $student_id = $student['student_id'];
-
+        if(empty($student_id)){
+            $user_id = $this->session->userdata('user_id');
+            $user = $this->user_m->getOne($user_id);
+            $student = $this->student_m->getStudentId($user['0']['user']);
+            $student_id = $student['student_id'];
+		}
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
@@ -252,6 +258,7 @@ class Evaluation_c extends MY_Controller {
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['teacher_id'] = $teacher_id;
+        $data['return_flg'] = $return_flg;
         $data['satisfaction_add_flg'] = $satisfaction_add_flg;
         $this->load->view('satisfaction_add_v',$data);
     }
@@ -349,7 +356,7 @@ class Evaluation_c extends MY_Controller {
         }
 
         $teacherEvData = $this->satisfaction_m->getTeacherEV($data);
-        if (!empty($evaluationData)) {
+        if (!empty($teacherEvData)) {
             $data['scores'] = round($teacherEvData['scores']);
         }
 
@@ -468,4 +475,36 @@ class Evaluation_c extends MY_Controller {
             $this->student_m->updateScores($data);
         }
     }
+
+    public function satisfaction_list_init($class_id,$course_id,$subject_id,$teacher_id){
+        $data = array();
+
+        if (empty($class_id)) {
+            $class_id = $this->input->post('class_id');
+        }
+        if (empty($course_id)) {
+            $course_id = $this->input->post('course_id');
+        }
+        if (empty($subject_id)) {
+            $subject_id = $this->input->post('subject_id');
+        }
+        if (empty($teacher_id)) {
+            $teacher_id = $this->input->post('teacher_id');
+        }
+
+        $data['class_id'] = $class_id;
+        $data['course_id'] = $course_id;
+        $data['subject_id'] = $subject_id;
+        $data['teacher_id'] = $teacher_id;
+        $satisfactionData = $this->satisfaction_m->selectTeacherEV($data);
+        foreach($satisfactionData as &$temp){
+            $temp['view']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".
+                                $class_id."/".$course_id."/".$subject_id."/".$teacher_id."/"
+                                .$temp['student_id']."/1"."\">"."查看"."</a>";
+        }
+        $data['satisfactionData'] = @json_encode(array('Rows'=>$satisfactionData));
+
+        $this->load->view('satisfaction_lst_v',$data);
+
+	}
 }
