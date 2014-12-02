@@ -117,18 +117,20 @@ class Student_c extends MY_Controller {
 
         $data['studentsData'] = @json_encode(array('Rows'=>$studentData));
         //---------------------------------------------------------//
-        $userinfo = $this->session->userdata('user');
-        $user_id = $this->session->userdata('user_id');
-        $data['user_id'] = $user_id;
-        $data['url_sub_id'] = "10040401";
-        $data['session_01'] = $start_year;
-        $data['session_02'] = $start_month;
-        $data['session_03'] = $search_key;
-        $data['insert_user'] = $userinfo;
-        $data['insert_time'] = date("Y-m-d H:i:s");
-        $data['update_user'] = $userinfo;
-        $data['update_time'] = date("Y-m-d H:i:s");
-        $this->session_m->insertorupdate($data);
+        if (empty($mode)) {
+            $userinfo = $this->session->userdata('user');
+            $user_id = $this->session->userdata('user_id');
+            $data['user_id'] = $user_id;
+            $data['url_sub_id'] = "10040401";
+            $data['session_01'] = $start_year;
+            $data['session_02'] = $start_month;
+            $data['session_03'] = $search_key;
+            $data['insert_user'] = $userinfo;
+            $data['insert_time'] = date("Y-m-d H:i:s");
+            $data['update_user'] = $userinfo;
+            $data['update_time'] = date("Y-m-d H:i:s");
+            $this->session_m->insertorupdate($data);
+        }
         //---------------------------------------------------------//
         $this->load->view('student_lst_v',$data);
     }
@@ -157,6 +159,7 @@ class Student_c extends MY_Controller {
         $userinfo = $this->session->userdata('user');
         $student_id = $this->input->post('student_id');
         $student_no = $this->input->post('student_no');
+        $student_no_old = $this->input->post('student_no_old');
         $student_name = $this->input->post('student_name');
         $remarks = $this->input->post('remarks');
         $mode = $this->input->post('mode');
@@ -220,7 +223,11 @@ class Student_c extends MY_Controller {
         }
 
         if($system_user == "1"){
-            self::addUser($student_no,$student_name,$remarks);
+            if($student_no_old != "" && $student_no_old != $student_no) {
+                self::updateUser($student_no_old,$student_no,$student_name,$remarks);
+            } else {
+                self::addUser($student_no,$student_name,$remarks);
+            }
         }
 
         self::index($mode,$class_id);
@@ -290,7 +297,7 @@ class Student_c extends MY_Controller {
 
         $chkuser= $this->user_m->checkUser($student_no);
         if(!empty($chkuser)){
-          return ;
+            return ;
         }
         $userData['user'] = $student_no;
         $userData['user_name'] = $student_name;
@@ -302,5 +309,23 @@ class Student_c extends MY_Controller {
         $userData['update_user'] = $userinfo;
         $userData['update_time'] = date("Y-m-d H:i:s");
         $this->user_m->addOne($userData);
+    }
+
+    private function updateUser($student_no_old,$student_no,$student_name,$remarks){
+        $userinfo = $this->session->userdata('user');
+
+        $chkuser= $this->user_m->checkUser($student_no_old);
+        if(!empty($chkuser)){
+            $user_id = $chkuser[0]['user_id'];
+            $userData['user_id'] = $user_id;
+            $userData['user'] = $student_no;
+            $userData['user_name'] = $student_name;
+            $userData['role_id'] = "1007";
+            $userData['remarks'] = $remarks;
+            $userData['delete_flg'] = 0;
+            $userData['update_user'] = $userinfo;
+            $userData['update_time'] = date("Y-m-d H:i:s");
+            $this->user_m->updOne($userData);
+        }
     }
 }

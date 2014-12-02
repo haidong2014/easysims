@@ -14,6 +14,8 @@ class Evaluation_c extends MY_Controller {
         $this->load->model('code_m','code_m');
         $this->load->model('user_m','user_m');
         $this->load->model('session_m','session_m');
+        $this->load->model('works_m','works_m');
+        $this->load->model('attendance_m','attendance_m');
     }
 
     public function index()
@@ -120,17 +122,25 @@ class Evaluation_c extends MY_Controller {
         if (empty($course_id)) {
             $course_id = $this->input->post('course_id');
         }
+        $role_id = $this->session->userdata('role_id');
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+
         $search_key = $this->input->post('txtKey');
         $data['search_key'] = $search_key;
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
-        $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
+		$teacher_id = '';
+        if($role_id == '1006'){
+            $teacher = $this->teacher_m->getTeacherId($user['0']['user']);
+            $teacher_id = $teacher['teacher_id'];
+            $data['teacher_id'] = $teacher_id;
+        }
+
+        $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key,$teacher_id);
         //---------------------------------------------------------------//
-        $role_id = $this->session->userdata('role_id');
         $data['role_id'] = $role_id;
         $data['student_id'] = '';
-        $user_id = $this->session->userdata('user_id');
-        $user = $this->user_m->getOne($user_id);
         if($role_id == '1007'){
             $student = $this->student_m->getStudentId($user['0']['user']);
             $student_id = $student['student_id'];
@@ -154,14 +164,16 @@ class Evaluation_c extends MY_Controller {
                 if(empty($temp['teacher_id'])){
                     $temp['attendance']="";
                 } else {
-                    $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".
-                                        $class_id."/".$course_id."/".$temp['subject_id']."/".
-                                        $temp['teacher_id']."\">"."评价"."</a>";
+                    if($role_id != '1007' && $role_id != '1006'){
+                        $temp['attendance']="<a href=\"".SITE_URL."/evaluation_c/attendance_add_init/".
+                                            $class_id."/".$course_id."/".$temp['subject_id']."/".
+                                            $temp['teacher_id']."\">"."评价"."</a>";
+					}
                 }
                 $temp['teacher_name']="<a href=\"".SITE_URL."/evaluation_c/teacher_ev_lst/".$class_id."/".
                                       $course_id."/".$temp['subject_id']."/".$temp['teacher_id']."\">".
                                       $temp['teacher_name']."</a>";
-                if($role_id == '1000' || $role_id == '1001' || $role_id == '1002' || $role_id == '1003' || $role_id == '1004'){
+                if($role_id != '1007'){
                     $temp['evaluation']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_list_init/".
                                         $class_id."/".$course_id."/".$temp['subject_id']."/".
                                         $temp['teacher_id']."\">"."查看"."</a>";
@@ -410,7 +422,24 @@ class Evaluation_c extends MY_Controller {
         $data['course_id'] = $course_id;
         $data['subject_id'] = $subject_id;
         $data['student_id'] = $student_id;
-
+        if(empty($data['attendance_scores'])) {
+            $attendanceData = $this->attendance_m->getAttendanceScores($class_id,$course_id,$subject_id,$student_id);
+            if(!empty($attendanceData)) {
+                $attendanceSum = $attendanceData['status_1']+$attendanceData['status_2']+$attendanceData['status_3']+$attendanceData['status_4'];
+                if($attendanceSum == 0) {
+                    $attendance_scores = 0;
+                } else {
+                    $attendance_scores = round(($attendanceData['status_1']/$attendanceSum)*100);
+                }
+                $data['attendance_scores'] = $attendance_scores;
+            }
+        }
+        if(empty($data['works_scores'])) {
+            $worksData = $this->works_m->getWorksScores($class_id,$course_id,$subject_id,$student_id);
+            if(!empty($worksData)) {
+                $data['works_scores'] = $worksData['works_scores'];
+            }
+        }
         $this->load->view('evaluation_studentev_add_v',$data);
     }
 
@@ -491,6 +520,7 @@ class Evaluation_c extends MY_Controller {
         if (empty($teacher_id)) {
             $teacher_id = $this->input->post('teacher_id');
         }
+        $role_id = $this->session->userdata('role_id');
 
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
@@ -498,6 +528,9 @@ class Evaluation_c extends MY_Controller {
         $data['teacher_id'] = $teacher_id;
         $satisfactionData = $this->satisfaction_m->selectTeacherEV($data);
         foreach($satisfactionData as &$temp){
+            if($role_id == '1006'){
+                $temp['student_name'] = '***';
+            }
             $temp['view']="<a href=\"".SITE_URL."/evaluation_c/satisfaction_add_init/".
                                 $class_id."/".$course_id."/".$subject_id."/".$teacher_id."/"
                                 .$temp['student_id']."/1"."\">"."查看"."</a>";

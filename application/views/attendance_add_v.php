@@ -11,7 +11,7 @@
             { display: '出勤状况(上午)', name: 'attendance_am', align: 'left', width: 200 },
             { display: '出勤状况(下午)', name: 'attendance_pm', align: 'left', width: 200 }
             ],
-            pageSize:10,
+            pageSize:50,
             data: $.extend(true,{},studentData),
             width: '100%',height:'100%'
         });

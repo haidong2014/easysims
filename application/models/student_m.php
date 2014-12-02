@@ -120,7 +120,7 @@ class Student_m extends MY_Model
     }
 
     public function getOneForUpd($student_id){
-        $this->db->select('t1.*,t2.*');
+        $this->db->select('t1.*,t2.*,t1.remarks');
         $this->db->from('ss_student t1');
         $this->db->join('ss_student_others t2', 't2.student_id=t1.student_id');
         $this->db->where('t1.student_id', $student_id);
@@ -237,14 +237,11 @@ class Student_m extends MY_Model
         if (!empty($data['sex'])) {
             $this->db->where('t1.sex', $data['sex']);
         }
-        if (!empty($data['age'])) {
-            if ($data['age'] == "00") {
-                $this->db->where('t1.age < ', '18');
-            } else if ($data['age'] == "99") {
-                $this->db->where('t1.age > ', '30');
-            } else {
-                $this->db->where('t1.age', $data['age']);
-            }
+        if (!empty($data['age_from'])) {
+            $this->db->where('t1.age >= ', $data['age_from']);
+        }
+        if (!empty($data['age_to'])) {
+            $this->db->where('t1.age <= ', $data['age_to']);
         }
         if (!empty($data['graduate'])) {
             $this->db->where('t2.graduate', $data['graduate']);

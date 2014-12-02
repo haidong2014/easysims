@@ -9,6 +9,7 @@ class Works_c extends MY_Controller {
         $this->load->model('student_m','student_m');
         $this->load->model('user_m','user_m');
         $this->load->model('session_m','session_m');
+        $this->load->model('teacher_m','teacher_m');
     }
 
     public function index()
@@ -116,11 +117,21 @@ class Works_c extends MY_Controller {
         if (empty($course_id)) {
             $course_id = $this->input->post('course_id');
         }
+        $role_id = $this->session->userdata('role_id');
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->user_m->getOne($user_id);
+
         $search_key = $this->input->post('txtKey');
         $data['search_key'] = $search_key;
         $data['class_id'] = $class_id;
         $data['course_id'] = $course_id;
-        $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key);
+		$teacher_id = '';
+        if($role_id == '1006'){
+            $teacher = $this->teacher_m->getTeacherId($user['0']['user']);
+            $teacher_id = $teacher['teacher_id'];
+            $data['teacher_id'] = $teacher_id;
+        }
+        $subjectData = $this->class_m->getSubjectList($class_id,$course_id,$search_key,$teacher_id);
 
         foreach($subjectData as &$temp){
             $temp['period']=$temp['period']."周";

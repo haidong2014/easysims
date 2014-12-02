@@ -7,6 +7,9 @@ $(function () {
         columns: [
         { display: '企业ID', name: 'job_id', align: 'left', width: 80 },
         { display: '企业名称', name: 'job_company', align: 'left', width: 300 },
+        { display: '所在城市', name: 'job_city', align: 'left', width: 150 },
+        { display: '企业电话', name: 'job_phone', align: 'left', width: 100 },
+        { display: '在职人数', name: 'job_onjob', align: 'left', width: 80 },
         { display: '操作', name: 'opt', align: 'center', width: 120}
         ],
         pageSize:10,

@@ -146,7 +146,7 @@
         </table>
     <br>
     <input type="hidden" name="class_id" id="class_id" value="<?php echo @$class_id?>" />
-    <input type="hidden" name="class_no_old"  value="<?php echo @$class_no?>" />
+    <input type="hidden" name="class_no_old" value="<?php echo @$class_no?>" />
     <input type="button" value="返回" class="l-button l-button-submit" onclick="location.href='<?php echo SITE_URL.'/class_c/';?>'" />
     <br>
     </form>

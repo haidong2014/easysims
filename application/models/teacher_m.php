@@ -130,4 +130,16 @@ class Teacher_m extends MY_Model
         $query =  $this->db->get();
         return $query->result_array();
     }
+
+    public function getTeacherId($teacher_no){
+       $this->db->select('teacher_id');
+       $this->db->where('teacher_no', $teacher_no);
+       $this->db->where('delete_flg', 0);
+       $query = $this->db->get($this->table_name);
+       $teacher= null;
+       foreach ($query->result_array() as $row){
+         $teacher = $row;
+       }
+       return $teacher;
+    }
 }

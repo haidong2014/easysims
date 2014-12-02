@@ -63,6 +63,24 @@
             <td align="left"></td>
         </tr>
         <tr>
+            <td align="right" class="l-table-edit-td">企业电话:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="job_phone" type="text" id="job_phone" maxlength="12" value="<?php echo @$job_phone;?>" /></td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">企业邮箱:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="job_mail" type="text" id="job_mail" maxlength="30" value="<?php echo @$job_mail;?>" /></td>
+            <td align="left"></td>
+        </tr>
+        <tr>
+            <td align="right" class="l-table-edit-td">QQ:</td>
+            <td align="left" class="l-table-edit-td">
+                <input name="job_qq" type="text" id="job_qq" maxlength="12" value="<?php echo @$job_qq;?>" /></td>
+            <td align="left"></td>
+        </tr>
+        <tr>
             <td align="right" class="l-table-edit-td">联系电话:</td>
             <td align="left" class="l-table-edit-td">
                 <input name="job_telephone" type="text" id="job_telephone" maxlength="12" value="<?php echo @$job_telephone;?>" /></td>

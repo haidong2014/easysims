@@ -56,7 +56,7 @@
     <table cellspacing="0" cellspacing="0" class="l-table-edit" >
         <tr>
         <td>
-        &nbsp入学年月：
+            &nbsp入学年月：
             <select name="start_year" id="start_year" ltype="select" onchange="search_click()">
             <option value=""></option>
             <?php for($i=0;$i<12;$i++){ ?>
@@ -79,82 +79,59 @@
             </select>
         </td>
         <td>
-        &nbsp学员成绩：
-        <select name="scores_from" id="scores_from" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php for($i=1;$i<=10;$i++){ ?>
-              <?php if(@$scores_from==($i*10)){ ?>
-                  <option value="<?php echo ($i*10); ?>" selected><?php echo ($i*10); ?></option>
-              <?php } else {?>
-                  <option value="<?php echo ($i*10); ?>"><?php echo ($i*10); ?></option>
-              <?php }?>
-            <?php } ?>
-        </select>
-        &nbsp&nbsp&nbsp&nbsp&nbsp到&nbsp&nbsp&nbsp&nbsp
-        <select name="scores_to" id="scores_to" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php for($i=1;$i<=10;$i++){ ?>
-              <?php if(@$scores_to==($i*10)){ ?>
-                  <option value="<?php echo ($i*10); ?>" selected><?php echo ($i*10); ?></option>
-              <?php } else {?>
-                  <option value="<?php echo ($i*10); ?>"><?php echo ($i*10); ?></option>
-              <?php }?>
-            <?php } ?>
-        </select>
+            &nbsp学员成绩：
+            <select name="scores_from" id="scores_from" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=1;$i<=10;$i++){ ?>
+                  <?php if(@$scores_from==($i*10)){ ?>
+                      <option value="<?php echo ($i*10); ?>" selected><?php echo ($i*10); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i*10); ?>"><?php echo ($i*10); ?></option>
+                  <?php }?>
+                <?php } ?>
+            </select>
+            &nbsp&nbsp&nbsp&nbsp&nbsp到&nbsp&nbsp&nbsp&nbsp
+            <select name="scores_to" id="scores_to" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=1;$i<=10;$i++){ ?>
+                  <?php if(@$scores_to==($i*10)){ ?>
+                      <option value="<?php echo ($i*10); ?>" selected><?php echo ($i*10); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i*10); ?>"><?php echo ($i*10); ?></option>
+                  <?php }?>
+                <?php } ?>
+            </select>
         </td>
         <td>
-        &nbsp年龄：
-        <select name="age" id="age" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php if(@$age=="00"){ ?>
-                <option value="00" selected>18以下</option>
-            <?php } else {?>
-                <option value="00">18以下</option>
-            <?php } ?>
-            <?php for($i=18;$i<=30;$i++){ ?>
-              <?php if(@$age==($i)){ ?>
-                  <option value="<?php echo ($i); ?>" selected><?php echo ($i); ?></option>
-              <?php } else {?>
-                  <option value="<?php echo ($i); ?>"><?php echo ($i); ?></option>
-              <?php }?>
-            <?php } ?>
-            <?php if(@$age=="99"){ ?>
-                <option value="99" selected>30以上</option>
-            <?php } else {?>
-                <option value="99">30以上</option>
-            <?php } ?>
-        </select>
+            &nbsp年龄：
+            <select name="age_from" id="age_from" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=0;$i<=8;$i++){ ?>
+                  <?php if(@$age_from==(10+$i*5)){ ?>
+                      <option value="<?php echo (10+$i*5); ?>" selected><?php echo (10+$i*5); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo (10+$i*5); ?>"><?php echo (10+$i*5); ?></option>
+                  <?php }?>
+                <?php } ?>
+            </select>
+            &nbsp&nbsp&nbsp&nbsp&nbsp到&nbsp&nbsp&nbsp&nbsp
         </td>
         <td>
-        &nbsp学历：
-        <select name="graduate" id="graduate" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php if(@$graduate=="1"){ ?>
-                <option value="1" selected>本科以上</option>
-            <?php } else {?>
-                <option value="1">本科以上</option>
-            <?php } ?>
-            <?php if(@$graduate=="2"){ ?>
-                <option value="2" selected>本科</option>
-            <?php } else {?>
-                <option value="2">本科</option>
-            <?php } ?>
-            <?php if(@$graduate=="3"){ ?>
-                <option value="3" selected>专科</option>
-            <?php } else {?>
-                <option value="3">专科</option>
-            <?php } ?>
-            <?php if(@$graduate=="4"){ ?>
-                <option value="4" selected>专科以下</option>
-            <?php } else {?>
-                <option value="4">专科以下</option>
-            <?php } ?>
-        </select>
+            <select name="age_to" id="age_to" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=0;$i<=8;$i++){ ?>
+                  <?php if(@$age_to==(10+$i*5)){ ?>
+                      <option value="<?php echo (10+$i*5); ?>" selected><?php echo (10+$i*5); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo (10+$i*5); ?>"><?php echo (10+$i*5); ?></option>
+                  <?php }?>
+                <?php } ?>
+            </select>
         </td>
         </tr>
         <tr>
         <td>
-        &nbsp毕业年月：
+            &nbsp毕业年月：
             <select name="end_year" id="end_year" ltype="select" onchange="search_click()">
             <option value=""></option>
             <?php for($i=0;$i<12;$i++){ ?>
@@ -177,73 +154,100 @@
             </select>
         </td>
         <td>
-        &nbsp就业薪资：
-        <select name="follow_salary_from" id="follow_salary_from" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php for($i=1;$i<=10;$i++){ ?>
-              <?php if(@$follow_salary_from==($i*1000)){ ?>
-                  <option value="<?php echo ($i*1000); ?>" selected><?php echo ($i*1000); ?></option>
-              <?php } else {?>
-                  <option value="<?php echo ($i*1000); ?>"><?php echo ($i*1000); ?></option>
-              <?php }?>
-            <?php } ?>
-            <?php if(@$follow_salary_from=="15000"){ ?>
-                <option value="15000" selected>15000</option>
-            <?php } else {?>
-                <option value="15000">15000</option>
-            <?php } ?>
-            <?php if(@$follow_salary_from=="20000"){ ?>
-                <option value="20000" selected>20000</option>
-            <?php } else {?>
-                <option value="20000">20000</option>
-            <?php } ?>
-        </select>
-        &nbsp到&nbsp
-        <select name="follow_salary_to" id="follow_salary_to" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php for($i=1;$i<=10;$i++){ ?>
-              <?php if(@$follow_salary_to==($i*1000)){ ?>
-                  <option value="<?php echo ($i*1000); ?>" selected><?php echo ($i*1000); ?></option>
-              <?php } else {?>
-                  <option value="<?php echo ($i*1000); ?>"><?php echo ($i*1000); ?></option>
-              <?php }?>
-            <?php } ?>
-            <?php if(@$follow_salary_to=="15000"){ ?>
-                <option value="15000" selected>15000</option>
-            <?php } else {?>
-                <option value="15000">15000</option>
-            <?php } ?>
-            <?php if(@$follow_salary_to=="20000"){ ?>
-                <option value="20000" selected>20000</option>
-            <?php } else {?>
-                <option value="20000">20000</option>
-            <?php } ?>
-        </select>
+            &nbsp就业薪资：
+            <select name="follow_salary_from" id="follow_salary_from" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=1;$i<=10;$i++){ ?>
+                  <?php if(@$follow_salary_from==($i*1000)){ ?>
+                      <option value="<?php echo ($i*1000); ?>" selected><?php echo ($i*1000); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i*1000); ?>"><?php echo ($i*1000); ?></option>
+                  <?php }?>
+                <?php } ?>
+                <?php if(@$follow_salary_from=="15000"){ ?>
+                    <option value="15000" selected>15000</option>
+                <?php } else {?>
+                    <option value="15000">15000</option>
+                <?php } ?>
+                <?php if(@$follow_salary_from=="20000"){ ?>
+                    <option value="20000" selected>20000</option>
+                <?php } else {?>
+                    <option value="20000">20000</option>
+                <?php } ?>
+            </select>
+            &nbsp到&nbsp
+            <select name="follow_salary_to" id="follow_salary_to" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php for($i=1;$i<=10;$i++){ ?>
+                  <?php if(@$follow_salary_to==($i*1000)){ ?>
+                      <option value="<?php echo ($i*1000); ?>" selected><?php echo ($i*1000); ?></option>
+                  <?php } else {?>
+                      <option value="<?php echo ($i*1000); ?>"><?php echo ($i*1000); ?></option>
+                  <?php }?>
+                <?php } ?>
+                <?php if(@$follow_salary_to=="15000"){ ?>
+                    <option value="15000" selected>15000</option>
+                <?php } else {?>
+                    <option value="15000">15000</option>
+                <?php } ?>
+                <?php if(@$follow_salary_to=="20000"){ ?>
+                    <option value="20000" selected>20000</option>
+                <?php } else {?>
+                    <option value="20000">20000</option>
+                <?php } ?>
+            </select>
         </td>
         <td>
-        &nbsp性别：
-        <select name="sex" id="sex" ltype="select" onchange="search_click()">
-            <option value=""></option>
-            <?php if(@$sex=="1"){ ?>
-                <option value="1" selected>男</option>
-            <?php } else {?>
-                <option value="1">男</option>
-            <?php } ?>
-            <?php if(@$sex=="2"){ ?>
-                <option value="2" selected>女</option>
-            <?php } else {?>
-                <option value="2">女</option>
-            <?php } ?>
-        </select>
+            &nbsp性别：
+            <select name="sex" id="sex" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php if(@$sex=="1"){ ?>
+                    <option value="1" selected>男</option>
+                <?php } else {?>
+                    <option value="1">男</option>
+                <?php } ?>
+                <?php if(@$sex=="2"){ ?>
+                    <option value="2" selected>女</option>
+                <?php } else {?>
+                    <option value="2">女</option>
+                <?php } ?>
+            </select>
+            &nbsp&nbsp&nbsp&nbsp&nbsp学历：
         </td>
-        <td></td>
+        <td >
+            <select name="graduate" id="graduate" ltype="select" onchange="search_click()">
+                <option value=""></option>
+                <?php if(@$graduate=="1"){ ?>
+                    <option value="1" selected>本科以上</option>
+                <?php } else {?>
+                    <option value="1">本科以上</option>
+                <?php } ?>
+                <?php if(@$graduate=="2"){ ?>
+                    <option value="2" selected>本科</option>
+                <?php } else {?>
+                    <option value="2">本科</option>
+                <?php } ?>
+                <?php if(@$graduate=="3"){ ?>
+                    <option value="3" selected>专科</option>
+                <?php } else {?>
+                    <option value="3">专科</option>
+                <?php } ?>
+                <?php if(@$graduate=="4"){ ?>
+                    <option value="4" selected>专科以下</option>
+                <?php } else {?>
+                    <option value="4">专科以下</option>
+                <?php } ?>
+            </select>
+        </td>
         </tr>
         <tr>
         <td colspan="4">
-        &nbsp任意查询：
+            &nbsp任意查询：
             <input type="text" name="txtKey" id="txtKey" maxlength="20" style="width:350px" value="<?php echo @$txtKey ?>" />&nbsp
             <input id="search" type="submit" value=" 查 询 " onclick="search_click()"/>&nbsp
-            <input id="search" type="button" value=" EXCEL批量下载 " onclick="download_click()" />
+            <?php if(@$show_flg == '0') { ?>
+                <input id="search" type="button" value=" EXCEL批量下载 " onclick="download_click()" />
+            <?php } ?>
             <input type="hidden" name="download_flg" id="download_flg"/>
         </td>
         </tr>

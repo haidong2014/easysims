@@ -91,4 +91,28 @@ class Attendance_m extends MY_Model
         $this->db->where('today',        $data['today']);
         $this->db->delete( $this->table_name );
    }
+
+    public function getAttendanceScores($class_id,$course_id,$subject_id,$student_id){
+        $this->db->select('t1.class_id,t1.student_id,t2.course_id,t2.subject_id, ' .
+            'sum(case when am_status=1 then 1 else 0 end) + sum(case when pm_status=1 then 1 else 0 end) as status_1,' .
+            'sum(case when am_status=2 then 1 else 0 end) + sum(case when pm_status=2 then 1 else 0 end) as status_2,' .
+            'sum(case when am_status=3 then 1 else 0 end) + sum(case when pm_status=3 then 1 else 0 end) as status_3,' .
+            'sum(case when am_status=4 then 1 else 0 end) + sum(case when pm_status=4 then 1 else 0 end) as status_4');
+        $this->db->from('ss_attendance t1');
+        $this->db->join('ss_class_course t2', "t1.class_id = t2.class_id and (t1.today >= t2.start_date and t2.end_date >= t1.today)");
+        $this->db->where('t1.class_id',   $class_id);
+        $this->db->where('t1.student_id', $student_id);
+        $this->db->where('t2.course_id',  $course_id);
+        $this->db->where('t2.subject_id', $subject_id);
+        $this->db->where('t1.delete_flg', 0);
+        $this->db->where('t2.delete_flg', 0);
+        $this->db->group_by('t1.class_id,t1.student_id,t2.course_id,t2.subject_id');
+        $query = $this->db->get();
+        $attendance= null;
+        foreach ($query->result_array() as $row){
+            $attendance = $row;
+        }
+        log_message('info', "Attendance_m getAttendanceScores SQL : ".$this->db->last_query());
+        return $attendance;
+    }
 }

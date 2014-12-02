@@ -7,15 +7,51 @@ class Student_Ev_c extends MY_Controller {
         $this->load->model('code_m','code_m');
         $this->load->model('user_m','user_m');
         $this->load->model('student_m','student_m');
+        $this->load->model('class_m','class_m');
+        $this->load->model('session_m','session_m');
     }
 
-    public function index()
+    public function index($mode=null)
     {
         $data = array();
         $searchData = array();
 
-        $data['class_name'] = "";
-        $data['student_name'] = "";
+        //---------------------------------------------------------//
+        $sessionData = array();
+        $class_name = null;
+        $student_name = null;
+
+        $user_id = $this->session->userdata('user_id');
+        $data['user_id'] = $user_id;
+        $data['url_sub_id'] = "10030301";
+        $sessionData = $this->session_m->select($data);
+        if(!empty($sessionData)){
+            $class_name = $sessionData['session_01'];
+            $student_name = $sessionData['session_02'];
+        }
+        //---------------------------------------------------------//
+        $student_id = "";
+        $data['class_name'] = $class_name;
+        $data['student_name'] = $student_name;
+        $data['student_id'] = $student_id;
+
+        if($mode == "1") {
+            //---------------------------------------------------------------//
+            $role_id = $this->session->userdata('role_id');
+            $data['role_id'] = $role_id;
+            if($role_id == '1007'){
+                $user_id = $this->session->userdata('user_id');
+                $user = $this->user_m->getOne($user_id);
+                $student = $this->student_m->getStudentId($user['0']['user']);
+                $student_id = $student['student_id'];
+                $data['student_id'] = $student_id;
+            }
+            //---------------------------------------------------------------//
+            $searchData = $this->class_m->getListForEv($class_name,$student_name,$student_id);
+            foreach($searchData as &$temp){
+                $temp['student_name']="<a href=\"".SITE_URL."/student_ev_c/show_ev_detail/".$temp['student_id']."\">".$temp['student_name']."</a>";
+            }
+		}
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('student_ev_v',$data);
     }
@@ -28,10 +64,9 @@ class Student_Ev_c extends MY_Controller {
         $class_name = $this->input->post('class_name');
         $student_name = $this->input->post('student_name');
         $student_id = "";
-        $download_flg = $this->input->post('download_flg');
         $data['class_name'] = $class_name;
         $data['student_name'] = $student_name;
-        $data['student_id'] = "";
+        $data['student_id'] = $student_id;
 
         //---------------------------------------------------------------//
         $role_id = $this->session->userdata('role_id');
@@ -44,6 +79,41 @@ class Student_Ev_c extends MY_Controller {
             $data['student_id'] = $student_id;
         }
         //---------------------------------------------------------------//
+
+        $searchData = $this->class_m->getListForEv($class_name,$student_name,$student_id);
+        foreach($searchData as &$temp){
+            $temp['student_name']="<a href=\"".SITE_URL."/student_ev_c/show_ev_detail/".$temp['student_id']."\">".$temp['student_name']."</a>";
+        }
+
+        $data['searchData'] = @json_encode(array('Rows'=>$searchData));
+
+        //---------------------------------------------------------//
+        $userinfo = $this->session->userdata('user');
+        $user_id = $this->session->userdata('user_id');
+        $data['user_id'] = $user_id;
+        $data['url_sub_id'] = "10030301";
+        $data['session_01'] = $class_name;
+        $data['session_02'] = $student_name;
+        $data['session_03'] = null;
+        $data['insert_user'] = $userinfo;
+        $data['insert_time'] = date("Y-m-d H:i:s");
+        $data['update_user'] = $userinfo;
+        $data['update_time'] = date("Y-m-d H:i:s");
+        $this->session_m->insertorupdate($data);
+        //---------------------------------------------------------//
+
+        $this->load->view('student_ev_v',$data);
+    }
+
+    public function show_ev_detail($student_id=null){
+        $data = array();
+        $searchData = array();
+
+        $download_flg = $this->input->post('download_flg');
+        if(empty($student_id)){
+            $student_id = $this->input->post('student_id');
+        }
+        $data['student_id'] = $student_id;
 
         $ev = $this->code_m->getList("10");
         $works_ev = $ev['作品分数']['1']/100;
@@ -76,7 +146,7 @@ class Student_Ev_c extends MY_Controller {
             $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(12);
             $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(12);
 
-            $searchXlsData = $this->evaluationstudent_m->selectEV($class_name,$student_name,$student_id);
+            $searchXlsData = $this->evaluationstudent_m->selectEV($student_id);
             $i = 2;
             foreach($searchXlsData as $temp){
                 $scores = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
@@ -108,16 +178,15 @@ class Student_Ev_c extends MY_Controller {
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
         } else {
-            $searchData = $this->evaluationstudent_m->selectEV($class_name,$student_name,$student_id);
+            $searchData = $this->evaluationstudent_m->selectEV($student_id);
             foreach($searchData as &$temp){
-                $temp['student_name'] = "<a href=\"#\" onclick=\"showStudent('".SITE_URL."/student_c/view_student_init/".
-                                        $temp['student_id']."/1/1/1')\">".$temp['student_name']."</a>";
                 $temp['scores'] = round($temp['works_scores']*$works_ev+$temp['attendance_scores']*$attendance_ev+
                                   $temp['performance_scores']*$performance_ev+$temp['homework_scores']*$homework_ev);
             }
         }
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
-        $this->load->view('student_ev_v',$data);
+        $this->load->view('student_ev_detail_v',$data);
     }
+
 }

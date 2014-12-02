@@ -4,6 +4,7 @@ class Teacher_c extends MY_Controller {
     {
         parent::__construct("100403");
         $this->load->model('teacher_m','teacher_m');
+        $this->load->model('user_m','user_m');
     }
 
     public function index(){
@@ -45,14 +46,15 @@ class Teacher_c extends MY_Controller {
 
         $data = array();
         $user = $this->session->all_userdata();
-        log_message('info', "teacher_c add_teacher user:".var_export($user,true));
         log_message('info', "teacher_c add_teacher post:".var_export($_POST,true));
 
         $userinfo = $this->session->userdata('user');
         $teacher_id = $this->input->post('teacher_id');
         $teacher_no = $this->input->post('teacher_no');
+        $teacher_no_old = $this->input->post('teacher_no_old');
         $teacher_name = $this->input->post('teacher_name');
         $system_user = $this->input->post('system_user');
+        $remarks = $this->input->post('remarks');
 
         $data['teacher_id'] = $teacher_id;
         $data['teacher_no'] = $teacher_no;
@@ -64,7 +66,7 @@ class Teacher_c extends MY_Controller {
         $data['telephone'] = $this->input->post('telephone');
         $data['email'] = $this->input->post('email');
         $data['system_user'] = $system_user;
-        $data['remarks'] = $this->input->post('remarks');
+        $data['remarks'] = $remarks;
         $data['delete_flg'] = "0";
         $data['insert_user'] = $userinfo;
         $data['insert_time'] = date("Y-m-d H:i:s");
@@ -72,7 +74,11 @@ class Teacher_c extends MY_Controller {
         $data['update_time'] = date("Y-m-d H:i:s");
 
         if($system_user == "1"){
-            self::addUser($teacher_no,$teacher_name,$data['remarks']);
+            if($teacher_no_old != "" && $teacher_no_old != $teacher_no) {
+                self::updateUser($teacher_no_old,$teacher_no,$teacher_name,$remarks);
+            } else {
+                self::addUser($teacher_no,$teacher_name,$remarks);
+            }
         }
 
         if(empty($teacher_id)) {
@@ -86,8 +92,6 @@ class Teacher_c extends MY_Controller {
 
     private function addUser($teacher_no,$teacher_name,$remarks){
         $userinfo = $this->session->userdata('user');
-
-        $this->load->model('user_m','user_m');
 
         $chkuser= $this->user_m->checkUser($teacher_no);
         if(!empty($chkuser)){
@@ -103,6 +107,24 @@ class Teacher_c extends MY_Controller {
         $userData['update_user'] = $userinfo;
         $userData['update_time'] = date("Y-m-d H:i:s");
         $this->user_m->addOne($userData);
+    }
+
+    private function updateUser($teacher_no_old,$teacher_no,$teacher_name,$remarks){
+        $userinfo = $this->session->userdata('user');
+
+        $chkuser= $this->user_m->checkUser($teacher_no_old);
+        if(!empty($chkuser)){
+            $user_id = $chkuser[0]['user_id'];
+            $userData['user_id'] = $user_id;
+            $userData['user'] = $teacher_no;
+            $userData['user_name'] = $teacher_name;
+            $userData['role_id'] = "1006";
+            $userData['remarks'] = $remarks;
+            $userData['delete_flg'] = 0;
+            $userData['update_user'] = $userinfo;
+            $userData['update_time'] = date("Y-m-d H:i:s");
+            $this->user_m->updOne($userData);
+        }
     }
 
     public function upd_teacher_init($teacher_id = null){

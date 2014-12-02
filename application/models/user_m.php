@@ -42,6 +42,7 @@ class User_m extends MY_Model
 
     public function updOne($data){
         $this->db->where('user_id',      $data['user_id']);
+        $this->db->set( 'user',          $data['user'] );
         $this->db->set( 'user_name',     $data['user_name'] );
         $this->db->set( 'role_id',       $data['role_id'] );
         $this->db->set( 'remarks',       $data['remarks'] );

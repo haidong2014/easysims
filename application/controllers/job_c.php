@@ -44,6 +44,9 @@ class Job_c extends MY_Controller {
         $data['job_city'] = $this->input->post('job_city');
         $data['job_business'] = $this->input->post('job_business');
         $data['job_address'] = $this->input->post('job_address');
+        $data['job_phone'] = $this->input->post('job_phone');
+        $data['job_mail'] = $this->input->post('job_mail');
+        $data['job_qq'] = $this->input->post('job_qq');
         $data['job_telephone'] = $this->input->post('job_telephone');
         $data['job_contacts'] = $this->input->post('job_contacts');
         $data['job_post'] = $this->input->post('job_post');

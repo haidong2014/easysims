@@ -293,7 +293,7 @@
         <tr>
             <td align="right" class="l-table-edit-td">备注:</td>
             <td align="left" class="l-table-edit-td">
-            <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="1000" style="width:400px" ><?php echo @$remarks ?></textarea>
+                <textarea cols="100" rows="4" class="l-textarea" id="remarks" name="remarks" maxlength="1000" style="width:400px" ><?php echo @$remarks;?></textarea>
             </td><td align="left"></td>
         </tr>
     </table>

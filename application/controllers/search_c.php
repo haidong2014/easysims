@@ -12,6 +12,14 @@ class Search_c extends MY_Controller {
         $data = array();
         $searchData = array();
 
+        $show_flg = '0';
+        //教师与学生权限的用户不能看到EXCEL下载按钮
+        $role_id = $this->session->userdata('role_id');
+        if($role_id == '1006' || $role_id == '1007') {
+			$show_flg = '1';
+		}
+        $data['show_flg'] = $show_flg;
+
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('search_lst_v',$data);
     }
@@ -20,12 +28,14 @@ class Search_c extends MY_Controller {
         $data = array();
         $searchData = array();
         log_message('info', "search_c search post:".var_export($_POST,true));
-
+		
+        $show_flg = '0';
         $start_year = $this->input->post('start_year');
         $start_month = $this->input->post('start_month');
         $scores_from = $this->input->post('scores_from');
         $scores_to = $this->input->post('scores_to');
-        $age = $this->input->post('age');
+        $age_from = $this->input->post('age_from');
+        $age_to = $this->input->post('age_to');
         $graduate = $this->input->post('graduate');
         $end_year = $this->input->post('end_year');
         $end_month = $this->input->post('end_month');
@@ -39,7 +49,8 @@ class Search_c extends MY_Controller {
         $data['start_month'] = substr('0'.$start_month,-2);
         $data['scores_from'] = $scores_from;
         $data['scores_to'] = $scores_to;
-        $data['age'] = $age;
+        $data['age_from'] = $age_from;
+        $data['age_to'] = $age_to;
         $data['graduate'] = $graduate;
         $data['end_year'] = $end_year;
         $data['end_month'] = substr('0'.$end_month,-2);
@@ -176,7 +187,12 @@ class Search_c extends MY_Controller {
             header('Content-Transfer-Encoding:binary');
             $objWriter->save('php://output');
         }
-
+        //教师与学生权限的用户不能看到EXCEL下载按钮
+        $role_id = $this->session->userdata('role_id');
+        if($role_id == '1006' || $role_id == '1007') {
+			$show_flg = '1';
+		}
+        $data['show_flg'] = $show_flg;
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));
         $this->load->view('search_lst_v',$data);
     }

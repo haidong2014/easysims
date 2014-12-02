@@ -97,10 +97,6 @@ class Teacher_Ev_c extends MY_Controller {
             $objWriter->save('php://output');
         } else {
             $searchData = $this->evaluationteacher_m->selectEV($class_name,$teacher_name,$teacher_id);
-            foreach($searchData as &$temp){
-                $temp['teacher_name'] = "<a href=\"#\" onclick=\"showTeacher('".SITE_URL."/teacher_c/view_teacher_init/".
-                                        $temp['teacher_id']."/1')\">".$temp['teacher_name']."</a>";
-            }
         }
 
         $data['searchData'] = @json_encode(array('Rows'=>$searchData));

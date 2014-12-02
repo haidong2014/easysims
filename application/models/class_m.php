@@ -43,6 +43,29 @@ class Class_m extends MY_Model
         return $query->result_array();
     }
 
+    public function getListForEv($class_name,$student_name,$student_id)
+    {
+        $this->db->select('t1.class_id,t1.class_name,t2.course_id,t2.course_name,t3.student_id,t3.student_name');
+        $this->db->from('ss_class t1');
+        $this->db->join('ss_course t2', 't1.course_id = t2.course_id', 'left');
+        $this->db->join('ss_student t3', 't1.class_id = t3.class_id', 'left');
+
+        if($class_name <> null && trim($class_name) <> ""){
+            $this->db->where('t1.class_name like', '%'.$class_name.'%');
+        }
+        if($student_name <> null && trim($student_name) <> ""){
+            $this->db->where('t3.student_name like', '%'.$student_name.'%');
+        }
+        if(!empty($student_id)){
+            $this->db->where('t3.student_id', $student_id);
+        }
+        $this->db->where('t1.delete_flg', 0);
+        $this->db->order_by('t3.student_id','asc');
+        $query =  $this->db->get();
+        log_message('info', "Class_m getListForEv SQL : ".$this->db->last_query());
+        return $query->result_array();
+    }
+
     public function addOne($data){
 
         $this->db->set( 'class_no',		$data['class_no'] );
@@ -151,7 +174,7 @@ class Class_m extends MY_Model
         $this->db->insert( "ss_class_course" );
     }
 
-    public function getSubjectList($class_id,$course_id,$search_key=null)
+    public function getSubjectList($class_id,$course_id,$search_key=null,$teacher_id=null)
     {
         $this->db->select('t1.course_id,t1.subject_id,t1.subject_name,t1.period,' .
                           't2.class_id,t2.start_date,t2.end_date,t2.teacher_id,t3.teacher_name');
@@ -162,6 +185,9 @@ class Class_m extends MY_Model
         if($search_key <> null && trim($search_key) <> ""){
             $this->db->where('t1.subject_name like', '%'.$search_key.'%');
         }
+        if($teacher_id <> null && trim($teacher_id) <> ""){
+            $this->db->where('t2.teacher_id',    $teacher_id);
+        }
         $this->db->order_by('t1.subject_id');
         $query =  $this->db->get();
         log_message('info', "Class_m getSubjectList SQL : ".$this->db->last_query());
@@ -169,9 +195,9 @@ class Class_m extends MY_Model
     }
 
     public function getOneSubject($class_id,$course_id,$subject_id){
-        $this->db->where('class_id',    $class_id);
+        $this->db->where('class_id',     $class_id);
         $this->db->where('course_id',    $course_id);
-        $this->db->where('subject_id',    $subject_id);
+        $this->db->where('subject_id',   $subject_id);
         $this->db->where('delete_flg', 0);
         $this->db->select('*');
         $query = $this->db->get("ss_class_course");

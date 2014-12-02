@@ -39,9 +39,6 @@
         document.form.download_flg.value = "1";
         document.form.submit();
     }
-    function showTeacher(parm){
-        $.ligerDialog.open({ url: parm, width: 500, height: 550, modal: false, isResize: true });
-    }
 </script>
 </head>
 <body style="padding:6px; overflow:hidden;">

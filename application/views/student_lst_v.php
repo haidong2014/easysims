@@ -59,6 +59,7 @@ function returnPage() {
           <?php if (empty($mode)) { ?>
             &nbsp入学年月：
             <select name="start_year" id="start_year" onchange="search_click()">
+            <option value=""></option>
             <?php for($i=0;$i<12;$i++){ ?>
                 <?php if(@$start_year==($i+2010)){ ?>
                     <option value="<?php echo ($i+2010); ?>" selected><?php echo ($i+2010); ?></option>
@@ -68,6 +69,7 @@ function returnPage() {
             <?php } ?>
             </select>
             <select name="start_month" id="start_month" onchange="search_click()">
+            <option value=""></option>
             <?php for($i=0;$i<12;$i++){ ?>
               <?php if(@$start_month==($i+1)){ ?>
                   <option value="<?php echo ($i+1); ?>" selected><?php echo ($i+1); ?></option>
