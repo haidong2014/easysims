@@ -305,7 +305,7 @@ class Works_c extends MY_Controller {
         $insData['update_time'] = date("Y-m-d H:i:s");
 
         $config['upload_path']=$up_path;
-        $config['allowed_types']="jpg|wmv|zip";
+        $config['allowed_types']="jpg|JPG|wmv|WMV|zip|ZIP";
         $config['max_size']="0";
         $config['max_width']="0";
         $config['max_height']="0";
@@ -313,7 +313,7 @@ class Works_c extends MY_Controller {
         if($this->upload->do_upload('upfile')){
             $data = $this->upload->data();
             $path_remarks = $class_id.'/'.$course_id.'/'.$subject_id.'/'.$student_id."/".$data['file_name'];
-            if (self::getExt($data['file_name']) == "jpg") {
+            if (self::getExt($data['file_name']) == "jpg" || self::getExt($data['file_name']) == "JPG") {
                 $this->load->library("image_lib");
                 $config_big_thumb['image_library'] = 'gd2';
                 $config_big_thumb['source_image'] = $data['full_path'];
@@ -327,7 +327,7 @@ class Works_c extends MY_Controller {
                 $this->image_lib->resize();
             } else {
                 $config['upload_path']=$up_path_temp;
-                $config['allowed_types']="jpg|wmv|zip";
+                $config['allowed_types']="jpg|JPG|wmv|WMV|zip|ZIP";
                 $config['max_size']="0";
                 $config['max_width']="0";
                 $config['max_height']="0";

@@ -22,7 +22,7 @@
                 return;
             }
             var check_upsmallfile = upfile.split(".");
-            if (check_upsmallfile[1] != "jpg") {
+            if (check_upsmallfile[1] != "jpg" && check_upsmallfile[1] != "JPG") {
                 if (upsmallfile == ""){
                     alert("请选择文件缩略图！");
                     return;
